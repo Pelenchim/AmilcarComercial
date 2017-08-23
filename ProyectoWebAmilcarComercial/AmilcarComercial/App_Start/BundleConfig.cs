@@ -28,12 +28,16 @@ namespace AmilcarComercial
                       "~/Scripts/jquery.mCustomScrollbar.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/materialize/css/materialize.css",
-                      "~/Content/site.css"));
+                      "~/Content/css/normalize.css",
+                      "~/Content/css/materialize.css",
+                      "~/Content/css/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fonts").Include(
+                      "~/Content/css/fonts.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new StyleBundle("~/Content/libraries").Include(
-                      "~/Content/pace/pace-theme-flat-top.css",
-                      "~/Content/jquery.mCustomScrollbar.css"));
+                      "~/Content/css/pace-theme-flash.css",
+                      "~/Content/css/jquery.mCustomScrollbar.css"));
         }
     }
 }

@@ -1,47 +1,100 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title - AmilcarComercial</title>
+    @Styles.Render("~/Content/fonts")
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/libraries")
+    @Styles.Render("~/Content/libraries")    
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+<body class="grey lighten-5">
+    <header>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content grey-text text-darken-3">
+            <li><a href="">Configuracion de la cuenta</a></li>
+            <li><a href="">configuraciones</a></li>
+            <li class="divider"></li>
+            <li><a href="">Cerrar Sesion</a></li>
+        </ul>
+        <div class="navbar-fixed">
+            <nav>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                <div class="nav-wrapper pink z-depth-2">
+                    <a href="#!" class="brand-logo">Logo</a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="sass.html">Nombre de Usuario</a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right">more_vert</i></a></li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
-
+    </header>
+    <main class="layout">
+        <aside>
+            <ul id="slide-out" class="side-nav fixed mCustomScrollbar" data-mcs-theme="minimal-dark">
+                <li>
+                    <div class="user-view">
+                        <div class="background">
+                            <img src="~/Content/images/mountain_desktop_by_xana_seraphi-d8d27ev.png.jpg" class="responsive-img">
+                        </div>
+                        <a href="#!user"><img class="circle" src="~/Content/images/avatar-male-default.png"></a>
+                        <a href="#!name"><span class="white-text name">John Doe</span></a>
+                        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    </div>
+                </li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Estadisticas</a></li>
+                <li class="sub"><a class="subheader">Opciones</a></li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Ventas</a></li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Credito</a></li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Inventario</a></li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header waves-effect"><i class="material-icons left">cloud</i>Catalogos<i class="material-icons right">arrow_drop_down</i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="#!">First</a></li>
+                                    <li><a href="#!">Second</a></li>
+                                    <li><a href="#!">Third</a></li>
+                                    <li><a href="#!">Fourth</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Reportes</a></li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Usuarios</a></li>
+                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Ayuda</a></li>
+                <li><div class="divider"></div></li>
+                <li class="sub"><a class="subheader">Configuracion</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="#!">ultimo</a></li>
+            </ul>
+        </aside>
+        <section class="content">
+            @RenderBody()
+        </section>
+    </main>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+    </footer>
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/materialize")
     @Scripts.Render("~/bundles/libraries")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $('.button-collapse').sideNav({
+            menuWidth: 260, 
+            draggable: true
+        });
+    </script>
 </body>
 </html>
