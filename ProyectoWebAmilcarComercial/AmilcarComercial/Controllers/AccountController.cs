@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AmilcarComercial.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AmilcarComercial.Controllers
 {
@@ -155,6 +156,21 @@ namespace AmilcarComercial.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //TEMPORAL
+                    //Creacion de un objeto de tipo RolStore y definir el uso de la base de datos
+                    var rolStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    //Creacion de un objeto que permite crear el rol
+                    var rolManager = new RoleManager<IdentityRole>(rolStore);
+                    //Creacion del Rol
+                    rolManager.Create(new IdentityRole("SuperAdministrador"));
+                    rolManager.Create(new IdentityRole("Administrador"));
+                    rolManager.Create(new IdentityRole("Vendedor"));
+
+                    ////Agregar el rol al usuario registrado
+                    await UserManager.AddToRolesAsync(user.Id, "SuperAdministrador");
+                    //await UserManager.AddToRolesAsync(user.Id, "Administrador");
+                    //await UserManager.AddToRolesAsync(user.Id, "Vendedor");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

@@ -9,6 +9,13 @@ namespace AmilcarComercial.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string IdentityidentificationCard { get; set; }
+        public string TelephoneNumber { get; set; }
+        public string Avatar { get; set; }
+        public string Access { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
@@ -16,6 +23,11 @@ namespace AmilcarComercial.Models
             // Agregar aquí notificaciones personalizadas de usuario
             return userIdentity;
         }
+    }
+
+    public class ApplicationRole : IdentityRole
+    {
+        public string Description { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
