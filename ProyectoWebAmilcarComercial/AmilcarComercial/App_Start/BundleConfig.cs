@@ -20,7 +20,7 @@ namespace AmilcarComercial
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
-                      "~/Scripts/materialize/materialize.js",
+                      "~/Scripts/materialize.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/libraries").Include(

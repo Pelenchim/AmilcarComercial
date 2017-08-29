@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace AmilcarComercial.Models
 {
@@ -15,7 +16,9 @@ namespace AmilcarComercial.Models
         public string IdentityidentificationCard { get; set; }
         public string TelephoneNumber { get; set; }
         public string Avatar { get; set; }
+        public int Sucursal { get; set; }
         public string Access { get; set; }
+        public bool State { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
@@ -24,12 +27,6 @@ namespace AmilcarComercial.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationRole : IdentityRole
-    {
-        public string Description { get; set; }
-    }
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

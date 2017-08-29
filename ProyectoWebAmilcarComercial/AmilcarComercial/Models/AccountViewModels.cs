@@ -49,9 +49,8 @@ namespace AmilcarComercial.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Correo electrónico")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Nombre de usuario")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

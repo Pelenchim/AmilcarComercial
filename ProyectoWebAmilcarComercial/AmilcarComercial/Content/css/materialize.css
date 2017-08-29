@@ -3369,10 +3369,18 @@ nav ul a span.badge {
   max-width: 1280px;
   width: 90%;
 }
+.container2 {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 95%;
+}
 
 @media only screen and (min-width: 601px) {
   .container {
     width: 85%;
+  }
+  .container2 {
+    width: 93%;
   }
 }
 
@@ -3380,11 +3388,18 @@ nav ul a span.badge {
   .container {
     width: 70%;
   }
+  .container {
+    width: 93%;
+  }
 }
 
 .container .row {
   margin-left: -0.75rem;
   margin-right: -0.75rem;
+}
+.container2 .row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
 }
 
 .section {
@@ -4243,12 +4258,14 @@ nav i.material-icons {
 nav .nav-wrapper {
     position: relative;
     height: 100%;
+}
+header nav .nav-wrapper {
     padding-left: 20px;
     padding-right: 20px;
 }
 
 @media only screen and (min-width: 993px) {
-  nav a.button-collapse {
+    nav a.button-collapse {
     display: none;
   }
 }

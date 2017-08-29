@@ -1,19 +1,13 @@
 ﻿body {
     font-family: Roboto, sans-serif;
-    overflow-y: hidden;
-    /*overflow-x: hidden; Nota: al finalizar poner el overflow general*/
 }
 
-.layout .content {
+body main.layout .content {
     padding-left: 260px;
-    height: 100%;
-}
-.layout .content > div {
-    overflow:auto;
 }
 
 @media only screen and (max-width : 992px) {
-    .layout .content {
+    body main.layout .content {
         padding-left: 0;
     }
 }
@@ -44,4 +38,11 @@ textarea {
     -moz-osx-font-smoothing: grayscale;
     /* Support for IE. */
     font-feature-settings: 'liga';
+}
+
+.content nav{
+    box-shadow: none !important ; 
+}
+.content nav .nav-wrapper{
+    padding-left: 25px;
 }

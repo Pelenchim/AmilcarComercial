@@ -25,7 +25,7 @@
                 <div class="nav-wrapper pink z-depth-2">
                     <a href="#!" class="brand-logo">Logo</a>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="sass.html">Nombre de Usuario</a></li>
+                        <li><a href="sass.html">@User.Identity.Name</a></li>
                         <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right">more_vert</i></a></li>
                     </ul>
                 </div>
@@ -45,7 +45,7 @@
                         <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
                     </div>
                 </li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Estadisticas</a></li>
+                <li><a class="waves-effect" href="@Url.Action("Index","Home")"><i class="material-icons">cloud</i>Estadisticas</a></li>
                 <li class="sub"><a class="subheader">Opciones</a></li>
                 <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Ventas</a></li>
                 <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Credito</a></li>
@@ -66,12 +66,10 @@
                     </ul>
                 </li>
                 <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Reportes</a></li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Usuarios</a></li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Ayuda</a></li>
-                <li><div class="divider"></div></li>
+              <li><div class="divider"></div></li>
                 <li class="sub"><a class="subheader">Configuracion</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="waves-effect" href="@Url.Action("Index","UsersAdmin")"><i class="material-icons">cloud</i>Usuarios</a></li>
+                <li><a class="waves-effect" href="@Url.Action("TiposUsuarios","UsersAdmin")"><i class="material-icons">cloud</i>Tipos de Usuario</a></li>
                 <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
                 <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
                 <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
