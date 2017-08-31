@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmilcarComercial.Models
@@ -64,18 +65,51 @@ namespace AmilcarComercial.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Nombre de Usuario *")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre *")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Apellidos *")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Cedula de Identidad")]
+        public string IdentificationCard { get; set; }
+
+        [Display(Name = "Fecha de Nacimiento")]
+        [DataType(DataType.DateTime)]
+        public DateTime BirthDay { get; set; }
+
+        [Display(Name = "Direccion Domiciliar")]
+        public string Address { get; set; }
+
+        [Required]
         [EmailAddress]
-        [Display(Name = "Correo electrónico")]
+        [Display(Name = "Correo electrónico *")]
         public string Email { get; set; }
+
+        [Display(Name = "Numero Telefonico")]
+        [DataType(DataType.PhoneNumber)]
+        public string TelephoneNumber { get; set; }
+
+        [Display(Name = "Foto de Perfil")]
+        public string Avatar { get; set; }
+
+        [Required]
+        [Display(Name = "Sucursal *")]
+        public int Sucursal { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Contraseña *")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmar contraseña")]
+        [Display(Name = "Confirmar contraseña *")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
     }

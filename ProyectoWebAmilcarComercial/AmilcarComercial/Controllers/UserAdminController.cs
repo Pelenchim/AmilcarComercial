@@ -84,7 +84,7 @@ namespace AmilcarComercial.Controllers
         public async Task<ActionResult> Create()
         {
             //Get the list of Roles
-            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), " Name", "Name");
+            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
             return View();
         }
 
@@ -93,9 +93,30 @@ namespace AmilcarComercial.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
         {
+            //TEMPORAL
+            //Creacion de un objeto de tipo RolStore y definir el uso de la base de datos
+            var rolStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+            //Creacion de un objeto que permite crear el rol
+            var rolManager = new RoleManager<IdentityRole>(rolStore);
+            //Creacion del Rol
+            rolManager.Create(new IdentityRole("SuperAdministrador"));
+            rolManager.Create(new IdentityRole("Administrador"));
+            rolManager.Create(new IdentityRole("Vendedor"));
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser {
+                    UserName = userViewModel.UserName,
+                    FirstName = userViewModel.FirstName,
+                    LastName = userViewModel.LastName,
+                    IdentityidentificationCard = userViewModel.IdentificationCard,
+                    BirthDay = userViewModel.BirthDay,
+                    Address = userViewModel.Address,
+                    Email = userViewModel.Email,
+                    TelephoneNumber = userViewModel.TelephoneNumber,
+                    Avatar = userViewModel.Avatar,
+                    Sucursal = userViewModel.Sucursal
+                };
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -108,7 +129,7 @@ namespace AmilcarComercial.Controllers
                         {
                             ModelState.AddModelError("", result.Errors.First());
                             ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
-                            return View();
+                            return RedirectToAction("Index");
                         }
                     }
                 }
@@ -117,7 +138,6 @@ namespace AmilcarComercial.Controllers
                     ModelState.AddModelError("", adminresult.Errors.First());
                     ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
                     return View();
-
                 }
                 return RedirectToAction("Index");
             }

@@ -1,53 +1,145 @@
 ﻿@model AmilcarComercial.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Configuracion";
+    ViewBag.SubTitle = "> Nuevo";
 }
 
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-error" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
+<nav class="nav-extended pink lighten-1">
+    <div class="nav-wrapper">
+        <a class="breadcrumb truncate">Configuracion > Usuarios @ViewBag.Subtitle</a>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+</nav>
+<div class="row">
+    <form class="container-mio white z-depth-1">
+        <div class="titulo-form">
+            <span>Agregar Nuevo Usuario</span>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-2 control-label">
-            Select User Role
-        </label>
-        <div class="col-md-10">
-            @foreach (var item in (SelectList)ViewBag.RoleId)
+        <div class="divider"></div>
+        <div class="nuevo-usuario">
+            @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { role = "form" }))
             {
-                <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
-                @Html.Label(item.Value, new { @class = "control-label" })
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col l3">
+                        <div class="col l12 s12 z-depth-1" style="height: 200px">
+
+                        </div>
+                        <div class="agregar-avatar col l12 center-align">
+                            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                    <div class="col l9">
+                        <div class="col l12">
+                            <span>Informacion Personal</span>
+                        </div>
+                        <div class="col l12 m12 s12"><div class="divider-mio"></div></div>
+                        <div class="input-field col l6">
+                            <i class="material-icons prefix">account_box</i>
+                            @Html.TextBoxFor(m => m.FirstName)
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                        <div class="input-field col l6">
+                            <i class="material-icons prefix">account_box</i>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                        </div>
+                        <div class="input-field col l6">
+                            <i class="material-icons prefix">credit_card</i>
+                            @Html.TextBoxFor(m => m.IdentificationCard, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.IdentificationCard, new { @class = "col-md-2 control-label" })
+                        </div>
+                        <div class="input-field col l6">
+                            <i class="material-icons prefix">today</i>
+                            @Html.LabelFor(m => m.BirthDay, new { @class = "col-md-2 control-label" })
+                            <input type="text" class="datepicker">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12">
+                        <span>Informacion de Contacto</span>
+                    </div>
+                    <div class="col l12 m12 s12"><div class="divider-mio"></div></div>
+                    <div class="input-field col l6 m6">
+                        <i class="material-icons prefix">contact_mail</i>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "validate" })
+                        @Html.LabelFor(m => m.Email)
+                    </div>
+                    <div class="input-field col l6 m6">
+                        <i class="material-icons prefix">contact_phone</i>
+                        @Html.TextBoxFor(m => m.TelephoneNumber, new { @class = "validate" })
+                        @Html.LabelFor(m => m.TelephoneNumber)
+                    </div>
+                    <div class="input-field col l12 m12">
+                        <i class="material-icons prefix">location_city</i>
+                        @Html.TextBoxFor(m => m.Address, new { @class = "validate" })
+                        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12">
+                        <span>Configuracion de la Cuenta</span>
+                    </div>
+                    <div class="col l12 m12 s12"><div class="divider-mio"></div></div>
+                    <div class="input-field col l4">
+                        <i class="material-icons prefix">perm_identity</i>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="input-field col l4">
+                        @Html.DropDownList("Value", new SelectList(ViewBag.RoleId))
+                        @*@Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="input-field col l4">
+                        @Html.DropDownList("Value", new SelectList(ViewBag.RoleId))
+                        @*@Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="input-field col l4">
+                        <i class="material-icons prefix">vpn_key</i>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="input-field col l4">
+                        <i class="material-icons prefix">vpn_key</i>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <br />
+                <div class="row">
+                    <div class="col l6">
+                        <p>Los campos marcados con * son Obligatorios</p>
+                    </div>
+                    <div class="col l6 right-align">
+                        <input type="reset" class="btn pink" value="Cancelar" />
+                        <button class="btn blue waves-effect waves-light" type="submit" name="action">
+                            Crear
+                        </button>
+                    </div>
+                </div>
             }
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create" />
-        </div>
-    </div>
-}
+    </form>
+</div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').material_select();
+
+            $('.datepicker').pickadate({
+                selectMonths: false, // Creates a dropdown to control month
+                selectYears: 20, // Creates a dropdown of 15 years to control year,
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Ok',
+                closeOnSelect: false // Close upon selecting a date,
+            });
+        });
+    </script>
 }

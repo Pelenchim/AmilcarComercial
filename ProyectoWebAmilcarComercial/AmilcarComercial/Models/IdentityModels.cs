@@ -14,6 +14,7 @@ namespace AmilcarComercial.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public string IdentityidentificationCard { get; set; }
+        public DateTime BirthDay { get; set; }
         public string TelephoneNumber { get; set; }
         public string Avatar { get; set; }
         public int Sucursal { get; set; }

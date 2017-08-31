@@ -3369,7 +3369,7 @@ nav ul a span.badge {
   max-width: 1280px;
   width: 90%;
 }
-.container2 {
+.container-mio {
     margin: 0 auto;
     max-width: 1280px;
     width: 95%;
@@ -3379,7 +3379,7 @@ nav ul a span.badge {
   .container {
     width: 85%;
   }
-  .container2 {
+  .container-mio {
     width: 93%;
   }
 }
@@ -3388,7 +3388,7 @@ nav ul a span.badge {
   .container {
     width: 70%;
   }
-  .container {
+  .container-mio {
     width: 93%;
   }
 }
@@ -3397,7 +3397,7 @@ nav ul a span.badge {
   margin-left: -0.75rem;
   margin-right: -0.75rem;
 }
-.container2 .row {
+.container-mio .row {
     margin-left: -0.75rem;
     margin-right: -0.75rem;
 }
@@ -4221,11 +4221,11 @@ nav ul a span.badge {
 }
 
 nav {
-  color: #fff;
-  background-color: #ee6e73;
-  width: 100%;
-  height: 56px;
-  line-height: 56px;
+    color: #fff;
+    background-color: #e91e63;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
 }
 
 nav.nav-extended {
