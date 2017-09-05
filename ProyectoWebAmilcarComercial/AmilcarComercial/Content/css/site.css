@@ -1,17 +1,4 @@
-﻿body {
-    font-family: Roboto, sans-serif;
-}
-
-    body main.layout .content {
-        padding-left: 260px;
-        background-color: #eceff1;
-    }
-
-@media only screen and (max-width : 992px) {
-    body main.layout .content {
-        padding-left: 0;
-    }
-}
+﻿/*#region Generales */
 
 .material-icons {
     font-family: 'Material Icons';
@@ -34,13 +21,156 @@
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
-
-.content nav{
-    box-shadow: none !important ; 
+.divider-mio {
+    width: 100%;
+    height: 1px;
+    overflow: hidden;
+    background-color: #e0e0e0;
 }
-.content nav .nav-wrapper{
+.border-radius {
+    border-radius: 5px !important;
+}
+
+/* label color */
+.input-field label {
+    color: #000 !important;
+}
+/* underline color */
+.input-field input[type=text],
+.input-field input[type=password] {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+}
+/* label focus color */
+.input-field input[type=password]:focus + label {
+    color: #000 !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #000 !important;
+}
+      
+/*#endregion */
+
+/*#region Layout */
+
+/*Layout*/
+body {
+    font-family: Roboto, sans-serif;
+}
+footer {
+    width: 100%;
+    height: 55px;
+    bottom: 0;
+    padding-left: 280px;
+    padding-right: 30px;
+    -webkit-box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14), 0 -1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14), 0 -1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    -webkit-transition: padding 0.4s ease-out;
+    -moz-transition: padding 0.4s ease-out;
+    -o-transition: padding 0.4s ease-out;
+    transition: padding 0.4s ease-out;
+}
+
+/*Content*/
+.layout .content {
+    padding-left: 260px;
+    background-color: #eceff1;
+    padding-bottom: 30px;
+    -webkit-transition: padding 0.4s ease-out;
+    -moz-transition: padding 0.4s ease-out;
+    -o-transition: padding 0.4s ease-out;
+    transition: padding 0.4s ease-out;
+}
+
+/*Aside*/
+.side-nav li > a > i.icono {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.side-nav li > a > i.inicio {
+    background-image: url('../system-resources/inicio.png');
+}
+.side-nav li > a > i.estadisticas {
+    background-image: url('../system-resources/estadisticas.png');
+}
+.side-nav li > a > i.ventas {
+    background-image: url('../system-resources/ventas.png');
+}
+.side-nav li > a > i.credito {
+    background-image: url('../system-resources/credito.png');
+}
+.side-nav li > a > i.inventario {
+    background-image: url('../system-resources/inventario.png');
+}
+.side-nav li > a > i.catalogos {
+    background-image: url('../system-resources/catalogos.png');
+}
+.side-nav li > a > i.usuarios {
+    background-image: url('../system-resources/usuarios.png');
+}
+aside .show-hidde {
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    width: 260px;
+    background-color: #fff;
+    z-index: 997;
+    padding: 0 23px;
+    border-top: solid 1px #e0e0e0;
+    text-align: end;
+}
+aside .show-hidde:hover {
+    background-color: #e0e0e0;
+}
+aside .show-hidde i {
+    line-height: 40px;
+    -webkit-transition: transform 0.4s ease-out;
+    -moz-transition: transform 0.4s ease-out;
+    -o-transition: transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+}
+
+/*MediaQuery del Layout*/
+@media only screen and (max-width : 992px) {
+    .layout .content {
+        padding-left: 0;
+    }
+    footer {
+        padding-left: 20px;
+    }
+}
+
+/*#endregion */
+
+/*#region Navbar-Extendida */
+
+.content nav {
+    box-shadow: none !important;
+}
+.content nav .nav-wrapper {
     padding-left: 25px;
 }
+
+/*#endregion */
+
+/*#region Login */
 
 .login {
     position: absolute;
@@ -54,69 +184,62 @@
     background: -webkit-linear-gradient(to left, #F45C43, #EB3349); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-
-.login-container{
+.login-container {
     width: 60%;
 }
-
 .login-info {
     background-color: #151532;
 }
 
-.border-radius {
-    border-radius: 5px !important;
-}
-
 /* label color */
-.input-field label {
-    color: #000;
+.login .input-field label {
+    color: #000 !important;
+}
+/* underline color */
+.login .input-field input[type=text],
+.login .input-field input[type=password] {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
 }
 /* label focus color */
-.input-field input[type=password]:focus + label {
-    color: #000;
+.login .input-field input[type=text]:focus + label,
+.login .input-field input[type=password]:focus + label {
+    color: #f2f2f2 !important;
 }
 /* label underline focus color */
-.input-field input[type=text]:focus {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+.login .input-field input[type=text]:focus,
+.login .input-field input[type=password]:focus {
+    border-bottom: 1px solid #fff !important;
+    box-shadow: 0 1px 0 0 #fff !important;
 }
 /* valid color */
 .input-field input[type=text].valid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
 }
 /* invalid color */
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-}
-/* icon prefix focus color */
-.input-field .prefix.active {
-    color: #000;
-}
-        
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}      
 
-.nuevo-usuario{
+/*#endregion */
+
+/*#region NuevoUsuario */
+
+.nuevo-usuario {
     padding: 30px 40px 5px 40px;
 }
-
-.agregar-avatar{
+.agregar-avatar {
     margin-top: -30px;
 }
-
-.divider-mio {
-    width: 100%;
-    height: 1px;
-    overflow: hidden;
-    background-color: #e0e0e0;
-}
-
-.nuevo-usuario span{
+.nuevo-usuario span {
     font-weight: bold;
 }
-
-.titulo-form{
+.titulo-form {
     width: 100%;
     margin-top: 40px;
     padding: 20px;
 }
+
+/*#endregion */

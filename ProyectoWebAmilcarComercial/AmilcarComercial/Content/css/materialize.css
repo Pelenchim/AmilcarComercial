@@ -7349,9 +7349,7 @@ input[type=range]:focus::-ms-fill-upper {
     margin-top: 56px;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
-    height: calc(100% - 56px);
-    height: -moz-calc(100%);
-    padding-bottom: 10px;
+    height: calc(100% - (56px + 40px));
     background-color: #fff;
     z-index: 996;
     overflow-y: auto;
@@ -7360,6 +7358,10 @@ input[type=range]:focus::-ms-fill-upper {
     backface-visibility: hidden;
     -webkit-transform: translateX(-105%);
     transform: translateX(-105%);
+    -webkit-transition: width 0.4s ease-in;
+    -moz-transition: width 0.4s ease-in;
+    -o-transition: width 0.4s ease-in;
+    transition: width 0.4s ease-in;
 }
 
 .side-nav.right-aligned {
@@ -7389,13 +7391,13 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .side-nav li > a {
-  color: rgba(0, 0, 0, 0.87);
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 32px;
+    color: rgba(0, 0, 0, 0.87);
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
 }
 
 .side-nav li.sub > a {
@@ -7484,9 +7486,13 @@ input[type=range]:focus::-ms-fill-upper {
   z-index: -1;
 }
 .side-nav .user-view .background img,
-.side-nav .userView .background img{
+.side-nav .userView .background img {
     width: 260px;
     height: 220px;
+    -webkit-transition: transform 0.4s ease-out;
+    -moz-transition: transform 0.4s ease-out;
+    -o-transition: transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
 }
 
 .side-nav .user-view .circle, .side-nav .user-view .name, .side-nav .user-view .email,
@@ -7545,6 +7551,7 @@ input[type=range]:focus::-ms-fill-upper {
 @media only screen and (max-width: 992px) {
   .side-nav.fixed {
       margin-top: 0;
+      margin-bottom: 0;
       height: 100%;
       z-index: 998;
     -webkit-transform: translateX(-105%);

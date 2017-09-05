@@ -18,7 +18,6 @@ namespace AmilcarComercial.Models
         public string TelephoneNumber { get; set; }
         public string Avatar { get; set; }
         public int Sucursal { get; set; }
-        public string Access { get; set; }
         public bool State { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

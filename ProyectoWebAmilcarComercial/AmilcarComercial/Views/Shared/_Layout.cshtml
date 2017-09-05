@@ -28,22 +28,43 @@
                 <li>
                     <div class="user-view">
                         <div class="background">
-                            <img src="~/Content/images/mountain_desktop_by_xana_seraphi-d8d27ev.png.jpg" class="responsive-img">
+                            <img src="~/Content/system-resources/side-nav-background.jpg" class="responsive-img">
                         </div>
                         <a href="#!user"><img class="circle" src="~/Content/images/avatar-male-default.png"></a>
-                        <a href="#!name"><span class="white-text name">John Doe</span></a>
-                        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                        <a href="#!name"><span class="grey-text text-darken-3 name">John Doe</span></a>
+                        <a href="#!email"><span class="grey-text text-darken-3 email">jdandturk@gmail.com</span></a>
                     </div>
                 </li>
-                <li><a class="waves-effect" href="@Url.Action("Index","Home")"><i class="material-icons">cloud</i>Estadisticas</a></li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inicio" href="@Url.Action("Index","Home")">
+                    <i class="icono inicio"></i><span>Inicio</span></a>
+                </li>
+                <li><div class="divider"></div></li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Estadisticas" href="@Url.Action("Index","Estadisticas")">
+                    <i class="icono estadisticas"></i><span>Estadisticas</span></a>
+                </li>
                 <li class="sub"><a class="subheader">Opciones</a></li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Ventas</a></li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Credito</a></li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Inventario</a></li>
-                <li class="no-padding">
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas" href="@Url.Action("Index","Ventas")">
+                    <i class="icono ventas"></i><span>Ventas</span></a>
+                </li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="#!">
+                    <i class="icono credito"></i><span>Credito</span></a>
+                </li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario" href="@Url.Action("Index","Inventario")">
+                    <i class="icono inventario"></i><span>Inventario</span></a>
+                </li>
+                <li class="item-hidden hide">
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos2" href="#!">
+                        <i class="icono catalogos"></i>
+                    </a>
+                </li>
+                <li class="submenus no-padding">
                     <ul class="collapsible collapsible-accordion">
                         <li>
-                            <a class="collapsible-header waves-effect"><i class="material-icons left">cloud</i>Catalogos<i class="material-icons right">arrow_drop_down</i></a>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos">
+                                <i class="icono catalogos left"></i>
+                                <span>Catalogos</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
                             <div class="collapsible-body">
                                 <ul>
                                     <li><a href="#!">First</a></li>
@@ -55,23 +76,29 @@
                         </li>
                     </ul>
                 </li>
-                <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Reportes</a></li>
-              <li><div class="divider"></div></li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Reportes" href="#!">
+                    <i class="material-icons">cloud</i><span>Reportes</span></a>
+                </li>
+                <li><div class="divider"></div></li>
                 <li class="sub"><a class="subheader">Configuracion</a></li>
-                <li><a class="waves-effect" href="@Url.Action("Index","UsersAdmin")"><i class="material-icons">cloud</i>Usuarios</a></li>
-                <li><a class="waves-effect" href="@Url.Action("TiposUsuarios","UsersAdmin")"><i class="material-icons">cloud</i>Tipos de Usuario</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                <li><a class="waves-effect" href="#!">ultimo</a></li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Usuarios" href="@Url.Action("Index","UsersAdmin")">
+                    <i class="icono usuarios"></i><span>Usuarios</span></a>
+                </li>
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Tipos de Usuarios" href="@Url.Action("TiposUsuarios","UsersAdmin")">
+                    <i class="material-icons">cloud</i><span>Tipos de Usuario</span></a>
+                </li>
             </ul>
+            <a class="show-hidde hidde-side-nav hide-on-med-and-down waves-effect z-depth-1 grey-text"><i class="material-icons">navigate_before</i></a>
         </aside>
         <section class="content">
             @RenderBody()
         </section>
     </main>
-    <footer class="z-depth-1">
-        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+    <footer>
+        <div>
+            <p class="left hide-on-small-and-down">Seminario de Graduacion - Ingenieria en Ciencias de la Computacion</p>
+            <p class="right">&copy; UNAN-Managua, FAREM-Carazo</p>
+        </div>
     </footer>
     
     @Scripts.Render("~/bundles/jquery")
@@ -79,10 +106,71 @@
     @Scripts.Render("~/bundles/libraries")
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
-        $('.button-collapse').sideNav({
-            menuWidth: 260, 
-            draggable: true
+        //mejorar esto
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 260,
+                draggable: true
+            });
+            $(window).resize(function () {
+                var ventana_ancho = $(window).width();
+
+                if (ventana_ancho <= 992 /*&& $("aside .show-hidde").hasClass('show-side-nav')*/) {
+                    mostrar();
+                }
+            })
+            $(".show-hidde").on("click", function () {
+                if ($(this).hasClass('hidde-side-nav')) {
+                    ocultar();
+                    $('aside a.show-hidde').removeClass('hidde-side-nav');
+                    $('aside a.show-hidde').addClass('show-side-nav');
+                }
+                else if ($(this).hasClass('show-side-nav')) {
+                    mostrar();
+                    $('aside a.show-hidde').removeClass('show-side-nav');
+                    $('aside a.show-hidde').addClass('hidde-side-nav');
+                }
+            });
         });
+        function ocultar() {
+            $('.user-view').hide("slow", "swing");
+            $('.material-icons.right').hide("slow", "swing");
+            $('.side-nav span').hide("slow", "swing");
+            $('.side-nav li.sub a.subheader').hide("slow", "swing");
+            $('.side-nav li.submenus').hide("slow", "swing");
+
+            $('.side-nav').css({ "width": "70px", "padding-top": "17px" }).fadeIn("4000");
+            $('.show-hidde').css("width", "70px").fadeIn("4000");
+            $('.side-nav li > a.item').css("padding", "0 21px").fadeIn("4000");
+            $('.side-nav li a i').css("width", "28px").fadeIn("4000");
+            $('body main.layout .content').css("padding-left", "70px").fadeIn("4000");
+            $('footer').css("padding-left", "70px").fadeIn("4000");
+            $('.hidde-side-nav i').css("transform", "rotate(180deg)");
+
+            $('.side-nav li > a').addClass("tooltipped");
+            $('.side-nav li.item-hidden').removeClass("hide");
+
+            $('.tooltipped').tooltip({ delay: 50 });
+        }
+        function mostrar() {
+            $('.user-view').show("slow", "swing");
+            $('.material-icons.right').show("slow", "swing");
+            $('.side-nav span').show("slow", "swing");
+            $('.side-nav li.sub a.subheader').show("slow", "swing");
+            $('.side-nav li.submenus').show("slow", "swing");
+
+            $('.side-nav').css({ "width": "260px", "padding-top": "0px" }).fadeIn("4000");
+            $('.show-hidde').css("width", "260px").fadeIn("4000");
+            $('.side-nav li > a.item').css("padding", "0 32px").fadeIn("4000");
+            $('.side-nav li a i').css("width", "24px").fadeIn("4000");
+            $('body main.layout .content').css("padding-left", "260px").fadeIn("4000");
+            $('footer').css("padding-left", "280px").fadeIn("4000");
+            $('.show-side-nav i').css("transform", "rotate(360deg)");
+
+            $('.side-nav li.item-hidden').addClass("hide");
+
+            $('.tooltipped').tooltip('remove');
+        }
     </script>
 </body>
 </html>

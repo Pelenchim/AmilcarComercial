@@ -1,13 +1,14 @@
 ﻿@model AmilcarComercial.Models.RegisterViewModel
 @{
     ViewBag.Title = "Configuracion";
-    ViewBag.SubTitle = "> Nuevo";
+    ViewBag.SubTitle = "> Usuarios";
+    ViewBag.Action = "> Nuevo";
+    ViewBag.BackgroundColor = "blue-grey darken-4";
+    ViewBag.NavExtendedColor = "blue-grey darken-3";
 }
 
-<nav class="nav-extended pink lighten-1">
-    <div class="nav-wrapper">
-        <a class="breadcrumb truncate">Configuracion > Usuarios @ViewBag.Subtitle</a>
-    </div>
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
 </nav>
 <div class="row">
     <form class="container-mio white z-depth-1">
@@ -17,7 +18,7 @@
         <div class="divider"></div>
         <div class="nuevo-usuario">
             @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { role = "form" }))
-            {
+        {
                 @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col l3">
@@ -114,9 +115,7 @@
                     </div>
                     <div class="col l6 right-align">
                         <input type="reset" class="btn pink" value="Cancelar" />
-                        <button class="btn blue waves-effect waves-light" type="submit" name="action">
-                            Crear
-                        </button>
+                        <input class="btn blue waves-effect waves-light" type="submit" name="action" value="Crear">
                     </div>
                 </div>
             }
@@ -126,9 +125,9 @@
 
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript">
         $(document).ready(function () {
             $('select').material_select();
 
@@ -141,5 +140,5 @@
                 closeOnSelect: false // Close upon selecting a date,
             });
         });
-    </script>
-}
+        </script>
+    }

@@ -18,20 +18,20 @@
                     <p class="flow-text">Iniciar Sesion</p>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="input-field row">
-                        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "validate" })
                         @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                     </div>
                     <div class="input-field row">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "validate" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <div class="checkbox">
                                 @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe, new { @class = "text-grey" })
                             </div>
                         </div>
                     </div>

@@ -3,81 +3,30 @@
 @{
     ViewBag.Title = "Configuracion";
     ViewBag.SubTitle = "> Usuarios";
+    ViewBag.BackgroundColor = "blue-grey darken-4";
+    ViewBag.NavExtendedColor = "blue-grey darken-3";
 }
 
-<div class="row">
-    <nav class="nav-extended pink lighten-1">
-        <div class="nav-wrapper">
-            <a class="breadcrumb">Configuracion @ViewBag.Subtitle</a>
-        </div>
-        <div class="nav-content">
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+    <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab"><a class="active" href="#Activos">Activos</a></li>
                 <li class="tab"><a href="#Desactivados">Desactivados</a></li>
             </ul>
         </div>
-    </nav>
+</nav>
+
+
+<div class="row">
     <div id="Activos" class="col l12">
-        @if (User.IsInRole("SuperAdministrador") & Model.Count() < 4)
-        {
-            <div class="center">
-                <p>No hay usuarios registrados en el sistema</p>
-                <br />
-                <a href="" class="waves-effect waves-light btn pink lighten-1">Agregar</a>
-            </div>
-        }
-        @if (@*User.IsInRole("SuperAdministrador") &*@ Model.Count() > 0)
-        {
-            foreach (var usuario in Model)
-            {
-                @*var rol = usuario.Roles.FirstOrDefault().ToString();
 
-                    if (rol == "SuperAdministrador")
-                    {
-                        <p>Usuarios tipo SuperAdministrador</p>
-                    }*@
-                if (usuario.State == true)
-                {
-                    <div class="col l4">
-                        <div class="card-panel white">
-                            <div class="row center">
-
-                            </div>
-                            <div class="row grey-text text-darken-3">
-                                <span>@usuario.FirstName</span>
-                                <span>@usuario.LastName</span>
-                                @*<span>@usuario.Sucursal</span>*@
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        }
     </div>
     <div id="Desactivados" class="col s12">Test 2</div>
 
     <div class="fixed-action-btn">
-        <a class="modal-trigger btn-floating btn-large pink" href="@Url.Action("Create","UsersAdmin")">
-            <i class="large material-icons">person_add</i></a>
+        <a class="modal-trigger btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Create","UsersAdmin")">
+            <i class="large material-icons">person_add</i>
+        </a>
     </div>
 </div>
-
-@*<div id="modal" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-    </div>
-</div>
-
-@section Scripts
-{
-    <script type="text/javascript">
-        $(document).ready(function(){
-        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-        });
-    </script>    
-}*@

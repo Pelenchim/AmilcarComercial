@@ -112,6 +112,8 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -193,15 +195,120 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Bodega_Detalle.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBAmilcar.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBAmilcar.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBAmilcar.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBAmilcar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SalidaDetalle.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Apartado.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Articulo.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_bodega.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_bodega_productos.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Categorias.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Clientes.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Color.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Compra.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Concepto.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Configuracion.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Credito.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Descripciones.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Detalle_Compra.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Detalle_Orden.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Devolucion.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Empleado.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_garantia.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Kardex.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Marca.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Orden.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Pago_Apartado.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Pago_Credito.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Presentacion.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Proveedor.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Salida.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Sucursal.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Talla.cs">
+      <DependentUpon>DBAmilcar.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewsModels\AdminViewModel.cs" />
@@ -218,12 +325,16 @@
     <Content Include="Content\fonts\material-design-icons\MaterialIcons-Regular.svg" />
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\pace-theme-flash.css" />
-    <Content Include="Content\images\123201jgz9zcp57z55og7e.png" />
     <Content Include="Content\images\avatar-female-default.png" />
     <Content Include="Content\images\avatar-male-default.png" />
-    <Content Include="Content\images\HD Material Design Wallpaper 0125-950x594.jpg" />
-    <Content Include="Content\images\mountain_desktop_by_xana_seraphi-d8d27ev.png.jpg" />
-    <Content Include="Content\images\white-background-with-3d-polygons_1017-4115.jpg" />
+    <Content Include="Content\system-resources\side-nav-background.jpg" />
+    <Content Include="Content\system-resources\inicio.png" />
+    <Content Include="Content\system-resources\catalogos.png" />
+    <Content Include="Content\system-resources\credito.png" />
+    <Content Include="Content\system-resources\estadisticas.png" />
+    <Content Include="Content\system-resources\inventario.png" />
+    <Content Include="Content\system-resources\usuarios.png" />
+    <Content Include="Content\system-resources\ventas.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\site.css" />
@@ -273,7 +384,24 @@
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.ttf" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff2" />
+    <EntityDeploy Include="Models\DBAmilcar.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBAmilcar.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DBAmilcar.edmx.diagram">
+      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Models\DBAmilcar.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+      <LastGenOutput>DBAmilcar.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBAmilcar.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+      <LastGenOutput>DBAmilcar.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -336,6 +464,10 @@
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\TiposUsuarios.cshtml" />
     <Content Include="Views\Shared\_LayoutAccountOptions.cshtml" />
+    <Content Include="Views\Ventas\Index.cshtml" />
+    <Content Include="Views\Estadisticas\Index.cshtml" />
+    <Content Include="Views\Inventario\Index.cshtml" />
+    <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,6 +480,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
