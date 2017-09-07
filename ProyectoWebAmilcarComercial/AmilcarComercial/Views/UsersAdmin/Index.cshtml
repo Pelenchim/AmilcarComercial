@@ -13,17 +13,129 @@
             <ul class="tabs tabs-transparent">
                 <li class="tab"><a class="active" href="#Activos">Activos</a></li>
                 <li class="tab"><a href="#Desactivados">Desactivados</a></li>
+                <li class="tab"><a href="#Tipos">Tipos de Usuario</a></li>
             </ul>
         </div>
 </nav>
 
 
 <div class="row">
-    <div id="Activos" class="col l12">
+    <div id="Activos" class="users col l12">
+        <div class="row">
+            <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                <form class="col l9">
+                    <div class="input-field">
+                        <input id="search" type="search" placeholder="Buscar Usuario" required>
+                    </div>
+                </form>
+                <div class="col l3">
+                    <a class="hide tooltipped" data-position="bottom" data-delay="50" data-tooltip="Vista de cuadricula"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Vista de lista"><i class="material-icons">view_list</i></a>
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
+                    <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottom" data-delay="50" data-tooltip="Opciones">
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                    </ul>
 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m5 l4">
+                <div class="card-panel white">
+                    <div class="row">
+                        <div class="col l3">
+                            <img src="~/Content/images/avatar-female-default.png" class="circle responsive-img" />
+                        </div>
+                        <div class="col l8 m11 s11">
+                            <span class="truncate">Usuario: Usuario1</span>
+                            <span>Administrador</span>
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="left" data-delay="50" data-tooltip="Opciones">
+                                <i class="material-icons right">more_vert</i>
+                            </a>                            
+                            <ul id='dropdown1' class='dropdown-content'>
+                                <li><a href="#!">one</a></li>
+                                <li><a href="#!">two</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="divider-mio"></div>
+                    <div class="row">
+                        <span class="truncate"><strong>Nombre:</strong> Francisco Fernandez Lopez</span>
+                        <span><strong>Email:</strong> Frank_hotmail.com</span><br />
+                        <span><strong>Sucursal:</strong> Carazo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
     </div>
     <div id="Desactivados" class="col s12">Test 2</div>
-
+    <div id="Tipos" class="col l12">
+        <div class="container2">
+            <div class="col l12 m12 s12">
+                <p class="flow-text truncate">Tipos de usuarios disponibles en el sistema.</p>
+            </div>
+            <div class="col l6 m12 s12">
+                <div class="card horizontal">
+                    <div class="card-image col l4 m3 hide-on-small-and-down blue-grey darken-4">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked col l8 m9 s12">
+                        <div class="card-content">
+                            <p class="card-title truncate">Vendedor</p>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                            <a class="waves-effect waves-teal btn-flat right">Agregar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col l6 m12 s12">
+                <div class="card horizontal">
+                    <div class="card-image col l4 m3 hide-on-small-and-down blue-grey darken-4">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked col l8 m9 s12">
+                        <div class="card-content">
+                            <p class="card-title truncate">Administrador</p>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                            <a class="waves-effect waves-teal btn-flat right">Agregar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col l6 m12 s12">
+                <div class="card horizontal">
+                    <div class="card-image col l4 m3 hide-on-small-and-down blue-grey darken-4">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked col l8 m9 s12">
+                        <div class="card-content">
+                            <p class="card-title truncate">SuperAdministrador</p>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                            <a class="waves-effect waves-teal btn-flat right">Agregar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="fixed-action-btn">
         <a class="modal-trigger btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Create","UsersAdmin")">
             <i class="large material-icons">person_add</i>

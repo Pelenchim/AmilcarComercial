@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Sucursal>
+
+@{
+    ViewBag.Title = "Configuracion";
+    ViewBag.SubTitle = "> Sucursales";
+    ViewBag.BackgroundColor = "blue-grey darken-4";
+    ViewBag.NavExtendedColor = "blue-grey darken-3";
+}
+
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
+
+@Ajax.ActionLink(
+                    "Listar", // <-- Text to display
+                    "Listar",// <-- Action/Method Name
+                      "Sucursales",//<!-- Controller Name
+                     new AjaxOptions
+                     {
+                         UpdateTargetId = "sucursales", // <-- DOM element ID to update
+                         InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                         HttpMethod = "GET" // <-- HTTP method
+                     },
+                      new { @class = "btn btn-primary" } //-- Class
+                     )   
+
+<div class="row">
+    <div class="container-mio sucursales" id="sucursales">
+    </div>
+</div>  
+
+<div class="fixed-action-btn">
+    <a class="modal-trigger btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Create","UsersAdmin")">
+        <i class="large material-icons">add</i>
+    </a>
+</div>

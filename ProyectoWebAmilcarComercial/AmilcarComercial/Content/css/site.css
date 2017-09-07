@@ -27,7 +27,16 @@
     overflow: hidden;
     background-color: #e0e0e0;
 }
-.border-radius {
+.border-radius-1 {
+    border-radius: 2px !important;
+}
+.border-radius-2 {
+    border-radius: 3px !important;
+}
+.border-radius-3 {
+    border-radius: 4px !important;
+}
+.border-radius-4 {
     border-radius: 5px !important;
 }
 
@@ -88,7 +97,7 @@ footer {
 }
 
 /*Content*/
-.layout .content {
+body main.layout .content {
     padding-left: 260px;
     background-color: #eceff1;
     padding-bottom: 30px;
@@ -149,8 +158,8 @@ aside .show-hidde i {
 
 /*MediaQuery del Layout*/
 @media only screen and (max-width : 992px) {
-    .layout .content {
-        padding-left: 0;
+    body main.layout .content {
+        padding-left: 0px;
     }
     footer {
         padding-left: 20px;
@@ -240,6 +249,83 @@ aside .show-hidde i {
     width: 100%;
     margin-top: 40px;
     padding: 20px;
+}
+
+/*#endregion */
+
+/*#region option-bar */
+.option-bar{
+    margin-top: 30px;
+}
+.option-bar .input-field
+{
+    margin-top: 2px !important;
+}
+.option-bar input{
+    margin-bottom: 2px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.00) !important;
+}
+.option-bar input[type=search]:focus {
+    border-bottom: 1px solid #a8a8a8 !important;
+    box-shadow: 0 0 0 0 #000 !important;
+}
+.option-bar a {
+    cursor: pointer;
+    color: rgba(79, 79, 79, 0.90);
+}
+.option-bar a:hover {
+    color: rgba(68, 68, 68, 1.00);
+}
+.option-bar i{
+    line-height: 2;
+}
+/*#endregion */
+
+/*#region Lista de Usuarios */
+
+.users .card-panel>.row{
+    margin-bottom: 0;
+}
+.users .card-panel > .row:last-child {
+    padding-top: 5px;
+}
+.users .card-panel > .row > .col:nth-child(2) {
+    padding: 0;
+    font-size: medium;
+}
+.users .card-panel > .row > .col:last-child {
+    padding: 2px 0;
+}
+.users .card-panel a i {
+    cursor: pointer;
+    color: rgba(79, 79, 79, 0.90);
+}
+
+.users .card-panel a i:hover {
+    color: rgba(68, 68, 68, 1.00);
+}
+.users .pagination li.active {
+    background-color: #37474f;
+}
+/*#endregion */
+
+/*#region Sucursales */
+
+.sucursales .card img{
+    width: 100%;
+    height: 200px;
+}
+.sucursales .card .opciones {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+.sucursales .card .opciones a {
+    margin-left: 5px;
+    color: #424242;
+}
+.sucursales .card .opciones a:hover{
+    color: #212121;
 }
 
 /*#endregion */

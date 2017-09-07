@@ -84,8 +84,10 @@
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Usuarios" href="@Url.Action("Index","UsersAdmin")">
                     <i class="icono usuarios"></i><span>Usuarios</span></a>
                 </li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Tipos de Usuarios" href="@Url.Action("TiposUsuarios","UsersAdmin")">
-                    <i class="material-icons">cloud</i><span>Tipos de Usuario</span></a>
+                <li>
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Sucursales" href="@Url.Action("Index","Sucursales")">
+                        <i class="icono usuarios"></i><span>Sucursales</span>
+                    </a>
                 </li>
             </ul>
             <a class="show-hidde hidde-side-nav hide-on-med-and-down waves-effect z-depth-1 grey-text"><i class="material-icons">navigate_before</i></a>
@@ -104,6 +106,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/materialize")
     @Scripts.Render("~/bundles/libraries")
+    @Scripts.Render("~/bundles/jqueryajax")
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
         //mejorar esto
@@ -116,7 +119,7 @@
                 var ventana_ancho = $(window).width();
 
                 if (ventana_ancho <= 992 /*&& $("aside .show-hidde").hasClass('show-side-nav')*/) {
-                    mostrar();
+                    //mostrar();
                 }
             })
             $(".show-hidde").on("click", function () {

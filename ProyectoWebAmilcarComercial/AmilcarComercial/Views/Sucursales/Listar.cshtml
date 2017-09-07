@@ -1,0 +1,30 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Sucursal>
+
+@foreach (var sucursal in Model)
+{
+    <div class="col l4">
+        <div class="card">
+            <div class="card-image teal">
+                <div class="opciones">
+                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a>
+                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="material-icons">mode_edit</i></a>
+                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Detalles"><i class="material-icons">info</i></a>
+                </div>
+                <img src="images/sample-1.jpg">
+                <span class="card-title">@sucursal.Nombre</span>
+            </div>
+            <div class="card-content">
+                <p>Gerente: Francisco Fernandez</p>            
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({ delay: 50 });
+        });
+    </script>
+}

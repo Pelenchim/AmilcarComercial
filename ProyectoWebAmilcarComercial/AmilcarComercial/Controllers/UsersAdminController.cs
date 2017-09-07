@@ -59,11 +59,6 @@ namespace AmilcarComercial.Controllers
             return View(await UserManager.Users.ToListAsync());
         }
 
-        public ActionResult TiposUsuarios()
-        {
-            return View();
-        }
-
         //
         // GET: /Users/Details/5
         public async Task<ActionResult> Details(string id)
@@ -83,8 +78,13 @@ namespace AmilcarComercial.Controllers
         // GET: /Users/Create
         public async Task<ActionResult> Create()
         {
+            using (DBAmilcarEntities _context = new DBAmilcarEntities())
+            {
+                ViewBag.Sucursales = new SelectList(await _context.Tbl_Sucursal.ToListAsync(), "id_sucursal","Nombre");
+            }
             //Get the list of Roles
             ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
+         
             return View();
         }
 
@@ -99,9 +99,9 @@ namespace AmilcarComercial.Controllers
             //Creacion de un objeto que permite crear el rol
             var rolManager = new RoleManager<IdentityRole>(rolStore);
             //Creacion del Rol
-            rolManager.Create(new IdentityRole("SuperAdministrador"));
-            rolManager.Create(new IdentityRole("Administrador"));
             rolManager.Create(new IdentityRole("Vendedor"));
+            rolManager.Create(new IdentityRole("Administrador"));
+            rolManager.Create(new IdentityRole("SuperAdministrador"));
 
             if (ModelState.IsValid)
             {

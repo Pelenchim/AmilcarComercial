@@ -11,7 +11,7 @@
     @Html.Partial("_breadcrumbPartial")
 </nav>
 <div class="row">
-    <form class="container-mio white z-depth-1">
+    <div class="container-mio white z-depth-1">
         <div class="titulo-form">
             <span>Agregar Nuevo Usuario</span>
         </div>
@@ -89,12 +89,13 @@
                         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
                     </div>
                     <div class="input-field col l4">
-                        @Html.DropDownList("Value", new SelectList(ViewBag.RoleId))
-                        @*@Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })*@
+                        @Html.DropDownList("name", new SelectList(ViewBag.RoleId, "value", "Text"))
+                        <label class="validate">Tipo de Usuario</label>
                     </div>
                     <div class="input-field col l4">
-                        @Html.DropDownList("Value", new SelectList(ViewBag.RoleId))
-                        @*@Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })*@
+                        @Html.DropDownList("name2", new SelectList(ViewBag.Sucursales, "value", "Text"))
+                        @Html.LabelFor(m => m.Sucursal, new { @class = "col-md-2 control-label" })
+                        @Html.ValidationMessageFor(model => model.Sucursal, "", new { @class = "text-danger" })
                     </div>
                     <div class="input-field col l4">
                         <i class="material-icons prefix">vpn_key</i>
@@ -120,25 +121,25 @@
                 </div>
             }
         </div>
-    </form>
+    </div>
 </div>
 
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/javascript">
-        $(document).ready(function () {
-            $('select').material_select();
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('select').material_select();
 
-            $('.datepicker').pickadate({
-                selectMonths: false, // Creates a dropdown to control month
-                selectYears: 20, // Creates a dropdown of 15 years to control year,
-                today: 'Hoy',
-                clear: 'Limpiar',
-                close: 'Ok',
-                closeOnSelect: false // Close upon selecting a date,
-            });
+        $('.datepicker').pickadate({
+            selectMonths: false, // Creates a dropdown to control month
+            selectYears: 20, // Creates a dropdown of 15 years to control year,
+            today: 'Hoy',
+            clear: 'Limpiar',
+            close: 'Ok',
+            closeOnSelect: false // Close upon selecting a date,
         });
-        </script>
-    }
+    });
+    </script>
+}

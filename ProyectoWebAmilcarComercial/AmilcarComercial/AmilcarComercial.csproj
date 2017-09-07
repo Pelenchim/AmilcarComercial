@@ -199,115 +199,131 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\SucursalesController.cs" />
+    <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Bodega_Detalle.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBAmilcar.Context.cs">
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBAmilcarModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcar.Context.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBAmilcar.cs">
+    <Compile Include="Models\DBAmilcarModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBAmilcar.Designer.cs">
+    <Compile Include="Models\DBAmilcarModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SalidaDetalle.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Apartado.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Articulo.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_bodega.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_bodega_productos.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Categorias.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Clientes.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Color.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Compra.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Concepto.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Configuracion.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Credito.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Descripciones.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Compra.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Orden.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Devolucion.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Empleado.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_garantia.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Kardex.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Marca.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Orden.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Pago_Apartado.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Pago_Credito.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Presentacion.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Proveedor.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Salida.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Sucursal.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Talla.cs">
-      <DependentUpon>DBAmilcar.tt</DependentUpon>
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -315,6 +331,10 @@
     <Compile Include="ViewsModels\UsuariosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\basic.css" />
+    <Content Include="Content\css\basic.min.css" />
+    <Content Include="Content\css\dropzone.css" />
+    <Content Include="Content\css\dropzone.min.css" />
     <Content Include="Content\css\fonts.css" />
     <Content Include="Content\css\jquery.mCustomScrollbar.css" />
     <Content Include="Content\css\materialize.css" />
@@ -384,32 +404,36 @@
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.ttf" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff2" />
-    <EntityDeploy Include="Models\DBAmilcar.edmx">
+    <EntityDeploy Include="Models\DBAmilcarModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBAmilcar.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBAmilcarModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBAmilcar.edmx.diagram">
-      <DependentUpon>DBAmilcar.edmx</DependentUpon>
+    <Content Include="Models\DBAmilcarModel.edmx.diagram">
+      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Models\DBAmilcar.Context.tt">
+    <Content Include="Models\DBAmilcarModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAmilcar.edmx</DependentUpon>
-      <LastGenOutput>DBAmilcar.Context.cs</LastGenOutput>
+      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
+      <LastGenOutput>DBAmilcarModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DBAmilcar.tt">
+    <Content Include="Models\DBAmilcarModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAmilcar.edmx</DependentUpon>
-      <LastGenOutput>DBAmilcar.cs</LastGenOutput>
+      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
+      <LastGenOutput>DBAmilcarModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\dropzone.js" />
+    <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -462,12 +486,17 @@
     <Content Include="Views\UsersAdmin\Details.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
-    <Content Include="Views\UsersAdmin\TiposUsuarios.cshtml" />
     <Content Include="Views\Shared\_LayoutAccountOptions.cshtml" />
     <Content Include="Views\Ventas\Index.cshtml" />
     <Content Include="Views\Estadisticas\Index.cshtml" />
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
+    <Content Include="Views\Sucursales\Create.cshtml" />
+    <Content Include="Views\Sucursales\Delete.cshtml" />
+    <Content Include="Views\Sucursales\Details.cshtml" />
+    <Content Include="Views\Sucursales\Edit.cshtml" />
+    <Content Include="Views\Sucursales\Index.cshtml" />
+    <Content Include="Views\Sucursales\Listar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

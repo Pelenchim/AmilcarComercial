@@ -27,6 +27,12 @@ namespace AmilcarComercial
                       "~/Scripts/pace.js",
                       "~/Scripts/jquery.mCustomScrollbar.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
+                      "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                      "~/Scripts/dropzone.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/normalize.css",
                       "~/Content/css/materialize.css",
@@ -38,6 +44,9 @@ namespace AmilcarComercial
             bundles.Add(new StyleBundle("~/Content/libraries").Include(
                       "~/Content/css/pace-theme-flash.css",
                       "~/Content/css/jquery.mCustomScrollbar.css"));
+
+            bundles.Add(new StyleBundle("~/Content/dropzone").Include(
+                      "~/Content/css/dropzone.css"));
         }
     }
 }

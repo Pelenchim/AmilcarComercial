@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBAmilcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="IdentityidentificationCard" Type="nvarchar(max)" />
+    <Property Name="BirthDay" Type="datetime" Nullable="false" />
+    <Property Name="TelephoneNumber" Type="nvarchar(max)" />
+    <Property Name="Avatar" Type="nvarchar(max)" />
+    <Property Name="Sucursal" Type="int" Nullable="false" />
+    <Property Name="State" Type="bit" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bodega_Detalle">
+    <Key>
+      <PropertyRef Name="id_Bodega_Detalle" />
+    </Key>
+    <Property Name="id_Bodega_Detalle" Type="int" Nullable="false" />
+    <Property Name="id_bodega_productos" Type="int" Nullable="false" />
+    <Property Name="id_talla" Type="int" Nullable="false" />
+    <Property Name="id_color" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SalidaDetalle">
+    <Key>
+      <PropertyRef Name="idSalidaDetalle" />
+    </Key>
+    <Property Name="idSalidaDetalle" Type="int" Nullable="false" />
+    <Property Name="Id_Salida" Type="int" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="id_Kardex" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Apartado">
+    <Key>
+      <PropertyRef Name="id_apartado" />
+    </Key>
+    <Property Name="id_apartado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha_plazo" Type="date" Nullable="false" />
+    <Property Name="importe" Type="float" Nullable="false" />
+    <Property Name="id_orden" Type="int" Nullable="false" />
+    <Property Name="id_cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Articulo">
+    <Key>
+      <PropertyRef Name="id_articulo" />
+    </Key>
+    <Property Name="id_articulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo_articulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="nombre_articulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion_articulo" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="imagen" Type="image" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+    <Property Name="credito_articulo" Type="int" Nullable="false" />
+    <Property Name="id_Marca" Type="int" Nullable="false" />
+    <Property Name="Garantia" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_bodega">
+    <Key>
+      <PropertyRef Name="id_bodega" />
+    </Key>
+    <Property Name="id_bodega" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_bodega_productos">
+    <Key>
+      <PropertyRef Name="id_bodega_productos1" />
+    </Key>
+    <Property Name="id_bodega_productos1" Type="int" Nullable="false" />
+    <Property Name="id_bodega" Type="int" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Categorias">
+    <Key>
+      <PropertyRef Name="id_categoria" />
+    </Key>
+    <Property Name="id_categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_CatPadre" Type="int" />
+  </EntityType>
+  <EntityType Name="Tbl_Clientes">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_cliente" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="apellidos_cliente" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="departamento" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="telefono" Type="int" Nullable="false" />
+    <Property Name="cedula" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tbl_Color">
+    <Key>
+      <PropertyRef Name="id_Color" />
+    </Key>
+    <Property Name="id_Color" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Compra">
+    <Key>
+      <PropertyRef Name="id_compra" />
+    </Key>
+    <Property Name="id_compra" Type="int" Nullable="false" />
+    <Property Name="id_proveedor" Type="int" Nullable="false" />
+    <Property Name="fecha_compra" Type="date" Nullable="false" />
+    <Property Name="fact_compra" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="tipo_comprobante_compra" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="iva_compra" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="id_bodega" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Concepto">
+    <Key>
+      <PropertyRef Name="id_concepto" />
+    </Key>
+    <Property Name="id_concepto" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Configuracion">
+    <Key>
+      <PropertyRef Name="id_Configuracion" />
+    </Key>
+    <Property Name="id_Configuracion" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Direccion" Type="nvarchar" MaxLength="50" />
+    <Property Name="telefono" Type="nvarchar" MaxLength="50" />
+    <Property Name="correo" Type="nvarchar" MaxLength="50" />
+    <Property Name="monto" Type="float" />
+    <Property Name="id_sucursal" Type="int" />
+  </EntityType>
+  <EntityType Name="Tbl_Credito">
+    <Key>
+      <PropertyRef Name="id_credito" />
+    </Key>
+    <Property Name="id_credito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_orden" Type="int" Nullable="false" />
+    <Property Name="meses_plazo" Type="int" Nullable="false" />
+    <Property Name="importe" Type="float" Nullable="false" />
+    <Property Name="amortizacion" Type="float" Nullable="false" />
+    <Property Name="fecha_consolidacion" Type="date" Nullable="false" />
+    <Property Name="cuotas" Type="int" Nullable="false" />
+    <Property Name="interesPorMora" Type="float" />
+    <Property Name="id_cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Descripciones">
+    <Key>
+      <PropertyRef Name="id_descripcion" />
+      <PropertyRef Name="id_categoria" />
+    </Key>
+    <Property Name="id_descripcion" Type="int" Nullable="false" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="valor" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Detalle_Compra">
+    <Key>
+      <PropertyRef Name="id_detalle_compra" />
+    </Key>
+    <Property Name="id_detalle_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_compra" Type="int" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="id_Kardex" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="descuento" Type="float" />
+  </EntityType>
+  <EntityType Name="Tbl_Detalle_Orden">
+    <Key>
+      <PropertyRef Name="id_detalle_orden" />
+    </Key>
+    <Property Name="id_detalle_orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="id_orden" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="precio_venta" Type="float" Nullable="false" />
+    <Property Name="descuento" Type="float" />
+    <Property Name="id_kardex" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Devolucion">
+    <Key>
+      <PropertyRef Name="id_devolucion" />
+    </Key>
+    <Property Name="id_devolucion" Type="float" Nullable="false" />
+    <Property Name="fecha_devolucion" Type="date" Nullable="false" />
+    <Property Name="usuario" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="id_garantia" Type="int" Nullable="false" />
+    <Property Name="id_orden" Type="int" Nullable="false" />
+    <Property Name="id_kardex" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Empleado">
+    <Key>
+      <PropertyRef Name="id_empleado" />
+    </Key>
+    <Property Name="id_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ced_empleado" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="acceso" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_garantia">
+    <Key>
+      <PropertyRef Name="id_garantia" />
+    </Key>
+    <Property Name="id_garantia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cod_garantia" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="plazo_garantia" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_detalle_orden" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Kardex">
+    <Key>
+      <PropertyRef Name="id_Kardex" />
+    </Key>
+    <Property Name="id_Kardex" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="fechaKardex" Type="date" Nullable="false" />
+    <Property Name="num_factura" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Entrada" Type="int" Nullable="false" />
+    <Property Name="salida" Type="int" Nullable="false" />
+    <Property Name="saldo" Type="int" Nullable="false" />
+    <Property Name="precio" Type="float" Nullable="false" />
+    <Property Name="costoPromedio" Type="float" Nullable="false" />
+    <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Marca">
+    <Key>
+      <PropertyRef Name="id_Marca" />
+    </Key>
+    <Property Name="id_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Orden">
+    <Key>
+      <PropertyRef Name="id_orden" />
+    </Key>
+    <Property Name="id_orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_sucursal" Type="int" />
+    <Property Name="usuario" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="fecha_orden" Type="date" Nullable="false" />
+    <Property Name="iva_orden" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="estado_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="tipo_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="fact_Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="id_bodega" Type="int" Nullable="false" />
+    <Property Name="NombreCliente" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tbl_Pago_Apartado">
+    <Key>
+      <PropertyRef Name="id_pago_apartado" />
+    </Key>
+    <Property Name="id_pago_apartado" Type="int" Nullable="false" />
+    <Property Name="id_apartado" Type="int" Nullable="false" />
+    <Property Name="fecha_pago" Type="date" />
+    <Property Name="Cantidad" Type="float" Nullable="false" />
+    <Property Name="saldo" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Pago_Credito">
+    <Key>
+      <PropertyRef Name="id_pago_credito" />
+    </Key>
+    <Property Name="id_pago_credito" Type="int" Nullable="false" />
+    <Property Name="id_credito" Type="int" Nullable="false" />
+    <Property Name="fecha_pago" Type="date" Nullable="false" />
+    <Property Name="cantidad" Type="float" Nullable="false" />
+    <Property Name="mora" Type="float" />
+    <Property Name="saldo" Type="float" Nullable="false" />
+    <Property Name="fecha_estimada_pago" Type="date" />
+  </EntityType>
+  <EntityType Name="Tbl_Presentacion">
+    <Key>
+      <PropertyRef Name="id_presentacion" />
+    </Key>
+    <Property Name="id_presentacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion_presentacion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Proveedor">
+    <Key>
+      <PropertyRef Name="id_proveedor" />
+    </Key>
+    <Property Name="id_proveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="razon_social" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="categoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Salida">
+    <Key>
+      <PropertyRef Name="IDSalida" />
+    </Key>
+    <Property Name="IDSalida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha" Type="date" Nullable="false" />
+    <Property Name="IdConcepto" Type="int" Nullable="false" />
+    <Property Name="IdBodega" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Sucursal">
+    <Key>
+      <PropertyRef Name="id_sucursal" />
+    </Key>
+    <Property Name="id_sucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="imagen" Type="nvarchar" MaxLength="50" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gerente" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Talla">
+    <Key>
+      <PropertyRef Name="id_Talla" />
+    </Key>
+    <Property Name="id_Talla" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Bodega_Detalle_Tbl_bodega_productos">
+    <End Role="Tbl_bodega_productos" Type="Self.Tbl_bodega_productos" Multiplicity="1" />
+    <End Role="Bodega_Detalle" Type="Self.Bodega_Detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_bodega_productos">
+        <PropertyRef Name="id_bodega_productos1" />
+      </Principal>
+      <Dependent Role="Bodega_Detalle">
+        <PropertyRef Name="id_bodega_productos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bodega_Detalle_Tbl_Color">
+    <End Role="Tbl_Color" Type="Self.Tbl_Color" Multiplicity="1" />
+    <End Role="Bodega_Detalle" Type="Self.Bodega_Detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Color">
+        <PropertyRef Name="id_Color" />
+      </Principal>
+      <Dependent Role="Bodega_Detalle">
+        <PropertyRef Name="id_color" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bodega_Detalle_Tbl_Talla">
+    <End Role="Tbl_Talla" Type="Self.Tbl_Talla" Multiplicity="1" />
+    <End Role="Bodega_Detalle" Type="Self.Bodega_Detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Talla">
+        <PropertyRef Name="id_Talla" />
+      </Principal>
+      <Dependent Role="Bodega_Detalle">
+        <PropertyRef Name="id_talla" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalidaDetalle_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="SalidaDetalle" Type="Self.SalidaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="SalidaDetalle">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalidaDetalle_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="1" />
+    <End Role="SalidaDetalle" Type="Self.SalidaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="SalidaDetalle">
+        <PropertyRef Name="id_Kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalidaDetalle_Tbl_Salida">
+    <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="1" />
+    <End Role="SalidaDetalle" Type="Self.SalidaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Salida">
+        <PropertyRef Name="IDSalida" />
+      </Principal>
+      <Dependent Role="SalidaDetalle">
+        <PropertyRef Name="Id_Salida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Apartado_Tbl_Clientes">
+    <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
+    <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Tbl_Apartado">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Apartado_Tbl_Orden">
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
+    <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Tbl_Apartado">
+        <PropertyRef Name="id_orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Articulo_Tbl_Categorias">
+    <End Role="Tbl_Categorias" Type="Self.Tbl_Categorias" Multiplicity="1" />
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Categorias">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Tbl_Articulo">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Articulo_Tbl_Marca">
+    <End Role="Tbl_Marca" Type="Self.Tbl_Marca" Multiplicity="1" />
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Marca">
+        <PropertyRef Name="id_Marca" />
+      </Principal>
+      <Dependent Role="Tbl_Articulo">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_bodega_productos_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_bodega_productos" Type="Self.Tbl_bodega_productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_bodega_productos">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_bodega_productos_Tbl_bodega">
+    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
+    <End Role="Tbl_bodega_productos" Type="Self.Tbl_bodega_productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_bodega">
+        <PropertyRef Name="id_bodega" />
+      </Principal>
+      <Dependent Role="Tbl_bodega_productos">
+        <PropertyRef Name="id_bodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Categorias_Tbl_Categorias1">
+    <End Role="Tbl_Categorias" Type="Self.Tbl_Categorias" Multiplicity="0..1" />
+    <End Role="Tbl_Categorias1" Type="Self.Tbl_Categorias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Categorias">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Tbl_Categorias1">
+        <PropertyRef Name="id_CatPadre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Compra_Tbl_bodega">
+    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_bodega">
+        <PropertyRef Name="id_bodega" />
+      </Principal>
+      <Dependent Role="Tbl_Compra">
+        <PropertyRef Name="id_bodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Compra_Tbl_Proveedor">
+    <End Role="Tbl_Proveedor" Type="Self.Tbl_Proveedor" Multiplicity="1" />
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Proveedor">
+        <PropertyRef Name="id_proveedor" />
+      </Principal>
+      <Dependent Role="Tbl_Compra">
+        <PropertyRef Name="id_proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Credito_Tbl_Clientes">
+    <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
+    <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Tbl_Credito">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Credito_Tbl_Orden">
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
+    <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Tbl_Credito">
+        <PropertyRef Name="id_orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Descripciones_Tbl_Categorias">
+    <End Role="Tbl_Categorias" Type="Self.Tbl_Categorias" Multiplicity="1" />
+    <End Role="Tbl_Descripciones" Type="Self.Tbl_Descripciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Categorias">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Tbl_Descripciones">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Compra_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Compra" Type="Self.Tbl_Detalle_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Compra">
+        <PropertyRef Name="id_Kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Orden_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Orden" Type="Self.Tbl_Detalle_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Orden">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Orden_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Orden" Type="Self.Tbl_Detalle_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Orden">
+        <PropertyRef Name="id_kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Orden_Tbl_Orden">
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Orden" Type="Self.Tbl_Detalle_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Orden">
+        <PropertyRef Name="id_orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Devolucion_Tbl_garantia">
+    <End Role="Tbl_garantia" Type="Self.Tbl_garantia" Multiplicity="1" />
+    <End Role="Tbl_Devolucion" Type="Self.Tbl_Devolucion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_garantia">
+        <PropertyRef Name="id_garantia" />
+      </Principal>
+      <Dependent Role="Tbl_Devolucion">
+        <PropertyRef Name="id_garantia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Kardex_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_Kardex">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Orden_Tbl_bodega">
+    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_bodega">
+        <PropertyRef Name="id_bodega" />
+      </Principal>
+      <Dependent Role="Tbl_Orden">
+        <PropertyRef Name="id_bodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Orden_Tbl_Sucursal">
+    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="0..1" />
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Sucursal">
+        <PropertyRef Name="id_sucursal" />
+      </Principal>
+      <Dependent Role="Tbl_Orden">
+        <PropertyRef Name="id_sucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Pago_Apartado_Tbl_Apartado">
+    <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="1" />
+    <End Role="Tbl_Pago_Apartado" Type="Self.Tbl_Pago_Apartado" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Apartado">
+        <PropertyRef Name="id_apartado" />
+      </Principal>
+      <Dependent Role="Tbl_Pago_Apartado">
+        <PropertyRef Name="id_pago_apartado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Pago_Credito_Tbl_Credito">
+    <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="1" />
+    <End Role="Tbl_Pago_Credito" Type="Self.Tbl_Pago_Credito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Credito">
+        <PropertyRef Name="id_credito" />
+      </Principal>
+      <Dependent Role="Tbl_Pago_Credito">
+        <PropertyRef Name="id_credito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Salida_Tbl_bodega">
+    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
+    <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_bodega">
+        <PropertyRef Name="id_bodega" />
+      </Principal>
+      <Dependent Role="Tbl_Salida">
+        <PropertyRef Name="IdBodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Salida_Tbl_Concepto">
+    <End Role="Tbl_Concepto" Type="Self.Tbl_Concepto" Multiplicity="1" />
+    <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Concepto">
+        <PropertyRef Name="id_concepto" />
+      </Principal>
+      <Dependent Role="Tbl_Salida">
+        <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBAmilcarModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Bodega_Detalle" EntityType="Self.Bodega_Detalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalidaDetalle" EntityType="Self.SalidaDetalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_bodega_productos" EntityType="Self.Tbl_bodega_productos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Categorias" EntityType="Self.Tbl_Categorias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Clientes" EntityType="Self.Tbl_Clientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Devolucion" EntityType="Self.Tbl_Devolucion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Empleado" EntityType="Self.Tbl_Empleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Marca" EntityType="Self.Tbl_Marca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Orden" EntityType="Self.Tbl_Orden" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Pago_Apartado" EntityType="Self.Tbl_Pago_Apartado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Pago_Credito" EntityType="Self.Tbl_Pago_Credito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Presentacion" EntityType="Self.Tbl_Presentacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Proveedor" EntityType="Self.Tbl_Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Salida" EntityType="Self.Tbl_Salida" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Sucursal" EntityType="Self.Tbl_Sucursal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Talla" EntityType="Self.Tbl_Talla" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bodega_Detalle_Tbl_bodega_productos" Association="Self.FK_Bodega_Detalle_Tbl_bodega_productos">
+      <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
+      <End Role="Bodega_Detalle" EntitySet="Bodega_Detalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bodega_Detalle_Tbl_Color" Association="Self.FK_Bodega_Detalle_Tbl_Color">
+      <End Role="Tbl_Color" EntitySet="Tbl_Color" />
+      <End Role="Bodega_Detalle" EntitySet="Bodega_Detalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bodega_Detalle_Tbl_Talla" Association="Self.FK_Bodega_Detalle_Tbl_Talla">
+      <End Role="Tbl_Talla" EntitySet="Tbl_Talla" />
+      <End Role="Bodega_Detalle" EntitySet="Bodega_Detalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalidaDetalle_Tbl_Articulo" Association="Self.FK_SalidaDetalle_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalidaDetalle_Tbl_Kardex" Association="Self.FK_SalidaDetalle_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalidaDetalle_Tbl_Salida" Association="Self.FK_SalidaDetalle_Tbl_Salida">
+      <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
+      <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Apartado_Tbl_Clientes" Association="Self.FK_Tbl_Apartado_Tbl_Clientes">
+      <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
+      <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Apartado_Tbl_Orden" Association="Self.FK_Tbl_Apartado_Tbl_Orden">
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+      <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Articulo_Tbl_Categorias" Association="Self.FK_Tbl_Articulo_Tbl_Categorias">
+      <End Role="Tbl_Categorias" EntitySet="Tbl_Categorias" />
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Articulo_Tbl_Marca" Association="Self.FK_Tbl_Articulo_Tbl_Marca">
+      <End Role="Tbl_Marca" EntitySet="Tbl_Marca" />
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_bodega_productos_Tbl_Articulo" Association="Self.FK_Tbl_bodega_productos_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_bodega_productos_Tbl_bodega" Association="Self.FK_Tbl_bodega_productos_Tbl_bodega">
+      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
+      <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Categorias_Tbl_Categorias1" Association="Self.FK_Tbl_Categorias_Tbl_Categorias1">
+      <End Role="Tbl_Categorias" EntitySet="Tbl_Categorias" />
+      <End Role="Tbl_Categorias1" EntitySet="Tbl_Categorias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Compra_Tbl_bodega" Association="Self.FK_Tbl_Compra_Tbl_bodega">
+      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Compra_Tbl_Proveedor" Association="Self.FK_Tbl_Compra_Tbl_Proveedor">
+      <End Role="Tbl_Proveedor" EntitySet="Tbl_Proveedor" />
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Credito_Tbl_Clientes" Association="Self.FK_Tbl_Credito_Tbl_Clientes">
+      <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
+      <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Credito_Tbl_Orden" Association="Self.FK_Tbl_Credito_Tbl_Orden">
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+      <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Descripciones_Tbl_Categorias" Association="Self.FK_Tbl_Descripciones_Tbl_Categorias">
+      <End Role="Tbl_Categorias" EntitySet="Tbl_Categorias" />
+      <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="Tbl_Detalle_Compra" EntitySet="Tbl_Detalle_Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Orden_Tbl_Articulo" Association="Self.FK_Tbl_Detalle_Orden_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Orden_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Orden_Tbl_Orden" Association="Self.FK_Tbl_Detalle_Orden_Tbl_Orden">
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+      <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Devolucion_Tbl_garantia" Association="Self.FK_Tbl_Devolucion_Tbl_garantia">
+      <End Role="Tbl_garantia" EntitySet="Tbl_garantia" />
+      <End Role="Tbl_Devolucion" EntitySet="Tbl_Devolucion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Kardex_Tbl_Articulo" Association="Self.FK_Tbl_Kardex_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Orden_Tbl_bodega" Association="Self.FK_Tbl_Orden_Tbl_bodega">
+      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Orden_Tbl_Sucursal" Association="Self.FK_Tbl_Orden_Tbl_Sucursal">
+      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Pago_Apartado_Tbl_Apartado" Association="Self.FK_Tbl_Pago_Apartado_Tbl_Apartado">
+      <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
+      <End Role="Tbl_Pago_Apartado" EntitySet="Tbl_Pago_Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Pago_Credito_Tbl_Credito" Association="Self.FK_Tbl_Pago_Credito_Tbl_Credito">
+      <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+      <End Role="Tbl_Pago_Credito" EntitySet="Tbl_Pago_Credito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Salida_Tbl_bodega" Association="Self.FK_Tbl_Salida_Tbl_bodega">
+      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
+      <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Salida_Tbl_Concepto" Association="Self.FK_Tbl_Salida_Tbl_Concepto">
+      <End Role="Tbl_Concepto" EntitySet="Tbl_Concepto" />
+      <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

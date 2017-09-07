@@ -25,6 +25,11 @@ namespace AmilcarComercial.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Bodega_Detalle> Bodega_Detalle { get; set; }
         public virtual DbSet<SalidaDetalle> SalidaDetalle { get; set; }
         public virtual DbSet<Tbl_Apartado> Tbl_Apartado { get; set; }

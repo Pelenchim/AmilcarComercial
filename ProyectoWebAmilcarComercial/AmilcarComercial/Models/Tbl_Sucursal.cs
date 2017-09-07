@@ -24,6 +24,11 @@ namespace AmilcarComercial.Models
         public int id_sucursal { get; set; }
         public string Nombre { get; set; }
         public string imagen { get; set; }
+        public bool Estado { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public string Gerente { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Configuracion> Tbl_Configuracion { get; set; }

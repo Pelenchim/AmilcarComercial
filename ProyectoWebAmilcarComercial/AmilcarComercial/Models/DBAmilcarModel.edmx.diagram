@@ -4,7 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3597fa2cd0724379874d03224de8ca0a" Name="DiagramaDBAmilcar">
+      <Diagram DiagramId="76b2ecdb8f834b49a23f0c68e26fafcc" Name="Diagram1">
+        <EntityTypeShape EntityType="DBAmilcarModel.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.AspNetRoles" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.AspNetUserClaims" Width="1.5" PointX="14.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.AspNetUserLogins" Width="1.5" PointX="14.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.AspNetUsers" Width="1.5" PointX="12" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Bodega_Detalle" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.SalidaDetalle" Width="1.5" PointX="7.5" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Apartado" Width="1.5" PointX="10.5" PointY="23" IsExpanded="true" />
@@ -21,19 +26,21 @@
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Descripciones" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Detalle_Compra" Width="1.5" PointX="7.5" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Detalle_Orden" Width="1.5" PointX="10.5" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Devolucion" Width="1.5" PointX="10" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Empleado" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_garantia" Width="1.5" PointX="7.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Devolucion" Width="1.5" PointX="12" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Empleado" Width="1.5" PointX="14.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_garantia" Width="1.5" PointX="9.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Kardex" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Marca" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Orden" Width="1.5" PointX="8.25" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Pago_Apartado" Width="1.5" PointX="12.75" PointY="27.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Pago_Credito" Width="1.5" PointX="15.75" PointY="23" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Presentacion" Width="1.5" PointX="9.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Presentacion" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Proveedor" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Salida" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Sucursal" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBAmilcarModel.Tbl_Talla" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="DBAmilcarModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DBAmilcarModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Bodega_Detalle_Tbl_bodega_productos" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Bodega_Detalle_Tbl_Color" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Bodega_Detalle_Tbl_Talla" ManuallyRouted="false" />
@@ -65,6 +72,7 @@
         <AssociationConnector Association="DBAmilcarModel.FK_Tbl_Detalle_Orden_Tbl_Orden" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Tbl_Devolucion_Tbl_garantia" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Tbl_Orden_Tbl_Sucursal" ManuallyRouted="false" />
+        <AssociationConnector Association="DBAmilcarModel.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
