@@ -17,7 +17,7 @@ namespace AmilcarComercial.Controllers
         // GET: Sucursales
         public ActionResult Index()
         {
-            return View();
+            return View(db.Tbl_Sucursal.ToList());
         }
 
         public PartialViewResult Listar()
@@ -37,13 +37,13 @@ namespace AmilcarComercial.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tbl_Sucursal);
+            return PartialView(tbl_Sucursal);
         }
 
         // GET: Sucursales/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Sucursales/Create
@@ -51,7 +51,7 @@ namespace AmilcarComercial.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_sucursal,Nombre,imagen,Estado")] Tbl_Sucursal tbl_Sucursal)
+        public ActionResult Create([Bind(Include = "id_sucursal,Nombre,imagen,Estado,Direccion,Telefono,Correo,Gerente")] Tbl_Sucursal tbl_Sucursal)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace AmilcarComercial.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(tbl_Sucursal);
+            return PartialView("Listar",tbl_Sucursal);
         }
 
         // GET: Sucursales/Edit/5
@@ -75,7 +75,7 @@ namespace AmilcarComercial.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tbl_Sucursal);
+            return PartialView(tbl_Sucursal);
         }
 
         // POST: Sucursales/Edit/5
@@ -83,7 +83,7 @@ namespace AmilcarComercial.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_sucursal,Nombre,imagen,Estado")] Tbl_Sucursal tbl_Sucursal)
+        public ActionResult Edit([Bind(Include = "id_sucursal,Nombre,imagen,Estado, Direccion,Telefono,Correo,Gerente")] Tbl_Sucursal tbl_Sucursal)
         {
             if (ModelState.IsValid)
             {
@@ -91,33 +91,18 @@ namespace AmilcarComercial.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tbl_Sucursal);
-        }
-
-        // GET: Sucursales/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tbl_Sucursal tbl_Sucursal = db.Tbl_Sucursal.Find(id);
-            if (tbl_Sucursal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_Sucursal);
+            return PartialView("Listar",tbl_Sucursal);
         }
 
         // POST: Sucursales/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Tbl_Sucursal tbl_Sucursal = db.Tbl_Sucursal.Find(id);
             db.Tbl_Sucursal.Remove(tbl_Sucursal);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return PartialView("Listar", tbl_Sucursal);
         }
 
         protected override void Dispose(bool disposing)

@@ -347,6 +347,7 @@
     <Content Include="Content\css\pace-theme-flash.css" />
     <Content Include="Content\images\avatar-female-default.png" />
     <Content Include="Content\images\avatar-male-default.png" />
+    <Content Include="Content\images\sucursales\1.jpg" />
     <Content Include="Content\system-resources\side-nav-background.jpg" />
     <Content Include="Content\system-resources\inicio.png" />
     <Content Include="Content\system-resources\catalogos.png" />
@@ -491,12 +492,11 @@
     <Content Include="Views\Estadisticas\Index.cshtml" />
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
-    <Content Include="Views\Sucursales\Create.cshtml" />
-    <Content Include="Views\Sucursales\Delete.cshtml" />
-    <Content Include="Views\Sucursales\Details.cshtml" />
-    <Content Include="Views\Sucursales\Edit.cshtml" />
     <Content Include="Views\Sucursales\Index.cshtml" />
     <Content Include="Views\Sucursales\Listar.cshtml" />
+    <Content Include="Views\Sucursales\Create.cshtml" />
+    <Content Include="Views\Sucursales\Details.cshtml" />
+    <Content Include="Views\Sucursales\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

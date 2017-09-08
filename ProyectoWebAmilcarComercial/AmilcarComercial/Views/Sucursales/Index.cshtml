@@ -11,26 +11,76 @@
     @Html.Partial("_breadcrumbPartial")
 </nav>
 
-@Ajax.ActionLink(
-                    "Listar", // <-- Text to display
-                    "Listar",// <-- Action/Method Name
-                      "Sucursales",//<!-- Controller Name
-                     new AjaxOptions
+@Ajax.ActionLink( "Listar", "Listar", "Sucursales", new AjaxOptions
                      {
                          UpdateTargetId = "sucursales", // <-- DOM element ID to update
                          InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
                          HttpMethod = "GET" // <-- HTTP method
-                     },
-                      new { @class = "btn btn-primary" } //-- Class
-                     )   
+                     }, new { @class = "btn btn-primary" } )   
 
 <div class="row">
     <div class="container-mio sucursales" id="sucursales">
+        @foreach (var sucursal in Model)
+        {
+            <div class="col l4">
+                <div class="card">
+                    <div class="card-image teal">
+                        <div class="opciones">
+                            @using (Ajax.BeginForm("Delete", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                            {
+                                UpdateTargetId = "sucursales",
+                                HttpMethod = "post",
+                                Confirm="Desea Eliminar este elemento?"
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            }
+
+                            @Ajax.ActionLink("mode_edit", "Edit", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+               {
+                   UpdateTargetId = "editar",
+                   HttpMethod = "GET"
+               }, new { @class = "material-icons", @onclick = "$('#editar').modal('open');" })
+
+                            @Ajax.ActionLink("info", "Details", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+               {
+                   UpdateTargetId = "detalle",
+                   HttpMethod = "GET"
+               }, new { @class = "material-icons", @onclick = "$('#detalle').modal('open');" })
+                        </div>
+                        <img src="~/Content/images/sucursales/@sucursal.imagen">
+                        <span class="card-title">@sucursal.Nombre</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Gerente: Francisco Fernandez</p>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>  
-
 <div class="fixed-action-btn">
-    <a class="modal-trigger btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Create","UsersAdmin")">
-        <i class="large material-icons">add</i>
-    </a>
+    @Ajax.ActionLink("add", "Create", "Sucursales", new AjaxOptions
+    {
+        UpdateTargetId = "nuevo", // <-- DOM element ID to update
+        InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+        HttpMethod = "GET" // <-- HTTP method,
+    } ,new { @class = "modal-trigger btn-floating btn-large blue-grey darken-4 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
 </div>
+<div id="detalle" class="modal"></div>
+<div id="nuevo" class="modal"></div>
+<div id="editar" class="modal"></div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+            $('.tooltipped').tooltip({ delay: 50 });
+        });
+    </script>    
+}

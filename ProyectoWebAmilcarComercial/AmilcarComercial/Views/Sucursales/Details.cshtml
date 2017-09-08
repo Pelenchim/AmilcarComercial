@@ -1,42 +1,45 @@
 ﻿@model AmilcarComercial.Models.Tbl_Sucursal
 
-@{
-    ViewBag.Title = "Details";
-}
 
-<h2>Details</h2>
+<div class="sucursal-detalle">
+    <div class="row blue-grey darken-4">
+        <h4 class="white-text left-align"><i class="material-icons">info</i>Sucursal: @Model.Nombre</h4>
+    </div>
+    <div class="row">
+        <div class="contenedor-img col l6">
+            <figure>
+                <img src="~/Content/images/sucursales/@Model.imagen" class="responsive-img"/>
+                <figcaption>Imagen del Local</figcaption>
+            </figure>
+        </div>
+        <div class="col l6">
+            <span>Gerente:</span>
+            <p>Francisco Fernandez</p>
+            <p><span>Telefono:</span> @Model.Telefono</p>
+            <p><span>Correo:</span> @Model.Correo</p>
+            <span>Direccion:</span>
+            <p>@Model.Direccion</p>
+            <div class="acciones col l12 right-align">
+                @using (Ajax.BeginForm("Delete", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
+                {
+                    UpdateTargetId = "sucursales",
+                    HttpMethod = "post"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Ajax.ActionLink("Editar", "Edit", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
+                    {
+                        UpdateTargetId = "editar",
+                        HttpMethod = "GET"
+                    }, new { @class = "btn blue", @onclick = "$('#editar').modal('open');" })
+                        <button type="submit" class="btn red">
+                            Eliminar
+                        </button>
+                    }
 
-<div>
-    <h4>Tbl_Sucursal</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.imagen)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.imagen)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-
-    </dl>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id_sucursal }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

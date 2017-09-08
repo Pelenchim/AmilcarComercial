@@ -39,7 +39,9 @@
 .border-radius-4 {
     border-radius: 5px !important;
 }
-
+.fixed-action-btn a{
+    line-height: 3.6rem;
+}
 /* label color */
 .input-field label {
     color: #000 !important;
@@ -314,18 +316,105 @@ aside .show-hidde i {
 .sucursales .card img{
     width: 100%;
     height: 200px;
+    position: initial;
 }
 .sucursales .card .opciones {
     position: absolute;
     top: 10px;
     right: 15px;
+    display: inline;
 }
 .sucursales .card .opciones a {
     margin-left: 5px;
     color: #424242;
+    display: block;
 }
-.sucursales .card .opciones a:hover{
+.sucursales .card .opciones button {
+    color: #424242;
+    border: none;
+    background-color: transparent;
+    padding:0;
+    display: block;
+}
+.sucursales .card .opciones a:hover,
+.sucursales .card .opciones button:hover {
     color: #212121;
+}
+.sucursal-detalle .row:last-child{
+    margin-bottom:0;
+}
+.sucursal-detalle h4,
+.sucursal-nuevo h4,
+.sucursal-editar h4{
+    padding: 20px 20px 10px 20px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 105%;
+}
+.sucursal-detalle h4 i,
+.sucursal-nuevo h4 i,
+.sucursal-editar h4 i{
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+}
+.sucursal-detalle .contenedor-img {
+    padding-bottom: 5px;
+    padding-left: 20px;
+    min-height: 225px;
+}
+.sucursal-detalle .contenedor-img figure {
+    margin: 0;
+    min-height: 225px;
+}
+.sucursal-detalle .contenedor-img figure img {
+    min-height: 225px;
+    max-height: 250px;
+    min-width: 100%;
+    background-color: #263238;
+}
+.sucursal-detalle .contenedor-img figure figcaption{
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.40);
+    position: relative;
+    top: -1.9rem;
+}
+.sucursal-detalle span {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #212121;
+}
+.sucursal-detalle p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+.sucursal-detalle p:nth-child(2),
+.sucursal-detalle p:nth-child(6){
+    padding-left: 25px;
+}
+.sucursal-detalle .acciones{
+    margin-top: 1.8rem;
+}
+.sucursal-nuevo .imagen{
+    margin-left: 10px;
+    height: 160px;
+    border: 2px dashed #212121;
+}
+.sucursal-editar .imagen {
+    margin-left: 10px;
+    height: 160px;
+}
+.sucursal-editar figure{
+    margin:0;
+}
+.sucursal-editar figure figcaption {
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.40);
+    position: relative;
+    bottom: 1.85rem;
 }
 
 /*#endregion */

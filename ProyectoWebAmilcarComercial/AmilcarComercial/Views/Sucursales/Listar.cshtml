@@ -5,12 +5,33 @@
     <div class="col l4">
         <div class="card">
             <div class="card-image teal">
-                <div class="opciones">
-                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a>
-                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="material-icons">mode_edit</i></a>
-                    <a class="waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Detalles"><i class="material-icons">info</i></a>
+                <div class="opciones">      
+                    @using (Ajax.BeginForm("Delete", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                    {
+                        UpdateTargetId = "sucursales",
+                        HttpMethod = "post",
+                        Confirm="Desea eliminar esto?"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    }
+
+                    @Ajax.ActionLink("mode_edit", "Edit", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                    {
+                        UpdateTargetId = "editar",
+                        HttpMethod = "GET"
+                    }, new { @class = "material-icons", @onclick = "$('#editar').modal('open');" })
+
+                    @Ajax.ActionLink("info", "Details", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+               {
+                   UpdateTargetId = "detalle",
+                   HttpMethod = "GET"
+               }, new { @class = "material-icons", @onclick = "$('#detalle').modal('open');" })
                 </div>
-                <img src="images/sample-1.jpg">
+                <img src="~/Content/images/sucursales/@sucursal.imagen">
                 <span class="card-title">@sucursal.Nombre</span>
             </div>
             <div class="card-content">
@@ -26,5 +47,10 @@
         $(document).ready(function () {
             $('.tooltipped').tooltip({ delay: 50 });
         });
+    </script>
+    <script type="text/javascript">
+            function ValidateDelete() {
+                return confirm("Are you sure?");
+            }
     </script>
 }
