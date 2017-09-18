@@ -13,7 +13,8 @@
         {
             HttpMethod = "POST",
             UpdateTargetId = "sucursales",
-            InsertionMode = InsertionMode.InsertAfter
+            InsertionMode = InsertionMode.InsertAfter,
+            OnSuccess= "Materialize.toast('I am a toast!', 4000)"
         }))
         {
             @Html.AntiForgeryToken()

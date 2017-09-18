@@ -15,7 +15,7 @@
         <div class="navbar-fixed">
             <nav>
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-                <div class="nav-wrapper @ViewBag.BackgroundColor z-depth-2">
+                <div class="nav-wrapper @ViewBag.PrimaryColor z-depth-2">
                     <a href="#!" class="brand-logo">Logo</a>
                     @Html.Partial("_LoginPartial")
                 </div>
@@ -67,10 +67,10 @@
                             </a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li><a href="#!">First</a></li>
-                                    <li><a href="#!">Second</a></li>
-                                    <li><a href="#!">Third</a></li>
-                                    <li><a href="#!">Fourth</a></li>
+                                    <li><a href="@Url.Action("Index","Marcas")">Marcas</a></li>
+                                    <li><a href="@Url.Action("Index","Categorias")">Categorias</a></li>
+                                    <li><a href="@Url.Action("Index","Clientes")">Clientes</a></li>
+                                    <li><a href="@Url.Action("Index","Proveedores")">Proveedores</a></li>
                                 </ul>
                             </div>
                         </li>

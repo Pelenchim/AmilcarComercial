@@ -1,0 +1,40 @@
+﻿@model AmilcarComercial.Models.Tbl_Marca
+
+@{ 
+    Layout = null;
+}
+
+<div class="sucursal-nuevo">
+    <div class="row blue-grey darken-4">
+        <h4 class="white-text left-align"><i class="material-icons">add_box</i>Detalle de Marca</h4>
+    </div>
+    <div class="row">
+        <div class="col l12">
+            <figure>
+                <img src="~/Content/images/marcas/@Model.imagen" class="responsive-img"/>
+                <figcaption>Imagen Actual</figcaption>
+            </figure>
+        </div>
+        <div class="col l12">
+            <p>Nombre: @Model.nombre</p>
+        </div>
+        <div class="acciones col l12 right-align">
+            @using (Ajax.BeginForm("Delete", "Marcas", new { id = Model.id_Marca }, new AjaxOptions
+            {
+                UpdateTargetId = "marcas",
+                HttpMethod = "post"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Ajax.ActionLink("Editar", "Edit", "Marcas", new { id = Model.id_Marca }, new AjaxOptions
+               {
+                   UpdateTargetId = "editar",
+                   HttpMethod = "GET"
+               }, new { @class = "btn blue", @onclick = "$('#editar').modal('open');" })
+                <button type="submit" class="btn red">
+                    Eliminar
+                </button>
+            }
+        </div>
+    </div>
+</div>

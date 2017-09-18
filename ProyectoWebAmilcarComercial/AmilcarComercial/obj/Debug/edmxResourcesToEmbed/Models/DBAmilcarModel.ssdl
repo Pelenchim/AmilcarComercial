@@ -91,6 +91,16 @@
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="id_Kardex" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Tbl_Apartado">
     <Key>
       <PropertyRef Name="id_apartado" />
@@ -136,8 +146,9 @@
       <PropertyRef Name="id_categoria" />
     </Key>
     <Property Name="id_categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="id_CatPadre" Type="int" />
+    <Property Name="estado" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Clientes">
     <Key>
@@ -212,7 +223,14 @@
     <Property Name="id_descripcion" Type="int" Nullable="false" />
     <Property Name="id_categoria" Type="int" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="valor" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_DescripcionValores">
+    <Key>
+      <PropertyRef Name="id_descripcionValor" />
+    </Key>
+    <Property Name="id_descripcionValor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_descripcion" Type="int" Nullable="false" />
+    <Property Name="valor" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Tbl_Detalle_Compra">
     <Key>
@@ -248,17 +266,6 @@
     <Property Name="id_orden" Type="int" Nullable="false" />
     <Property Name="id_kardex" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Tbl_Empleado">
-    <Key>
-      <PropertyRef Name="id_empleado" />
-    </Key>
-    <Property Name="id_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="apellidos" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="ced_empleado" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="telefono_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="acceso" Type="nvarchar" MaxLength="50" Nullable="false" />
-  </EntityType>
   <EntityType Name="Tbl_garantia">
     <Key>
       <PropertyRef Name="id_garantia" />
@@ -290,6 +297,8 @@
     </Key>
     <Property Name="id_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="estado" Type="bit" Nullable="false" />
+    <Property Name="imagen" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Tbl_Orden">
     <Key>
@@ -344,6 +353,7 @@
     <Property Name="categoria" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="bit" />
   </EntityType>
   <EntityType Name="Tbl_Salida">
     <Key>
@@ -646,6 +656,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tbl_Descripciones_Tbl_DescripcionValores">
+    <End Role="Tbl_DescripcionValores" Type="Self.Tbl_DescripcionValores" Multiplicity="1" />
+    <End Role="Tbl_Descripciones" Type="Self.Tbl_Descripciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DescripcionValores">
+        <PropertyRef Name="id_descripcionValor" />
+      </Principal>
+      <Dependent Role="Tbl_Descripciones">
+        <PropertyRef Name="id_descripcion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tbl_Detalle_Compra_Tbl_Kardex">
     <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="1" />
     <End Role="Tbl_Detalle_Compra" Type="Self.Tbl_Detalle_Compra" Multiplicity="*" />
@@ -799,6 +821,7 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Bodega_Detalle" EntityType="Self.Bodega_Detalle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SalidaDetalle" EntityType="Self.SalidaDetalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" Schema="dbo" store:Type="Tables" />
@@ -811,10 +834,10 @@
     <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Devolucion" EntityType="Self.Tbl_Devolucion" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Tbl_Empleado" EntityType="Self.Tbl_Empleado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Marca" EntityType="Self.Tbl_Marca" Schema="dbo" store:Type="Tables" />
@@ -912,6 +935,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Descripciones_Tbl_Categorias" Association="Self.FK_Tbl_Descripciones_Tbl_Categorias">
       <End Role="Tbl_Categorias" EntitySet="Tbl_Categorias" />
+      <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Descripciones_Tbl_DescripcionValores" Association="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores">
+      <End Role="Tbl_DescripcionValores" EntitySet="Tbl_DescripcionValores" />
       <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Clientes>
+
+@{
+    ViewBag.Title = "Catalogos";
+    ViewBag.SubTitle = "> Clientes";
+    ViewBag.PrimaryColor = "teal darken-4";
+    ViewBag.SecundaryColor = "teal darken-3";
+}
+
+<nav class="nav-extended @ViewBag.SecundaryColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
+<div class="row titulo-catalogo">
+    <div class="container-mio">
+        <div class="col l12">
+            <h5>Lista de Clientes</h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container-mio clientes" id="clientes">
+        @foreach (var cliente in Model)
+        {
+            <div class="col l3">
+                <div class="card">
+                    <div class="card-image teal">
+                        <div class="opciones">
+                            <a class='dropdown-button white-text' href='#' data-activates='@cliente.id_cliente'>
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul id='@cliente.id_cliente' class='dropdown-content'>
+                                <li>
+                                    @Ajax.ActionLink("Detalles", "Details", "Clientes", new { id = cliente.id_cliente }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "detalle",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Editar", "Edit", "Clientes", new { id = cliente.id_cliente }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "editar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                            </li>
+                                        <li>
+                                    @using (Ajax.BeginForm("Delete", "Clientes", new { id = cliente.id_cliente }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "clientes",
+                                        HttpMethod = "POST",
+                                        Confirm = "Desea Eliminar este elemento?",
+                                        InsertionMode = InsertionMode.Replace
+                                    }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit">Eliminar</button>
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    <img src="~/Content/images/sucursales">
+                </div>
+                <div class="card-content">
+                    <span class="card-title truncate">@cliente.nombre_cliente @cliente.apellidos_cliente</span>
+                    <p class="">Tel: @cliente.telefono <span class="right">@cliente.departamento</span></p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>  
+<div class="fixed-action-btn">
+    @Ajax.ActionLink("add", "Create", "Clientes", new AjaxOptions
+    {
+        UpdateTargetId = "nuevo", // <-- DOM element ID to update
+        InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+        HttpMethod = "GET" // <-- HTTP method,
+    }, new { @class = "modal-trigger btn-floating btn-large teal darken-3 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
+</div>
+
+<div id="detalle" class="modal"></div>
+<div id="nuevo" class="modal"></div>
+<div id="editar" class="modal"></div>

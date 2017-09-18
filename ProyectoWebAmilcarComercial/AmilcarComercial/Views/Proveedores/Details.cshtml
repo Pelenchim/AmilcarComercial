@@ -1,0 +1,48 @@
+﻿@model AmilcarComercial.Models.Tbl_Proveedor
+
+@{
+    Layout = null;
+}
+
+<div>
+    <h4>Tbl_Proveedor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.razon_social)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.razon_social)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ruc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ruc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_proveedor }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

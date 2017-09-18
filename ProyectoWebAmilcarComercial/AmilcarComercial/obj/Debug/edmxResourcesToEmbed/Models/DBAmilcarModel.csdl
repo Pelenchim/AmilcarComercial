@@ -95,6 +95,16 @@
     <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_SalidaDetalle_Tbl_Kardex" FromRole="SalidaDetalle" ToRole="Tbl_Kardex" />
     <NavigationProperty Name="Tbl_Salida" Relationship="Self.FK_SalidaDetalle_Tbl_Salida" FromRole="SalidaDetalle" ToRole="Tbl_Salida" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
   <EntityType Name="Tbl_Apartado">
     <Key>
       <PropertyRef Name="id_apartado" />
@@ -156,8 +166,9 @@
       <PropertyRef Name="id_categoria" />
     </Key>
     <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="id_CatPadre" Type="Int32" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Articulo_Tbl_Categorias" FromRole="Tbl_Categorias" ToRole="Tbl_Articulo" />
     <NavigationProperty Name="Tbl_Categorias1" Relationship="Self.FK_Tbl_Categorias_Tbl_Categorias1" FromRole="Tbl_Categorias" ToRole="Tbl_Categorias1" />
     <NavigationProperty Name="Tbl_Categorias2" Relationship="Self.FK_Tbl_Categorias_Tbl_Categorias1" FromRole="Tbl_Categorias1" ToRole="Tbl_Categorias" />
@@ -219,7 +230,6 @@
     <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="monto" Type="Double" />
     <Property Name="id_sucursal" Type="Int32" />
-    <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Configuracion_Tbl_Sucursal" FromRole="Tbl_Configuracion" ToRole="Tbl_Sucursal" />
   </EntityType>
   <EntityType Name="Tbl_Credito">
     <Key>
@@ -246,8 +256,17 @@
     <Property Name="id_descripcion" Type="Int32" Nullable="false" />
     <Property Name="id_categoria" Type="Int32" Nullable="false" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="valor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Tbl_Categorias" Relationship="Self.FK_Tbl_Descripciones_Tbl_Categorias" FromRole="Tbl_Descripciones" ToRole="Tbl_Categorias" />
+    <NavigationProperty Name="Tbl_DescripcionValores" Relationship="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores" FromRole="Tbl_Descripciones" ToRole="Tbl_DescripcionValores" />
+  </EntityType>
+  <EntityType Name="Tbl_DescripcionValores">
+    <Key>
+      <PropertyRef Name="id_descripcionValor" />
+    </Key>
+    <Property Name="id_descripcionValor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_descripcion" Type="Int32" Nullable="false" />
+    <Property Name="valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Descripciones" Relationship="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores" FromRole="Tbl_DescripcionValores" ToRole="Tbl_Descripciones" />
   </EntityType>
   <EntityType Name="Tbl_Detalle_Compra">
     <Key>
@@ -288,17 +307,6 @@
     <Property Name="id_kardex" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Tbl_garantia" Relationship="Self.FK_Tbl_Devolucion_Tbl_garantia" FromRole="Tbl_Devolucion" ToRole="Tbl_garantia" />
   </EntityType>
-  <EntityType Name="Tbl_Empleado">
-    <Key>
-      <PropertyRef Name="id_empleado" />
-    </Key>
-    <Property Name="id_empleado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="apellidos" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ced_empleado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="telefono_empleado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="acceso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
   <EntityType Name="Tbl_garantia">
     <Key>
       <PropertyRef Name="id_garantia" />
@@ -335,6 +343,8 @@
     </Key>
     <Property Name="id_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Articulo_Tbl_Marca" FromRole="Tbl_Marca" ToRole="Tbl_Articulo" />
   </EntityType>
   <EntityType Name="Tbl_Orden">
@@ -398,6 +408,7 @@
     <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Proveedor" ToRole="Tbl_Compra" />
+    <Property Name="Estado" Type="Boolean" />
   </EntityType>
   <EntityType Name="Tbl_Salida">
     <Key>
@@ -418,13 +429,12 @@
     <Property Name="id_sucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Tbl_Configuracion" Relationship="Self.FK_Tbl_Configuracion_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Configuracion" />
-    <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Orden" />
     <Property Name="Estado" Type="Boolean" Nullable="false" />
-    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Gerente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gerente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Orden" />
   </EntityType>
   <EntityType Name="Tbl_Talla">
     <Key>
@@ -738,18 +748,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Configuracion_Tbl_Sucursal">
-    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="0..1" />
-    <End Role="Tbl_Configuracion" Type="Self.Tbl_Configuracion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Sucursal">
-        <PropertyRef Name="id_sucursal" />
-      </Principal>
-      <Dependent Role="Tbl_Configuracion">
-        <PropertyRef Name="id_sucursal" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Tbl_Credito_Tbl_Orden">
     <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
     <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
@@ -771,6 +769,18 @@
       </Principal>
       <Dependent Role="Tbl_Pago_Credito">
         <PropertyRef Name="id_credito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Descripciones_Tbl_DescripcionValores">
+    <End Role="Tbl_DescripcionValores" Type="Self.Tbl_DescripcionValores" Multiplicity="1" />
+    <End Role="Tbl_Descripciones" Type="Self.Tbl_Descripciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DescripcionValores">
+        <PropertyRef Name="id_descripcionValor" />
+      </Principal>
+      <Dependent Role="Tbl_Descripciones">
+        <PropertyRef Name="id_descripcion" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -846,6 +856,7 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
     <EntitySet Name="Bodega_Detalle" EntityType="Self.Bodega_Detalle" />
     <EntitySet Name="SalidaDetalle" EntityType="Self.SalidaDetalle" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" />
     <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" />
     <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" />
@@ -858,10 +869,10 @@
     <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" />
     <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" />
     <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" />
+    <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" />
     <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" />
     <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" />
     <EntitySet Name="Tbl_Devolucion" EntityType="Self.Tbl_Devolucion" />
-    <EntitySet Name="Tbl_Empleado" EntityType="Self.Tbl_Empleado" />
     <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" />
     <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" />
     <EntitySet Name="Tbl_Marca" EntityType="Self.Tbl_Marca" />
@@ -973,10 +984,6 @@
       <End Role="Tbl_Concepto" EntitySet="Tbl_Concepto" />
       <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Configuracion_Tbl_Sucursal" Association="Self.FK_Tbl_Configuracion_Tbl_Sucursal">
-      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
-      <End Role="Tbl_Configuracion" EntitySet="Tbl_Configuracion" />
-    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Credito_Tbl_Orden" Association="Self.FK_Tbl_Credito_Tbl_Orden">
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
       <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
@@ -984,6 +991,10 @@
     <AssociationSet Name="FK_Tbl_Pago_Credito_Tbl_Credito" Association="Self.FK_Tbl_Pago_Credito_Tbl_Credito">
       <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
       <End Role="Tbl_Pago_Credito" EntitySet="Tbl_Pago_Credito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Descripciones_Tbl_DescripcionValores" Association="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores">
+      <End Role="Tbl_DescripcionValores" EntitySet="Tbl_DescripcionValores" />
+      <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />

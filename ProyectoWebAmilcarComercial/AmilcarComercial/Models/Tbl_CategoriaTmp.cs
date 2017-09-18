@@ -12,13 +12,10 @@ namespace AmilcarComercial.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Empleado
+    public partial class Tbl_CategoriaTmp
     {
-        public string id_empleado { get; set; }
-        public string nombre { get; set; }
-        public string apellidos { get; set; }
-        public string ced_empleado { get; set; }
-        public string telefono_empleado { get; set; }
-        public string acceso { get; set; }
+        public int id_categoriaTmp { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<int> id_CatPadreTmp { get; set; }
     }
 }

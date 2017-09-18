@@ -96,6 +96,16 @@
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="id_Kardex" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Tbl_Apartado">
           <Key>
             <PropertyRef Name="id_apartado" />
@@ -141,8 +151,17 @@
             <PropertyRef Name="id_categoria" />
           </Key>
           <Property Name="id_categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="id_CatPadre" Type="int" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_CategoriaTmp">
+          <Key>
+            <PropertyRef Name="id_categoriaTmp" />
+          </Key>
+          <Property Name="id_categoriaTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_CatPadreTmp" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Clientes">
           <Key>
@@ -209,6 +228,13 @@
           <Property Name="interesPorMora" Type="float" />
           <Property Name="id_cliente" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Departamentos">
+          <Key>
+            <PropertyRef Name="id_Departamento" />
+          </Key>
+          <Property Name="id_Departamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tbl_Descripciones">
           <Key>
             <PropertyRef Name="id_descripcion" />
@@ -217,7 +243,14 @@
           <Property Name="id_descripcion" Type="int" Nullable="false" />
           <Property Name="id_categoria" Type="int" Nullable="false" />
           <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="valor" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_DescripcionValores">
+          <Key>
+            <PropertyRef Name="id_descripcionValor" />
+          </Key>
+          <Property Name="id_descripcionValor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_descripcion" Type="int" Nullable="false" />
+          <Property Name="valor" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Detalle_Compra">
           <Key>
@@ -253,17 +286,6 @@
           <Property Name="id_orden" Type="int" Nullable="false" />
           <Property Name="id_kardex" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_Empleado">
-          <Key>
-            <PropertyRef Name="id_empleado" />
-          </Key>
-          <Property Name="id_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="apellidos" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="ced_empleado" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="telefono_empleado" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="acceso" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_garantia">
           <Key>
             <PropertyRef Name="id_garantia" />
@@ -295,6 +317,8 @@
           </Key>
           <Property Name="id_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="imagen" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Orden">
           <Key>
@@ -349,6 +373,7 @@
           <Property Name="categoria" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="bit" />
         </EntityType>
         <EntityType Name="Tbl_Salida">
           <Key>
@@ -651,6 +676,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Descripciones_Tbl_DescripcionValores">
+          <End Role="Tbl_DescripcionValores" Type="Self.Tbl_DescripcionValores" Multiplicity="1" />
+          <End Role="Tbl_Descripciones" Type="Self.Tbl_Descripciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_DescripcionValores">
+              <PropertyRef Name="id_descripcionValor" />
+            </Principal>
+            <Dependent Role="Tbl_Descripciones">
+              <PropertyRef Name="id_descripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Detalle_Compra_Tbl_Kardex">
           <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="1" />
           <End Role="Tbl_Detalle_Compra" Type="Self.Tbl_Detalle_Compra" Multiplicity="*" />
@@ -804,22 +841,25 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bodega_Detalle" EntityType="Self.Bodega_Detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalidaDetalle" EntityType="Self.SalidaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_bodega_productos" EntityType="Self.Tbl_bodega_productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Categorias" EntityType="Self.Tbl_Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_CategoriaTmp" EntityType="Self.Tbl_CategoriaTmp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Clientes" EntityType="Self.Tbl_Clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Departamentos" EntityType="Self.Tbl_Departamentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Devolucion" EntityType="Self.Tbl_Devolucion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_Empleado" EntityType="Self.Tbl_Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Marca" EntityType="Self.Tbl_Marca" Schema="dbo" store:Type="Tables" />
@@ -917,6 +957,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Descripciones_Tbl_Categorias" Association="Self.FK_Tbl_Descripciones_Tbl_Categorias">
             <End Role="Tbl_Categorias" EntitySet="Tbl_Categorias" />
+            <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Descripciones_Tbl_DescripcionValores" Association="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores">
+            <End Role="Tbl_DescripcionValores" EntitySet="Tbl_DescripcionValores" />
             <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">
@@ -1067,6 +1111,16 @@
           <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_SalidaDetalle_Tbl_Kardex" FromRole="SalidaDetalle" ToRole="Tbl_Kardex" />
           <NavigationProperty Name="Tbl_Salida" Relationship="Self.FK_SalidaDetalle_Tbl_Salida" FromRole="SalidaDetalle" ToRole="Tbl_Salida" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tbl_Apartado">
           <Key>
             <PropertyRef Name="id_apartado" />
@@ -1128,8 +1182,9 @@
             <PropertyRef Name="id_categoria" />
           </Key>
           <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="id_CatPadre" Type="Int32" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Articulo_Tbl_Categorias" FromRole="Tbl_Categorias" ToRole="Tbl_Articulo" />
           <NavigationProperty Name="Tbl_Categorias1" Relationship="Self.FK_Tbl_Categorias_Tbl_Categorias1" FromRole="Tbl_Categorias" ToRole="Tbl_Categorias1" />
           <NavigationProperty Name="Tbl_Categorias2" Relationship="Self.FK_Tbl_Categorias_Tbl_Categorias1" FromRole="Tbl_Categorias1" ToRole="Tbl_Categorias" />
@@ -1191,7 +1246,6 @@
           <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="monto" Type="Double" />
           <Property Name="id_sucursal" Type="Int32" />
-          <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Configuracion_Tbl_Sucursal" FromRole="Tbl_Configuracion" ToRole="Tbl_Sucursal" />
         </EntityType>
         <EntityType Name="Tbl_Credito">
           <Key>
@@ -1218,8 +1272,17 @@
           <Property Name="id_descripcion" Type="Int32" Nullable="false" />
           <Property Name="id_categoria" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="valor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tbl_Categorias" Relationship="Self.FK_Tbl_Descripciones_Tbl_Categorias" FromRole="Tbl_Descripciones" ToRole="Tbl_Categorias" />
+          <NavigationProperty Name="Tbl_DescripcionValores" Relationship="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores" FromRole="Tbl_Descripciones" ToRole="Tbl_DescripcionValores" />
+        </EntityType>
+        <EntityType Name="Tbl_DescripcionValores">
+          <Key>
+            <PropertyRef Name="id_descripcionValor" />
+          </Key>
+          <Property Name="id_descripcionValor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_descripcion" Type="Int32" Nullable="false" />
+          <Property Name="valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Descripciones" Relationship="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores" FromRole="Tbl_DescripcionValores" ToRole="Tbl_Descripciones" />
         </EntityType>
         <EntityType Name="Tbl_Detalle_Compra">
           <Key>
@@ -1260,17 +1323,6 @@
           <Property Name="id_kardex" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tbl_garantia" Relationship="Self.FK_Tbl_Devolucion_Tbl_garantia" FromRole="Tbl_Devolucion" ToRole="Tbl_garantia" />
         </EntityType>
-        <EntityType Name="Tbl_Empleado">
-          <Key>
-            <PropertyRef Name="id_empleado" />
-          </Key>
-          <Property Name="id_empleado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="apellidos" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ced_empleado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="telefono_empleado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="acceso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_garantia">
           <Key>
             <PropertyRef Name="id_garantia" />
@@ -1307,6 +1359,8 @@
           </Key>
           <Property Name="id_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Articulo_Tbl_Marca" FromRole="Tbl_Marca" ToRole="Tbl_Articulo" />
         </EntityType>
         <EntityType Name="Tbl_Orden">
@@ -1370,6 +1424,7 @@
           <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Proveedor" ToRole="Tbl_Compra" />
+          <Property Name="Estado" Type="Boolean" />
         </EntityType>
         <EntityType Name="Tbl_Salida">
           <Key>
@@ -1390,13 +1445,12 @@
           <Property Name="id_sucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Tbl_Configuracion" Relationship="Self.FK_Tbl_Configuracion_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Configuracion" />
-          <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Orden" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gerente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gerente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Sucursal" ToRole="Tbl_Orden" />
         </EntityType>
         <EntityType Name="Tbl_Talla">
           <Key>
@@ -1710,18 +1764,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Configuracion_Tbl_Sucursal">
-          <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="0..1" />
-          <End Role="Tbl_Configuracion" Type="Self.Tbl_Configuracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Sucursal">
-              <PropertyRef Name="id_sucursal" />
-            </Principal>
-            <Dependent Role="Tbl_Configuracion">
-              <PropertyRef Name="id_sucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Credito_Tbl_Orden">
           <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
           <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
@@ -1743,6 +1785,18 @@
             </Principal>
             <Dependent Role="Tbl_Pago_Credito">
               <PropertyRef Name="id_credito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Descripciones_Tbl_DescripcionValores">
+          <End Role="Tbl_DescripcionValores" Type="Self.Tbl_DescripcionValores" Multiplicity="1" />
+          <End Role="Tbl_Descripciones" Type="Self.Tbl_Descripciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_DescripcionValores">
+              <PropertyRef Name="id_descripcionValor" />
+            </Principal>
+            <Dependent Role="Tbl_Descripciones">
+              <PropertyRef Name="id_descripcion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1818,6 +1872,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Bodega_Detalle" EntityType="Self.Bodega_Detalle" />
           <EntitySet Name="SalidaDetalle" EntityType="Self.SalidaDetalle" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" />
           <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" />
           <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" />
@@ -1830,10 +1885,10 @@
           <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" />
           <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" />
           <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" />
+          <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" />
           <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" />
           <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" />
           <EntitySet Name="Tbl_Devolucion" EntityType="Self.Tbl_Devolucion" />
-          <EntitySet Name="Tbl_Empleado" EntityType="Self.Tbl_Empleado" />
           <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" />
           <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" />
           <EntitySet Name="Tbl_Marca" EntityType="Self.Tbl_Marca" />
@@ -1945,10 +2000,6 @@
             <End Role="Tbl_Concepto" EntitySet="Tbl_Concepto" />
             <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Configuracion_Tbl_Sucursal" Association="Self.FK_Tbl_Configuracion_Tbl_Sucursal">
-            <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
-            <End Role="Tbl_Configuracion" EntitySet="Tbl_Configuracion" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Credito_Tbl_Orden" Association="Self.FK_Tbl_Credito_Tbl_Orden">
             <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
             <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
@@ -1956,6 +2007,10 @@
           <AssociationSet Name="FK_Tbl_Pago_Credito_Tbl_Credito" Association="Self.FK_Tbl_Pago_Credito_Tbl_Credito">
             <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
             <End Role="Tbl_Pago_Credito" EntitySet="Tbl_Pago_Credito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Descripciones_Tbl_DescripcionValores" Association="Self.FK_Tbl_Descripciones_Tbl_DescripcionValores">
+            <End Role="Tbl_DescripcionValores" EntitySet="Tbl_DescripcionValores" />
+            <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">
             <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
@@ -1981,7 +2036,24 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Tbl_CategoriaTmp" EntityType="DBAmilcarModel.Tbl_CategoriaTmp" />
+          <EntitySet Name="Tbl_Departamentos" EntityType="DBAmilcarModel.Tbl_Departamentos" />
         </EntityContainer>
+        <EntityType Name="Tbl_CategoriaTmp">
+          <Key>
+            <PropertyRef Name="id_categoriaTmp" />
+          </Key>
+          <Property Name="id_categoriaTmp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_CatPadreTmp" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tbl_Departamentos">
+          <Key>
+            <PropertyRef Name="id_Departamento" />
+          </Key>
+          <Property Name="id_Departamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2075,6 +2147,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBAmilcarModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Apartado">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Apartado">
               <MappingFragment StoreEntitySet="Tbl_Apartado">
@@ -2123,8 +2206,9 @@
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Categorias">
               <MappingFragment StoreEntitySet="Tbl_Categorias">
                 <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="id_CatPadre" ColumnName="id_CatPadre" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2205,6 +2289,14 @@
                 <ScalarProperty Name="id_descripcion" ColumnName="id_descripcion" />
                 <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_DescripcionValores">
+            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DescripcionValores">
+              <MappingFragment StoreEntitySet="Tbl_DescripcionValores">
+                <ScalarProperty Name="id_descripcionValor" ColumnName="id_descripcionValor" />
+                <ScalarProperty Name="id_descripcion" ColumnName="id_descripcion" />
                 <ScalarProperty Name="valor" ColumnName="valor" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2246,18 +2338,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Empleado">
-            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Empleado">
-              <MappingFragment StoreEntitySet="Tbl_Empleado">
-                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="ced_empleado" ColumnName="ced_empleado" />
-                <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
-                <ScalarProperty Name="acceso" ColumnName="acceso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_garantia">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_garantia">
               <MappingFragment StoreEntitySet="Tbl_garantia">
@@ -2290,6 +2370,8 @@
               <MappingFragment StoreEntitySet="Tbl_Marca">
                 <ScalarProperty Name="id_Marca" ColumnName="id_Marca" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2344,6 +2426,7 @@
           <EntitySetMapping Name="Tbl_Proveedor">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Proveedor">
               <MappingFragment StoreEntitySet="Tbl_Proveedor">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
                 <ScalarProperty Name="razon_social" ColumnName="razon_social" />
                 <ScalarProperty Name="categoria" ColumnName="categoria" />
@@ -2365,14 +2448,14 @@
           <EntitySetMapping Name="Tbl_Sucursal">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Sucursal">
               <MappingFragment StoreEntitySet="Tbl_Sucursal">
-                <ScalarProperty Name="Gerente" ColumnName="Gerente" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Gerente" ColumnName="Gerente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2392,6 +2475,23 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Tbl_CategoriaTmp">
+            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_CategoriaTmp">
+              <MappingFragment StoreEntitySet="Tbl_CategoriaTmp">
+                <ScalarProperty Name="id_CatPadreTmp" ColumnName="id_CatPadreTmp" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id_categoriaTmp" ColumnName="id_categoriaTmp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Departamentos">
+            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Departamentos">
+              <MappingFragment StoreEntitySet="Tbl_Departamentos">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id_Departamento" ColumnName="id_Departamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

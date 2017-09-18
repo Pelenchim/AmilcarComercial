@@ -17,8 +17,8 @@ namespace AmilcarComercial.Models
         public int id_descripcion { get; set; }
         public int id_categoria { get; set; }
         public string nombre { get; set; }
-        public string valor { get; set; }
     
         public virtual Tbl_Categorias Tbl_Categorias { get; set; }
+        public virtual Tbl_DescripcionValores Tbl_DescripcionValores { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Sucursal()
         {
-            this.Tbl_Configuracion = new HashSet<Tbl_Configuracion>();
             this.Tbl_Orden = new HashSet<Tbl_Orden>();
         }
     
@@ -30,8 +29,6 @@ namespace AmilcarComercial.Models
         public string Correo { get; set; }
         public string Gerente { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Configuracion> Tbl_Configuracion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Orden> Tbl_Orden { get; set; }
     }

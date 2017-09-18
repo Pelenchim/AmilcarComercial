@@ -21,7 +21,5 @@ namespace AmilcarComercial.Models
         public string correo { get; set; }
         public Nullable<double> monto { get; set; }
         public Nullable<int> id_sucursal { get; set; }
-    
-        public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
     }
 }

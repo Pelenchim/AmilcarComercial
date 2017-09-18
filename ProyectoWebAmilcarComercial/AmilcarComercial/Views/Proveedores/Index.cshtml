@@ -1,0 +1,91 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Proveedor>
+
+@{
+    ViewBag.Title = "Catalogos";
+    ViewBag.SubTitle = "> Proveedores";
+    ViewBag.BackgroundColor = "teal darken-4";
+    ViewBag.NavExtendedColor = "teal darken-3";
+}
+
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
+
+@*@Ajax.ActionLink( "Listar", "Listar", "Sucursales", new AjaxOptions
+    {
+        UpdateTargetId = "sucursales", // <-- DOM element ID to update
+        InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+        HttpMethod = "GET" // <-- HTTP method
+    }, new { @class = "btn btn-primary" } )*@
+
+<div class="row titulo-catalogo">
+    <div class="container-mio">
+        <div class="col l12">
+            <h5>Lista de Proveedores</h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container-mio proveedores" id="proveedores">
+        @foreach (var proveedor in Model)
+        {
+            <div class="col l4">
+                <div class="card">
+                    <div class="card-image teal">
+                        <div class="opciones">
+                            <a class='dropdown-button white-text' href='#' data-activates='@proveedor.id_proveedor'>
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul id='@proveedor.id_proveedor' class='dropdown-content'>
+                                <li>
+                                    @Ajax.ActionLink("Detalles", "Details", "Sucursales", new { id = proveedor.id_proveedor }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "detalle",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Editar", "Edit", "Sucursales", new { id = proveedor.id_proveedor }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "editar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                            </li>
+                                <li>
+                                @using (Ajax.BeginForm("Delete", "Sucursales", new { id = proveedor.id_proveedor }, new AjaxOptions
+                            {
+                                UpdateTargetId = "sucursales",
+                                HttpMethod = "POST",
+                                Confirm = "Desea Eliminar este elemento?",
+                                InsertionMode = InsertionMode.Replace
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit">Eliminar</button>
+                            }
+                        </li>
+                            </ul>
+                        </div>
+                        <img src="~/Content/images/sucursales/">
+                    </div>
+                    <div class="card-content">
+                        <span>Estado</span>
+                        <span class="card-title truncate">@proveedor.razon_social</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div> 
+<div class="fixed-action-btn">
+    @Ajax.ActionLink("add", "Create", "Sucursales", new AjaxOptions
+{
+    UpdateTargetId = "nuevo", // <-- DOM element ID to update
+    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+    HttpMethod = "GET" // <-- HTTP method,
+}, new { @class = "modal-trigger btn-floating btn-large blue-grey darken-4 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
+</div>
+
+<div id="detalle" class="modal"></div>
+<div id="nuevo" class="modal"></div>
+<div id="editar" class="modal"></div>

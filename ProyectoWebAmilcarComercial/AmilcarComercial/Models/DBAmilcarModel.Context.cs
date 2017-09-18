@@ -32,6 +32,7 @@ namespace AmilcarComercial.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Bodega_Detalle> Bodega_Detalle { get; set; }
         public virtual DbSet<SalidaDetalle> SalidaDetalle { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Apartado> Tbl_Apartado { get; set; }
         public virtual DbSet<Tbl_Articulo> Tbl_Articulo { get; set; }
         public virtual DbSet<Tbl_bodega> Tbl_bodega { get; set; }
@@ -44,10 +45,10 @@ namespace AmilcarComercial.Models
         public virtual DbSet<Tbl_Configuracion> Tbl_Configuracion { get; set; }
         public virtual DbSet<Tbl_Credito> Tbl_Credito { get; set; }
         public virtual DbSet<Tbl_Descripciones> Tbl_Descripciones { get; set; }
+        public virtual DbSet<Tbl_DescripcionValores> Tbl_DescripcionValores { get; set; }
         public virtual DbSet<Tbl_Detalle_Compra> Tbl_Detalle_Compra { get; set; }
         public virtual DbSet<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
         public virtual DbSet<Tbl_Devolucion> Tbl_Devolucion { get; set; }
-        public virtual DbSet<Tbl_Empleado> Tbl_Empleado { get; set; }
         public virtual DbSet<Tbl_garantia> Tbl_garantia { get; set; }
         public virtual DbSet<Tbl_Kardex> Tbl_Kardex { get; set; }
         public virtual DbSet<Tbl_Marca> Tbl_Marca { get; set; }
@@ -59,5 +60,7 @@ namespace AmilcarComercial.Models
         public virtual DbSet<Tbl_Salida> Tbl_Salida { get; set; }
         public virtual DbSet<Tbl_Sucursal> Tbl_Sucursal { get; set; }
         public virtual DbSet<Tbl_Talla> Tbl_Talla { get; set; }
+        public virtual DbSet<Tbl_CategoriaTmp> Tbl_CategoriaTmp { get; set; }
+        public virtual DbSet<Tbl_Departamentos> Tbl_Departamentos { get; set; }
     }
 }

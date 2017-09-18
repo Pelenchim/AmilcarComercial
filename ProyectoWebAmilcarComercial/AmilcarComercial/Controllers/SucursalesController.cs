@@ -57,7 +57,7 @@ namespace AmilcarComercial.Controllers
             {
                 db.Tbl_Sucursal.Add(tbl_Sucursal);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return PartialView("Listar", tbl_Sucursal);
             }
 
             return PartialView("Listar",tbl_Sucursal);

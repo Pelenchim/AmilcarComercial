@@ -88,6 +88,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="DBAmilcarModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Tbl_Apartado">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Apartado">
         <MappingFragment StoreEntitySet="Tbl_Apartado">
@@ -136,8 +147,9 @@
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Categorias">
         <MappingFragment StoreEntitySet="Tbl_Categorias">
           <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="id_CatPadre" ColumnName="id_CatPadre" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -218,6 +230,14 @@
           <ScalarProperty Name="id_descripcion" ColumnName="id_descripcion" />
           <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_DescripcionValores">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DescripcionValores">
+        <MappingFragment StoreEntitySet="Tbl_DescripcionValores">
+          <ScalarProperty Name="id_descripcionValor" ColumnName="id_descripcionValor" />
+          <ScalarProperty Name="id_descripcion" ColumnName="id_descripcion" />
           <ScalarProperty Name="valor" ColumnName="valor" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -259,18 +279,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tbl_Empleado">
-      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Empleado">
-        <MappingFragment StoreEntitySet="Tbl_Empleado">
-          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-          <ScalarProperty Name="ced_empleado" ColumnName="ced_empleado" />
-          <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
-          <ScalarProperty Name="acceso" ColumnName="acceso" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tbl_garantia">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_garantia">
         <MappingFragment StoreEntitySet="Tbl_garantia">
@@ -303,6 +311,8 @@
         <MappingFragment StoreEntitySet="Tbl_Marca">
           <ScalarProperty Name="id_Marca" ColumnName="id_Marca" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="imagen" ColumnName="imagen" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -357,6 +367,7 @@
     <EntitySetMapping Name="Tbl_Proveedor">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Proveedor">
         <MappingFragment StoreEntitySet="Tbl_Proveedor">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
           <ScalarProperty Name="razon_social" ColumnName="razon_social" />
           <ScalarProperty Name="categoria" ColumnName="categoria" />
@@ -378,14 +389,14 @@
     <EntitySetMapping Name="Tbl_Sucursal">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Sucursal">
         <MappingFragment StoreEntitySet="Tbl_Sucursal">
-          <ScalarProperty Name="Gerente" ColumnName="Gerente" />
-          <ScalarProperty Name="Correo" ColumnName="Correo" />
-          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="imagen" ColumnName="imagen" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Gerente" ColumnName="Gerente" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

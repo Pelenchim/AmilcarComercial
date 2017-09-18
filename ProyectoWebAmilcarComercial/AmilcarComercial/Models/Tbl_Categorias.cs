@@ -23,8 +23,9 @@ namespace AmilcarComercial.Models
         }
     
         public int id_categoria { get; set; }
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
         public Nullable<int> id_CatPadre { get; set; }
+        public bool estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Articulo> Tbl_Articulo { get; set; }

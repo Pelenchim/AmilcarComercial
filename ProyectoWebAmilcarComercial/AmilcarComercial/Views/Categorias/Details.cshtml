@@ -1,0 +1,40 @@
+﻿@model AmilcarComercial.Models.Tbl_Categorias
+
+@{ 
+    Layout = null;
+}
+
+<div>
+    <h4>Tbl_Categorias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Categorias2.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Categorias2.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_categoria }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Marca>
+
+@foreach (var marca in Model)
+{
+    <div class="col l4">
+        <div class="card">
+            <div class="card-image teal">
+                <div class="opciones">
+                    @using (Ajax.BeginForm("Delete", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                    {
+                        UpdateTargetId = "marcas",
+                        HttpMethod = "post",
+                        Confirm = "Desea Eliminar este elemento?"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    }
+
+                    @Ajax.ActionLink("mode_edit", "Edit", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                       {
+                           UpdateTargetId = "editar",
+                           HttpMethod = "GET"
+                       }, new { @class = "material-icons", @onclick = "$('#editar').modal('open');" })
+
+                    @Ajax.ActionLink("info", "Details", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                       {
+                           UpdateTargetId = "detalle",
+                           HttpMethod = "GET"
+                       }, new { @class = "material-icons", @onclick = "$('#detalle').modal('open');" })
+                </div>
+                <img src="~/Content/images/marcas/@marca.imagen">
+                <span class="card-title">@marca.nombre</span>
+            </div>
+        </div>
+    </div>
+}

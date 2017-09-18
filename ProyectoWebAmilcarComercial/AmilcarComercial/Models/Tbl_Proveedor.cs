@@ -25,6 +25,7 @@ namespace AmilcarComercial.Models
         public string categoria { get; set; }
         public string telefono { get; set; }
         public string Ruc { get; set; }
+        public Nullable<bool> Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Compra> Tbl_Compra { get; set; }

@@ -1,0 +1,53 @@
+﻿@model AmilcarComercial.Models.Tbl_Clientes
+
+@{ 
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col l4"></div>
+    <div class="col l8">
+        <div class="col l12">
+            <span>Informacion del Cliente</span>
+            <div class="divider-mio"></div>
+        </div>
+        <div class="col l12">
+            <p><span>@Html.DisplayNameFor(m => m.nombre_cliente)</span> 
+                @Html.DisplayFor(m => m.nombre_cliente) @Html.DisplayFor(m => m.apellidos_cliente)
+            </p>
+        </div>
+        <div class="col l12">            
+            <p><span>@Html.DisplayNameFor(m => m.cedula)</span> @Html.DisplayFor(m => m.cedula)</p>
+        </div>
+        <div class="col l12">            
+            <p><span>@Html.DisplayNameFor(m => m.telefono)</span> @Html.DisplayFor(m => m.telefono)</p>
+        </div>
+        <div class="col l12">            
+            <p><span>@Html.DisplayNameFor(m => m.departamento)</span> @Html.DisplayFor(m => m.departamento)</p>
+        </div>
+        <div class="col l12">            
+            <p><span>@Html.DisplayNameFor(m => m.direccion)</span> @Html.DisplayFor(m => m.direccion)</p>
+        </div>
+        <div class="acciones col l12 right-align">
+            @using (Ajax.BeginForm("Delete", "Clientes", new { id = Model.id_cliente }, new AjaxOptions
+            {
+                UpdateTargetId = "clientes",
+                HttpMethod = "post"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Ajax.ActionLink("Editar", "Edit", "Clientes", new { id = Model.id_cliente }, new AjaxOptions
+               {
+                   UpdateTargetId = "editar",
+                   HttpMethod = "GET"
+               }, new { @class = "btn blue", @onclick = "$('#editar').modal('open');" })
+                <button type="submit" class="btn red">
+                    Eliminar
+                </button>
+            }
+
+
+        </div>
+
+    </div>
+</div>

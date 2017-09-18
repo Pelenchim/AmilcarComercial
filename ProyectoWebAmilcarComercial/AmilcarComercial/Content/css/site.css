@@ -191,15 +191,11 @@ aside .show-hidde i {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #EB3349; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #F45C43, #EB3349); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .login-container {
     width: 60%;
 }
 .login-info {
-    background-color: #151532;
 }
 
 /* label color */
@@ -311,34 +307,95 @@ aside .show-hidde i {
 }
 /*#endregion */
 
-/*#region Sucursales */
+/*#region Catalogos-Generales */
 
-.sucursales .card img{
-    width: 100%;
-    height: 200px;
+.titulo-catalogo {
+    margin-top: 20px;
+    margin-bottom: 5px !important;
+}
+.proveedores .card img,
+.sucursales .card img,
+.clientes .card img{
     position: initial;
 }
-.sucursales .card .opciones {
+.proveedores .card .opciones,
+.sucursales .card .opciones,
+.clientes .card .opciones{
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 12px;
+    right: 10px;
     display: inline;
 }
-.sucursales .card .opciones a {
-    margin-left: 5px;
-    color: #424242;
-    display: block;
-}
-.sucursales .card .opciones button {
-    color: #424242;
-    border: none;
-    background-color: transparent;
-    padding:0;
-    display: block;
-}
-.sucursales .card .opciones a:hover,
-.sucursales .card .opciones button:hover {
+
+.proveedores .card .opciones button,
+.sucursales .card .opciones button,
+.clientes .card .opciones button{
+    font-size: 16px;
     color: #212121;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+    background-color: transparent;
+    border: none;
+}
+
+/*#endregion */
+
+/*#region Clientes */
+
+.clientes .card img {
+    width: 100%;
+    height: 170px;
+}
+.clientes .card .card-content {
+    padding: 10px 24px 15px 24px;
+}
+
+/*#endregion */
+/*#region Proveedores */
+
+.proveedores .card img{
+    width: 100%;
+    height: 150px;
+}
+.proveedores .card .card-content{
+    padding: 10px 24px 15px 24px;
+}
+
+
+/*#endregion */
+/*#region Configuracion */
+.config-title{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.config-title h3 {
+    font-weight: 300;
+}
+.config-content .card img{
+    width: 100%;
+    height: 200px;
+}
+.config-content .card .card-content{
+    padding: 10px 24px 20px 24px;
+}
+.config-content .card .card-content span{
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+    /*#endregion */
+/*#region Sucursales */
+.sucursales .card img {
+    width: 100%;
+    height: 200px;
+}
+.sucursales .card-content {
+    padding: 20px 24px;
+}
+.sucursales .card-content p {
+    font-size: larger;
+    font-weight: 500;
 }
 .sucursal-detalle .row:last-child{
     margin-bottom:0;
@@ -415,6 +472,38 @@ aside .show-hidde i {
     background-color: rgba(0, 0, 0, 0.40);
     position: relative;
     bottom: 1.85rem;
+}
+
+/*#endregion */
+
+/*#region home */
+
+.home .home-title{
+    margin-bottom: 0px;
+    padding: 15px 15px 15px 25px;
+    line-height: 20px;
+}
+.home .home-title span{
+    font-size: large;
+}
+.home .home-content{
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+.home .home-content img{
+    margin-top: 30px;
+    width: 200px;
+}
+.home-items{
+    margin-bottom: 90px;
+}
+.home-items img{
+    width: 70%;
+}
+.home-items figcaption {
+    font-weight: 500;
+    font-size: larger;
+    color: #424242;
 }
 
 /*#endregion */

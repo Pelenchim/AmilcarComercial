@@ -13,6 +13,7 @@
         }))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.id_sucursal)
             <div class="row">
                 <div class="col l4">
                     <div class="imagen">

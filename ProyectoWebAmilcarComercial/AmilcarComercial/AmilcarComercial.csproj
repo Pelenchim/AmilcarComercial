@@ -195,10 +195,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriasController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ConfiguracionController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MarcasController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\SucursalesController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
@@ -244,6 +249,9 @@
     <Compile Include="Models\SalidaDetalle.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Apartado.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
@@ -257,6 +265,9 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Categorias.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_CategoriaTmp.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Clientes.cs">
@@ -277,7 +288,13 @@
     <Compile Include="Models\Tbl_Credito.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_Departamentos.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Descripciones.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DescripcionValores.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Compra.cs">
@@ -287,9 +304,6 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Devolucion.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tbl_Empleado.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_garantia.cs">
@@ -347,7 +361,9 @@
     <Content Include="Content\css\pace-theme-flash.css" />
     <Content Include="Content\images\avatar-female-default.png" />
     <Content Include="Content\images\avatar-male-default.png" />
+    <Content Include="Content\images\marcas\1.jpg" />
     <Content Include="Content\images\sucursales\1.jpg" />
+    <Content Include="Content\system-resources\marca_oficial_unan_managua.png" />
     <Content Include="Content\system-resources\side-nav-background.jpg" />
     <Content Include="Content\system-resources\inicio.png" />
     <Content Include="Content\system-resources\catalogos.png" />
@@ -497,6 +513,27 @@
     <Content Include="Views\Sucursales\Create.cshtml" />
     <Content Include="Views\Sucursales\Details.cshtml" />
     <Content Include="Views\Sucursales\Edit.cshtml" />
+    <Content Include="Views\Marcas\Index.cshtml" />
+    <Content Include="Views\Marcas\Listar.cshtml" />
+    <Content Include="Views\Marcas\Details.cshtml" />
+    <Content Include="Views\Marcas\Create.cshtml" />
+    <Content Include="Views\Marcas\Edit.cshtml" />
+    <Content Include="Views\Categorias\Listar.cshtml" />
+    <Content Include="Views\Categorias\Details.cshtml" />
+    <Content Include="Views\Categorias\Create.cshtml" />
+    <Content Include="Views\Categorias\Edit.cshtml" />
+    <Content Include="Views\Categorias\Index.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\Listar.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Proveedores\Listar.cshtml" />
+    <Content Include="Views\Proveedores\Details.cshtml" />
+    <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\Proveedores\Edit.cshtml" />
+    <Content Include="Views\Configuracion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

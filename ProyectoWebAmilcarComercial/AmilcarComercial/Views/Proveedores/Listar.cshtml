@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Proveedor>
+
+@{ 
+    Layout = null;
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.razon_social)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ruc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.razon_social)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ruc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_proveedor }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_proveedor }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_proveedor })
+        </td>
+    </tr>
+}
+
+</table>

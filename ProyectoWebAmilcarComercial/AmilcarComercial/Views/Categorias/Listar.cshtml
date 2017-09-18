@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Categorias>
+
+@{ 
+    Layout = null;
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Categorias2.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tbl_Categorias2.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_categoria }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_categoria }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_categoria })
+        </td>
+    </tr>
+}
+
+</table>
