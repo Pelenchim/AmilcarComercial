@@ -150,6 +150,14 @@
     <Property Name="id_CatPadre" Type="int" />
     <Property Name="estado" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Tbl_CategoriaTmp">
+    <Key>
+      <PropertyRef Name="id_categoriaTmp" />
+    </Key>
+    <Property Name="id_categoriaTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_CatPadreTmp" Type="int" />
+  </EntityType>
   <EntityType Name="Tbl_Clientes">
     <Key>
       <PropertyRef Name="id_cliente" />
@@ -214,6 +222,13 @@
     <Property Name="cuotas" Type="int" Nullable="false" />
     <Property Name="interesPorMora" Type="float" />
     <Property Name="id_cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Departamentos">
+    <Key>
+      <PropertyRef Name="id_Departamento" />
+    </Key>
+    <Property Name="id_Departamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Descripciones">
     <Key>
@@ -827,12 +842,14 @@
     <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_bodega_productos" EntityType="Self.Tbl_bodega_productos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Categorias" EntityType="Self.Tbl_Categorias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_CategoriaTmp" EntityType="Self.Tbl_CategoriaTmp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Clientes" EntityType="Self.Tbl_Clientes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Departamentos" EntityType="Self.Tbl_Departamentos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Descripciones" EntityType="Self.Tbl_Descripciones" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" Schema="dbo" store:Type="Tables" />

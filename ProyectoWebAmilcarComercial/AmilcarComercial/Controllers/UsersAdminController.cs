@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace AmilcarComercial.Controllers
 {
@@ -81,11 +82,12 @@ namespace AmilcarComercial.Controllers
             using (DBAmilcarEntities _context = new DBAmilcarEntities())
             {
                 ViewBag.Sucursales = new SelectList(await _context.Tbl_Sucursal.ToListAsync(), "id_sucursal","Nombre");
+                var user = "User" + _context.AspNetUsers.Count();
             }
             //Get the list of Roles
             ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
          
-            return View();
+            return View(User);
         }
 
         //
@@ -102,6 +104,7 @@ namespace AmilcarComercial.Controllers
             rolManager.Create(new IdentityRole("Vendedor"));
             rolManager.Create(new IdentityRole("Administrador"));
             rolManager.Create(new IdentityRole("SuperAdministrador"));
+            
 
             if (ModelState.IsValid)
             {
@@ -115,7 +118,8 @@ namespace AmilcarComercial.Controllers
                     Email = userViewModel.Email,
                     TelephoneNumber = userViewModel.TelephoneNumber,
                     Avatar = userViewModel.Avatar,
-                    Sucursal = userViewModel.Sucursal
+                    Sucursal = userViewModel.Sucursal,
+                    State = true
                 };
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 

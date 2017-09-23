@@ -1020,5 +1020,22 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="Tbl_CategoriaTmp" EntityType="DBAmilcarModel.Tbl_CategoriaTmp" />
+    <EntitySet Name="Tbl_Departamentos" EntityType="DBAmilcarModel.Tbl_Departamentos" />
   </EntityContainer>
+  <EntityType Name="Tbl_CategoriaTmp">
+    <Key>
+      <PropertyRef Name="id_categoriaTmp" />
+    </Key>
+    <Property Name="id_categoriaTmp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_CatPadreTmp" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tbl_Departamentos">
+    <Key>
+      <PropertyRef Name="id_Departamento" />
+    </Key>
+    <Property Name="id_Departamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

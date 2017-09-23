@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Configuracion";
     ViewBag.SubTitle = "> Usuarios";
-    ViewBag.BackgroundColor = "blue-grey darken-4";
+    ViewBag.PrimaryColor = "blue-grey darken-4";
     ViewBag.NavExtendedColor = "blue-grey darken-3";
 }
 
@@ -45,34 +45,37 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12 m5 l4">
-                <div class="card-panel white">
-                    <div class="row">
-                        <div class="col l3">
-                            <img src="~/Content/images/avatar-female-default.png" class="circle responsive-img" />
+            @foreach (var user in Model)
+            {
+                <div class="col s12 m5 l4">
+                    <div class="card-panel white">
+                        <div class="row">
+                            <div class="col l3">
+                                <img src="~/Content/images/@user.Avatar" class="circle responsive-img" />
+                            </div>
+                            <div class="col l8 m11 s11">
+                                <span class="truncate">Usuario: @user.UserName</span>
+                                <span>rol de usuario</span>
+                            </div>
+                            <div class="col l1 m1 s1">
+                                <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="left" data-delay="50" data-tooltip="Opciones">
+                                    <i class="material-icons right">more_vert</i>
+                                </a>
+                                <ul id='dropdown1' class='dropdown-content'>
+                                    <li><a href="#!">one</a></li>
+                                    <li><a href="#!">two</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col l8 m11 s11">
-                            <span class="truncate">Usuario: Usuario1</span>
-                            <span>Administrador</span>
+                        <div class="divider-mio"></div>
+                        <div class="row">
+                            <span class="truncate"><strong>Nombre:</strong> @user.FirstName @user.LastName</span>
+                            <span><strong>Email:</strong> @user.Email</span><br />
+                            <span><strong>Sucursal:</strong> @user.Sucursal</span>
                         </div>
-                        <div class="col l1 m1 s1">
-                            <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="left" data-delay="50" data-tooltip="Opciones">
-                                <i class="material-icons right">more_vert</i>
-                            </a>                            
-                            <ul id='dropdown1' class='dropdown-content'>
-                                <li><a href="#!">one</a></li>
-                                <li><a href="#!">two</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="divider-mio"></div>
-                    <div class="row">
-                        <span class="truncate"><strong>Nombre:</strong> Francisco Fernandez Lopez</span>
-                        <span><strong>Email:</strong> Frank_hotmail.com</span><br />
-                        <span><strong>Sucursal:</strong> Carazo</span>
                     </div>
                 </div>
-            </div>
+            }
         </div>
         <div class="row center">
             <ul class="pagination">

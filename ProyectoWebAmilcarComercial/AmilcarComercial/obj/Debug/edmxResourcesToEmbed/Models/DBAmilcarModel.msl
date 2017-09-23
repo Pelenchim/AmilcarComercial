@@ -416,5 +416,22 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Tbl_CategoriaTmp">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_CategoriaTmp">
+        <MappingFragment StoreEntitySet="Tbl_CategoriaTmp">
+          <ScalarProperty Name="id_CatPadreTmp" ColumnName="id_CatPadreTmp" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="id_categoriaTmp" ColumnName="id_categoriaTmp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Departamentos">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Departamentos">
+        <MappingFragment StoreEntitySet="Tbl_Departamentos">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="id_Departamento" ColumnName="id_Departamento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

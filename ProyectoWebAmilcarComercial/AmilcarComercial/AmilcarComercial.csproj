@@ -246,9 +246,12 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Marcas.cs" />
+    <Compile Include="Models\Proveedores.cs" />
     <Compile Include="Models\SalidaDetalle.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Sucursales.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
