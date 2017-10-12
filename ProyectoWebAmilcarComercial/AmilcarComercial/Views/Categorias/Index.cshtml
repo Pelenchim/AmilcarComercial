@@ -1,8 +1,38 @@
 ﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Categorias>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Catalogos";
+    ViewBag.SubTitle = "Categorias";
+    ViewBag.ControllerGeneral = "Home";
+    ViewBag.PrimaryColor = "cyan";
+    ViewBag.NavExtendedColor = "cyan darken-1";
 }
 
-<h2>Index</h2>
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
 
+<div class="fixed-action-btn">
+    @Ajax.ActionLink("add", "Create", "Categorias", new AjaxOptions
+{
+    UpdateTargetId = "nuevo", // <-- DOM element ID to update
+    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+    HttpMethod = "GET" // <-- HTTP method,
+}, new { @class = "modal-trigger btn-floating btn-large blue-grey darken-4 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
+</div>
+
+<div id="detalle" class="modal modal-w"></div>
+<div id="nuevo" class="modal modal-w"></div>
+<div id="editar" class="modal modal-w"></div>
+<div id="eliminar" class="modal modal-mini"></div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+            $('.tooltipped').tooltip({ delay: 50 });
+        });
+    </script>
+}

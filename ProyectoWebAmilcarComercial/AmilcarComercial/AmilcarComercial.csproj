@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -195,9 +196,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticulosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
-    <Compile Include="Controllers\ConfiguracionController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\SucursalesController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +278,9 @@
     <Compile Include="Models\Tbl_Clientes.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_ClienteTmp.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Color.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
@@ -312,6 +317,9 @@
     <Compile Include="Models\Tbl_garantia.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_ImgTamporal.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Kardex.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
@@ -319,6 +327,9 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Orden.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_OrdenTmp.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Pago_Apartado.cs">
@@ -342,6 +353,7 @@
     <Compile Include="Models\Tbl_Talla.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UtilitiesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewsModels\AdminViewModel.cs" />
@@ -362,17 +374,30 @@
     <Content Include="Content\fonts\material-design-icons\MaterialIcons-Regular.svg" />
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\pace-theme-flash.css" />
-    <Content Include="Content\images\avatar-female-default.png" />
-    <Content Include="Content\images\avatar-male-default.png" />
-    <Content Include="Content\images\marcas\1.jpg" />
+    <Content Include="Content\images\articulos\1.png" />
+    <Content Include="Content\system-resources\avatar-female-default.png" />
+    <Content Include="Content\system-resources\avatar-male-default.png" />
+    <Content Include="Content\images\marcas\1.png" />
+    <Content Include="Content\images\marcas\2.png" />
+    <Content Include="Content\images\marcas\3.png" />
+    <Content Include="Content\images\marcas\4.png" />
     <Content Include="Content\images\sucursales\1.jpg" />
+    <Content Include="Content\system-resources\ayuda.png" />
+    <Content Include="Content\system-resources\Background-login.png" />
+    <Content Include="Content\system-resources\catalogos.png" />
+    <Content Include="Content\system-resources\clientes.png" />
+    <Content Include="Content\system-resources\Config.png" />
+    <Content Include="Content\system-resources\logo-ejemplo.png" />
+    <Content Include="Content\system-resources\marca.png" />
     <Content Include="Content\system-resources\marca_oficial_unan_managua.png" />
+    <Content Include="Content\system-resources\proveedor-Default.png" />
     <Content Include="Content\system-resources\side-nav-background.jpg" />
     <Content Include="Content\system-resources\inicio.png" />
-    <Content Include="Content\system-resources\catalogos.png" />
+    <Content Include="Content\system-resources\reportes.png" />
     <Content Include="Content\system-resources\credito.png" />
     <Content Include="Content\system-resources\estadisticas.png" />
     <Content Include="Content\system-resources\inventario.png" />
+    <Content Include="Content\system-resources\sucursales.png" />
     <Content Include="Content\system-resources\usuarios.png" />
     <Content Include="Content\system-resources\ventas.png" />
     <Content Include="favicon.ico" />
@@ -513,13 +538,11 @@
     <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
     <Content Include="Views\Sucursales\Index.cshtml" />
     <Content Include="Views\Sucursales\Listar.cshtml" />
-    <Content Include="Views\Sucursales\Create.cshtml" />
     <Content Include="Views\Sucursales\Details.cshtml" />
     <Content Include="Views\Sucursales\Edit.cshtml" />
     <Content Include="Views\Marcas\Index.cshtml" />
     <Content Include="Views\Marcas\Listar.cshtml" />
     <Content Include="Views\Marcas\Details.cshtml" />
-    <Content Include="Views\Marcas\Create.cshtml" />
     <Content Include="Views\Marcas\Edit.cshtml" />
     <Content Include="Views\Categorias\Listar.cshtml" />
     <Content Include="Views\Categorias\Details.cshtml" />
@@ -536,10 +559,22 @@
     <Content Include="Views\Proveedores\Details.cshtml" />
     <Content Include="Views\Proveedores\Create.cshtml" />
     <Content Include="Views\Proveedores\Edit.cshtml" />
-    <Content Include="Views\Configuracion\Index.cshtml" />
+    <Content Include="Views\Articulos\Index.cshtml" />
+    <Content Include="Views\Articulos\Details.cshtml" />
+    <Content Include="Views\Marcas\Delete.cshtml" />
+    <Content Include="Views\Proveedores\Delete.cshtml" />
+    <Content Include="Views\Sucursales\Delete.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Articulos\Delete.cshtml" />
+    <Content Include="Views\Home\Configuracion.cshtml" />
+    <Content Include="Views\Home\Catalogos.cshtml" />
+    <Content Include="Views\Articulos\Listar.cshtml" />
+    <Content Include="Views\Ventas\Nueva.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\imagesTemporales\" />
+    <Folder Include="Views\Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

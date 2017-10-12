@@ -115,7 +115,7 @@ and dependencies (minified).
 			scrolling inertia
 			values: integer (milliseconds)
 			*/
-			scrollInertia:950,
+			scrollInertia:300,
 			/* 
 			auto-adjust scrollbar dragger length
 			values: boolean

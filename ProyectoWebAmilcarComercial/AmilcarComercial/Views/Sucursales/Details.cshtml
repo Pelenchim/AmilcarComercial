@@ -1,43 +1,35 @@
 ﻿@model AmilcarComercial.Models.Tbl_Sucursal
 
 
-<div class="sucursal-detalle">
-    <div class="row blue-grey darken-4">
-        <h4 class="white-text left-align"><i class="material-icons">info</i>Sucursal: @Model.Nombre</h4>
+<div class="sucursal-detalle blue-grey darken-4">
+    <div class="row white z-depth-1">
+        <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">info</i>Sucursal: @Model.Nombre</h4>
     </div>
-    <div class="row">
-        <div class="contenedor-img col l6">
+    <div class="modal-content row white-text">
+        <div class="contenedor-img col l4">
             <figure>
                 <img src="~/Content/images/sucursales/@Model.imagen" class="responsive-img"/>
-                <figcaption>Imagen del Local</figcaption>
+                <figcaption class="center-align">Imagen del Local</figcaption>
             </figure>
         </div>
-        <div class="col l6">
-            <span>Gerente:</span>
+        <div class="col l8">
+            <strong>Gerente:</strong>
             <p>Francisco Fernandez</p>
-            <p><span>Telefono:</span> @Model.Telefono</p>
-            <p><span>Correo:</span> @Model.Correo</p>
-            <span>Direccion:</span>
+            <p><strong>Telefono:</strong> @Model.Telefono</p>
+            <p><strong>Correo:</strong> @Model.Correo</p>
+            <strong>Direccion:</strong>
             <p>@Model.Direccion</p>
             <div class="acciones col l12 right-align">
-                @using (Ajax.BeginForm("Delete", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
+                @Ajax.ActionLink("Editar", "Edit", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
                 {
-                    UpdateTargetId = "sucursales",
-                    HttpMethod = "post"
-                }))
+                    UpdateTargetId = "editar",
+                    HttpMethod = "GET"
+                }, new { @class = "btn btn-flat white blue-text", @onclick = "$('#editar').modal('open');" })
+                    @Ajax.ActionLink("Eliminar", "Delete", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
                 {
-                    @Html.AntiForgeryToken()
-                    @Ajax.ActionLink("Editar", "Edit", "Sucursales", new { id = Model.id_sucursal }, new AjaxOptions
-                    {
-                        UpdateTargetId = "editar",
-                        HttpMethod = "GET"
-                    }, new { @class = "btn blue", @onclick = "$('#editar').modal('open');" })
-                        <button type="submit" class="btn red">
-                            Eliminar
-                        </button>
-                    }
-
-
+                    UpdateTargetId = "eliminar",
+                    HttpMethod = "GET"
+                }, new { @class = "btn btn-flat white red-text", @onclick = "$('#eliminar').modal('open');" })
             </div>
         </div>
     </div>

@@ -13,16 +13,19 @@ namespace AmilcarComercial.Controllers
     public class SucursalesController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
+        UtilitiesController utileria = new UtilitiesController();
 
         // GET: Sucursales
         public ActionResult Index()
         {
-            return View(db.Tbl_Sucursal.ToList());
+            ViewBag.Gerente = new SelectList(db.AspNetUsers, "Id", "LastName");
+            return View(db.Tbl_Sucursal.Where(m => m.Estado == true).ToList());
         }
 
         public PartialViewResult Listar()
         {
-            return PartialView(db.Tbl_Sucursal.ToList());
+            ViewBag.Usuarios = new SelectList(db.AspNetUsers, "Id", "LastName");
+            return PartialView(db.Tbl_Sucursal.Where(m => m.Estado == true).ToList());
         }
 
         // GET: Sucursales/Details/5
@@ -55,12 +58,18 @@ namespace AmilcarComercial.Controllers
         {
             if (ModelState.IsValid)
             {
+                var imagen = db.Tbl_ImgTamporal.OrderByDescending(m => m.id_img).Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                tbl_Sucursal.imagen = imagen.imagen;
+                var ruta = "sucursales";
+                utileria.MoverImagen(ruta, imagen.imagen);
+
                 db.Tbl_Sucursal.Add(tbl_Sucursal);
+                db.Tbl_ImgTamporal.Remove(imagen);
                 db.SaveChanges();
-                return PartialView("Listar", tbl_Sucursal);
+                return RedirectToAction("Index");
             }
 
-            return PartialView("Listar",tbl_Sucursal);
+            return RedirectToAction("Index",tbl_Sucursal);
         }
 
         // GET: Sucursales/Edit/5
@@ -89,20 +98,28 @@ namespace AmilcarComercial.Controllers
             {
                 db.Entry(tbl_Sucursal).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
             }
-            return PartialView("Listar",tbl_Sucursal);
+            return View(tbl_Sucursal);
         }
 
         // POST: Sucursales/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             Tbl_Sucursal tbl_Sucursal = db.Tbl_Sucursal.Find(id);
-            db.Tbl_Sucursal.Remove(tbl_Sucursal);
             db.SaveChanges();
-            return PartialView("Listar", tbl_Sucursal);
+            return PartialView(tbl_Sucursal);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Tbl_Sucursal Tbl_sucursal = db.Tbl_Sucursal.Find(id);
+            Tbl_sucursal.Estado = false;
+            db.Entry(Tbl_sucursal).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Listar");
         }
 
         protected override void Dispose(bool disposing)

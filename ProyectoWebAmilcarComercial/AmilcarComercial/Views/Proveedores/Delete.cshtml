@@ -1,0 +1,34 @@
+﻿@model AmilcarComercial.Models.Tbl_Proveedor
+
+@{ 
+    Layout = null;
+}
+
+<div class="proveedor-eliminar cyan">
+    <div class="row white z-depth-1">
+        <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">add_box</i>Eliminar Proveedor</h4>
+    </div>
+    <div class="modal-content row white-text">
+        <div class="row">
+            <p>Esta seguro que sea eliminar el elemento <strong>"@Model.razon_social"</strong>?</p>
+            <p>Por motivos de seguridad los elementos nose eliminan, solo se dan de baja de sistema</p>
+        </div>
+        <div class="row">
+            @using (Ajax.BeginForm("Delete", "Proveedores", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "proveedores",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "OnDelete"
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="col l12 right-align">
+                    <button type="button" class="btn-flat white grey-text text-darken-4" onclick="$('#eliminar').modal('close')">Cancelar</button>
+                    <input type="submit" value="Eliminar" class="btn-flat white red-text" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

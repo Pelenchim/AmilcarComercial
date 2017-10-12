@@ -4,60 +4,66 @@
     Layout = null;
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Tbl_Proveedor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id_proveedor)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.razon_social, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.razon_social, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.razon_social, "", new { @class = "text-danger" })
-            </div>
+<div class="proveedor-editar cyan">
+    <div class="row white z-depth-1">
+        <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">edit</i>Editar Proveedor</h4>
+    </div>
+    <div class="modal-content row white-text">
+        <div class="col l4">
+            <figure>
+                <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
+            </figure>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.categoria, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.categoria, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.categoria, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ruc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <div class="col l8">
+            @using (Ajax.BeginForm("Edit", "Proveedores", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "proveedores",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "OnEdit"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.id_proveedor)
+                <div class="input-field col l12">
+                    @Html.EditorFor(model => model.razon_social, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="razon_social">Nombre</label>
+                    @Html.ValidationMessageFor(model => model.razon_social, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="telefono">N° Telefono</label>
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="Ruc">N° Ruc</label>
+                    @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
+                </div>
+                <div class="col l2">
+                    <span class="white-text"><strong>Estado: </strong></span>
+                </div>
+                <div class="col l10">
+                    <div class="switch">
+                        <label class="white-text">
+                            Inactivo
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            Activo
+                        </label>
+                    </div>
+                </div>
+                <div class="acciones col l12 right-align">
+                    <button class="btn btn-flat white red-text" type="reset" onclick="$('#editar').modal('close')">Cancelar</button>
+                    <button class="btn btn-flat white blue-text" type="submit">Guardar</button>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    $(document).ready(function () {
+        $('.input-field :input').focus();
+    });
+</script>

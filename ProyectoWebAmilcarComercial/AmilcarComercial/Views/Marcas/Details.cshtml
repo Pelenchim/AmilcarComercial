@@ -4,37 +4,42 @@
     Layout = null;
 }
 
-<div class="sucursal-nuevo">
-    <div class="row blue-grey darken-4">
-        <h4 class="white-text left-align"><i class="material-icons">add_box</i>Detalle de Marca</h4>
+<div class="marca-detalle cyan">
+    <div class="row white z-depth-1">
+        <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">info</i>Detalle de Marca</h4>
     </div>
-    <div class="row">
-        <div class="col l12">
+    <div class="modal-content row white-text">
+        <div class="col l6">
             <figure>
                 <img src="~/Content/images/marcas/@Model.imagen" class="responsive-img"/>
-                <figcaption>Imagen Actual</figcaption>
+                <figcaption class="center-align">Logo de Marca</figcaption>
             </figure>
         </div>
-        <div class="col l12">
-            <p>Nombre: @Model.nombre</p>
-        </div>
-        <div class="acciones col l12 right-align">
-            @using (Ajax.BeginForm("Delete", "Marcas", new { id = Model.id_Marca }, new AjaxOptions
-            {
-                UpdateTargetId = "marcas",
-                HttpMethod = "post"
-            }))
-            {
-                @Html.AntiForgeryToken()
+        <div class="col l6">
+            <p><strong>Nombre:</strong> @Model.nombre</p>
+            <span><strong>Estado:</strong></span>
+            <div class="col l12 center-align">
+                <div class="switch">
+                    <label class="white-text">
+                        Inactiva
+                        <input disabled type="checkbox">
+                        <span class="lever"></span>
+                        Activa
+                    </label>
+                </div>
+            </div>
+            <div class="acciones col l12 right-align">
                 @Ajax.ActionLink("Editar", "Edit", "Marcas", new { id = Model.id_Marca }, new AjaxOptions
-               {
-                   UpdateTargetId = "editar",
-                   HttpMethod = "GET"
-               }, new { @class = "btn blue", @onclick = "$('#editar').modal('open');" })
-                <button type="submit" class="btn red">
-                    Eliminar
-                </button>
-            }
-        </div>
+                {
+                    UpdateTargetId = "editar",
+                    HttpMethod = "GET"
+                }, new { @class = "btn btn-flat white blue-text", @onclick = "$('#editar').modal('open');" })
+                @Ajax.ActionLink("Eliminar", "Delete", "Marcas", new { id = Model.id_Marca }, new AjaxOptions
+                {
+                    UpdateTargetId = "eliminar",
+                    HttpMethod = "GET"
+                }, new { @class = "btn btn-flat white red-text", @onclick = "$('#eliminar').modal('open');" })
+            </div>
+        </div>        
     </div>
 </div>

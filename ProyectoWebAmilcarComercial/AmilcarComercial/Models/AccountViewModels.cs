@@ -86,6 +86,9 @@ namespace AmilcarComercial.Models
         [Display(Name = "Direccion Domiciliar")]
         public string Address { get; set; }
 
+        [Display(Name = "Departamento")]
+        public string DepartmentAddress { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Correo electrónico *")]

@@ -13,6 +13,7 @@ namespace AmilcarComercial.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
+        public string DepartmentAddress { get; set; }
         public string IdentityidentificationCard { get; set; }
         public DateTime BirthDay { get; set; }
         public string TelephoneNumber { get; set; }

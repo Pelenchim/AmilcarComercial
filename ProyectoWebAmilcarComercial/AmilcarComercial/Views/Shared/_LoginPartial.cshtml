@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -6,14 +7,11 @@
     @Html.AntiForgeryToken()
 
     <ul class="right hide-on-med-and-down">
-        <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right">more_vert</i></a></li>
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">@User.Identity.GetUserName()<i class="material-icons right">more_vert</i></a></li>
     </ul>
 
     <ul id="dropdown1" class="dropdown-content grey-text text-darken-3">
-        <li><a href="">Configuracion de la cuenta</a></li>
+        <li>@Html.ActionLink("Configuracion de la Cuenta", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
         <li><a href="">configuraciones</a></li>
         <li class="divider"></li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>

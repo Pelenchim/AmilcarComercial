@@ -17,12 +17,14 @@ namespace AmilcarComercial.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            return View(db.Tbl_Clientes.ToList());
+            var tbl_Clientes = db.Tbl_Clientes.Include(t => t.Tbl_Departamentos).Where(m => m.estado == true).ToList();
+            return View(tbl_Clientes);
         }
 
         public ActionResult Listar()
         {
-            return PartialView(db.Tbl_Clientes.ToList());
+            var tbl_Clientes = db.Tbl_Clientes.Include(t => t.Tbl_Departamentos).Where(m => m.estado == true).ToList();
+            return PartialView(tbl_Clientes);
         }
 
         // GET: Clientes/Details/5
@@ -43,24 +45,23 @@ namespace AmilcarComercial.Controllers
         // GET: Clientes/Create
         public ActionResult Create()
         {
+            ViewBag.departamento = new SelectList(db.Tbl_Departamentos, "id_Departamento", "Nombre");
             return PartialView();
         }
 
-        // POST: Clientes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_cliente,nombre_cliente,apellidos_cliente,direccion,departamento,telefono,cedula")] Tbl_Clientes tbl_Clientes)
+        public ActionResult Create([Bind(Include = "id_cliente,nombre_cliente,apellidos_cliente,direccion,departamento,telefono,cedula,estado")] Tbl_Clientes tbl_Clientes)
         {
             if (ModelState.IsValid)
             {
                 db.Tbl_Clientes.Add(tbl_Clientes);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
             }
 
-            return PartialView(tbl_Clientes);
+            ViewBag.departamento = new SelectList(db.Tbl_Departamentos, "id_Departamento", "Nombre", tbl_Clientes.departamento);
+            return View(tbl_Clientes);
         }
 
         // GET: Clientes/Edit/5
@@ -75,22 +76,27 @@ namespace AmilcarComercial.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView(tbl_Clientes);
+            ViewBag.departamento = new SelectList(db.Tbl_Departamentos, "id_Departamento", "Nombre", tbl_Clientes.departamento);
+            return View(tbl_Clientes);
         }
 
-        // POST: Clientes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_cliente,nombre_cliente,apellidos_cliente,direccion,departamento,telefono,cedula")] Tbl_Clientes tbl_Clientes)
+        public ActionResult Edit([Bind(Include = "id_cliente,nombre_cliente,apellidos_cliente,direccion,departamento,telefono,cedula,estado")] Tbl_Clientes tbl_Clientes)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(tbl_Clientes).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
             }
+            ViewBag.departamento = new SelectList(db.Tbl_Departamentos, "id_Departamento", "Nombre", tbl_Clientes.departamento);
+            return View(tbl_Clientes);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            Tbl_Clientes tbl_Clientes = db.Tbl_Clientes.Find(id);
             return PartialView(tbl_Clientes);
         }
 
@@ -100,9 +106,10 @@ namespace AmilcarComercial.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Tbl_Clientes tbl_Clientes = db.Tbl_Clientes.Find(id);
-            db.Tbl_Clientes.Remove(tbl_Clientes);
+            tbl_Clientes.estado = false;
+            db.Entry(tbl_Clientes).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Listar");
         }
 
         protected override void Dispose(bool disposing)

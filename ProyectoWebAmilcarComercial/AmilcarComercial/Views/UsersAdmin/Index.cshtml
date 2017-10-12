@@ -10,12 +10,12 @@
 <nav class="nav-extended @ViewBag.NavExtendedColor">
     @Html.Partial("_breadcrumbPartial")
     <div class="nav-content">
-            <ul class="tabs tabs-transparent">
-                <li class="tab"><a class="active" href="#Activos">Activos</a></li>
-                <li class="tab"><a href="#Desactivados">Desactivados</a></li>
-                <li class="tab"><a href="#Tipos">Tipos de Usuario</a></li>
-            </ul>
-        </div>
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a class="active" href="#Activos">Activos</a></li>
+            <li class="tab"><a href="#Desactivados">Desactivados</a></li>
+            <li class="tab"><a href="#Tipos">Tipos de Usuario</a></li>
+        </ul>
+    </div>
 </nav>
 
 
@@ -140,7 +140,7 @@
         </div>
     </div>
     <div class="fixed-action-btn">
-        <a class="modal-trigger btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Create","UsersAdmin")">
+        <a class="modal-trigger btn-floating btn-large pink pulse" href="@Url.Action("Create","UsersAdmin")">
             <i class="large material-icons">person_add</i>
         </a>
     </div>

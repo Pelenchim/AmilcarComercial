@@ -4,46 +4,53 @@
     Layout = null;
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.razon_social)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.categoria)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ruc)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.razon_social)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.categoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ruc)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_proveedor }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_proveedor }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_proveedor })
-        </td>
-    </tr>
+@foreach (var proveedor in Model)
+{
+    <div class="col l4">
+        <div class="card horizontal white hoverable">
+            <div class="col l4 cyan contenedor-img">
+                <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img">
+            </div>
+            <div class="col l8 card-content">
+                <div class="opciones">
+                    <a class='dropdown-button grey-text text-darken-3 tooltipped' href='#' data-activates='@proveedor.id_proveedor' data-position="opcionesCatalogo" data-delay="50" data-tooltip="Opciones">
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <ul id='@proveedor.id_proveedor' class='dropdown-content'>
+                        <li>
+                            @Ajax.ActionLink("Detalles", "Details", "Proveedores", new { id = proveedor.id_proveedor }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "detalle",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Editar", "Edit", "Proveedores", new { id = proveedor.id_proveedor }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "editar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Eliminar", "Delete", "Proveedores", new { id = proveedor.id_proveedor }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "eliminar",
+                                   HttpMethod = "GET",
+                               }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                        </li>
+                    </ul>
+                </div>
+                <span class="card-title truncate tooltipped" data-position="tituloCatalogo" data-delay="50" data-tooltip="@proveedor.razon_social">@proveedor.razon_social</span>
+                <p>Tel: @proveedor.telefono</p>
+                @if (proveedor.Estado == true)
+                {
+                    <p>Activo</p>
+                }
+                else
+                {
+                    <p>Inactivo</p>
+                }
+            </div>
+        </div>
+    </div>
 }
-
-</table>

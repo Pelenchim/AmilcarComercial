@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/fonts")
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/libraries")    
+    @RenderSection("Styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="grey lighten-5">
@@ -16,7 +17,8 @@
             <nav>
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
                 <div class="nav-wrapper @ViewBag.PrimaryColor z-depth-2">
-                    <a href="#!" class="brand-logo">Logo</a>
+                    <a href="#!" class="brand-logo center">Logo</a>
+                    <a class="show-hidde hidde-side-nav hide-on-med-and-down"><i class="material-icons">menu</i></a>
                     @Html.Partial("_LoginPartial")
                 </div>
             </nav>
@@ -35,7 +37,7 @@
                         <a href="#!email"><span class="grey-text text-darken-3 email">jdandturk@gmail.com</span></a>
                     </div>
                 </li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inicio" href="@Url.Action("Index","Home")">
+                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inicio" href="@Url.Action("Index", "Home")">
                     <i class="icono inicio"></i><span>Inicio</span></a>
                 </li>
                 <li><div class="divider"></div></li>
@@ -53,7 +55,7 @@
                     <i class="icono inventario"></i><span>Inventario</span></a>
                 </li>
                 <li class="item-hidden hide">
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos2" href="#!">
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos" href="#!">
                         <i class="icono catalogos"></i>
                     </a>
                 </li>
@@ -67,30 +69,57 @@
                             </a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li><a href="@Url.Action("Index","Marcas")">Marcas</a></li>
-                                    <li><a href="@Url.Action("Index","Categorias")">Categorias</a></li>
-                                    <li><a href="@Url.Action("Index","Clientes")">Clientes</a></li>
-                                    <li><a href="@Url.Action("Index","Proveedores")">Proveedores</a></li>
+                                    <li><a href="@Url.Action("Index","Articulos")"><i class="material-icons tiny">subdirectory_arrow_right</i>Articulos</a></li>
+                                    <li><a href="@Url.Action("Index","Categorias")"><i class="material-icons tiny">subdirectory_arrow_right</i>Categorias</a></li>
+                                    <li><a href="@Url.Action("Index","Marcas")"><i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono marcas"></i>Marcas</a></li>
+                                    <li><a href="@Url.Action("Index","Proveedores")"><i class="material-icons tiny">subdirectory_arrow_right</i>Proveedores</a></li>
+                                    <li><a href="@Url.Action("Index","Clientes")"><i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono cliente"></i>Clientes</a></li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
                 </li>
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Reportes" href="#!">
-                    <i class="material-icons">cloud</i><span>Reportes</span></a>
+                     <i class="icono reportes"></i><span>Reportes</span></a>
                 </li>
                 <li><div class="divider"></div></li>
-                <li class="sub"><a class="subheader">Configuracion</a></li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Usuarios" href="@Url.Action("Index","UsersAdmin")">
-                    <i class="icono usuarios"></i><span>Usuarios</span></a>
+                <li class="sub"><a class="subheader">Preferencias</a></li>
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Configuracion">
+                                <i class="icono config left"></i>
+                                <span>Configuracion</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Usuarios" href="@Url.Action("Index","UsersAdmin")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono usuarios"></i><span>Usuarios</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Sucursales" href="@Url.Action("Index","Sucursales")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono sucursal"></i><span>Sucursales</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>             
+                    </ul>
+                </li>
+                <li class="item-hidden hide">
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Configuracion" href="#!">
+                        <i class="icono config"></i>
+                    </a>
                 </li>
                 <li>
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Sucursales" href="@Url.Action("Index","Sucursales")">
-                        <i class="icono usuarios"></i><span>Sucursales</span>
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Ayuda" href="#!">
+                        <i class="icono ayuda"></i><span>Ayuda</span>
                     </a>
                 </li>
             </ul>
-            <a class="show-hidde hidde-side-nav hide-on-med-and-down waves-effect z-depth-1 grey-text"><i class="material-icons">navigate_before</i></a>
         </aside>
         <section class="content">
             @RenderBody()
@@ -106,7 +135,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/materialize")
     @Scripts.Render("~/bundles/libraries")
-    @Scripts.Render("~/bundles/jqueryajax")
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
         //mejorar esto
@@ -125,13 +153,13 @@
             $(".show-hidde").on("click", function () {
                 if ($(this).hasClass('hidde-side-nav')) {
                     ocultar();
-                    $('aside a.show-hidde').removeClass('hidde-side-nav');
-                    $('aside a.show-hidde').addClass('show-side-nav');
+                    $('a.show-hidde').removeClass('hidde-side-nav');
+                    $('a.show-hidde').addClass('show-side-nav');
                 }
                 else if ($(this).hasClass('show-side-nav')) {
                     mostrar();
-                    $('aside a.show-hidde').removeClass('show-side-nav');
-                    $('aside a.show-hidde').addClass('hidde-side-nav');
+                    $('a.show-hidde').removeClass('show-side-nav');
+                    $('a.show-hidde').addClass('hidde-side-nav');
                 }
             });
         });
@@ -143,7 +171,6 @@
             $('.side-nav li.submenus').hide("slow", "swing");
 
             $('.side-nav').css({ "width": "70px", "padding-top": "17px" }).fadeIn("4000");
-            $('.show-hidde').css("width", "70px").fadeIn("4000");
             $('.side-nav li > a.item').css("padding", "0 21px").fadeIn("4000");
             $('.side-nav li a i').css("width", "28px").fadeIn("4000");
             $('body main.layout .content').css("padding-left", "70px").fadeIn("4000");
@@ -163,7 +190,6 @@
             $('.side-nav li.submenus').show("slow", "swing");
 
             $('.side-nav').css({ "width": "260px", "padding-top": "0px" }).fadeIn("4000");
-            $('.show-hidde').css("width", "260px").fadeIn("4000");
             $('.side-nav li > a.item').css("padding", "0 32px").fadeIn("4000");
             $('.side-nav li a i').css("width", "24px").fadeIn("4000");
             $('body main.layout .content').css("padding-left", "260px").fadeIn("4000");

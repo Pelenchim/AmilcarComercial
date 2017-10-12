@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Catalogos";
-    ViewBag.SubTitle = "> Marcas";
-    ViewBag.BackgroundColor = "teal darken-4";
-    ViewBag.NavExtendedColor = "teal darken-3";
+    ViewBag.SubTitle = "Marcas";
+    ViewBag.ControllerGeneral = "Home";
+    ViewBag.PrimaryColor = "cyan";
+    ViewBag.NavExtendedColor = "cyan darken-1";
 }
 
 <nav class="nav-extended @ViewBag.NavExtendedColor">
@@ -19,15 +20,18 @@
     </div>
 </div>
 <div class="row">
-    <div class="container-mio sucursales" id="marcas">
+    <div class="container-mio marcas" id="marcas">
         @foreach (var marca in Model)
         {
-            <div class="col l4">
-                <div class="card">
-                    <div class="card-image teal">
+            <div class="col l3">
+                <div class="card horizontal white hoverable">
+                    <div class="col l4 contenedor-img cyan">
+                        <img src="~/Content/images/marcas/@marca.imagen" class="responsive-img">
+                    </div>
+                    <div class="col l8 card-content white">
                         <div class="opciones">
-                            <a class='dropdown-button white-text' href='#' data-activates='@marca.nombre'>
-                                <i class="material-icons">more_vert</i>
+                            <a class='dropdown-button grey-text text-darken-3 tooltipped' href='#' data-activates='@marca.nombre' data-position="opcionesCatalogo" data-delay="50" data-tooltip="Opciones">
+                                <i class="material-icons right">more_vert</i>
                             </a>
                             <ul id='@marca.nombre' class='dropdown-content'>
                                 <li>
@@ -43,24 +47,25 @@
                                    UpdateTargetId = "editar",
                                    HttpMethod = "GET"
                                }, new { @class = "", @onclick = "$('#editar').modal('open');" })
-                            </li>
-                            <li>
-                                @using (Ajax.BeginForm("Delete", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
-                            {
-                                UpdateTargetId = "marcas",
-                                HttpMethod = "POST",
-                                Confirm = "Desea Eliminar este elemento?",
-                                InsertionMode = InsertionMode.Replace
-                            }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <button type="submit">Eliminar</button>
-                            }
-                        </li>
-                    </ul>
-                    </div>
-                        <img src="~/Content/images/marcas/@marca.imagen">
-                        <span class="card-title">@marca.nombre</span>
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Eliminar", "Delete", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "eliminar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="card-title truncate tooltipped" data-position="tituloCatalogo" data-delay="50" data-tooltip="@marca.nombre">@marca.nombre</span>
+                        @if (marca.estado == true)
+	                    {
+		                     <p>Activa</p>
+                        }
+                        else
+                        {
+                            <p>Inactiva</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -68,7 +73,7 @@
     </div>
 </div> 
 <div class="fixed-action-btn">
-    @Ajax.ActionLink("add", "Create", "Sucursales", new AjaxOptions
+    @Ajax.ActionLink("add", "Create", "Marcas", new AjaxOptions
 {
     UpdateTargetId = "nuevo", // <-- DOM element ID to update
     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
@@ -76,17 +81,93 @@
 }, new { @class = "modal-trigger btn-floating btn-large blue-grey darken-4 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
 </div>
 
-<div id="detalle" class="modal modal-w"></div>
-<div id="nuevo" class="modal modal-w"></div>
-<div id="editar" class="modal modal-w"></div>
+<div id="detalle" class="modal modal-small cyan"></div>
+<div id="nuevo" class="modal modal-small cyan">
+    <div class="marca-nuevo cyan">
+        <div class="row white z-depth-1">
+            <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">add_box</i>Agregar Nueva Marca</h4>
+        </div>
+        <div class="modal-content row white-text">
+            <div class="col l5">
+                <div class="col l10 offset-l1">
+                    <form action="~/Utilities/SaveUploadedFile/1" method="post" enctype="multipart/form-data" class="dropzone" id="my-dropzone" style="width: 50px; background: none; border: none;">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col l7">
+                <form action="/Marcas/Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="input-field col l12">
+                        <input name="nombre" id="nombre" class="validate" type="text" autofocus />
+                        <label for="nombre">Nombre de la Marca</label>
+                    </div>
+                    <div class="col l12">
+                        <span><strong>Estado:</strong></span>
+                    </div>
+                    <div class="col l12 center-align">
+                        <div class="switch">
+                            <label class="white-text">
+                                Inactivo
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                                Activo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="acciones col l12 right-align">
+                        <button class="btn btn-flat white red-text" type="reset" onclick="$('#nuevo').modal('close')">Cancelar</button>
+                        <button class="btn btn-flat white blue-text" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-@section Scripts
-{
+</div>
+<div id="editar" class="modal modal-small cyan"></div>
+<div id="eliminar" class="modal modal-mini cyan"></div>
+
+@section Styles{
+    @Styles.Render("~/Content/dropzone")
+}
+@section Scripts{    
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dropzone")
     <script type="text/javascript">
         $(document).ready(function () {
-            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
-            $('.tooltipped').tooltip({ delay: 50 });
+            $('.tooltipped').tooltip({ delay: 50 });            
         });
+        //File Upload response from the server
+        Dropzone.autoDiscover = true;
+        Dropzone.options.myDropzone = {
+            paramName: "file",
+            uploadMultiple: false,
+            maxFiles: 1,
+            addRemoveLinks: true,
+            init: function () {
+                this.on("complete", function (data) {
+                    //var res = eval('(' + data.xhr.responseText + ')');
+                    var res = JSON.parse(data.xhr.responseText);
+                });
+            }
+        };
+        function OnSuccess() {
+            Materialize.toast('Marca Agregada Correctamente', 4000);
+            $('#nuevo').modal('close');
+        }
+        function OnDelete() {
+            Materialize.toast('Marca Eliminada Correctamente', 4000);
+            $('#eliminar').modal('close');
+        }
+        function OnEdit() {
+            Materialize.toast('Marca Editada Correctamente', 4000);
+            $('#editar').modal('close');
+        }        
     </script>
 }

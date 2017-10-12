@@ -2,37 +2,49 @@
 
 @foreach (var marca in Model)
 {
-    <div class="col l4">
-        <div class="card">
-            <div class="card-image teal">
+    <div class="col l3">
+        <div class="card horizontal white hoverable">
+            <div class="col l4 contenedor-img cyan">
+                <img src="~/Content/images/marcas/@marca.imagen" class="responsive-img">
+            </div>
+            <div class="col l8 card-content white">
                 <div class="opciones">
-                    @using (Ajax.BeginForm("Delete", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
-                    {
-                        UpdateTargetId = "marcas",
-                        HttpMethod = "post",
-                        Confirm = "Desea Eliminar este elemento?"
-                    }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <button type="submit">
-                            <i class="material-icons">delete</i>
-                        </button>
-                    }
-
-                    @Ajax.ActionLink("mode_edit", "Edit", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
-                       {
-                           UpdateTargetId = "editar",
-                           HttpMethod = "GET"
-                       }, new { @class = "material-icons", @onclick = "$('#editar').modal('open');" })
-
-                    @Ajax.ActionLink("info", "Details", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
-                       {
-                           UpdateTargetId = "detalle",
-                           HttpMethod = "GET"
-                       }, new { @class = "material-icons", @onclick = "$('#detalle').modal('open');" })
+                    <a class='dropdown-button grey-text text-darken-2' href='#' data-activates='@marca.nombre'>
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <ul id='@marca.nombre' class='dropdown-content'>
+                        <li>
+                            @Ajax.ActionLink("Detalles", "Details", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "detalle",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Editar", "Edit", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "editar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Eliminar", "Delete", "Marcas", new { id = marca.id_Marca }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "eliminar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                        </li>
+                    </ul>
                 </div>
-                <img src="~/Content/images/marcas/@marca.imagen">
-                <span class="card-title">@marca.nombre</span>
+                <span class="card-title truncate">@marca.nombre</span>
+                @if (marca.estado == true)
+                {
+                    <p>Activa</p>
+                }
+                else
+                {
+                    <p>Inactiva</p>
+                }
             </div>
         </div>
     </div>

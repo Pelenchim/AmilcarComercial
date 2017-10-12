@@ -82,12 +82,12 @@ namespace AmilcarComercial.Controllers
             using (DBAmilcarEntities _context = new DBAmilcarEntities())
             {
                 ViewBag.Sucursales = new SelectList(await _context.Tbl_Sucursal.ToListAsync(), "id_sucursal","Nombre");
-                var user = "User" + _context.AspNetUsers.Count();
+                ViewBag.Departamento = new SelectList(await _context.Tbl_Departamentos.ToListAsync(), "id_Departamento", "Nombre");
             }
             //Get the list of Roles
             ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
          
-            return View(User);
+            return View();
         }
 
         //
@@ -115,6 +115,7 @@ namespace AmilcarComercial.Controllers
                     IdentityidentificationCard = userViewModel.IdentificationCard,
                     BirthDay = userViewModel.BirthDay,
                     Address = userViewModel.Address,
+                    DepartmentAddress = userViewModel.DepartmentAddress,
                     Email = userViewModel.Email,
                     TelephoneNumber = userViewModel.TelephoneNumber,
                     Avatar = userViewModel.Avatar,

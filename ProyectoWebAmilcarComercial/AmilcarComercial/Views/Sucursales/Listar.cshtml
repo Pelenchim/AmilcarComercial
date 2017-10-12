@@ -7,54 +7,44 @@
 @foreach (var sucursal in Model)
 {
     <div class="col l4">
-        <div class="card">
-            <div class="card-image teal">
-                <div class="opciones">      
-                    @using (Ajax.BeginForm("Delete", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
-                    {
-                        UpdateTargetId = "sucursales",
-                        HttpMethod = "post",
-                        Confirm="Desea eliminar esto?"
-                    }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <button type="submit">
-                            <i class="material-icons">delete</i>
-                        </button>
-                    }
+        <div class="card hoverable">
+            <div class="card-image blue-grey darken-3">
+                <div class="opciones">
+                    <a class='dropdown-button white-text' href='#' data-activates='@sucursal.id_sucursal'>
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <ul id='@sucursal.id_sucursal' class='dropdown-content'>
+                        <li>
+                            @Ajax.ActionLink("Detalles", "Details", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "detalle",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Editar", "Edit", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "editar",
+                                   HttpMethod = "GET"
+                               }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                    </li>
+                    <li>
+                        @Ajax.ActionLink("Eliminar", "Delete", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "eliminar",
+                                   HttpMethod = "GET",
+                                   InsertionMode = InsertionMode.Replace
+                               }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                    </li>
 
-                    @Ajax.ActionLink("mode_edit", "Edit", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
-                    {
-                        UpdateTargetId = "editar",
-                        HttpMethod = "GET"
-                    }, new { @class = "material-icons", @onclick = "$('#editar').modal('open');" })
-
-                    @Ajax.ActionLink("info", "Details", "Sucursales", new { id = sucursal.id_sucursal }, new AjaxOptions
-               {
-                   UpdateTargetId = "detalle",
-                   HttpMethod = "GET"
-               }, new { @class = "material-icons", @onclick = "$('#detalle').modal('open');" })
-                </div>
-                <img src="~/Content/images/sucursales/@sucursal.imagen">
-                <span class="card-title">@sucursal.Nombre</span>
+                </ul>
             </div>
-            <div class="card-content">
-                <p>Gerente: Francisco Fernandez</p>            
-            </div>
+            <img src="~/Content/images/sucursales/@sucursal.imagen">
+            <span class="card-title">@sucursal.Nombre</span>
+        </div>
+        <div class="card-content">
+            <p class="truncate">Gerente: Francisco Fernandez</p>
         </div>
     </div>
-}
-
-@section Scripts
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.tooltipped').tooltip({ delay: 50 });
-        });
-    </script>
-    <script type="text/javascript">
-            function ValidateDelete() {
-                return confirm("Are you sure?");
-            }
-    </script>
+</div>
 }

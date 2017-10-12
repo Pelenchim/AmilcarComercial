@@ -4260,7 +4260,7 @@ nav .nav-wrapper {
     height: 100%;
 }
 header nav .nav-wrapper {
-    padding-left: 20px;
+    padding-left: 15px;
     padding-right: 20px;
 }
 
@@ -7349,7 +7349,8 @@ input[type=range]:focus::-ms-fill-upper {
     margin-top: 56px;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
-    height: calc(100% - (56px + 40px));
+    height: calc(100% - 56px);
+    padding-bottom: 10px;
     background-color: #fff;
     z-index: 996;
     overflow-y: auto;

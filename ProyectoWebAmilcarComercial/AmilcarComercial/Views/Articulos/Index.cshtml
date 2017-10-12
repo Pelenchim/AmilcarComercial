@@ -1,0 +1,309 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Articulo>
+
+@{
+    ViewBag.Title = "Catalogos";
+    ViewBag.SubTitle = "Articulos";
+    ViewBag.ControllerGeneral = "Home";
+    ViewBag.PrimaryColor = "cyan";
+    ViewBag.NavExtendedColor = "cyan darken-1";
+}
+
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a class="active" href="#Todos">Todos</a></li>
+            <li class="tab"><a href="#Ropa">Electrodomesticos</a></li>
+            <li class="tab"><a href="#Ropa">Ropa</a></li>
+            <li class="tab"><a href="#Juguetes">Juguetes</a></li>
+            <li class="tab"><a href="#Bicicletas">Bicicletas</a></li>
+            <li class="tab"><a href="#Deportivos">Deportivos</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div id="Todos" class="col l12">
+        <br />
+        <div class="row">
+            <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                <form class="col l9">
+                    <div class="input-field">
+                        <input id="search" type="search" placeholder="Buscar Articulo" required>
+                    </div>
+                </form>
+                <div class="col l3">
+                    <a class="hide tooltipped" data-position="bottom" data-delay="50" data-tooltip="Vista de cuadricula"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Vista de lista"><i class="material-icons">view_list</i></a>
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
+                    <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottom" data-delay="50" data-tooltip="Opciones">
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="row titulo-catalogo">
+            <div class="container-mio">
+                <div class="col l12">
+                    <h5>Lista de Articulos</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container-mio articulos" id="articulos">
+                @foreach (var articulo in Model)
+                {
+                    <div class="col width-mio">
+                        <div class="card">
+                            <div class="card-image cyan">
+                                <p class="codigo white-text">Cod: @articulo.codigo_articulo</p>
+                                <div class="opciones">
+                                    <a class='dropdown-button white-text tooltipped' href='#' data-activates='@articulo.id_articulo' data-position="opcionesCatalogo" data-delay="50" data-tooltip="Opciones">
+                                        <i class="material-icons right">more_vert</i>
+                                    </a>
+                                    <ul id='@articulo.id_articulo' class='dropdown-content'>
+                                        <li>
+                                            @Ajax.ActionLink("Detalles", "Details", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                   {
+                                       UpdateTargetId = "detalle",
+                                       HttpMethod = "GET"
+                                   }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                                        </li>
+                                        <li>
+                                            @Ajax.ActionLink("Editar", "Edit", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                   {
+                                       UpdateTargetId = "editar",
+                                       HttpMethod = "GET"
+                                   }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                                        </li>
+                                        <li>
+                                            @Ajax.ActionLink("Eliminar","Delete", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                            {
+                                                UpdateTargetId = "eliminar",
+                                                HttpMethod = "GET"
+                                            }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                                        </li>
+                                    </ul>
+                                </div>
+                                <img src="~/Content/images/articulos/@articulo.imagen">
+                                <span class="card-title truncate tooltipped" data-position="topMio" data-delay="50" data-tooltip="@articulo.nombre_articulo">@articulo.nombre_articulo</span>
+                            </div>
+                            <div class="card-content">
+                                <p>Marca: @articulo.Tbl_Marca.nombre</p>
+                                <p>Precio: 30$</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col l12 center">
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>    
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light blue-grey darken-4 pulse" onclick="ultimo()"><i class="material-icons">add</i></a>
+</div>
+
+<div id="detalle" class="modal white-text border-radius-4 cyan"></div>
+<div id="nuevo" class="modal cyan">
+    <div class="articulo-nuevo cyan">
+        <div class="row white z-depth-1">
+            <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">add_box</i>Agregar Nuevo Articulo</h4>
+        </div>
+        <div class="modal-content row white-text">
+            <div class="col l4">
+                <div class="col l12">
+                    <form action="~/Utilities/SaveUploadedFile/0" method="post" enctype="multipart/form-data" class="dropzone" id="my-dropzone" style="width: 50px; background: none; border: none;">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <form action="/Articulos/Create" method="post">
+                @Html.AntiForgeryToken()
+                <div class="col l8">
+                    <div class="input-field col l3">
+                        <input name="codigo_articulo" id="codigo_articulo" class="validate" type="text" autofocus/>
+                        <label for="codigo_articulo">Codigo</label>
+                    </div>
+                    <div class="input-field col l9">
+                        <input name="nombre_articulo" id="nombre_articulo" class="validate" type="text" autofocus/>
+                        <label for="nombre_articulo">Nombre</label>
+                    </div>
+                    <div class="input-field col l6">
+                        @Html.DropDownList("id_marca", null, "Seleccione Marca", htmlAttributes: new { @class = "form-control" })
+                        <label>Marca</label>
+                    </div>
+                    <div class="input-field col l6">
+                        @Html.DropDownList("id_categoria", null, "Seleccione Categoria", htmlAttributes: new { @class = "form-control" })
+                        <label>Categoria</label>
+                    </div>
+                    <div class="input-field col l8">
+                        <input name="descripcion_articulo" id="descripcion_articulo" class="validate" type="text" />
+                        <label for="descripcion_articulo">Descripcion</label>
+                    </div>
+                    <div class="input-field col l2">
+                        <input name="GarantiaCant" id="GarantiaCant" class="validate" type="text" />
+                        <label for="Garantia">Garantia</label>
+                    </div>
+                    <div class="input-field col l2">
+                        <select id="GarantiaMedida" name="GarantiaMedida">
+                            <option value="1">Dias</option>
+                            <option value="2">Meses</option>
+                            <option value="3">Años</option>
+                        </select>
+                    </div>
+                    <div class="col l3">
+                        <label class="white-text">Credito</label>
+                        <div class="switch">
+                            <label class="white-text">
+                                No
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                                Si
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col l5">
+                        <label class="white-text">Estado</label>
+                        <div class="switch">
+                            <label class="white-text">
+                                Inactivo
+                                <input type="checkbox" id="estado" name="estado">
+                                <span class="lever"></span>
+                                Activo
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div id="" class="col l12 especificaciones"></div>
+                <div class="col l12 right-align">
+                    <br />
+                    <div class="col l12">
+                        <button class="btn btn-flat white red-text" type="reset" onclick="OnClose()">Cancelar</button>
+                        <button class="btn btn-flat white blue-text" type="submit">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="editar" class="modal cyan"></div>
+<div id="eliminar" class="modal modal-mini cyan"></div>
+
+@section Styles{
+    @Styles.Render("~/Content/dropzone")
+}
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/dropzone")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal').modal();
+            $('.tooltipped').tooltip({ delay: 50 }); 
+            $('select').material_select();
+            $('#id_categoria').on('change', '', function (e) {
+                var idCategoria = this.value;
+                $.ajax({
+                    url: '/obtener/especificaciones/' + idCategoria,
+                    type: 'GET',
+                    contentType: "application/json",
+                    dataType: "json",
+                    'success': function (data) {
+                        $(".especificaciones").empty();
+                        $(".especificaciones").append(
+                            '<div class="col l12">' +
+                            '<br />' +
+                            '<span>Especificaciones:</span>' +
+                            '<div class="divider-mio white"></div>' +
+                            '<br />' +
+                            '</div>'
+                        );
+                        $.each(data, function () {
+                            $.each(this, function (name, value) {
+                                $(".especificaciones").append(
+                                    '<div class="input-field col l4">' +
+                                    '<input id="' + value.ID + '" type="text" class="validate">' +
+                                    '<label for="' + value.ID + '">' + value.Nombre + '</label>' +
+                                    '</div>'
+                                );
+                            });
+                        });
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            });              
+        });
+        //File Upload response from the server
+        Dropzone.autoDiscover = true;
+        Dropzone.options.myDropzone = {
+            paramName: "file",
+            uploadMultiple: false,
+            maxFiles: 1,
+            addRemoveLinks: true,
+            init: function () {
+                this.on("complete", function (data) {
+                    //var res = eval('(' + data.xhr.responseText + ')');
+                    var res = JSON.parse(data.xhr.responseText);
+                });
+            }
+        };   
+        function OnSuccess() {
+            Materialize.toast('Marca Agregada Correctamente', 4000);
+            $('#nuevo').modal('close');
+        }
+        function OnDelete() {
+            Materialize.toast('Marca Eliminada Correctamente', 4000);
+            $('#eliminar').modal('close');
+        }
+        function OnEdit() {
+            Materialize.toast('Marca Editada Correctamente', 4000);
+            $('#editar').modal('close');
+        }
+        function OnClose() {
+            $('#nuevo').modal('close');
+            $(".especificaciones").empty();
+        }        
+        function ultimo() {
+            $.ajax({
+                url: '/obtener/ultimo',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $.each(data, function (index, element) {
+                        $('#codigo_articulo').val(element.ID);
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+            $('#nuevo').modal('open');
+        };
+    </script>
+}

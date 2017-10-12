@@ -173,11 +173,13 @@
 .dropzone, .dropzone * {
   box-sizing: border-box; }
 
-.dropzone {
+/*.dropzone {
   min-height: 150px;
   border: 2px solid rgba(0, 0, 0, 0.3);
   background: white;
-  padding: 20px 20px; }
+  padding: 20px 20px; 
+
+}*/
   .dropzone.dz-clickable {
     cursor: pointer; }
     .dropzone.dz-clickable * {
@@ -205,7 +207,7 @@
         opacity: 1; }
     .dropzone .dz-preview.dz-file-preview .dz-image {
       border-radius: 20px;
-      background: #999;
+      background: rgba(0, 0, 0, 0.00);
       background: linear-gradient(to bottom, #eee, #ddd); }
     .dropzone .dz-preview.dz-file-preview .dz-details {
       opacity: 1; }
@@ -223,8 +225,6 @@
       display: block;
       cursor: pointer;
       border: none; }
-      .dropzone .dz-preview .dz-remove:hover {
-        text-decoration: underline; }
     .dropzone .dz-preview:hover .dz-details {
       opacity: 1; }
     .dropzone .dz-preview .dz-details {

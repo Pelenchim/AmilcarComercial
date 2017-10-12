@@ -1,3 +1,6 @@
 ﻿<div class="nav-wrapper">
-    <a class="breadcrumb truncate">@ViewBag.Title @ViewBag.SubTitle @ViewBag.Action</a>
+    <div class="col l12">
+        <a href="@Url.Action((ViewBag.Title).ToString(),(ViewBag.ControllerGeneral).ToString())" class="breadcrumb">@ViewBag.Title</a>
+        <a href="@Url.Action("Index",(ViewBag).SubTitle.ToString())" class="breadcrumb">@ViewBag.SubTitle</a>
+    </div>
 </div>

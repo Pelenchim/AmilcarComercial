@@ -13,16 +13,17 @@ namespace AmilcarComercial.Controllers
     public class MarcasController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
+        UtilitiesController utileria = new UtilitiesController();
 
         // GET: Marcas
         public ActionResult Index()
         {
-            return View(db.Tbl_Marca.ToList());
+            return View(db.Tbl_Marca.Where(m => m.estado == true).ToList());
         }
 
         public ActionResult Listar()
         {
-            return PartialView(db.Tbl_Marca.ToList());
+            return PartialView(db.Tbl_Marca.Where(m => m.estado == true).ToList());
         }
 
         // GET: Marcas/Details/5
@@ -43,7 +44,7 @@ namespace AmilcarComercial.Controllers
         // GET: Marcas/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Marcas/Create
@@ -55,7 +56,13 @@ namespace AmilcarComercial.Controllers
         {
             if (ModelState.IsValid)
             {
+                var imagen = db.Tbl_ImgTamporal.OrderByDescending(m => m.id_img).Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                tbl_Marca.imagen = imagen.imagen;
+                var ruta = "marcas";
+                utileria.MoverImagen(ruta, imagen.imagen);
+
                 db.Tbl_Marca.Add(tbl_Marca);
+                db.Tbl_ImgTamporal.Remove(imagen);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -87,9 +94,10 @@ namespace AmilcarComercial.Controllers
         {
             if (ModelState.IsValid)
             {
+                tbl_Marca.estado = false;
                 db.Entry(tbl_Marca).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
             }
             return View(tbl_Marca);
         }
@@ -106,7 +114,7 @@ namespace AmilcarComercial.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tbl_Marca);
+            return PartialView(tbl_Marca);
         }
 
         // POST: Marcas/Delete/5
@@ -115,9 +123,10 @@ namespace AmilcarComercial.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Tbl_Marca tbl_Marca = db.Tbl_Marca.Find(id);
-            db.Tbl_Marca.Remove(tbl_Marca);
+            tbl_Marca.estado = false;
+            db.Entry(tbl_Marca).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Listar");
         }
 
         protected override void Dispose(bool disposing)

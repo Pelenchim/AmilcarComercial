@@ -1,0 +1,82 @@
+﻿@model AmilcarComercial.Models.Tbl_Articulo
+
+<div class="articulo-detalle">
+    <div class="row">
+        <div class="col l12">
+            <h5>@Model.nombre_articulo</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l6">
+            <img src="~/Content/images/articulos/@Model.imagen" class="responsive-img" />
+        </div>
+        <div class="descripciones col l4 right">
+            <p class="precio">$ 1200</p>
+            <p>Descripcion: <strong>valor1 valor2</strong></p>
+            <p>Descripcion: <strong>valor1 valor2</strong></p>
+            <p>Descripcion: <strong>valor1 valor2</strong></p>
+            <p>Descripcion: <strong>valor1 valor2</strong></p>
+            <p>Descripcion: <strong>valor1 valor2</strong></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l12">
+            <div class="divider-mio white"></div>
+        </div>
+        <div class="valores col l8">
+            <p class="resumen"><strong>Descripcion:</strong> @Model.descripcion_articulo</p>
+            <p><span>Marca: @Model.Tbl_Marca.nombre</span><span>Garantia: 3 meses</span><span>Credito: Si</span></p>
+        </div>
+        <div class="acciones col l4 center">
+            <p>Stock: <span>70</span>unid</p>
+            @Ajax.ActionLink("delete", "Delete", "Articulos", new { id = Model.id_articulo }, new AjaxOptions
+            {
+                UpdateTargetId = "eliminar",
+                HttpMethod = "GET"
+            }, new { @class = "btn btn-flat white grey-text text-darken-2 material-icons", @onclick = "$('#eliminar').modal('open');" })
+            @Ajax.ActionLink("edit", "Edit", "Articulos", new { id = Model.id_articulo }, new AjaxOptions
+       {
+           UpdateTargetId = "editar",
+           HttpMethod = "GET"
+       }, new { @class = "btn btn-flat white grey-text text-darken-2 material-icons", @onclick = "$('#editar').modal('open');" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        Dropzone.options.dropzoneForm = {
+            acceptedFiles: "image/*",
+            init: function () {
+                var thisDropzone = this;
+
+                //Call the action method to load the images from the server
+                $.getJSON("/home/GetAttachments/").done(function (data) {
+                    if (data.Data != '') {
+
+                        $.each(data.Data, function (index, item) {
+                                //// Create the mock file:
+                                var mockFile = {
+                                    name: item.AttachmentID,
+                                    size: 12345
+                                };
+
+                                // Call the default addedfile event handler
+                                thisDropzone.emit("addedfile", mockFile);
+
+                                // And optionally show the thumbnail of the file:
+                                thisDropzone.emit("thumbnail", mockFile, item.Path);
+
+                                // If you use the maxFiles option, make sure you adjust it to the
+                                // correct amount:
+                                //var existingFileCount = 1; // The number of files already uploaded
+                                //myDropzone.options.maxFiles = myDropzone.options.maxFiles - existingFileCount;
+                        });
+                    }
+
+                });
+
+
+            }
+        };
+
+</script>

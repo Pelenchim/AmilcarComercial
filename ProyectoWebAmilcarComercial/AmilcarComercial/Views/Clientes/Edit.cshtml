@@ -4,59 +4,69 @@
     Layout = null;
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.id_cliente)
-    <div class="row">
-        <div class="col l4 red">
-            sdfdsfdf
+<div class="cliente-editar cyan">
+    <div class="row white z-depth-1">
+        <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">edit</i>Editar Cliente</h4>
+    </div>
+    <div class="modal-content row white-text">
+        <div class="col l4">
+            <figure>
+                <img src="~/Content/system-resources/clientes.png" class="responsive-img" />
+            </figure>
         </div>
         <div class="col l8">
-            <div class="col l12">
-                <span>Editar Cliente</span>
-                <div class="divider-mio"></div>
-            </div>
-            <div class="input-field col l6">
-                @Html.EditorFor(model => model.nombre_cliente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.nombre_cliente, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.nombre_cliente, "", new { @class = "text-danger" })
-            </div>
-            <div class="input-field col l6">
-                @Html.EditorFor(model => model.apellidos_cliente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.apellidos_cliente, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.apellidos_cliente, "", new { @class = "text-danger" })
-            </div>
-            <div class="input-field col l6">
-                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
-            </div>
-            <div class="input-field col l6">
-                @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.cedula, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
-            </div>
-            <div class="input-field col l7">
-                @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
-            </div>
-            <div class="input-field col l5">
-                @Html.EditorFor(model => model.departamento, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.LabelFor(model => model.departamento, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.departamento, "", new { @class = "text-danger" })
-            </div>
-            <div class="modal-footer">
-                <div class="col l12">
-                    <input type="reset" value="Cancelar" class="btn" />
-                    <input type="submit" value="Editar" class="btn" />
+            @using (Ajax.BeginForm("Edit", "Clientes", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "clientes",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "OnEdit"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.id_cliente)
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.nombre_cliente, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="nombre_cliente">Nombre del Cliente</label>
+                    @Html.ValidationMessageFor(model => model.nombre_cliente, "", new { @class = "text-danger" })
                 </div>
-            </div>
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.apellidos_cliente, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="apellidos_cliente">Apellidos del Cliente</label>
+                    @Html.ValidationMessageFor(model => model.apellidos_cliente, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="telefono">N° Telefono</label>
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l6">
+                    @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="cedula">N° Cedula</label>
+                    @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l7">
+                    @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+                    <label for="direccion">Direccion Domiciliar</label>
+                    @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l5">
+                    @Html.DropDownList("departamento", null, htmlAttributes: new { @class = "form-control" })
+                    <label for="departamento">Departamento</label>
+                    @Html.ValidationMessageFor(model => model.departamento, "", new { @class = "text-danger" })
+                </div>
+                <div class="acciones col l12 right-align">
+                    <button class="btn btn-flat white red-text" type="reset" onclick="$('#editar').modal('close')">Cancelar</button>
+                    <button class="btn btn-flat white blue-text" type="submit">Guardar</button>
+                </div>
+            }
         </div>
     </div>
-}
+</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    $(document).ready(function () {
+        $('select').material_select();
+        $('.input-field :input').focus();
+    });
+</script>

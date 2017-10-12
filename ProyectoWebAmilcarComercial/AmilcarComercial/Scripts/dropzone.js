@@ -149,7 +149,7 @@
       renameFilename: null,
       renameFile: null,
       forceFallback: false,
-      dictDefaultMessage: "Drop files here to upload",
+      dictDefaultMessage: "Arrastra o Seleccione la Imagen",
       dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
       dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
       dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
@@ -157,7 +157,7 @@
       dictResponseError: "Server responded with {{statusCode}} code.",
       dictCancelUpload: "Cancel upload",
       dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
-      dictRemoveFile: "Remove file",
+      dictRemoveFile: "Eliminar",
       dictRemoveFileConfirmation: null,
       dictMaxFilesExceeded: "You can not upload any more files.",
       dictFileSizeUnits: {

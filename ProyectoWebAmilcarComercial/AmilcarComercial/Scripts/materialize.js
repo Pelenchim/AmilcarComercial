@@ -1774,6 +1774,49 @@ if (jQuery) {
                 marginLeft: '0px'
               });
             }
+            else if (tooltipPosition === "opcionesCatalogo") {
+                targetTop = origin.offset().top + originHeight / 2 + tooltipHeight / 6;
+                targetLeft = origin.offset().left + margin;
+                newCoordinates = repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);
+
+                tooltipHorizontalMovement = '-10px';
+                backdrop.css({
+                    top: 0,
+                    right: 0,
+                    width: '14px',
+                    height: '14px',
+                    borderRadius: '14px 0 0 14px',
+                    transformOrigin: '95% 50%',
+                    marginTop: tooltipHeight/2,
+                    marginLeft: tooltipWidth
+                });
+            }
+            else if (tooltipPosition === "tituloCatalogo" || tooltipPosition === "bottomMio") {
+                targetTop = origin.offset().top + origin.outerHeight() - margin;
+                targetLeft = origin.offset().left + originWidth / 2 - tooltipWidth / 2;
+                newCoordinates = repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);
+                tooltipVerticalMovement = '+10px';
+                backdrop.css({
+                    top: 0,
+                    left: 0,
+                    marginLeft: (tooltipWidth / 2) - (backdropOffsetWidth / 2)
+                });
+            }
+            else if (tooltipPosition === "topMio") {
+                // Top Position
+                targetTop = origin.offset().top - tooltipHeight/2 - margin;
+                targetLeft = origin.offset().left + originWidth / 2 - tooltipWidth / 2;
+                newCoordinates = repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);
+                tooltipVerticalMovement = '-10px';
+                backdrop.css({
+                    bottom: 0,
+                    left: 0,
+                    borderRadius: '14px 14px 0 0',
+                    transformOrigin: '50% 100%',
+                    marginTop: tooltipHeight,
+                    marginLeft: (tooltipWidth / 2) - (backdropOffsetWidth / 2)
+                });
+            }
             else {
               // Bottom Position
               targetTop = origin.offset().top + origin.outerHeight() + margin;

@@ -1,9 +1,46 @@
 ﻿@model AmilcarComercial.Models.IndexViewModel
 @{
-    ViewBag.Title = "Gestionar";
+    ViewBag.Title = "Perfil";
+    ViewBag.PrimaryColor = "blue-grey darken-4";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div class="perfil row">
+    <div class="main-header col l12">
+        <div class="header"></div>
+        <div class="col l12 white z-depth-1">
+            <div class="col l9 offset-l3">
+                <div class="col l2">
+                    <span>ventas</span><br />
+                    <span>6526</span>
+                </div>
+                <div class="col l2">
+                    <span>ventas</span><br />
+                    <span>6526</span>
+                </div>
+                <div class="col l2">
+                    <span>ventas</span><br />
+                    <span>6526</span>
+                </div>
+                <div class="col l3 offset-l3">
+                    <a class="btn waves-effect waves-light blue-grey darken-3 right">Editar Perfil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile col l12">
+        <div class="col l3">
+            <img src="~/Content/images/avatar-male-default.png" class="profile-picture responsive-img right"/>
+        </div>
+        <div class="col l9">
+            <h4 class="white-text left">Francisco Fernandez Lopez</h4>
+        </div>
+    </div>
+    
+</div>
+
+
+
+@*<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -56,13 +93,13 @@
                 }
             </dd>
         *@
-        <dt>Autenticación de dos factores:</dt>
+@*<dt>Autenticación de dos factores:</dt>
         <dd>
             <p>
                 There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
-            @*@if (Model.TwoFactor)
+            @if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
@@ -81,7 +118,7 @@
                         <input type="submit" value="Habilitar" class="btn btn-link" />
                         </text>
                     }
-                }*@
+                }
         </dd>
     </dl>
-</div>
+</div>*@

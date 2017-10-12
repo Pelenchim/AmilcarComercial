@@ -12,6 +12,15 @@ namespace AmilcarComercial.Controllers
         {
             return View();
         }
+        public ActionResult Catalogos()
+        {
+            return View();
+        }
+        public ActionResult Configuracion()
+        {
+            return View();
+        }
+
 
         public ActionResult About()
         {

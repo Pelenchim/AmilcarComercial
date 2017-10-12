@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Articulo>
+
+@foreach (var articulo in Model)
+{
+    <div class="col width-mio">
+        <div class="card hoverable">
+            <div class="card-image cyan">
+                <p class="codigo white-text">Cod: @articulo.codigo_articulo</p>
+                <div class="opciones">
+                    <a class='dropdown-button white-text' href='#' data-activates='@articulo.id_articulo'>
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <ul id='@articulo.id_articulo' class='dropdown-content'>
+                        <li>
+                            @Ajax.ActionLink("Detalles", "Details", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                       {
+                                           UpdateTargetId = "detalle",
+                                           HttpMethod = "GET"
+                                       }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Editar", "Edit", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                       {
+                                           UpdateTargetId = "editar",
+                                           HttpMethod = "GET"
+                                       }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Eliminar", "Delete", "Articulos", new { id = @articulo.id_articulo }, new AjaxOptions
+                                       {
+                                           UpdateTargetId = "eliminar",
+                                           HttpMethod = "GET"
+                                       }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                        </li>
+                    </ul>
+                </div>
+                <img src="~/Content/images/articulos/@articulo.imagen">
+                <span class="card-title truncate tooltipped" data-position="top" data-delay="50" data-tooltip="@articulo.nombre_articulo">@articulo.nombre_articulo</span>
+            </div>
+            <div class="card-content">
+                <p>Marca: @articulo.Tbl_Marca.nombre</p>
+                <p>Precio: 30$</p>
+            </div>
+        </div>
+    </div>
+}

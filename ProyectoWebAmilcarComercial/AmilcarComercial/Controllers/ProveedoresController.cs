@@ -17,11 +17,12 @@ namespace AmilcarComercial.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View(db.Tbl_Proveedor.ToList());
+            return View(db.Tbl_Proveedor.Where(m => m.Estado == true).ToList());
         }
+
         public ActionResult Listar()
         {
-            return PartialView(db.Tbl_Proveedor.ToList());
+            return PartialView(db.Tbl_Proveedor.Where(m => m.Estado == true).ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -56,7 +57,7 @@ namespace AmilcarComercial.Controllers
             {
                 db.Tbl_Proveedor.Add(tbl_Proveedor);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
             }
 
             return PartialView(tbl_Proveedor);
@@ -88,7 +89,21 @@ namespace AmilcarComercial.Controllers
             {
                 db.Entry(tbl_Proveedor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Listar");
+            }
+            return PartialView(tbl_Proveedor);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tbl_Proveedor tbl_Proveedor = db.Tbl_Proveedor.Find(id);
+            if (tbl_Proveedor == null)
+            {
+                return HttpNotFound();
             }
             return PartialView(tbl_Proveedor);
         }
@@ -98,10 +113,11 @@ namespace AmilcarComercial.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tbl_Proveedor tbl_Proveedor = db.Tbl_Proveedor.Find(id);
-            db.Tbl_Proveedor.Remove(tbl_Proveedor);
+            Tbl_Proveedor tbl_proveedor = db.Tbl_Proveedor.Find(id);
+            tbl_proveedor.Estado = false;
+            db.Entry(tbl_proveedor).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Listar");
         }
 
         protected override void Dispose(bool disposing)
