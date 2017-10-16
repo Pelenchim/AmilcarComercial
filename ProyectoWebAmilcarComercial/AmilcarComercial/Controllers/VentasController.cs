@@ -16,6 +16,7 @@ namespace AmilcarComercial.Controllers
         {
             return View();
         }
+
         public ActionResult Nueva()
         {
             return View();
@@ -47,7 +48,7 @@ namespace AmilcarComercial.Controllers
                                 ID = p.id_cliente,
                                 Nombre = p.nombre_cliente,
                                 Apellido = p.apellidos_cliente,
-                                Departamento = p.departamento,
+                                Departamento = p.Tbl_Departamentos.Nombre,
                                 Telefono = p.telefono
                             }).ToList();
 
@@ -73,18 +74,25 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult MostrarClienteTmp(Tbl_ClienteTmp cliente)
         {
-            var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).OrderByDescending(m => m.id_clienteTmp)
-                         select new
-                         {
-                             Nombre = c.nombre_cliente,
-                             Apellido = c.apellidos_cliente,
-                             Cedula = c.cedula,
-                             Telefono = c.telefono,
-                             Direccion = c.direccion,
-                             Departamento = c.Tbl_Departamentos.Nombre
-                         }).First();
-
-            return Json(data, JsonRequestBehavior.AllowGet);
+            if (db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
+            {
+                var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).OrderByDescending(m => m.id_clienteTmp)
+                            select new
+                            {
+                                Nombre = c.nombre_cliente,
+                                Apellido = c.apellidos_cliente,
+                                Cedula = c.cedula,
+                                Telefono = c.telefono,
+                                Direccion = c.direccion,
+                                Departamento = c.Tbl_Departamentos.Nombre
+                            }).First();
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = 0;
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [Route("agregar/clienteExistente/{id}")]
@@ -94,6 +102,7 @@ namespace AmilcarComercial.Controllers
             var user = User.Identity.Name;
             Tbl_Clientes cliente = db.Tbl_Clientes.Find(id);
             Tbl_ClienteTmp clienteTmp = new Tbl_ClienteTmp();
+            EliminarClientesTmp();
 
             clienteTmp.user = user;
             clienteTmp.nombre_cliente = cliente.nombre_cliente;
@@ -109,13 +118,93 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("agregar/producto/{id}")]
-        [HttpGet]
-        public JsonResult AgregarProducto(int id)
+        //metodo que elimina los clientes existentes en la tabla temporal
+        [Route("eliminar/clienteTmp")]
+        public JsonResult EliminarClientesTmp()
         {
+            var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
 
+            if (lista != null)
+            {
+                db.Tbl_ClienteTmp.RemoveRange(lista);
+                db.SaveChanges();
+            }
+            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("editar/clienteTmp")]
+        [HttpGet]
+        public JsonResult EditarClienteTmp()
+        {
+            var cliente = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name)
+                           select new
+                           {
+                               ID = c.id_clienteTmp,
+                               Nombre = c.nombre_cliente,
+                               Apellido = c.apellidos_cliente,
+                               Direccion = c.direccion,
+                               Departamento = c.departamento,
+                               Telefono = c.telefono,
+                               Cedula = c.cedula
+                           }).FirstOrDefault();
+            return Json(new { data = cliente }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("editar/clienteGuardarTmp")]
+        [HttpPost]
+        public JsonResult EditarGuardarClienteTmp(Tbl_ClienteTmp cliente)
+        {
+            var user = User.Identity.Name;
+            cliente.user = user;
+
+            db.Entry(cliente).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
 
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("agregar/producto/{id}/{cant}")]
+        [HttpGet]
+        public JsonResult AgregarProducto(int id, int cant)
+        {
+            var user = User.Identity.Name;
+            Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
+
+            orden.id_Articulo = id;
+            orden.cantidad = cant;
+            orden.user = user;
+
+            db.Tbl_OrdenTmp.Add(orden);
+            db.SaveChanges();
+
+            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("eliminar/productoTmp/{id}")]
+        [HttpGet]
+        public JsonResult EliminarProducto(int id)
+        {
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            db.Tbl_OrdenTmp.Remove(articulo);
+            db.SaveChanges();
+
+            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("obtener/productosTmp")]
+        [HttpGet]
+        public JsonResult MostrarProductosTmp()
+        {
+            var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name)
+                         select new
+                         {
+                             ID = p.id_OrdenTmp,
+                             Nombre = p.Tbl_Articulo.nombre_articulo,
+                             Imagen = p.Tbl_Articulo.imagen,
+                             Cantidad = p.cantidad
+                         }).ToList();
+
+            return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
         }
     }
 }

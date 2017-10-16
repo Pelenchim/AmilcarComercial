@@ -12,11 +12,14 @@
         </div>
         <div class="descripciones col l4 right">
             <p class="precio">$ 1200</p>
-            <p>Descripcion: <strong>valor1 valor2</strong></p>
-            <p>Descripcion: <strong>valor1 valor2</strong></p>
-            <p>Descripcion: <strong>valor1 valor2</strong></p>
-            <p>Descripcion: <strong>valor1 valor2</strong></p>
-            <p>Descripcion: <strong>valor1 valor2</strong></p>
+            @foreach (var item in @Model.Tbl_Categorias.Tbl_Descripciones)
+            {
+                <p>@item.nombre</p>
+            }
+            @foreach (var item in Model.Tbl_DescripcionValores)
+            {
+                <p>@item.valor</p>
+            }
         </div>
     </div>
     <div class="row">
