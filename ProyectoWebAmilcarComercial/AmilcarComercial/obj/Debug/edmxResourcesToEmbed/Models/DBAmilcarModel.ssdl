@@ -128,19 +128,12 @@
     <Property Name="imagen" Type="nvarchar(max)" />
     <Property Name="GarantiaMedida" Type="nvarchar" MaxLength="10" />
   </EntityType>
-  <EntityType Name="Tbl_bodega">
-    <Key>
-      <PropertyRef Name="id_bodega" />
-    </Key>
-    <Property Name="id_bodega" Type="int" Nullable="false" />
-    <Property Name="Descripcion" Type="nchar" MaxLength="10" Nullable="false" />
-  </EntityType>
   <EntityType Name="Tbl_bodega_productos">
     <Key>
-      <PropertyRef Name="id_bodega_productos1" />
+      <PropertyRef Name="id_bodega_productos" />
     </Key>
-    <Property Name="id_bodega_productos1" Type="int" Nullable="false" />
-    <Property Name="id_bodega" Type="int" Nullable="false" />
+    <Property Name="id_bodega_productos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_sucursal" Type="int" Nullable="false" />
     <Property Name="id_articulo" Type="int" Nullable="false" />
     <Property Name="stock" Type="int" Nullable="false" />
   </EntityType>
@@ -186,6 +179,7 @@
     <Property Name="telefono" Type="int" />
     <Property Name="cedula" Type="nvarchar" MaxLength="50" />
     <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="nuevo" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Color">
     <Key>
@@ -205,7 +199,7 @@
     <Property Name="tipo_comprobante_compra" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="iva_compra" Type="decimal" Precision="4" Scale="2" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
-    <Property Name="id_bodega" Type="int" Nullable="false" />
+    <Property Name="id_sucursal" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -274,6 +268,7 @@
     <Property Name="id_Kardex" Type="int" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="descuento" Type="float" />
+    <Property Name="costo" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Detalle_Orden">
     <Key>
@@ -330,6 +325,7 @@
     <Property Name="precio" Type="float" Nullable="false" />
     <Property Name="costoPromedio" Type="float" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="id_sucursal" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Marca">
     <Key>
@@ -352,7 +348,6 @@
     <Property Name="estado_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="tipo_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="fact_Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="id_bodega" Type="int" Nullable="false" />
     <Property Name="NombreCliente" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
@@ -403,6 +398,17 @@
     <Property Name="Ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Estado" Type="bit" />
   </EntityType>
+  <EntityType Name="Tbl_ProveedorTmp">
+    <Key>
+      <PropertyRef Name="id_proveedorTmp" />
+    </Key>
+    <Property Name="id_proveedorTmp" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="nuevo" Type="bit" Nullable="false" />
+    <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Tbl_Salida">
     <Key>
       <PropertyRef Name="IDSalida" />
@@ -410,7 +416,7 @@
     <Property Name="IDSalida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="fecha" Type="date" Nullable="false" />
     <Property Name="IdConcepto" Type="int" Nullable="false" />
-    <Property Name="IdBodega" Type="int" Nullable="false" />
+    <Property Name="IdSucursal" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Sucursal">
     <Key>
@@ -437,7 +443,7 @@
     <End Role="Bodega_Detalle" Type="Self.Bodega_Detalle" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tbl_bodega_productos">
-        <PropertyRef Name="id_bodega_productos1" />
+        <PropertyRef Name="id_bodega_productos" />
       </Principal>
       <Dependent Role="Bodega_Detalle">
         <PropertyRef Name="id_bodega_productos" />
@@ -620,15 +626,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_bodega_productos_Tbl_bodega">
-    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
+  <Association Name="FK_Tbl_bodega_productos_Tbl_Sucursal">
+    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="1" />
     <End Role="Tbl_bodega_productos" Type="Self.Tbl_bodega_productos" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tbl_bodega">
-        <PropertyRef Name="id_bodega" />
+      <Principal Role="Tbl_Sucursal">
+        <PropertyRef Name="id_sucursal" />
       </Principal>
       <Dependent Role="Tbl_bodega_productos">
-        <PropertyRef Name="id_bodega" />
+        <PropertyRef Name="id_sucursal" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -668,18 +674,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Compra_Tbl_bodega">
-    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
-    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_bodega">
-        <PropertyRef Name="id_bodega" />
-      </Principal>
-      <Dependent Role="Tbl_Compra">
-        <PropertyRef Name="id_bodega" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Tbl_Compra_Tbl_Proveedor">
     <End Role="Tbl_Proveedor" Type="Self.Tbl_Proveedor" Multiplicity="1" />
     <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="*" />
@@ -689,6 +683,18 @@
       </Principal>
       <Dependent Role="Tbl_Compra">
         <PropertyRef Name="id_proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Compra_Tbl_Sucursal">
+    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="1" />
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Sucursal">
+        <PropertyRef Name="id_sucursal" />
+      </Principal>
+      <Dependent Role="Tbl_Compra">
+        <PropertyRef Name="id_sucursal" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -749,6 +755,30 @@
       </Principal>
       <Dependent Role="Tbl_DescripcionValores">
         <PropertyRef Name="id_descripcion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Compra_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Compra" Type="Self.Tbl_Detalle_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Compra">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Detalle_Compra_Tbl_Compra">
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="1" />
+    <End Role="Tbl_Detalle_Compra" Type="Self.Tbl_Detalle_Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Compra">
+        <PropertyRef Name="id_compra" />
+      </Principal>
+      <Dependent Role="Tbl_Detalle_Compra">
+        <PropertyRef Name="id_compra" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -824,15 +854,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Orden_Tbl_bodega">
-    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
-    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
+  <Association Name="FK_Tbl_Kardex_Tbl_Sucursal">
+    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="1" />
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tbl_bodega">
-        <PropertyRef Name="id_bodega" />
+      <Principal Role="Tbl_Sucursal">
+        <PropertyRef Name="id_sucursal" />
       </Principal>
-      <Dependent Role="Tbl_Orden">
-        <PropertyRef Name="id_bodega" />
+      <Dependent Role="Tbl_Kardex">
+        <PropertyRef Name="id_sucursal" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -884,18 +914,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Salida_Tbl_bodega">
-    <End Role="Tbl_bodega" Type="Self.Tbl_bodega" Multiplicity="1" />
-    <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_bodega">
-        <PropertyRef Name="id_bodega" />
-      </Principal>
-      <Dependent Role="Tbl_Salida">
-        <PropertyRef Name="IdBodega" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Tbl_Salida_Tbl_Concepto">
     <End Role="Tbl_Concepto" Type="Self.Tbl_Concepto" Multiplicity="1" />
     <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
@@ -905,6 +923,18 @@
       </Principal>
       <Dependent Role="Tbl_Salida">
         <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Salida_Tbl_Sucursal">
+    <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="1" />
+    <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Sucursal">
+        <PropertyRef Name="id_sucursal" />
+      </Principal>
+      <Dependent Role="Tbl_Salida">
+        <PropertyRef Name="IdSucursal" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -920,7 +950,6 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Apartado" EntityType="Self.Tbl_Apartado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Articulo" EntityType="Self.Tbl_Articulo" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Tbl_bodega" EntityType="Self.Tbl_bodega" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_bodega_productos" EntityType="Self.Tbl_bodega_productos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Categorias" EntityType="Self.Tbl_Categorias" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_CategoriaTmp" EntityType="Self.Tbl_CategoriaTmp" Schema="dbo" store:Type="Tables" />
@@ -947,6 +976,7 @@
     <EntitySet Name="Tbl_Pago_Credito" EntityType="Self.Tbl_Pago_Credito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Presentacion" EntityType="Self.Tbl_Presentacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Proveedor" EntityType="Self.Tbl_Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_ProveedorTmp" EntityType="Self.Tbl_ProveedorTmp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Salida" EntityType="Self.Tbl_Salida" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Sucursal" EntityType="Self.Tbl_Sucursal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Talla" EntityType="Self.Tbl_Talla" Schema="dbo" store:Type="Tables" />
@@ -1010,8 +1040,8 @@
       <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
       <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_bodega_productos_Tbl_bodega" Association="Self.FK_Tbl_bodega_productos_Tbl_bodega">
-      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
+    <AssociationSet Name="FK_Tbl_bodega_productos_Tbl_Sucursal" Association="Self.FK_Tbl_bodega_productos_Tbl_Sucursal">
+      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Categorias_Tbl_Categorias1" Association="Self.FK_Tbl_Categorias_Tbl_Categorias1">
@@ -1026,12 +1056,12 @@
       <End Role="Tbl_Departamentos" EntitySet="Tbl_Departamentos" />
       <End Role="Tbl_ClienteTmp" EntitySet="Tbl_ClienteTmp" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Compra_Tbl_bodega" Association="Self.FK_Tbl_Compra_Tbl_bodega">
-      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
-      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
-    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Compra_Tbl_Proveedor" Association="Self.FK_Tbl_Compra_Tbl_Proveedor">
       <End Role="Tbl_Proveedor" EntitySet="Tbl_Proveedor" />
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Compra_Tbl_Sucursal" Association="Self.FK_Tbl_Compra_Tbl_Sucursal">
+      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Credito_Tbl_Clientes" Association="Self.FK_Tbl_Credito_Tbl_Clientes">
@@ -1053,6 +1083,14 @@
     <AssociationSet Name="FK_Tbl_DescripcionValores_Tbl_Descripciones" Association="Self.FK_Tbl_DescripcionValores_Tbl_Descripciones">
       <End Role="Tbl_Descripciones" EntitySet="Tbl_Descripciones" />
       <End Role="Tbl_DescripcionValores" EntitySet="Tbl_DescripcionValores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Articulo" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_Detalle_Compra" EntitySet="Tbl_Detalle_Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Compra" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Compra">
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+      <End Role="Tbl_Detalle_Compra" EntitySet="Tbl_Detalle_Compra" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Detalle_Compra_Tbl_Kardex" Association="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex">
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
@@ -1078,9 +1116,9 @@
       <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Orden_Tbl_bodega" Association="Self.FK_Tbl_Orden_Tbl_bodega">
-      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
-      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+    <AssociationSet Name="FK_Tbl_Kardex_Tbl_Sucursal" Association="Self.FK_Tbl_Kardex_Tbl_Sucursal">
+      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Orden_Tbl_Sucursal" Association="Self.FK_Tbl_Orden_Tbl_Sucursal">
       <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
@@ -1098,12 +1136,12 @@
       <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
       <End Role="Tbl_Pago_Credito" EntitySet="Tbl_Pago_Credito" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Salida_Tbl_bodega" Association="Self.FK_Tbl_Salida_Tbl_bodega">
-      <End Role="Tbl_bodega" EntitySet="Tbl_bodega" />
-      <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
-    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Salida_Tbl_Concepto" Association="Self.FK_Tbl_Salida_Tbl_Concepto">
       <End Role="Tbl_Concepto" EntitySet="Tbl_Concepto" />
+      <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Salida_Tbl_Sucursal" Association="Self.FK_Tbl_Salida_Tbl_Sucursal">
+      <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
     </AssociationSet>
   </EntityContainer>

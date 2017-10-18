@@ -19,9 +19,10 @@ namespace AmilcarComercial.Models
         {
             this.SalidaDetalle = new HashSet<SalidaDetalle>();
             this.Tbl_bodega_productos = new HashSet<Tbl_bodega_productos>();
+            this.Tbl_DescripcionValores = new HashSet<Tbl_DescripcionValores>();
+            this.Tbl_Detalle_Compra = new HashSet<Tbl_Detalle_Compra>();
             this.Tbl_Detalle_Orden = new HashSet<Tbl_Detalle_Orden>();
             this.Tbl_Kardex = new HashSet<Tbl_Kardex>();
-            this.Tbl_DescripcionValores = new HashSet<Tbl_DescripcionValores>();
             this.Tbl_OrdenTmp = new HashSet<Tbl_OrdenTmp>();
         }
     
@@ -44,11 +45,13 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_bodega_productos> Tbl_bodega_productos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DescripcionValores> Tbl_DescripcionValores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Detalle_Compra> Tbl_Detalle_Compra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Kardex> Tbl_Kardex { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_DescripcionValores> Tbl_DescripcionValores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_OrdenTmp> Tbl_OrdenTmp { get; set; }
     }

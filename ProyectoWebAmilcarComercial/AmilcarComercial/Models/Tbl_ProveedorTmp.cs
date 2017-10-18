@@ -12,18 +12,13 @@ namespace AmilcarComercial.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_ClienteTmp
+    public partial class Tbl_ProveedorTmp
     {
-        public int id_clienteTmp { get; set; }
-        public string nombre_cliente { get; set; }
-        public string apellidos_cliente { get; set; }
-        public string direccion { get; set; }
-        public int departamento { get; set; }
-        public Nullable<int> telefono { get; set; }
-        public string cedula { get; set; }
-        public string user { get; set; }
+        public int id_proveedorTmp { get; set; }
+        public string nombre { get; set; }
+        public string telefono { get; set; }
+        public string ruc { get; set; }
         public bool nuevo { get; set; }
-    
-        public virtual Tbl_Departamentos Tbl_Departamentos { get; set; }
+        public string user { get; set; }
     }
 }

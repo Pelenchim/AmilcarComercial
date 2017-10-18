@@ -30,12 +30,10 @@ namespace AmilcarComercial.Models
         public string estado_orden { get; set; }
         public string tipo_orden { get; set; }
         public string fact_Orden { get; set; }
-        public int id_bodega { get; set; }
         public string NombreCliente { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Apartado> Tbl_Apartado { get; set; }
-        public virtual Tbl_bodega Tbl_bodega { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Credito> Tbl_Credito { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

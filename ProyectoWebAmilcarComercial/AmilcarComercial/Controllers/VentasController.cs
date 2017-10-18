@@ -184,8 +184,19 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
-            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name).FirstOrDefault();
             db.Tbl_OrdenTmp.Remove(articulo);
+            db.SaveChanges();
+
+            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("eliminar/eliminarProductosTodos")]
+        [HttpGet]
+        public JsonResult EliminarProductosTodos()
+        {
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
+            db.Tbl_OrdenTmp.RemoveRange(articulos);
             db.SaveChanges();
 
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);

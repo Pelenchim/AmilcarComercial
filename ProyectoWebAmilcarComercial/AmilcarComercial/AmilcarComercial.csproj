@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ArticulosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
@@ -248,12 +249,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Marcas.cs" />
-    <Compile Include="Models\Proveedores.cs" />
     <Compile Include="Models\SalidaDetalle.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Sucursales.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
@@ -261,9 +259,6 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Articulo.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tbl_bodega.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_bodega_productos.cs">
@@ -342,6 +337,9 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Proveedor.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_ProveedorTmp.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Salida.cs">
@@ -570,6 +568,8 @@
     <Content Include="Views\Home\Catalogos.cshtml" />
     <Content Include="Views\Articulos\Listar.cshtml" />
     <Content Include="Views\Ventas\Nueva.cshtml" />
+    <Content Include="Views\Compras\Nueva.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

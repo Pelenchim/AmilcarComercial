@@ -23,11 +23,11 @@ namespace AmilcarComercial.Models
         public int IDSalida { get; set; }
         public System.DateTime fecha { get; set; }
         public int IdConcepto { get; set; }
-        public int IdBodega { get; set; }
+        public int IdSucursal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalidaDetalle> SalidaDetalle { get; set; }
-        public virtual Tbl_bodega Tbl_bodega { get; set; }
         public virtual Tbl_Concepto Tbl_Concepto { get; set; }
+        public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
     }
 }

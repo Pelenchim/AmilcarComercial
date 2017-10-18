@@ -35,11 +35,11 @@ namespace AmilcarComercial.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Apartado> Tbl_Apartado { get; set; }
         public virtual DbSet<Tbl_Articulo> Tbl_Articulo { get; set; }
-        public virtual DbSet<Tbl_bodega> Tbl_bodega { get; set; }
         public virtual DbSet<Tbl_bodega_productos> Tbl_bodega_productos { get; set; }
         public virtual DbSet<Tbl_Categorias> Tbl_Categorias { get; set; }
         public virtual DbSet<Tbl_CategoriaTmp> Tbl_CategoriaTmp { get; set; }
         public virtual DbSet<Tbl_Clientes> Tbl_Clientes { get; set; }
+        public virtual DbSet<Tbl_ClienteTmp> Tbl_ClienteTmp { get; set; }
         public virtual DbSet<Tbl_Color> Tbl_Color { get; set; }
         public virtual DbSet<Tbl_Compra> Tbl_Compra { get; set; }
         public virtual DbSet<Tbl_Concepto> Tbl_Concepto { get; set; }
@@ -56,6 +56,7 @@ namespace AmilcarComercial.Models
         public virtual DbSet<Tbl_Kardex> Tbl_Kardex { get; set; }
         public virtual DbSet<Tbl_Marca> Tbl_Marca { get; set; }
         public virtual DbSet<Tbl_Orden> Tbl_Orden { get; set; }
+        public virtual DbSet<Tbl_OrdenTmp> Tbl_OrdenTmp { get; set; }
         public virtual DbSet<Tbl_Pago_Apartado> Tbl_Pago_Apartado { get; set; }
         public virtual DbSet<Tbl_Pago_Credito> Tbl_Pago_Credito { get; set; }
         public virtual DbSet<Tbl_Presentacion> Tbl_Presentacion { get; set; }
@@ -63,7 +64,6 @@ namespace AmilcarComercial.Models
         public virtual DbSet<Tbl_Salida> Tbl_Salida { get; set; }
         public virtual DbSet<Tbl_Sucursal> Tbl_Sucursal { get; set; }
         public virtual DbSet<Tbl_Talla> Tbl_Talla { get; set; }
-        public virtual DbSet<Tbl_ClienteTmp> Tbl_ClienteTmp { get; set; }
-        public virtual DbSet<Tbl_OrdenTmp> Tbl_OrdenTmp { get; set; }
+        public virtual DbSet<Tbl_ProveedorTmp> Tbl_ProveedorTmp { get; set; }
     }
 }

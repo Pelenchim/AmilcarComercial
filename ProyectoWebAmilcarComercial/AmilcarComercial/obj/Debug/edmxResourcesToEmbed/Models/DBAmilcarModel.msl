@@ -128,19 +128,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tbl_bodega">
-      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega">
-        <MappingFragment StoreEntitySet="Tbl_bodega">
-          <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tbl_bodega_productos">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega_productos">
         <MappingFragment StoreEntitySet="Tbl_bodega_productos">
-          <ScalarProperty Name="id_bodega_productos1" ColumnName="id_bodega_productos1" />
-          <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
+          <ScalarProperty Name="id_bodega_productos" ColumnName="id_bodega_productos" />
+          <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
           <ScalarProperty Name="stock" ColumnName="stock" />
         </MappingFragment>
@@ -179,6 +171,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_ClienteTmp">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ClienteTmp">
+        <MappingFragment StoreEntitySet="Tbl_ClienteTmp">
+          <ScalarProperty Name="nuevo" ColumnName="nuevo" />
+          <ScalarProperty Name="id_clienteTmp" ColumnName="id_clienteTmp" />
+          <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+          <ScalarProperty Name="apellidos_cliente" ColumnName="apellidos_cliente" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="departamento" ColumnName="departamento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="user" ColumnName="user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Tbl_Color">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Color">
         <MappingFragment StoreEntitySet="Tbl_Color">
@@ -197,7 +204,7 @@
           <ScalarProperty Name="tipo_comprobante_compra" ColumnName="tipo_comprobante_compra" />
           <ScalarProperty Name="iva_compra" ColumnName="iva_compra" />
           <ScalarProperty Name="usuario" ColumnName="usuario" />
-          <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
+          <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -257,10 +264,10 @@
     <EntitySetMapping Name="Tbl_DescripcionValores">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DescripcionValores">
         <MappingFragment StoreEntitySet="Tbl_DescripcionValores">
-          <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
           <ScalarProperty Name="id_descripcionValor" ColumnName="id_descripcionValor" />
           <ScalarProperty Name="id_descripcion" ColumnName="id_descripcion" />
           <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -273,6 +280,7 @@
           <ScalarProperty Name="id_Kardex" ColumnName="id_Kardex" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
           <ScalarProperty Name="descuento" ColumnName="descuento" />
+          <ScalarProperty Name="costo" ColumnName="costo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -334,6 +342,7 @@
           <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="costoPromedio" ColumnName="costoPromedio" />
           <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -358,8 +367,17 @@
           <ScalarProperty Name="estado_orden" ColumnName="estado_orden" />
           <ScalarProperty Name="tipo_orden" ColumnName="tipo_orden" />
           <ScalarProperty Name="fact_Orden" ColumnName="fact_Orden" />
-          <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
           <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_OrdenTmp">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
+        <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
+          <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />
+          <ScalarProperty Name="id_Articulo" ColumnName="id_Articulo" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -412,7 +430,7 @@
           <ScalarProperty Name="IDSalida" ColumnName="IDSalida" />
           <ScalarProperty Name="fecha" ColumnName="fecha" />
           <ScalarProperty Name="IdConcepto" ColumnName="IdConcepto" />
-          <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+          <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -446,27 +464,15 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Tbl_ClienteTmp">
-      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ClienteTmp">
-        <MappingFragment StoreEntitySet="Tbl_ClienteTmp">
+    <EntitySetMapping Name="Tbl_ProveedorTmp">
+      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ProveedorTmp">
+        <MappingFragment StoreEntitySet="Tbl_ProveedorTmp">
           <ScalarProperty Name="user" ColumnName="user" />
-          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="nuevo" ColumnName="nuevo" />
+          <ScalarProperty Name="ruc" ColumnName="ruc" />
           <ScalarProperty Name="telefono" ColumnName="telefono" />
-          <ScalarProperty Name="departamento" ColumnName="departamento" />
-          <ScalarProperty Name="direccion" ColumnName="direccion" />
-          <ScalarProperty Name="apellidos_cliente" ColumnName="apellidos_cliente" />
-          <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
-          <ScalarProperty Name="id_clienteTmp" ColumnName="id_clienteTmp" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Tbl_OrdenTmp">
-      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
-        <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
-          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-          <ScalarProperty Name="user" ColumnName="user" />
-          <ScalarProperty Name="id_Articulo" ColumnName="id_Articulo" />
-          <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_proveedorTmp" ColumnName="id_proveedorTmp" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

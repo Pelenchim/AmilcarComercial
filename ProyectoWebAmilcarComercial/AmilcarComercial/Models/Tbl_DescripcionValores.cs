@@ -19,7 +19,7 @@ namespace AmilcarComercial.Models
         public string valor { get; set; }
         public Nullable<int> id_articulo { get; set; }
     
-        public virtual Tbl_Descripciones Tbl_Descripciones { get; set; }
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
+        public virtual Tbl_Descripciones Tbl_Descripciones { get; set; }
     }
 }

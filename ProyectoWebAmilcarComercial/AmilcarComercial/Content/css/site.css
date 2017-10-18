@@ -1248,17 +1248,41 @@ background-color: #37474f;
 /*#region ventas */
 
 .ventas{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
-.ventas .ventas-content{
-    
-    width: 100%;
+.ventas .ventas-content {
+    padding: 0;
+    transition: padding 0.3s ease-in;
 }
-.ventas .ventas-details{
-    background-color: cornflowerblue !important;
+.ventas .ventas-content .ventas-opciones{
+    padding: 30px 0 40px 0;
+}
+.ventas .listado-ventas{
+    height: 70vh;
+    overflow-y:scroll;
+}
+.ventas .listado-ventas table{
+    border-radius: 2px;
+}
+.ventas .listado-ventas table thead tr th:first-child{
+    padding-left: 20px;
+}
+.ventas .listado-ventas table tbody tr td:first-child {
+    padding-left: 20px;
+}
+.ventas .listado-ventas table tbody tr:last-child
+{
+    border-bottom: 0px solid grey;
+}
+
+
+.ventas .ventas-details {
     width: 300px;
+    height: calc(100% - 56px);
+    position: fixed;
+    top: 0;
+    right: -300px;
+    margin-top: 56px;
+    transition: right 0.3s ease-in;
 }
 
 /*#endregion */
@@ -1535,6 +1559,42 @@ background-color: #37474f;
 /*modal de clientes*/
 .clientes .lista-clientes a{
     cursor:pointer;
+}
+
+/*#endregion */
+
+/*#region NuevaCompra */
+
+.nueva-compra > div:first-child {
+    padding-left: 1.5rem;
+}
+
+.nueva-compra > div:last-child {
+    padding-right: 1.5rem;
+}
+
+.nueva-compra .proveedor,
+.nueva-compra .detalle {
+    margin-top: 1rem;
+}
+
+.nueva-compra .proveedor .opcionesProveedor a {
+    padding: 0 5px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+
+.nueva-compra .proveedor .opcionesProveedor a:hover {
+    color: #212121;
+}
+
+.nueva-compra .proveedor .datosProveedor div:last-child {
+    margin-bottom: 1.5rem;
+}
+
+.nueva-compra .proveedor .datosProveedor p {
+    margin-bottom: 0px;
 }
 
 /*#endregion */

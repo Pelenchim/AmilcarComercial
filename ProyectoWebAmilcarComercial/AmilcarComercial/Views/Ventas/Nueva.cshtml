@@ -38,7 +38,8 @@
                             <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Agregar Producto" onclick="articulos(0)"><i class="material-icons">add_box</i></a>
                             <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
                             <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
-                            <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
+                            <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="eliminarProductosTodos()"><i class="material-icons">delete</i></a>
+                            <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
                         </div>
                         <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
                     </div>
@@ -145,7 +146,6 @@
                                 <li><a href="#!">one</a></li>
                                 <li><a href="#!">two</a></li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -238,7 +238,7 @@
         </div>
     </div>
     <div id="editarCliente" class="modal modal-middle">
-        <div class="nuevoCliente blue">
+        <div class="editarCliente blue">
             <div class="row white z-depth-1">
                 <h4 class="grey-text text-darken-3 left-align">
                     <i class="material-icons">search</i>
@@ -287,7 +287,7 @@
 </div>
 
 @section Scripts{
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $('.modal').modal({
                 opacity: 0.5,
@@ -546,6 +546,19 @@
                 'success': function (data) {
                     mostrarProductosTmp(0);
                     Materialize.toast('Articulo eliminado de la orden', 4000);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function eliminarProductosTodos() {
+            $.ajax({
+                url: '/eliminar/eliminarProductosTodos',
+                type: 'GET',
+                'success': function (data) {
+                    mostrarProductosTmp(0);
+                    Materialize.toast('A eliminado todos los articulos de la orden', 4000);
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));

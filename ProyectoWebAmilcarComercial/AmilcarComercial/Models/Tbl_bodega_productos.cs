@@ -20,14 +20,14 @@ namespace AmilcarComercial.Models
             this.Bodega_Detalle = new HashSet<Bodega_Detalle>();
         }
     
-        public int id_bodega_productos1 { get; set; }
-        public int id_bodega { get; set; }
+        public int id_bodega_productos { get; set; }
+        public int id_sucursal { get; set; }
         public int id_articulo { get; set; }
         public int stock { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bodega_Detalle> Bodega_Detalle { get; set; }
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
-        public virtual Tbl_bodega Tbl_bodega { get; set; }
+        public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
     }
 }

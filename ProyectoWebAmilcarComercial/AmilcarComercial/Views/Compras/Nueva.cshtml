@@ -1,0 +1,371 @@
+﻿
+@{
+    ViewBag.Title = "Compras";
+    ViewBag.SubTitle = "Nueva";
+    ViewBag.ControllerGeneral = "Compras";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
+}
+
+<nav class="nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
+<div class="nueva-compra row">
+    <div class="col l8">
+        <div class="proveedor row white z-depth-1">
+            <div class="col l12">
+                <div class="opcionesProveedor col l12">
+                    <p>
+                        <strong>Datos del Proveedor</strong>
+                        <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Eliminar Proveedor" onclick="eliminarProveedor()"><i class="material-icons">clear</i></a>
+                        <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Proveedor" onclick="proveedores()"><i class="material-icons">search</i></a>
+                        <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Editar Proveedor" onclick="editarProveedor()"><i class="material-icons">edit</i></a>
+                    </p>
+                </div>
+                <div class="divider-mio"></div>
+                <div class="datosProveedor"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-compras">
+    <div id="proveedores" class="modal">
+        <div class="proveedores blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">search</i>
+                    Buscar Proveedor
+                    <i class="salir material-icons right" onclick="CancelProveedores()">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content row white-text">
+                <div class="col l12">
+                    <div class="option-bar col l8 offset-l2 white z-depth-1 border-radius-2">
+                        <form class="col l9">
+                            <div class="input-field">
+                                <input id="search" type="search" placeholder="Buscar Proveedor" required>
+                            </div>
+                        </form>
+                        <div class="col l3">
+                            <a class="hide tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula"><i class="material-icons">view_module</i></a>
+                            <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de lista"><i class="material-icons">view_list</i></a>
+                            <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
+                            <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottomMio" data-delay="50" data-tooltip="Opciones">
+                                <i class="material-icons right">more_vert</i>
+                            </a>
+                            <!-- Dropdown Structure -->
+                            <ul id='dropdown1' class='dropdown-content'>
+                                <li><a href="#!">one</a></li>
+                                <li><a href="#!">two</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="lista-proveedores"></div>
+            </div>
+        </div>
+    </div>
+    <div id="nuevoProveedor" class="modal modal-middle">
+        <div class="nuevoProveedor blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">search</i>
+                    Agregar Proveedor
+                    <i class="salir material-icons right" onclick="$('#nuevoProveedor').modal('close');">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content row white-text">
+                <div class="col l3">
+                    <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
+                </div>
+                <div class="col l9">
+                    <div class="input-field col l6">
+                        <input placeholder="" id="nombre_cliente" name="nombre_cliente" type="text">
+                        <label for="nombre_cliente">Nombre</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input placeholder="" id="apellidos_cliente" name="apellidos_cliente" type="text">
+                        <label for="apellidos_cliente">Apellidos</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="cedula" name="cedula" type="text" class="validate">
+                        <label for="cedula">Cedula</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="telefono" name="telefono" type="text" class="validate">
+                        <label for="telefono">Telefono</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="departamento" name="departamento" type="text" class="validate">
+                        <label for="departamento">Departamento</label>
+                    </div>
+                    <div class="input-field col l12">
+                        <input placeholder="" id="direccion" name="direccion" type="text" class="validate">
+                        <label for="direccion">Direccion</label>
+                    </div>
+                    <div class="col l12 right-align">
+                        <br />
+                        <button class="btn btn-flat white pink-text" type="button" onclick="CancelNuevoProveedor()">Cancelar</button>
+                        <button class="btn btn-flat white blue-text" type="button" onclick="agregarProveedorTmp()">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="editarProveedor" class="modal modal-middle">
+        <div class="editarProveedor blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">search</i>
+                    Editar Proveedor
+                    <i class="salir material-icons right" onclick="$('#editarProveedor').modal('close');">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content row white-text">
+                <div class="col l3">
+                    <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
+                </div>
+                <div class="col l9">
+                    <div class="input-field col l6">
+                        <input placeholder="" id="nombre_cliente" name="nombre_cliente" type="text">
+                        <label for="nombre_cliente">Nombre</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input placeholder="" id="apellidos_cliente" name="apellidos_cliente" type="text">
+                        <label for="apellidos_cliente">Apellidos</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="cedula" name="cedula" type="text" class="validate">
+                        <label for="cedula">Cedula</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="telefono" name="telefono" type="text" class="validate">
+                        <label for="telefono">Telefono</label>
+                    </div>
+                    <div class="input-field col l4">
+                        <input placeholder="" id="departamento" name="departamento" type="text" class="validate">
+                        <label for="departamento">Departamento</label>
+                    </div>
+                    <div class="input-field col l12">
+                        <input placeholder="" id="direccion" name="direccion" type="text" class="validate">
+                        <label for="direccion">Direccion</label>
+                    </div>
+                    <div class="col l12 right-align">
+                        <br />
+                        <button class="btn btn-flat white pink-text" type="button" onclick="$('#editarProveedor').modal('close');">Cancelar</button>
+                        <button class="btn btn-flat white blue-text" type="button" onclick="editarProveedorTmp()">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal').modal({
+                opacity: 0.5,
+                inDuration: 350,
+                outDuration: 250,
+                ready: undefined,
+                complete: undefined,
+                dismissible: false,
+                startingTop: '4%',
+                endingTop: '10%'
+            });
+            $('.tooltipped').tooltip({ delay: 50 });
+            $('select').material_select();
+            $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
+                $('.nueva-venta .articulosVenta .acciones input').toggle(500);
+            });
+            mostrarProveedorTmp();
+        });
+        function proveedores() {
+            $.ajax({
+                url: '/obtener/proveedores',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".lista-proveedores").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".lista-proveedores").append(
+                                '<a onclick="agregarProveedorExistente(' + value.ID + ')">' +
+                                '<div class="col l4">' +
+                                '<div class="card white grey-text text-darken-3">' +
+                                '<div class="card-content">' +
+                                '<span class="card-title truncate">' + value.Nombre + '</span>' +
+                                '<p>Tel: ' + value.Telefono + '</p>' +
+                                '<p>Ruc: ' + value.Ruc + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</a>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+            $('#proveedores').modal('open');
+        };
+        function agregarProveedorTmp() {
+            var datos = {
+                Nombre: $(".nuevoCliente #nombre_cliente").val(),
+                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
+                Direccion: $('.nuevoCliente #direccion').val(),
+                Departamento: $('.nuevoCliente #departamento').val(),
+                Telefono: $('.nuevoCliente #telefono').val(),
+                Cedula: $('.nuevoCliente #cedula').val()
+            };
+            $.ajax({
+                url: '/agregar/proveedorTmp',
+                type: 'POST',
+                data: datos,
+                'success': function (data) {
+                    mostrarClienteTmp();
+                    $('#nuevoProveedor').modal('close');
+                    Materialize.toast('Proveedor agregado exitosamente', 4000);
+                    $(".nuevoCliente #nombre_cliente").val('');
+                    $('.nuevoCliente #apellidos_cliente').val('');
+                    $('.nuevoCliente #direccion').val('');
+                    $('.nuevoCliente #departamento').val('');
+                    $('.nuevoCliente #telefono').val('');
+                    $('.nuevoCliente #cedula').val('');
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function agregarProveedorExistente(id) {
+            $.ajax({
+                url: '/agregar/ProveedorExistente/' + id,
+                type: 'GET',
+                'success': function (data) {
+                    mostrarProveedorTmp();
+                    $('#proveedores').modal('close');
+                    Materialize.toast('Proveedor definido exitosamente', 4000);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function editarProveedor() {
+            $('#editarProveedor').modal('open');
+            $.ajax({
+                url: '/editar/proveedorTmp',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $.each(data, function () {
+                        $(".editarCliente #nombre_cliente").val(data.Nombre);
+                        $(".editarCliente #apellidos_cliente").val(data.Apellido)
+                        $(".editarCliente #cedula").val(data.Cedula)
+                        $(".editarCliente #telefono").val(data.Telefono)
+                        $(".editarCliente #departamento").val(data.Departamento)
+                        $(".editarCliente #direccion").val(data.Direccion)
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function editarGuardarProveedor() {
+            var datos = {
+                Nombre: $(".nuevoCliente #nombre_cliente").val(),
+                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
+                Direccion: $('.nuevoCliente #direccion').val(),
+                Departamento: $('.nuevoCliente #departamento').val(),
+                Telefono: $('.nuevoCliente #telefono').val(),
+                Cedula: $('.nuevoCliente #cedula').val()
+            };
+            $.ajax({
+                url: '/editar/proveedorGuardarTmp',
+                type: 'POST',
+                data: datos,
+                'success': function (data) {
+                    mostrarClienteTmp();
+                    $('#editarProveedor').modal('close');
+                    Materialize.toast('Proveedor editado exitosamente', 4000);
+                    $(".nuevoCliente #nombre_cliente").val('');
+                    $('.nuevoCliente #apellidos_cliente').val('');
+                    $('.nuevoCliente #direccion').val('');
+                    $('.nuevoCliente #departamento').val('');
+                    $('.nuevoCliente #telefono').val('');
+                    $('.nuevoCliente #cedula').val('');
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function eliminarProveedor() {
+            $.ajax({
+                url: '/eliminar/proveedorTmp',
+                type: 'GET',
+                'success': function (data) {
+                    mostrarClienteTmp();
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function mostrarProveedorTmp() {
+            $.ajax({
+                url: '/obtener/proveedorTmp',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    if (data === 0) {
+                        $(".proveedor .opcionesProveedor a").hide();
+                        $(".datosProveedor").empty();
+                        $(".datosProveedor").append(
+                            '<div class="center-align">' +
+                            '<p style="padding-bottom: 10px">Aun no a definido cliente para esta venta</p>' +
+                            '<button class="btn btn-flat green white-text" onclick="agregarProveedor()">Agregar</button>' + ' ' +
+                            '<button class="btn btn-flat green white-text" onclick="proveedores()">Buscar</button>' +
+                            '</div>'
+                        );
+                    }
+                    else {
+                        $(".proveedor .opcionesProveedor a").show();
+                        $(".datosProveedor").empty();
+                        $(".datosProveedor").append(
+                            '<div class="col l12">' +
+                            '<p><strong>Nombre: </strong>' + data.Nombre + '</p>' +
+                            '</div>' +
+                            '<div class="col l4">' +
+                            '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
+                            '</div>' +
+                            '<div class="col l4">' +
+                            '<p><strong>N° Ruc: </strong>' + data.Ruc + '</p>' +
+                            '</div>'
+                        );
+                    }
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function CancelProveedor() {
+            $('#proveedores').modal('close');
+            $(".lista-proveedores").empty();
+        }
+        function CancelNuevoProveedor() {
+            $('#nuevoProveedor').modal('close');
+        }
+    </script>    
+}

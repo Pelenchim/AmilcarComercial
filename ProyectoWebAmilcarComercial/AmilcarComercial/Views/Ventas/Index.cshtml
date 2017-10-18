@@ -8,17 +8,96 @@
 }
 
 <div class="ventas">
-    <div class="ventas-content">
+    <div class="ventas-content row">
         <nav class="nav-extended @ViewBag.NavExtendedColor">
             @Html.Partial("_breadcrumbPartial")
         </nav>
-        swerwe
+        <div class="ventas-opciones col l12">
+            <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                <form class="col l9">
+                    <div class="input-field">
+                        <input id="search" type="search" placeholder="Buscar Venta" required>
+                    </div>
+                </form>
+                <div class="col l3">
+                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped info-sidenav show" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
+                    <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottomMio" data-delay="50" data-tooltip="Opciones">
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="listado-ventas container-mio">
+            <table class="bordered highlight white z-depth-1">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                    </tr>
+                    <tr>
+                        <td>Alan</td>
+                        <td>Jellybean</td>
+                        <td>$3.76</td>
+                        <td>$0.87</td>
+                    </tr>
+                    <tr>
+                        <td>Jonathan</td>
+                        <td>Lollipop</td>
+                        <td>$7.00</td>
+                        <td>$0.87</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+
+
+
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Ventas")"><i class="material-icons">add</i></a>
         </div>
     </div>
 
-    @*<aside class="ventas-details">
+    <aside class="ventas-details white z-depth-1">
         khgjhkg
-    </aside>*@
+    </aside>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".ventas .ventas-opciones .info-sidenav").click(function () {
+                if ($(this).hasClass('show')) {
+                    $(".ventas .ventas-details").css("right", "0px");
+                    $(".ventas .ventas-content").css("padding", "0 280px 0 0");
+                    $(".ventas .ventas-opciones .info-sidenav").toggleClass('show hiden');
+                }
+                else if ($(this).hasClass('hiden'))
+                {
+                    $(".ventas .ventas-details").css("right", "-300px");
+                    $(".ventas .ventas-content").css("padding", "0");
+                    $(".ventas .ventas-opciones .info-sidenav").toggleClass('show hiden');
+                }
+            });
+        });
+    </script>    
+}
