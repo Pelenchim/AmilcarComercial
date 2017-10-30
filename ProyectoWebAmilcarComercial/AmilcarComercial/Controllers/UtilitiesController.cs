@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AmilcarComercial.Controllers
 {
+    [Authorize]
     public class UtilitiesController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();

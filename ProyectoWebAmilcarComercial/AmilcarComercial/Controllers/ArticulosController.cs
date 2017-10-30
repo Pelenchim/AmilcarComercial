@@ -10,6 +10,7 @@ using AmilcarComercial.Models;
 
 namespace AmilcarComercial.Controllers
 {
+    [Authorize]
     public class ArticulosController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
@@ -60,6 +61,7 @@ namespace AmilcarComercial.Controllers
                 tbl_Articulo.imagen = imagen.imagen;
                 var ruta = "articulos";
                 utileria.MoverImagen(ruta, imagen.imagen);
+                tbl_Articulo.estado = true;
 
                 db.Tbl_Articulo.Add(tbl_Articulo);
                 db.Tbl_ImgTamporal.Remove(imagen);

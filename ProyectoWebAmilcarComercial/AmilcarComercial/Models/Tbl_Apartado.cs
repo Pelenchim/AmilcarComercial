@@ -18,9 +18,7 @@ namespace AmilcarComercial.Models
         public System.DateTime fecha_plazo { get; set; }
         public double importe { get; set; }
         public int id_orden { get; set; }
-        public int id_cliente { get; set; }
     
-        public virtual Tbl_Clientes Tbl_Clientes { get; set; }
         public virtual Tbl_Orden Tbl_Orden { get; set; }
         public virtual Tbl_Pago_Apartado Tbl_Pago_Apartado { get; set; }
     }

@@ -20,5 +20,6 @@ namespace AmilcarComercial.Models
         public string ruc { get; set; }
         public bool nuevo { get; set; }
         public string user { get; set; }
+        public Nullable<int> id_proveedor { get; set; }
     }
 }

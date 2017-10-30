@@ -25,7 +25,7 @@ namespace AmilcarComercial.Models
         public System.DateTime fecha_compra { get; set; }
         public string fact_compra { get; set; }
         public string tipo_comprobante_compra { get; set; }
-        public decimal iva_compra { get; set; }
+        public double iva_compra { get; set; }
         public string usuario { get; set; }
         public int id_sucursal { get; set; }
     

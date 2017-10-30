@@ -126,7 +126,8 @@
 <div id="nuevo" class="modal cyan">
     <div class="articulo-nuevo cyan">
         <div class="row white z-depth-1">
-            <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">add_box</i>Agregar Nuevo Articulo</h4>
+            <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">add_box</i>Agregar Nuevo Articulo
+            <i class="material-icons modal-close right">clear</i></h4>
         </div>
         <div class="modal-content row white-text">
             <div class="col l4">
@@ -178,7 +179,7 @@
                         <div class="switch">
                             <label class="white-text">
                                 No
-                                <input type="checkbox">
+                                <input id="prueba" type="checkbox">
                                 <span class="lever"></span>
                                 Si
                             </label>
@@ -221,6 +222,10 @@
     @Scripts.Render("~/bundles/dropzone")
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#prueba').on('click', function (e) {
+                console.log("alerta")
+                console.log($(this).prop('checked'))
+            })
             $('.modal').modal();
             $('.tooltipped').tooltip({ delay: 50 }); 
             $('select').material_select();

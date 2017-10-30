@@ -15,6 +15,7 @@ using System.Globalization;
 namespace AmilcarComercial.Controllers
 {
     //[Authorize(Roles = "Admin")]
+    [Authorize]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

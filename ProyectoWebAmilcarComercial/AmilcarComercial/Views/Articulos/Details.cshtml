@@ -8,18 +8,18 @@
     </div>
     <div class="row">
         <div class="col l6">
-            <img src="~/Content/images/articulos/@Model.imagen" class="responsive-img" />
+            <img src="~/Content/images/articulos/@Model.imagen" class="responsive-img" width="160"/>
         </div>
         <div class="descripciones col l4 right">
             <p class="precio">$ 1200</p>
-            @foreach (var item in @Model.Tbl_Categorias.Tbl_Descripciones)
+            @*@foreach (var item in @Model.Tbl_Categorias.Tbl_Descripciones)
             {
                 <p>@item.nombre</p>
             }
             @foreach (var item in Model.Tbl_DescripcionValores)
             {
                 <p>@item.valor</p>
-            }
+            }*@
         </div>
     </div>
     <div class="row">

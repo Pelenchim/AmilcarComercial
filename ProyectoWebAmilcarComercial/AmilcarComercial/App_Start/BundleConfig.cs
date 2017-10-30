@@ -33,6 +33,12 @@ namespace AmilcarComercial
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
                       "~/Scripts/dropzone.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ventas").Include(
+                      "~/Scripts/TransactionScripts/Ventas.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/compras").Include(
+                      "~/Scripts/TransactionScripts/Compras.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/normalize.css",
                       "~/Content/css/materialize.css",

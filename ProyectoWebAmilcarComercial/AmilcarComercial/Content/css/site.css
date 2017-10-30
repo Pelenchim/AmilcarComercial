@@ -134,6 +134,25 @@ header .show-hidde i{
     height: 40px;
     line-height: 40px;  
 }
+header .logo-container{
+    position: absolute;
+    width: 240px;
+}
+header .brand-logo img{
+    width: 100%;
+    height: 50px;
+    margin-top: 6px;
+}
+header .dropdown-content {
+    margin: 10px 0 0 0;
+    right: 10px;
+    min-width: 200px;
+    border-radius: 3px;
+}
+header .dropdown-content li a:hover {
+    color: #000 !important;
+}
+
 
 /*Content*/
 body main.layout .content {
@@ -159,22 +178,22 @@ body main.layout .content {
     background-image: url('../system-resources/inicio.png');
 }
 .side-nav li > a > i.estadisticas {
-    background-image: url('../system-resources/estadisticas.png');
+    background-image: url('../system-resources/Estadisticas-icon.png');
 }
 .side-nav li > a > i.ventas {
-    background-image: url('../system-resources/ventas.png');
+    background-image: url('../system-resources/ventas-icon.png');
 }
 .side-nav li > a > i.credito {
-    background-image: url('../system-resources/credito.png');
+    background-image: url('../system-resources/Credit-icon.png');
 }
 .side-nav li > a > i.inventario {
-    background-image: url('../system-resources/inventario.png');
+    background-image: url('../system-resources/Inventario-icon.png');
 }
 .side-nav li > a > i.catalogos {
-    background-image: url('../system-resources/catalogos.png');
+    background-image: url('../system-resources/Catalogos-icon.png');
 }
 .side-nav li > a > i.reportes {
-    background-image: url('../system-resources/reportes.png');
+    background-image: url('../system-resources/reportes-icon.png');
 }
 .side-nav li > a > i.config {
     background-image: url('../system-resources/Config.png');
@@ -193,6 +212,12 @@ body main.layout .content {
 }
 .side-nav li > a > i.cliente {
     background-image: url('../system-resources/clientes.png');
+}
+.side-nav li > a > i.kardex {
+    background-image: url('../system-resources/Kardex-icon.png');
+}
+.side-nav li > a > i.compras {
+    background-image: url('../system-resources/Compras-icon.png');
 }
 
 /*MediaQuery del Layout*/
@@ -270,8 +295,8 @@ box-shadow: 0 1px 0 0 #000 !important;
 /* label underline focus color */
 .login .input-field input[type=text]:focus,
 .login .input-field input[type=password]:focus {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
 }
 /* valid color */
 .input-field input[type=text].valid {
@@ -337,12 +362,12 @@ box-shadow: 0 1px 0 0 #000 !important;
     padding: 15px 15px 15px 25px;
     line-height: 20px;
 }
-
 .home .home-title span {
     font-size: large;
 }
 .home .home-content .home-head-text h5 {
     margin-bottom: 0;
+    text-transform: uppercase;
 } 
 .home .home-content .home-head-text p{
     margin: 5px 0 0 0;
@@ -354,23 +379,49 @@ box-shadow: 0 1px 0 0 #000 !important;
     padding-bottom: 60px;
 }
 
-.home .home-content img {
-    margin-top: 30px;
+.home .home-content img.Logo-AM {
+    margin-top: 20px;
     width: 200px;
 }
+.home .home-content img.Logo-Unan{
+    margin-top: 20px;
+    width: 250px;
+}
 
-.home-items {
+.home .home-items {
     margin-bottom: 90px;
 }
-
-.home-items img {
-    width: 70%;
+.home .home-items figure{
+    width: 100%;
+    height: 195px;
 }
-
-.home-items figcaption {
+.home .home-items img:not(.no) {
+    width: 70%;
+    min-height: 170px;
+    height: 185px;
+    max-height: 190px;
+    transition: all ease 0.2s;
+}
+.home .home-items img.no {
+    width: 70%;
+    min-height: 170px;
+    height: 170px;
+    margin-top: 15px;
+    max-height: 190px;
+    transition: all ease 0.2s;
+}
+.home .home-items figcaption {
     font-weight: 500;
     font-size: larger;
     color: #424242;
+}
+.home .home-items a:hover > figure > img:not(.no){
+    width: 71%;
+    height: 190px;
+}
+.home .home-items a:hover > figure > img.no {
+    width: 71%;
+    height: 175px;
 }
 
 /*#endregion */
@@ -1257,8 +1308,6 @@ background-color: #37474f;
     padding: 30px 0 40px 0;
 }
 .ventas .listado-ventas{
-    height: 70vh;
-    overflow-y:scroll;
 }
 .ventas .listado-ventas table{
     border-radius: 2px;
@@ -1273,16 +1322,67 @@ background-color: #37474f;
 {
     border-bottom: 0px solid grey;
 }
+.ventas .pagination {
+    margin-top: 2rem;
+}
+.ventas .pagination li.active {
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
 
+/*aside de detalles*/
 
 .ventas .ventas-details {
     width: 300px;
-    height: calc(100% - 56px);
+    height: calc(100% - 50px);
     position: fixed;
     top: 0;
     right: -300px;
-    margin-top: 56px;
+    margin-top: 50px;
+    padding: 10px 0 30px 0;
     transition: right 0.3s ease-in;
+}
+.ventas .ventas-details .row {
+    margin-bottom: 0;
+}
+.ventas .ventas-details .title {
+    margin-bottom: 0;
+    padding: 10px 15px;
+}
+.ventas .ventas-details .title i:last-child {
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+}
+.ventas .ventas-details .title i:last-child:hover {
+    color: rgba(255,255,255,1);
+}
+.ventas .ventas-details .title h5 {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.8rem;
+}
+.ventas .ventas-details .tabs .tab a {
+    color: #fff;
+    font-weight: 500;
+}
+.ventas .ventas-details .tabs .indicator {
+    background-color: #fff !important;
+    height: 3px;
+}
+.ventas .ventas-details .general,
+.ventas .ventas-details .detalle {
+    padding: 5px 25px;
+}
+.ventas .ventas-details .general p {
+    text-align: end;
+    font-size: 13px;
+}
+.ventas .ventas-details .general p span {
+    color: rgba(0, 0, 0, 0.55);
+}
+.ventas .ventas-details .detalle p:not(.name) {
+    margin: 0;
 }
 
 /*#endregion */
@@ -1322,19 +1422,22 @@ background-color: #37474f;
 
 .articulos > .row,
 .clientes > .row,
-.nuevoCliente > .row{
+.nuevoCliente > .row,
+.cancelarVenta > .row{
     margin: 0;
 }
 .articulos h4,
 .clientes h4,
-.nuevoCliente h4{
+.nuevoCliente h4,
+.cancelarVenta h4{
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
     padding-top: 0.8rem;
 }
 .clientes h4 .salir,
-.nuevoCliente h4 .salir{
+.nuevoCliente h4 .salir,
+.cancelarVenta h4 .salir{
     cursor: pointer;
 }
 .articulos .option-bar,
@@ -1493,25 +1596,55 @@ background-color: #37474f;
     box-shadow: 0 0 2px #727272 !important;
 }
 
+.articulosVenta .articulos-orden .articulosLista{
+    padding: 0;
+}
+
+.articulosVenta .articulos-orden .articulosLista table {
+    width: 100%;
+}
+
+    .articulosVenta .articulos-orden .articulosLista table thead {
+        width: calc( 100% - 1em );
+        border-bottom: 0px;
+    }
+
+    .articulosVenta .articulos-orden .articulosLista table tbody {
+        display: block;
+        height: 42vh;
+        min-height: 280px;
+        overflow: auto;
+    }
+
+        .articulosVenta .articulos-orden .articulosLista table thead tr,
+        .articulosVenta .articulos-orden .articulosLista table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+    .articulosVenta .articulos-orden .articulosLista table thead tr {
+        border-bottom: 0px;
+    }
+
 /*modal de articulos*/
 
 .modal-ventas .articulos .card-v,
 .modal-ventas .articulos .table-v {
     display: none;
 }
-.lista-articulos table.highlight > tbody > tr:hover {
-    background-color: #42a5f5;
+.modal-ventas .lista-articulos table.highlight > tbody > tr:hover {
 }
-.articulos .lista-articulos .card .nombre {
+.modal-ventas .articulos .lista-articulos .card .nombre {
     font-size: 1.3rem;
 }
-.articulos .lista-articulos .card a {
+.modal-ventas .articulos .lista-articulos .card a {
     padding: 0 0.5rem;
 }
-.articulos .lista-articulos .card a:hover {
+.modal-ventas .articulos .lista-articulos .card a:hover {
     background-color: #66bb6a !important;
 }
-.articulos .lista-articulos .card input[type=text] {
+.modal-ventas .articulos .lista-articulos .card input[type=text] {
     margin: 0 15px 0 0;
     color: #3c3c3c;
     border: none !important;
@@ -1526,33 +1659,33 @@ background-color: #37474f;
     transition: background-color 0.4s;
     text-align: center;
 }
-.articulos .lista-articulos .card input[type=text]:focus {
+.modal-ventas .articulos .lista-articulos .card input[type=text]:focus {
     background-color: #f9f9f9 !important;
     border-bottom: 0;
     box-shadow: 0 0 2px #727272 !important;
 }
-.articulos .lista-articulos table tbody input[type=text] {
+.modal-ventas .articulos .lista-articulos table tbody input[type=text] {
     margin: 0;
-    color: #fff;
+    color: #555;
     border: none !important;
     border-radius: 2px;
     width: 80px;
     height: 35px !important;
     outline: none !important;
     padding: 1px 10px 1px 10px !important;
-    background: rgba(255, 255, 255, 0.30) !important;
+    background: rgba(183, 183, 183, 0.50) !important;
     -moz-box-sizing: border-box;
     box-sizing: border-box !important;
     transition: background-color 0.4s;
     text-align: center;
 }
-.articulos .lista-articulos table tbody input[type=text]:focus {
+.modal-ventas .articulos .lista-articulos table tbody input[type=text]:focus {
     background-color: #fff !important;
     color: #3d3d3d;
     border-bottom: 0;
     box-shadow: 0 0 2px #727272 !important;
 }
-.articulos .lista-articulos table tbody a{
+.modal-ventas .articulos .lista-articulos table tbody a{
     padding: 0 0.7rem;
 }
 
@@ -1561,40 +1694,548 @@ background-color: #37474f;
     cursor:pointer;
 }
 
+/*modal cancelar*/
+.cancelarVenta p{
+    margin-top: 0;
+}
+
 /*#endregion */
 
+/*#region Compras */
+
+.compras {
+}
+.compras .compras-content {
+    padding: 0;
+    transition: all 0.3s ease-in;
+}
+.compras .compras-content .compras-opciones {
+    padding: 30px 0 40px 0;
+}
+.compras .compras-content .compras-opciones .icons,
+.compras .compras-content .compras-opciones form,
+.compras .compras-content .compras-opciones form .col:not(.filtro),
+.compras .compras-content .compras-opciones form .search{
+    padding:0;
+}
+.compras .compras-content .compras-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.compras .compras-content .compras-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.compras .compras-content .compras-opciones .icons i{
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.compras .compras-content .compras-opciones .icons .last i{
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.compras .listado-compras table {
+    border-radius: 2px;
+}
+.compras .listado-compras table thead tr th:first-child {
+    padding-left: 20px;
+}
+.compras .listado-compras table tbody tr td:first-child {
+    padding-left: 20px;
+}
+.compras .listado-compras table tbody tr:last-child {
+    border-bottom: 0px solid grey;
+}
+.compras .listado-compras table tbody tr{
+    cursor: pointer;
+}
+.compras .listado-compras table tbody tr.active {
+    background-color: #2196f3 !important;
+    border-bottom: 2px solid blue;
+}
+.compras .pagination{
+    margin-top: 2rem;
+}
+.compras .pagination li.active {
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+/*aside de compras*/
+
+.compras .compras-details {
+    width: 300px;
+    height: calc(100% - 50px);
+    position: fixed;
+    top: 0;
+    right: -300px;
+    margin-top: 50px;
+    padding: 10px 0 30px 0;
+    transition: all 0.3s ease-in;
+}
+.compras .compras-details .row{
+    margin-bottom: 0;
+}
+.compras .compras-details .title{
+    margin-bottom: 0;
+    padding: 10px 15px;
+}
+.compras .compras-details .title i:last-child {
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+}
+.compras .compras-details .title i:last-child:hover{
+    color: rgba(255,255,255,1);
+}
+.compras .compras-details .title h5 {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.8rem;
+}
+.compras .compras-details .tabs .tab a {
+    color: #fff;
+    font-weight: 500;
+}
+.compras .compras-details .tabs .indicator {
+    background-color: #fff !important;
+    height: 3px;
+}
+.compras .compras-details .general,
+.compras .compras-details .detalle{
+    padding: 5px 25px;
+}
+.compras .compras-details .general .no-selected,
+.compras .compras-details .detalle .no-selected{
+    margin-top: 2rem;
+}
+.compras .compras-details .general p:not(.no){
+    text-align: end;
+    font-size: 13px;
+}
+.compras .compras-details .general p span {
+    color: rgba(0, 0, 0, 0.55);
+}
+.compras .compras-details .individual{
+    padding: 15px 0 10px 0;
+}
+.compras .compras-details .detalle p:not(.no){
+    margin:0;
+    opacity: 0.9;
+}
+.compras .compras-details .detalle .individual .name{
+    opacity: 0.85;   
+    padding-left: 5px;
+}
+.compras .compras-details .detalle .individual .cate {
+    padding-left: 5px;
+}
+.compras .compras-details .detalle .individual > .col{
+    padding: 0;
+    margin: 0;
+}
+.compras .compras-details .detalle .individual img{
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+/*#endregion */
 /*#region NuevaCompra */
 
 .nueva-compra > div:first-child {
-    padding-left: 1.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
 }
-
 .nueva-compra > div:last-child {
-    padding-right: 1.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
 }
-
 .nueva-compra .proveedor,
-.nueva-compra .detalle {
-    margin-top: 1rem;
+.nueva-compra .general {
+    margin-top: 1.5rem;
 }
-
 .nueva-compra .proveedor .opcionesProveedor a {
     padding: 0 5px;
     margin: 0 1px;
     cursor: pointer;
     color: #424242;
 }
-
 .nueva-compra .proveedor .opcionesProveedor a:hover {
     color: #212121;
 }
 
-.nueva-compra .proveedor .datosProveedor div:last-child {
+.nueva-compra .proveedor .datosProveedor div:not(.vacio):last-child,
+.nueva-compra .general .datosGenerales div:last-child{
     margin-bottom: 1.5rem;
 }
-
-.nueva-compra .proveedor .datosProveedor p {
+.nueva-compra .proveedor .datosProveedor .vacio{
+    margin-bottom: 1rem;
+}
+.nueva-compra .proveedor .datosProveedor div:not(.vacio) p,
+.nueva-compra .general .datosGenerales p{
     margin-bottom: 0px;
+}
+.nueva-compra .proveedor .datosProveedor .vacio p{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.nueva-compra .articulosCompra .articulosLista {
+    height: 50vh;
+    min-height: 300px;
+    overflow-x: hidden;
+}
+.articulosCompra .opcionesArticulos:first-child {
+    padding: 0 0.75rem 0 0;
+}
+.articulosCompra .opcionesArticulos .acciones {
+    padding: 0;
+}
+.articulosCompra .opcionesArticulos .acciones div {
+    height: 100%;
+}
+.articulosCompra .opcionesArticulos .acciones a {
+    padding: 0 5px;
+    margin: 1rem 1px 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+.articulosCompra .opcionesArticulos .acciones a.card-v,
+.articulosCompra .opcionesArticulos .acciones a.table-v {
+    display: none;
+}
+.articulosCompra .opcionesArticulos .acciones input {
+    width: 65%;
+    margin: 0.3rem 0 0 0;
+    display: none;
+}
+.articulosCompra .opcionesArticulos input[type=text]:focus {
+    border-bottom: 1px solid #424242 !important;
+    box-shadow: 0 1px 0 0 #424242 !important;
+}
+
+.articulosCompra .opcionesArticulos input[type=text].valid {
+    border-bottom: 1px solid #424242 !important;
+    box-shadow: 0 1px 0 0 #424242 !important;
+}
+.articulosCompra .articulos-orden .articulosLista table {
+    width: 100%;
+}
+.articulosCompra .articulos-orden .articulosLista table thead {
+    width: calc( 100% - 1em );
+    border-bottom: 0px;
+}
+.articulosCompra .articulos-orden .articulosLista table tbody {
+    display: block;
+    height: 42vh;
+    min-height: 280px;
+    overflow: auto;
+}
+.articulosCompra .articulos-orden .articulosLista table thead tr,
+.articulosCompra .articulos-orden .articulosLista table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.articulosCompra .articulos-orden .articulosLista table thead tr {
+    border-bottom: 0px;
+}
+.articulosCompra .articulosLista .articulosLista .card .card-content {
+    padding: 0;
+}
+.articulosCompra .articulos-orden .articulosLista table td {
+    padding: 5px;
+}
+
+.articulosCompra .articulos-orden .articulosLista .top {
+    position: absolute;
+    width: 100%;
+    padding-left: 5px;
+    z-index: 50;
+}
+
+.articulosCompra .articulos-orden .articulosLista .top a {
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
+}
+.articulosCompra .articulos-orden .articulosLista table td a {
+    color: #424242;
+    cursor: pointer;
+}
+.articulosCompra .articulos-orden .articulosLista table td a:hover {
+    color: #f44336;
+}
+
+.articulosCompra .articulos-orden .articulosLista .top a:hover {
+    color: #e1e1e1;
+}
+
+.articulosCompra .articulos-orden .articulosLista .card img {
+    width: 100%;
+    max-height: 180px;
+}
+
+.articulosCompra .articulos-orden .articulosLista table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.articulosCompra .articulos-orden .articulosLista .card-title {
+    padding: 5px 10px;
+}
+
+.articulosCompra .articulos-orden .articulosLista .card .card-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0.3rem;
+}
+
+.articulosCompra .articulos-orden .articulosLista .card .card-content div {
+    width: 50%;
+    margin: 0.3rem;
+}
+
+.articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text],
+.articulosCompra .articulos-orden .articulosLista table tbody input[type=text] {
+    width: 100%;
+    margin: 0;
+    color: #333;
+    border: none !important;
+    border-radius: 2px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background: #dbdbdb !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+
+.articulosCompra .articulos-orden .articulosLista table tbody input[type=text]:not(.precio) {
+    width: 60px;
+}
+.articulosCompra .articulos-orden .articulosLista table tbody input[type=text].precio {
+    width: 75px;
+}
+.articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text]:focus,
+.articulosCompra .articulos-orden .articulosLista table tbody input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.nueva-compra .detalle p:not(.title){
+    margin: 5px 0 3px 0;
+}
+.nueva-compra .detalle .input-field input{
+    margin: 0;
+}
+.nueva-compra .detalle .input-field:last-child{
+    margin: 25px 0 5px 0;
+}
+.nueva-compra .detalle .detalles span{
+    margin-bottom: 3px;
+}
+.nueva-compra .detalle .acciones{
+    margin-top: 5px;
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+}
+
+/*modales generales*/
+.modal-compras .articulos > .row,
+.modal-compras .proveedores > .row,
+.modal-compras .nuevoProveedor > .row,
+.modal-compras .editarProveedor > .row,
+.modal-compras .eliminartodos > .row,
+.modal-compras .cancelarCompra > .row{
+    margin: 0;
+}
+
+.modal-compras .articulos h4,
+.modal-compras .proveedores h4,
+.modal-compras .nuevoProveedor h4,
+.modal-compras .editarProveedor h4,
+.modal-compras .eliminartodos h4,
+.modal-compras .cancelarCompra h4{
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.8rem;
+}
+.modal-compras .articulos h4 .salir,
+.modal-compras .proveedores h4 .salir,
+.modal-compras .nuevoProveedor h4 .salir,
+.modal-compras .editarProveedor h4 .salir,
+.modal-compras .eliminartodos h4 .salir,
+.modal-compras .cancelarCompra h4 .salir{
+    cursor: pointer;
+}
+.modal-compras .articulos .option-bar,
+.modal-compras .proveedores .option-bar {
+    margin-bottom: 15px;
+}
+.modal-compras .proveedores .pagination li a,
+.modal-compras .articulos .pagination li a{
+    color: #fff !important;
+}
+.modal-compras .proveedores .pagination li.active,
+.modal-compras .articulos .pagination li.active{
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.modal-compras .proveedores .pagination li.active a,
+.modal-compras .articulos .pagination li.active a{
+    color: #444 !important;
+}
+
+.modal-compras .input-field label {
+    color: #fff !important;
+}
+
+.modal-compras .input-field input[type=text]{
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+
+.modal-compras .input-field input[type=text]:focus + label{
+    color: #fff !important;
+}
+
+.modal-compras .input-field input[type=text]:focus{
+    border-bottom: 1px solid #fff !important;
+    box-shadow: 0 1px 0 0 #fff !important;
+}
+
+.modal-compras .input-field input[type=text].valid{
+    border-bottom: 1px solid #fff !important;
+    box-shadow: 0 1px 0 0 #fff !important;
+}
+
+.modal-compras .input-field input[type=text].invalid {
+    border-bottom: 1px solid #e91e63 !important;
+    box-shadow: 0 1px 0 0 #e91e63 !important;
+}
+
+/*modal proveedores*/
+.modal-compras .proveedores .lista-proveedores a{
+    cursor: pointer;
+}
+
+/*modal articulos*/
+.modal-compras .articulos .acciones .card-v,
+.modal-compras .articulos .acciones .table-v{
+    display: none;
+}
+.modal-compras .articulos .lista-articulos table tbody input[type=text] {
+    margin: 0;
+    color: #2a2a2a;
+    border: none !important;
+    border-radius: 2px;
+    width: 80px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background-color: #e1e1e1;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-compras .articulos .lista-articulos table tbody input[type=text]:focus {
+    background-color: #fff !important;
+    color: #3d3d3d;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-compras .articulos .lista-articulos table tbody a {
+    padding: 0 0.7rem;
+}
+.modal-compras .articulos .lista-articulos table tbody a:hover {
+    background-color: #ec407a !important;
+}
+.modal-compras .articulos .lista-articulos .card .card-title{
+    padding: 0;
+}
+.modal-compras .articulos .lista-articulos .card p{
+    margin-top: 0;
+}
+.modal-compras .articulos .lista-articulos .card a {
+    padding: 0 0.6rem;
+    margin: 5px;
+}
+.modal-compras .articulos .lista-articulos .card a:hover {
+    background-color: #66bb6a !important;
+}
+.modal-compras .articulos .lista-articulos .card input[type=text] {
+    margin: 5px;
+    color: #3c3c3c;
+    border: none !important;
+    border-radius: 2px;
+    width: 60px;
+    height: 36px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background-color: #ffffff !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-compras .articulos .lista-articulos .card input[type=text]:focus {
+    border-bottom: 0;
+    box-shadow: 0 0 3px #727272 !important;
+}
+
+/*modal eliminar*/
+.modal-compras .eliminartodos p {
+    margin-top: 0;
+}
+
+/*modal cancelar*/
+.modal-compras .cancelarCompra p{
+    margin-top: 0;
+}
+
+/*#endregion */
+
+/*#region Kardex */
+
+.kardex .kardex-content .kardex-opciones {
+    padding: 30px 0 40px 0;
+}
+.kardex .kardex-content table tbody i{
+    cursor: pointer;
+}
+
+/*modal detalle-kardex*/
+.modal-kardex .kardex .row{
+    margin: 0;
+}
+.modal-kardex .kardex h4 {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.8rem;
+}
+.modal-kardex .kardex .modal-content .option-bar{
+    margin-bottom: 15px;
+}
+
+/*#endregion */
+
+/*#region Inventario */
+
+.inventario .inventario-content .inventario-opciones {
+    padding: 30px 0 40px 0;
 }
 
 /*#endregion */

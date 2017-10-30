@@ -17,8 +17,7 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Clientes()
         {
-            this.Tbl_Apartado = new HashSet<Tbl_Apartado>();
-            this.Tbl_Credito = new HashSet<Tbl_Credito>();
+            this.Tbl_Orden = new HashSet<Tbl_Orden>();
         }
     
         public int id_cliente { get; set; }
@@ -30,10 +29,8 @@ namespace AmilcarComercial.Models
         public string cedula { get; set; }
         public Nullable<bool> estado { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Apartado> Tbl_Apartado { get; set; }
         public virtual Tbl_Departamentos Tbl_Departamentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Credito> Tbl_Credito { get; set; }
+        public virtual ICollection<Tbl_Orden> Tbl_Orden { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AmilcarComercial.Controllers
 {
+    [Authorize]
     public class EstadisticasController : Controller
     {
         // GET: Estadisticas

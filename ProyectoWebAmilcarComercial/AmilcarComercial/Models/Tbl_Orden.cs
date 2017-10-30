@@ -26,14 +26,16 @@ namespace AmilcarComercial.Models
         public Nullable<int> id_sucursal { get; set; }
         public string usuario { get; set; }
         public System.DateTime fecha_orden { get; set; }
-        public decimal iva_orden { get; set; }
+        public double iva_orden { get; set; }
         public string estado_orden { get; set; }
         public string tipo_orden { get; set; }
         public string fact_Orden { get; set; }
-        public string NombreCliente { get; set; }
+        public int id_cliente { get; set; }
+        public string tipo_pago { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Apartado> Tbl_Apartado { get; set; }
+        public virtual Tbl_Clientes Tbl_Clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Credito> Tbl_Credito { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

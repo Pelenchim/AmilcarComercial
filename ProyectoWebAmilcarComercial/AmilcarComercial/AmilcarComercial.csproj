@@ -203,6 +203,7 @@
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
+    <Compile Include="Controllers\KardexController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcasController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
@@ -280,6 +281,9 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Compra.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_CompraTmp.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Concepto.cs">
@@ -373,6 +377,8 @@
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\pace-theme-flash.css" />
     <Content Include="Content\images\articulos\1.png" />
+    <Content Include="Content\system-resources\AM-Logo.png" />
+    <Content Include="Content\system-resources\AM-Logo2.png" />
     <Content Include="Content\system-resources\avatar-female-default.png" />
     <Content Include="Content\system-resources\avatar-male-default.png" />
     <Content Include="Content\images\marcas\1.png" />
@@ -489,6 +495,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TransactionScripts\Compras.js" />
+    <Content Include="Scripts\TransactionScripts\Ventas.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -570,6 +578,7 @@
     <Content Include="Views\Ventas\Nueva.cshtml" />
     <Content Include="Views\Compras\Nueva.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Kardex\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

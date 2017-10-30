@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Compras";
-    ViewBag.SubTitle = "Nueva";
+    ViewBag.SubTitle = "Todas";
     ViewBag.ControllerGeneral = "Compras";
     ViewBag.PrimaryColor = "blue";
     ViewBag.NavExtendedColor = "blue darken-1";
@@ -11,9 +11,9 @@
     @Html.Partial("_breadcrumbPartial")
 </nav>
 <div class="nueva-compra row">
-    <div class="col l8">
-        <div class="proveedor row white z-depth-1">
-            <div class="col l12">
+    <div class="row">
+        <div class="proveedor col l6">
+            <div class="row white z-depth-1">
                 <div class="opcionesProveedor col l12">
                     <p>
                         <strong>Datos del Proveedor</strong>
@@ -26,7 +26,78 @@
                 <div class="datosProveedor"></div>
             </div>
         </div>
+        <div class="general col l6">
+            <div class="row white z-depth-1">
+                <div class="opcionesGeneral col l12">
+                    <p><strong>Datos Generales</strong></p>
+                </div>
+                <div class="divider-mio"></div>
+                <div class="datosGenerales"></div>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="articulosCompra col l9">
+            <div class="row">
+                <div class="head col l12 white z-depth-1">
+                    <div class="opcionesArticulos col l12">
+                        <p class="col l6">
+                            <strong>Lista de Articulos a Comprar</strong>
+                        </p>
+                        <div class="acciones col l6">
+                            <div>
+                                <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="abrirArticulos(1)"><i class="material-icons">add_shopping_cart</i></a>
+                                @*<a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Nuevo Producto" onclick="articulos(0)"><i class="material-icons">add_box</i></a>*@
+                                <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
+                                <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
+                                <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
+                                <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
+                            </div>
+                            <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="articulos-orden"></div>
+            </div>
+        </div>
+        <div class="detalle col l3">
+            <div class="row white z-depth-1">
+                <div class="col l12">
+                    <p class="title"><strong>Detalle de la Compra</strong></p>
+                </div>
+                <div class="divider-mio"></div>
+                <div class="col l12">
+                    <p><strong>Preferencias:</strong></p>
+                    <div class="input-field col l6">
+                        <input placeholder="" id="N_factura" name="N_factura" type="text" required>
+                        <label for="N_factura">N° Factura</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <select id="iva">
+                            <option value="1">5%</option>
+                            <option value="2">10%</option>
+                            <option value="3">15%</option>
+                        </select>
+                        <label>IVA</label>
+                    </div>
+                    <div class="input-field col l12">
+                        <select id="comprobante">
+                            <option value="Recibo">Recibo</option>
+                            <option value="Factura">Factura</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <label>Comprobante</label>
+                    </div>                    
+                </div>
+                <div class="detalles col l12"></div>
+                <div class="acciones col l12 blue center-align">
+                    <h5 class="center-align white-text total"></h5>
+                    <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Compra" onclick="$('#cancelarCompra').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
+                    <a class="btn white blue-text text-darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Compra" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
+                </div>
+            </div>
+        </div>        
+    </div> 
 </div>
 
 <div class="modal-compras">
@@ -36,7 +107,7 @@
                 <h4 class="grey-text text-darken-3 left-align">
                     <i class="material-icons">search</i>
                     Buscar Proveedor
-                    <i class="salir material-icons right" onclick="CancelProveedores()">clear</i>
+                    <i class="salir material-icons right" onclick="CancelProveedor()">clear</i>
                 </h4>
             </div>
             <div class="modal-content row white-text">
@@ -64,6 +135,17 @@
                     </div>
                 </div>
                 <div class="lista-proveedores"></div>
+                <div class="col l12 center">
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -82,27 +164,27 @@
                 </div>
                 <div class="col l9">
                     <div class="input-field col l6">
-                        <input placeholder="" id="nombre_cliente" name="nombre_cliente" type="text">
+                        <input placeholder="" autofocus="autofocus" id="nombre_cliente" name="nombre_cliente" type="text">
                         <label for="nombre_cliente">Nombre</label>
                     </div>
                     <div class="input-field col l6">
-                        <input placeholder="" id="apellidos_cliente" name="apellidos_cliente" type="text">
+                        <input id="apellidos_cliente" name="apellidos_cliente" type="text">
                         <label for="apellidos_cliente">Apellidos</label>
                     </div>
                     <div class="input-field col l4">
-                        <input placeholder="" id="cedula" name="cedula" type="text" class="validate">
+                        <input id="cedula" name="cedula" type="text" class="validate">
                         <label for="cedula">Cedula</label>
                     </div>
                     <div class="input-field col l4">
-                        <input placeholder="" id="telefono" name="telefono" type="text" class="validate">
+                        <input id="telefono" name="telefono" type="text" class="validate">
                         <label for="telefono">Telefono</label>
                     </div>
                     <div class="input-field col l4">
-                        <input placeholder="" id="departamento" name="departamento" type="text" class="validate">
+                        <input id="departamento" name="departamento" type="text" class="validate">
                         <label for="departamento">Departamento</label>
                     </div>
                     <div class="input-field col l12">
-                        <input placeholder="" id="direccion" name="direccion" type="text" class="validate">
+                        <input id="direccion" name="direccion" type="text" class="validate">
                         <label for="direccion">Direccion</label>
                     </div>
                     <div class="col l12 right-align">
@@ -161,211 +243,89 @@
             </div>
         </div>
     </div>
+    <div id="articulos" class="modal modal-giant">
+        <div class="articulos blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>
+                Buscar Articulo
+                <i class="salir material-icons right" onclick="CancelArticulos()">clear</i></h4>
+            </div>
+            <div class="modal-content row">
+                <div class="col l12">
+                    <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                        <form class="col l9">
+                            <div class="input-field">
+                                <input id="search" type="search" placeholder="Buscar Articulo" required>
+                            </div>
+                        </form>
+                        <div class="acciones col l3">
+                            <a class="tooltipped card-v" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                            <a class="tooltipped table-v" data-position="bottomMio" data-delay="50" data-tooltip="Vista de lista" onclick="articulos(1)"><i class="material-icons">view_list</i></a>
+                            <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
+                            <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottomMio" data-delay="50" data-tooltip="Opciones">
+                                <i class="material-icons right">more_vert</i>
+                            </a>
+                            <!-- Dropdown Structure -->
+                            <ul id='dropdown1' class='dropdown-content'>
+                                <li><a href="#!">one</a></li>
+                                <li><a href="#!">two</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="lista-articulos"></div>
+                <div class="col l12 center">
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="eliminartodos" class="modal modal-mini">
+        <div class="eliminartodos blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">delete_forever</i>
+                    Vaciar orden
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light btn-flat white blue-text" onclick="eliminarProductosTodos()">Aceptar</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div id="cancelarCompra" class="modal modal-mini">
+        <div class="cancelarCompra blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">cancel</i>
+                    Cancelar Compra
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea cancelar la compra?</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarCompra()">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.modal').modal({
-                opacity: 0.5,
-                inDuration: 350,
-                outDuration: 250,
-                ready: undefined,
-                complete: undefined,
-                dismissible: false,
-                startingTop: '4%',
-                endingTop: '10%'
-            });
-            $('.tooltipped').tooltip({ delay: 50 });
-            $('select').material_select();
-            $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
-                $('.nueva-venta .articulosVenta .acciones input').toggle(500);
-            });
-            mostrarProveedorTmp();
-        });
-        function proveedores() {
-            $.ajax({
-                url: '/obtener/proveedores',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".lista-proveedores").empty();
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            $(".lista-proveedores").append(
-                                '<a onclick="agregarProveedorExistente(' + value.ID + ')">' +
-                                '<div class="col l4">' +
-                                '<div class="card white grey-text text-darken-3">' +
-                                '<div class="card-content">' +
-                                '<span class="card-title truncate">' + value.Nombre + '</span>' +
-                                '<p>Tel: ' + value.Telefono + '</p>' +
-                                '<p>Ruc: ' + value.Ruc + '</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</a>'
-                            );
-                        });
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-            $('#proveedores').modal('open');
-        };
-        function agregarProveedorTmp() {
-            var datos = {
-                Nombre: $(".nuevoCliente #nombre_cliente").val(),
-                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-                Direccion: $('.nuevoCliente #direccion').val(),
-                Departamento: $('.nuevoCliente #departamento').val(),
-                Telefono: $('.nuevoCliente #telefono').val(),
-                Cedula: $('.nuevoCliente #cedula').val()
-            };
-            $.ajax({
-                url: '/agregar/proveedorTmp',
-                type: 'POST',
-                data: datos,
-                'success': function (data) {
-                    mostrarClienteTmp();
-                    $('#nuevoProveedor').modal('close');
-                    Materialize.toast('Proveedor agregado exitosamente', 4000);
-                    $(".nuevoCliente #nombre_cliente").val('');
-                    $('.nuevoCliente #apellidos_cliente').val('');
-                    $('.nuevoCliente #direccion').val('');
-                    $('.nuevoCliente #departamento').val('');
-                    $('.nuevoCliente #telefono').val('');
-                    $('.nuevoCliente #cedula').val('');
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function agregarProveedorExistente(id) {
-            $.ajax({
-                url: '/agregar/ProveedorExistente/' + id,
-                type: 'GET',
-                'success': function (data) {
-                    mostrarProveedorTmp();
-                    $('#proveedores').modal('close');
-                    Materialize.toast('Proveedor definido exitosamente', 4000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function editarProveedor() {
-            $('#editarProveedor').modal('open');
-            $.ajax({
-                url: '/editar/proveedorTmp',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $.each(data, function () {
-                        $(".editarCliente #nombre_cliente").val(data.Nombre);
-                        $(".editarCliente #apellidos_cliente").val(data.Apellido)
-                        $(".editarCliente #cedula").val(data.Cedula)
-                        $(".editarCliente #telefono").val(data.Telefono)
-                        $(".editarCliente #departamento").val(data.Departamento)
-                        $(".editarCliente #direccion").val(data.Direccion)
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function editarGuardarProveedor() {
-            var datos = {
-                Nombre: $(".nuevoCliente #nombre_cliente").val(),
-                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-                Direccion: $('.nuevoCliente #direccion').val(),
-                Departamento: $('.nuevoCliente #departamento').val(),
-                Telefono: $('.nuevoCliente #telefono').val(),
-                Cedula: $('.nuevoCliente #cedula').val()
-            };
-            $.ajax({
-                url: '/editar/proveedorGuardarTmp',
-                type: 'POST',
-                data: datos,
-                'success': function (data) {
-                    mostrarClienteTmp();
-                    $('#editarProveedor').modal('close');
-                    Materialize.toast('Proveedor editado exitosamente', 4000);
-                    $(".nuevoCliente #nombre_cliente").val('');
-                    $('.nuevoCliente #apellidos_cliente').val('');
-                    $('.nuevoCliente #direccion').val('');
-                    $('.nuevoCliente #departamento').val('');
-                    $('.nuevoCliente #telefono').val('');
-                    $('.nuevoCliente #cedula').val('');
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function eliminarProveedor() {
-            $.ajax({
-                url: '/eliminar/proveedorTmp',
-                type: 'GET',
-                'success': function (data) {
-                    mostrarClienteTmp();
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function mostrarProveedorTmp() {
-            $.ajax({
-                url: '/obtener/proveedorTmp',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    if (data === 0) {
-                        $(".proveedor .opcionesProveedor a").hide();
-                        $(".datosProveedor").empty();
-                        $(".datosProveedor").append(
-                            '<div class="center-align">' +
-                            '<p style="padding-bottom: 10px">Aun no a definido cliente para esta venta</p>' +
-                            '<button class="btn btn-flat green white-text" onclick="agregarProveedor()">Agregar</button>' + ' ' +
-                            '<button class="btn btn-flat green white-text" onclick="proveedores()">Buscar</button>' +
-                            '</div>'
-                        );
-                    }
-                    else {
-                        $(".proveedor .opcionesProveedor a").show();
-                        $(".datosProveedor").empty();
-                        $(".datosProveedor").append(
-                            '<div class="col l12">' +
-                            '<p><strong>Nombre: </strong>' + data.Nombre + '</p>' +
-                            '</div>' +
-                            '<div class="col l4">' +
-                            '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
-                            '</div>' +
-                            '<div class="col l4">' +
-                            '<p><strong>N° Ruc: </strong>' + data.Ruc + '</p>' +
-                            '</div>'
-                        );
-                    }
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function CancelProveedor() {
-            $('#proveedores').modal('close');
-            $(".lista-proveedores").empty();
-        }
-        function CancelNuevoProveedor() {
-            $('#nuevoProveedor').modal('close');
-        }
-    </script>    
+    @Scripts.Render("~/bundles/compras") 
 }

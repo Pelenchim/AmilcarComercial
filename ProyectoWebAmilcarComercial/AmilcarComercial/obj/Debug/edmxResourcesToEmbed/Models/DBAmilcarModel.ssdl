@@ -110,7 +110,6 @@
     <Property Name="fecha_plazo" Type="date" Nullable="false" />
     <Property Name="importe" Type="float" Nullable="false" />
     <Property Name="id_orden" Type="int" Nullable="false" />
-    <Property Name="id_cliente" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Articulo">
     <Key>
@@ -180,6 +179,7 @@
     <Property Name="cedula" Type="nvarchar" MaxLength="50" />
     <Property Name="user" Type="nvarchar(max)" Nullable="false" />
     <Property Name="nuevo" Type="bit" Nullable="false" />
+    <Property Name="id_cliente" Type="int" />
   </EntityType>
   <EntityType Name="Tbl_Color">
     <Key>
@@ -192,14 +192,26 @@
     <Key>
       <PropertyRef Name="id_compra" />
     </Key>
-    <Property Name="id_compra" Type="int" Nullable="false" />
+    <Property Name="id_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_proveedor" Type="int" Nullable="false" />
     <Property Name="fecha_compra" Type="date" Nullable="false" />
     <Property Name="fact_compra" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="tipo_comprobante_compra" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="iva_compra" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="iva_compra" Type="float" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="id_sucursal" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_CompraTmp">
+    <Key>
+      <PropertyRef Name="id_compraTmp" />
+    </Key>
+    <Property Name="id_compraTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_articulo" Type="int" Nullable="false" />
+    <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="costo" Type="float" Nullable="false" />
+    <Property Name="descuento" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -232,7 +244,6 @@
     <Property Name="fecha_consolidacion" Type="date" Nullable="false" />
     <Property Name="cuotas" Type="int" Nullable="false" />
     <Property Name="interesPorMora" Type="float" />
-    <Property Name="id_cliente" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Departamentos">
     <Key>
@@ -344,11 +355,12 @@
     <Property Name="id_sucursal" Type="int" />
     <Property Name="usuario" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="fecha_orden" Type="date" Nullable="false" />
-    <Property Name="iva_orden" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="iva_orden" Type="float" Nullable="false" />
     <Property Name="estado_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="tipo_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="fact_Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="NombreCliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_cliente" Type="int" Nullable="false" />
+    <Property Name="tipo_pago" Type="nvarchar" MaxLength="20" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
     <Key>
@@ -358,6 +370,7 @@
     <Property Name="id_Articulo" Type="int" />
     <Property Name="user" Type="nvarchar(max)" />
     <Property Name="cantidad" Type="int" />
+    <Property Name="fecha" Type="datetime" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>
@@ -408,6 +421,7 @@
     <Property Name="ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="nuevo" Type="bit" Nullable="false" />
     <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="id_proveedor" Type="int" />
   </EntityType>
   <EntityType Name="Tbl_Salida">
     <Key>
@@ -566,18 +580,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Apartado_Tbl_Clientes">
-    <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-    <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Clientes">
-        <PropertyRef Name="id_cliente" />
-      </Principal>
-      <Dependent Role="Tbl_Apartado">
-        <PropertyRef Name="id_cliente" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Tbl_Apartado_Tbl_Orden">
     <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
     <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
@@ -698,15 +700,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_Credito_Tbl_Clientes">
-    <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-    <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
+  <Association Name="FK_Tbl_CompraTmp_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_CompraTmp" Type="Self.Tbl_CompraTmp" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tbl_Clientes">
-        <PropertyRef Name="id_cliente" />
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
       </Principal>
-      <Dependent Role="Tbl_Credito">
-        <PropertyRef Name="id_cliente" />
+      <Dependent Role="Tbl_CompraTmp">
+        <PropertyRef Name="id_articulo" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -866,6 +868,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tbl_Orden_Tbl_Clientes">
+    <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Tbl_Orden">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tbl_Orden_Tbl_Sucursal">
     <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="0..1" />
     <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
@@ -957,6 +971,7 @@
     <EntitySet Name="Tbl_ClienteTmp" EntityType="Self.Tbl_ClienteTmp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_CompraTmp" EntityType="Self.Tbl_CompraTmp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
@@ -1020,10 +1035,6 @@
       <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
       <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Apartado_Tbl_Clientes" Association="Self.FK_Tbl_Apartado_Tbl_Clientes">
-      <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-      <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
-    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Apartado_Tbl_Orden" Association="Self.FK_Tbl_Apartado_Tbl_Orden">
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
       <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
@@ -1064,9 +1075,9 @@
       <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_Credito_Tbl_Clientes" Association="Self.FK_Tbl_Credito_Tbl_Clientes">
-      <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-      <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+    <AssociationSet Name="FK_Tbl_CompraTmp_Tbl_Articulo" Association="Self.FK_Tbl_CompraTmp_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_CompraTmp" EntitySet="Tbl_CompraTmp" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Credito_Tbl_Orden" Association="Self.FK_Tbl_Credito_Tbl_Orden">
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
@@ -1119,6 +1130,10 @@
     <AssociationSet Name="FK_Tbl_Kardex_Tbl_Sucursal" Association="Self.FK_Tbl_Kardex_Tbl_Sucursal">
       <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Orden_Tbl_Clientes" Association="Self.FK_Tbl_Orden_Tbl_Clientes">
+      <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_Orden_Tbl_Sucursal" Association="Self.FK_Tbl_Orden_Tbl_Sucursal">
       <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />

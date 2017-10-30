@@ -8,20 +8,21 @@
     </div>
     <div class="row home-content white z-depth-1 center-align">
         <div class="home-head-text">
-            <h5 class="grey-text text-darken-4">Sistema de Ventas y Control de Inventario Amilcar-Comercial</h5>
-            <p class="grey-text text-darken-3">fsdfsdfs sd sdsg sg sdgs dgs dg sdgsdgsd </p>
+            <h5 class="grey-text text-darken-4">Sistema de Ventas y Control de Inventario Tienda Amilcar-Comercial</h5>
+            <p class="grey-text text-darken-3">Desarrollado con fines academicos en la modalidad de seminario de graduacion <br /> como herramienta para
+            optar al titulo de Ing. en Ciencias de la Computacion.</p>
         </div>
         <div class="col l6">
-            <img src="~/Content/system-resources/marca_oficial_unan_managua.png" alt="logotipo UNAN-Managua" class="responsive-img right" />
+            <img src="~/Content/system-resources/AM-Logo.png" alt="logotipo UNAN-Managua" class="Logo-AM responsive-img right" />
         </div>
         <div class="col l6">
-            <img src="~/Content/system-resources/marca_oficial_unan_managua.png" alt="logotipo de la empresa" class="responsive-img left" />
+            <img src="~/Content/system-resources/marca_oficial_unan_managua.png" alt="logotipo de la empresa" class="Logo-Unan responsive-img left" />
         </div>
     </div>
     <div class="row home-items">
         <div class="col l10 offset-l1">
             <div class="col l4 center">
-                <a href="">
+                <a href="@Url.Action("Index","Estadisticas")">
                     <figure>
                         <img src="~/Content/system-resources/estadisticas.png" class="responsive-img" />
                         <figcaption>Estadisticas</figcaption>
@@ -29,7 +30,15 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="">
+                <a href="@Url.Action("Index","Compras")">
+                    <figure>
+                        <img src="~/Content/system-resources/compras.png" class="responsive-img no" />
+                        <figcaption>Compras</figcaption>
+                    </figure>
+                </a>
+            </div>
+            <div class="col l4 center">
+                <a href="@Url.Action("Index","Ventas")">
                     <figure>
                         <img src="~/Content/system-resources/ventas.png" class="responsive-img" />
                         <figcaption>Ventas</figcaption>
@@ -37,7 +46,7 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="">
+                <a href="@Url.Action("Index","Credito")">
                     <figure>
                         <img src="~/Content/system-resources/credito.png" class="responsive-img" />
                         <figcaption>Credito</figcaption>
@@ -45,15 +54,23 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="">
+                <a href="@Url.Action("Index","Kardex")">
+                    <figure>
+                        <img src="~/Content/system-resources/kardex.png" class="responsive-img" />
+                        <figcaption>Kardex</figcaption>
+                    </figure>
+                </a>
+            </div>
+            <div class="col l4 center">
+                <a href="@Url.Action("Index","Inventario")">
                     <figure>
                         <img src="~/Content/system-resources/inventario.png" class="responsive-img" />
                         <figcaption>Inventario</figcaption>
                     </figure>
                 </a>
             </div>
-            <div class="col l4 center">
-                <a href="">
+            <div class="col l4 offset-l2 center">
+                <a href="@Url.Action("Catalogos","Home")">
                     <figure>
                         <img src="~/Content/system-resources/catalogos.png" class="responsive-img" />
                         <figcaption>Catalogos</figcaption>
@@ -61,7 +78,7 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="">
+                <a href="@Url.Action("Index","Reportes")">
                     <figure>
                         <img src="~/Content/system-resources/reportes.png" class="responsive-img" />
                         <figcaption>Reportes</figcaption>
@@ -71,7 +88,7 @@
         </div>
     </div>
     <div class="row">
-        <p class="center-align grey-text darken-3">Francisco Fernandez - Roger Davila</p>
+        <p class="center-align grey-text darken-3">Francisco Fernandez Lopez - Roger Davila Ortiz</p>
         <p class="center-align grey-text darken-3">Desarrolladores</p>
     </div>
 </div>

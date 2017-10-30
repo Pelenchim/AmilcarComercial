@@ -1,10 +1,234 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Compras";
+    ViewBag.SubTitle = "Nueva";
+    ViewBag.ControllerGeneral = "Compras";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
 }
 
-<h2>Index</h2>
+<div class="compras">
+    <div class="compras-content row">
+        <nav class="nav-extended @ViewBag.NavExtendedColor">
+            @Html.Partial("_breadcrumbPartial")
+        </nav>
+        <div class="compras-opciones col l12">
+            <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                <form class="col l10">
+                    <div class="input-field col l8">
+                        <input id="search" type="search" placeholder="Buscar Compra" required>
+                    </div>
+                    <div class="input-field col l3 filtro">
+                        <select>
+                            <option value="" selected>Todo</option>
+                            <option value="1">Factura</option>
+                            <option value="2">Proveedor</option>
+                            <option value="3">Fecha</option>
+                        </select>
+                    </div> 
+                    <div class="col l1 center search">
+                        <a class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">search</i></a>
+                    </div>
+                </form>      
+                <div class="col l2 center-align icons">
+                    <a class="tooltipped  last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped  info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="listado-compras container-mio">
+            <table class="bordered highlight white z-depth-1">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Factura</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Articulos</th>
+                        <th>Cantidad Total</th>
+                        <th>Pago Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col l12 center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
+    </div>
+    <aside class="compras-details show row white z-depth-1">
+        <div class="row z-depth-1-half">
+            <div class="col l12 blue darken-1 title">
+                <h5><i class="material-icons left">business_center</i>Detalle de Compra<i class="material-icons right info-sidenav">clear</i></h5>
+            </div>
+            <div class="col l12 blue darken-1">
+                <ul class="tabs blue darken-1">
+                    <li class="tab col l6"><a class="active" href="#general">General</a></li>
+                    <li class="tab col l6"><a href="#detalle">Detalle</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="general" class="general col s12">
+                <div class="no-selected">
+                    <div class="center">
+                        <i class="grey-text text-darken-1 material-icons large">touch_app</i>
+                    </div>
+                    <p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>
+                </div>
+            </div>
+            <div id="detalle" class="detalle col s12">
+                <div class="no-selected">
+                    <div class="center">
+                        <i class="grey-text text-darken-1 material-icons large">touch_app</i>
+                    </div>
+                    <p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>
+                </div>
+            </div>
+        </div>
+    </aside>
 
-<div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Compras")"><i class="material-icons">add</i></a>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Compras")"><i class="material-icons">add</i></a>
+    </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".compras .info-sidenav").click(function () {
+                if ($(".compras .compras-details").hasClass('show')) {
+                    $(".compras .compras-details").css("right", "0px");
+                    $(".compras .compras-content").css("padding", "0 280px 0 0");
+                    $(".compras .compras-details").toggleClass('show hiden');
+                }
+                else if ($(".compras .compras-details").hasClass('hiden'))
+                {
+                    $(".compras .compras-details").css("right", "-300px");
+                    $(".compras .compras-content").css("padding", "0");
+                    $(".compras .compras-details").toggleClass('show hiden');
+                }
+            });
+            $('ul.tabs').tabs();
+            $('select').material_select();
+            listaCompras();
+            $(".compras .listado-compras table.highlight tbody .item td").click(function () {
+                alert("f");
+            });
+        });
+        function listaCompras()
+        {
+            $.ajax({
+                url: '/compras/listacompras',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".listado-compras table tbody").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".listado-compras table tbody").append(
+                                '<tr class="item" onclick="informacionCompra(' + value.ID + ')">' +
+                                '<td>' + value.Compra + '</td>' +
+                                '<td>' + value.Factura + '</td>' +
+                                '<td>' + value.Proveedor + '</td>' +
+                                '<td>' + value.Fecha + '</td>' +
+                                '<td>' + value.Articulos + '</td>' +
+                                '<td>' + value.CantidadTotal + ' Unidades</td>' +
+                                '<td>C$ ' + value.PagoTotal + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function informacionCompra(id) {
+            var id = id;
+            detalleCompraGeneral(id);
+            detalleCompraEspecifico(id);
+        }
+        function detalleCompraGeneral(id) {
+            $.ajax({
+                url: '/compras/detallecompra/general/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".compras-details .general").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".compras-details .general").append(
+                                '<div>' +
+                                '<p><span class="left">N° Compra</span>' + value.Compra + '</p>' +
+                                '<p><span class="left">N° Factura</span>C$ ' + value.Factura + '</p>' +
+                                '<p><span class="left">Comprador</span>' + value.Usuario + '</p>' +
+                                '<p><span class="left">Proveedor</span>' + value.Proveedor + '</p>' +
+                                '<p><span class="left">Sucursal</span>C$ ' + value.Sucursal + '</p>' +
+                                '<p><span class="left">Fecha</span>' + value.Fecha + '</td>' +
+                                '<p><span class="left">Tipos Articulos</span>' + value.Articulos + '</p>' +
+                                '<p><span class="left">Cantidad Articulos</span>' + value.CantidadTotal + ' Unds</p>' +
+                                '<p><span class="left">SubTotal</span>C$ ' + value.SubTotal + '</p>' +
+                                '<p><span class="left">Iva %</span>C$ ' + value.Iva + '</p>' +
+                                '<p><span class="left">Iva Total</span>C$ ' + value.Iva + '</p>' +
+                                '<p><span class="left">Descuento Total</span>C$ ' + value.DescuentoTotal + '</p>' +
+                                '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
+                                '</div>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function detalleCompraEspecifico(id) {
+            $.ajax({
+                url: '/compras/detallecompra/especifico/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".compras-details .detalle").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".compras-details .detalle").append(
+                                '<div class="individual col l12">' +   
+                                '<div class="col l2">' +
+                                '<img src="https://lorempixel.com/100/190/nature/6">'+
+                                '</div>' +
+                                '<div class="col l10">' +
+                                '<p class="name"><strong>' + value.Articulo + '</strong></p>' +
+                                '<p class="cate">' + value.Categoria + '</p>' +
+                                '</div>' +
+                                '<div class="col l12">' +
+                                '<p><span>Cant: ' + value.Cantidad + ' </span>' + '<span class="right">Costo: ' + value.Costo + '</span>' + '</p>' +
+                                '<p><span>SubTotal: ' + value.SubTotal + ' </span>' + '<span class="right">Total: ' + value.Total + '</span>' + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col l12 divider-mio"></div>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    </script>
+}

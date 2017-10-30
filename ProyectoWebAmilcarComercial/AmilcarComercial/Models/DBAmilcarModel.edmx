@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DBAmilcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DBAmilcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -115,7 +115,6 @@
           <Property Name="fecha_plazo" Type="date" Nullable="false" />
           <Property Name="importe" Type="float" Nullable="false" />
           <Property Name="id_orden" Type="int" Nullable="false" />
-          <Property Name="id_cliente" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Articulo">
           <Key>
@@ -185,6 +184,7 @@
           <Property Name="cedula" Type="nvarchar" MaxLength="50" />
           <Property Name="user" Type="nvarchar(max)" Nullable="false" />
           <Property Name="nuevo" Type="bit" Nullable="false" />
+          <Property Name="id_cliente" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Color">
           <Key>
@@ -197,14 +197,26 @@
           <Key>
             <PropertyRef Name="id_compra" />
           </Key>
-          <Property Name="id_compra" Type="int" Nullable="false" />
+          <Property Name="id_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_proveedor" Type="int" Nullable="false" />
           <Property Name="fecha_compra" Type="date" Nullable="false" />
           <Property Name="fact_compra" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="tipo_comprobante_compra" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="iva_compra" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="iva_compra" Type="float" Nullable="false" />
           <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="id_sucursal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_CompraTmp">
+          <Key>
+            <PropertyRef Name="id_compraTmp" />
+          </Key>
+          <Property Name="id_compraTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_articulo" Type="int" Nullable="false" />
+          <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="costo" Type="float" Nullable="false" />
+          <Property Name="descuento" Type="float" />
         </EntityType>
         <EntityType Name="Tbl_Concepto">
           <Key>
@@ -237,7 +249,6 @@
           <Property Name="fecha_consolidacion" Type="date" Nullable="false" />
           <Property Name="cuotas" Type="int" Nullable="false" />
           <Property Name="interesPorMora" Type="float" />
-          <Property Name="id_cliente" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Departamentos">
           <Key>
@@ -349,11 +360,12 @@
           <Property Name="id_sucursal" Type="int" />
           <Property Name="usuario" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="fecha_orden" Type="date" Nullable="false" />
-          <Property Name="iva_orden" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="iva_orden" Type="float" Nullable="false" />
           <Property Name="estado_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="tipo_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="fact_Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="NombreCliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+          <Property Name="tipo_pago" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_OrdenTmp">
           <Key>
@@ -363,6 +375,7 @@
           <Property Name="id_Articulo" Type="int" />
           <Property Name="user" Type="nvarchar(max)" />
           <Property Name="cantidad" Type="int" />
+          <Property Name="fecha" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
           <Key>
@@ -413,6 +426,7 @@
           <Property Name="ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="nuevo" Type="bit" Nullable="false" />
           <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="id_proveedor" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Salida">
           <Key>
@@ -571,18 +585,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Apartado_Tbl_Clientes">
-          <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-          <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Clientes">
-              <PropertyRef Name="id_cliente" />
-            </Principal>
-            <Dependent Role="Tbl_Apartado">
-              <PropertyRef Name="id_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Apartado_Tbl_Orden">
           <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
           <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
@@ -703,15 +705,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Credito_Tbl_Clientes">
-          <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-          <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
+        <Association Name="FK_Tbl_CompraTmp_Tbl_Articulo">
+          <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+          <End Role="Tbl_CompraTmp" Type="Self.Tbl_CompraTmp" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Clientes">
-              <PropertyRef Name="id_cliente" />
+            <Principal Role="Tbl_Articulo">
+              <PropertyRef Name="id_articulo" />
             </Principal>
-            <Dependent Role="Tbl_Credito">
-              <PropertyRef Name="id_cliente" />
+            <Dependent Role="Tbl_CompraTmp">
+              <PropertyRef Name="id_articulo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -871,6 +873,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Orden_Tbl_Clientes">
+          <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
+          <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Clientes">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Tbl_Orden">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Orden_Tbl_Sucursal">
           <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="0..1" />
           <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
@@ -962,6 +976,7 @@
           <EntitySet Name="Tbl_ClienteTmp" EntityType="Self.Tbl_ClienteTmp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_CompraTmp" EntityType="Self.Tbl_CompraTmp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" Schema="dbo" store:Type="Tables" />
@@ -1025,10 +1040,6 @@
             <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
             <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Apartado_Tbl_Clientes" Association="Self.FK_Tbl_Apartado_Tbl_Clientes">
-            <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-            <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Apartado_Tbl_Orden" Association="Self.FK_Tbl_Apartado_Tbl_Orden">
             <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
             <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
@@ -1069,9 +1080,9 @@
             <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
             <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Credito_Tbl_Clientes" Association="Self.FK_Tbl_Credito_Tbl_Clientes">
-            <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-            <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+          <AssociationSet Name="FK_Tbl_CompraTmp_Tbl_Articulo" Association="Self.FK_Tbl_CompraTmp_Tbl_Articulo">
+            <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+            <End Role="Tbl_CompraTmp" EntitySet="Tbl_CompraTmp" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Credito_Tbl_Orden" Association="Self.FK_Tbl_Credito_Tbl_Orden">
             <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
@@ -1125,6 +1136,10 @@
             <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
             <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Orden_Tbl_Clientes" Association="Self.FK_Tbl_Orden_Tbl_Clientes">
+            <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
+            <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Orden_Tbl_Sucursal" Association="Self.FK_Tbl_Orden_Tbl_Sucursal">
             <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
             <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
@@ -1150,7 +1165,8 @@
             <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBAmilcarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1268,8 +1284,6 @@
           <Property Name="fecha_plazo" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="importe" Type="Double" Nullable="false" />
           <Property Name="id_orden" Type="Int32" Nullable="false" />
-          <Property Name="id_cliente" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tbl_Clientes" Relationship="Self.FK_Tbl_Apartado_Tbl_Clientes" FromRole="Tbl_Apartado" ToRole="Tbl_Clientes" />
           <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Apartado_Tbl_Orden" FromRole="Tbl_Apartado" ToRole="Tbl_Orden" />
           <NavigationProperty Name="Tbl_Pago_Apartado" Relationship="Self.FK_Tbl_Pago_Apartado_Tbl_Apartado" FromRole="Tbl_Apartado" ToRole="Tbl_Pago_Apartado" />
         </EntityType>
@@ -1292,6 +1306,7 @@
           <NavigationProperty Name="Tbl_Categorias" Relationship="Self.FK_Tbl_Articulo_Tbl_Categorias" FromRole="Tbl_Articulo" ToRole="Tbl_Categorias" />
           <NavigationProperty Name="Tbl_Marca" Relationship="Self.FK_Tbl_Articulo_Tbl_Marca" FromRole="Tbl_Articulo" ToRole="Tbl_Marca" />
           <NavigationProperty Name="Tbl_bodega_productos" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_bodega_productos" />
+          <NavigationProperty Name="Tbl_CompraTmp" Relationship="Self.FK_Tbl_CompraTmp_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_CompraTmp" />
           <NavigationProperty Name="Tbl_DescripcionValores" Relationship="Self.FK_Tbl_DescripcionValores_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DescripcionValores" />
           <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_Detalle_Compra" />
           <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_Detalle_Orden" />
@@ -1343,9 +1358,8 @@
           <Property Name="telefono" Type="Int32" Nullable="false" />
           <Property Name="cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="estado" Type="Boolean" />
-          <NavigationProperty Name="Tbl_Apartado" Relationship="Self.FK_Tbl_Apartado_Tbl_Clientes" FromRole="Tbl_Clientes" ToRole="Tbl_Apartado" />
           <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_Clientes_Tbl_Departamentos" FromRole="Tbl_Clientes" ToRole="Tbl_Departamentos" />
-          <NavigationProperty Name="Tbl_Credito" Relationship="Self.FK_Tbl_Credito_Tbl_Clientes" FromRole="Tbl_Clientes" ToRole="Tbl_Credito" />
+          <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Orden_Tbl_Clientes" FromRole="Tbl_Clientes" ToRole="Tbl_Orden" />
         </EntityType>
         <EntityType Name="Tbl_ClienteTmp">
           <Key>
@@ -1359,8 +1373,9 @@
           <Property Name="telefono" Type="Int32" />
           <Property Name="cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
           <Property Name="nuevo" Type="Boolean" Nullable="false" />
+          <Property Name="id_cliente" Type="Int32" />
+          <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
         </EntityType>
         <EntityType Name="Tbl_Color">
           <Key>
@@ -1374,17 +1389,30 @@
           <Key>
             <PropertyRef Name="id_compra" />
           </Key>
-          <Property Name="id_compra" Type="Int32" Nullable="false" />
+          <Property Name="id_compra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_proveedor" Type="Int32" Nullable="false" />
           <Property Name="fecha_compra" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="fact_compra" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tipo_comprobante_compra" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="iva_compra" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="iva_compra" Type="Double" Nullable="false" />
           <Property Name="usuario" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="id_sucursal" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tbl_Proveedor" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Compra" ToRole="Tbl_Proveedor" />
           <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Compra_Tbl_Sucursal" FromRole="Tbl_Compra" ToRole="Tbl_Sucursal" />
           <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Compra" FromRole="Tbl_Compra" ToRole="Tbl_Detalle_Compra" />
+        </EntityType>
+        <EntityType Name="Tbl_CompraTmp">
+          <Key>
+            <PropertyRef Name="id_compraTmp" />
+          </Key>
+          <Property Name="id_compraTmp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_articulo" Type="Int32" Nullable="false" />
+          <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="costo" Type="Double" Nullable="false" />
+          <Property Name="descuento" Type="Double" />
+          <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_CompraTmp_Tbl_Articulo" FromRole="Tbl_CompraTmp" ToRole="Tbl_Articulo" />
         </EntityType>
         <EntityType Name="Tbl_Concepto">
           <Key>
@@ -1418,8 +1446,6 @@
           <Property Name="fecha_consolidacion" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="cuotas" Type="Int32" Nullable="false" />
           <Property Name="interesPorMora" Type="Double" />
-          <Property Name="id_cliente" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tbl_Clientes" Relationship="Self.FK_Tbl_Credito_Tbl_Clientes" FromRole="Tbl_Credito" ToRole="Tbl_Clientes" />
           <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Credito_Tbl_Orden" FromRole="Tbl_Credito" ToRole="Tbl_Orden" />
           <NavigationProperty Name="Tbl_Pago_Credito" Relationship="Self.FK_Tbl_Pago_Credito_Tbl_Credito" FromRole="Tbl_Credito" ToRole="Tbl_Pago_Credito" />
         </EntityType>
@@ -1553,12 +1579,14 @@
           <Property Name="id_sucursal" Type="Int32" />
           <Property Name="usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="fecha_orden" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="iva_orden" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="iva_orden" Type="Double" Nullable="false" />
           <Property Name="estado_orden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tipo_orden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="fact_Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NombreCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="tipo_pago" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tbl_Apartado" Relationship="Self.FK_Tbl_Apartado_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Apartado" />
+          <NavigationProperty Name="Tbl_Clientes" Relationship="Self.FK_Tbl_Orden_Tbl_Clientes" FromRole="Tbl_Orden" ToRole="Tbl_Clientes" />
           <NavigationProperty Name="Tbl_Credito" Relationship="Self.FK_Tbl_Credito_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Credito" />
           <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Detalle_Orden" />
           <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Orden" ToRole="Tbl_Sucursal" />
@@ -1571,6 +1599,7 @@
           <Property Name="id_Articulo" Type="Int32" />
           <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="cantidad" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
@@ -1614,6 +1643,18 @@
           <Property Name="Ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Proveedor" ToRole="Tbl_Compra" />
+        </EntityType>
+        <EntityType Name="Tbl_ProveedorTmp">
+          <Key>
+            <PropertyRef Name="id_proveedorTmp" />
+          </Key>
+          <Property Name="id_proveedorTmp" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nuevo" Type="Boolean" Nullable="false" />
+          <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_proveedor" Type="Int32" />
         </EntityType>
         <EntityType Name="Tbl_Salida">
           <Key>
@@ -1753,18 +1794,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Apartado_Tbl_Clientes">
-          <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-          <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Clientes">
-              <PropertyRef Name="id_cliente" />
-            </Principal>
-            <Dependent Role="Tbl_Apartado">
-              <PropertyRef Name="id_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Apartado_Tbl_Orden">
           <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
           <End Role="Tbl_Apartado" Type="Self.Tbl_Apartado" Multiplicity="*" />
@@ -1821,6 +1850,18 @@
               <PropertyRef Name="id_articulo" />
             </Principal>
             <Dependent Role="Tbl_bodega_productos">
+              <PropertyRef Name="id_articulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_CompraTmp_Tbl_Articulo">
+          <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+          <End Role="Tbl_CompraTmp" Type="Self.Tbl_CompraTmp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Articulo">
+              <PropertyRef Name="id_articulo" />
+            </Principal>
+            <Dependent Role="Tbl_CompraTmp">
               <PropertyRef Name="id_articulo" />
             </Dependent>
           </ReferentialConstraint>
@@ -1933,14 +1974,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Credito_Tbl_Clientes">
+        <Association Name="FK_Tbl_Orden_Tbl_Clientes">
           <End Role="Tbl_Clientes" Type="Self.Tbl_Clientes" Multiplicity="1" />
-          <End Role="Tbl_Credito" Type="Self.Tbl_Credito" Multiplicity="*" />
+          <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Clientes">
               <PropertyRef Name="id_cliente" />
             </Principal>
-            <Dependent Role="Tbl_Credito">
+            <Dependent Role="Tbl_Orden">
               <PropertyRef Name="id_cliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -2147,6 +2188,7 @@
           <EntitySet Name="Tbl_ClienteTmp" EntityType="Self.Tbl_ClienteTmp" />
           <EntitySet Name="Tbl_Color" EntityType="Self.Tbl_Color" />
           <EntitySet Name="Tbl_Compra" EntityType="Self.Tbl_Compra" />
+          <EntitySet Name="Tbl_CompraTmp" EntityType="Self.Tbl_CompraTmp" />
           <EntitySet Name="Tbl_Concepto" EntityType="Self.Tbl_Concepto" />
           <EntitySet Name="Tbl_Configuracion" EntityType="Self.Tbl_Configuracion" />
           <EntitySet Name="Tbl_Credito" EntityType="Self.Tbl_Credito" />
@@ -2166,6 +2208,7 @@
           <EntitySet Name="Tbl_Pago_Credito" EntityType="Self.Tbl_Pago_Credito" />
           <EntitySet Name="Tbl_Presentacion" EntityType="Self.Tbl_Presentacion" />
           <EntitySet Name="Tbl_Proveedor" EntityType="Self.Tbl_Proveedor" />
+          <EntitySet Name="Tbl_ProveedorTmp" EntityType="Self.Tbl_ProveedorTmp" />
           <EntitySet Name="Tbl_Salida" EntityType="Self.Tbl_Salida" />
           <EntitySet Name="Tbl_Sucursal" EntityType="Self.Tbl_Sucursal" />
           <EntitySet Name="Tbl_Talla" EntityType="Self.Tbl_Talla" />
@@ -2201,10 +2244,6 @@
             <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
             <End Role="SalidaDetalle" EntitySet="SalidaDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Apartado_Tbl_Clientes" Association="Self.FK_Tbl_Apartado_Tbl_Clientes">
-            <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-            <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Apartado_Tbl_Orden" Association="Self.FK_Tbl_Apartado_Tbl_Orden">
             <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
             <End Role="Tbl_Apartado" EntitySet="Tbl_Apartado" />
@@ -2224,6 +2263,10 @@
           <AssociationSet Name="FK_Tbl_bodega_productos_Tbl_Articulo" Association="Self.FK_Tbl_bodega_productos_Tbl_Articulo">
             <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
             <End Role="Tbl_bodega_productos" EntitySet="Tbl_bodega_productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_CompraTmp_Tbl_Articulo" Association="Self.FK_Tbl_CompraTmp_Tbl_Articulo">
+            <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+            <End Role="Tbl_CompraTmp" EntitySet="Tbl_CompraTmp" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_DescripcionValores_Tbl_Articulo" Association="Self.FK_Tbl_DescripcionValores_Tbl_Articulo">
             <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
@@ -2261,9 +2304,9 @@
             <End Role="Tbl_Departamentos" EntitySet="Tbl_Departamentos" />
             <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Credito_Tbl_Clientes" Association="Self.FK_Tbl_Credito_Tbl_Clientes">
+          <AssociationSet Name="FK_Tbl_Orden_Tbl_Clientes" Association="Self.FK_Tbl_Orden_Tbl_Clientes">
             <End Role="Tbl_Clientes" EntitySet="Tbl_Clientes" />
-            <End Role="Tbl_Credito" EntitySet="Tbl_Credito" />
+            <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_ClienteTmp_Tbl_Departamentos" Association="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos">
             <End Role="Tbl_Departamentos" EntitySet="Tbl_Departamentos" />
@@ -2329,19 +2372,7 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Tbl_ProveedorTmp" EntityType="DBAmilcarModel.Tbl_ProveedorTmp" />
         </EntityContainer>
-        <EntityType Name="Tbl_ProveedorTmp">
-          <Key>
-            <PropertyRef Name="id_proveedorTmp" />
-          </Key>
-          <Property Name="id_proveedorTmp" Type="Int32" Nullable="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="nuevo" Type="Boolean" Nullable="false" />
-          <Property Name="user" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2454,7 +2485,6 @@
                 <ScalarProperty Name="fecha_plazo" ColumnName="fecha_plazo" />
                 <ScalarProperty Name="importe" ColumnName="importe" />
                 <ScalarProperty Name="id_orden" ColumnName="id_orden" />
-                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2521,7 +2551,6 @@
           <EntitySetMapping Name="Tbl_ClienteTmp">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ClienteTmp">
               <MappingFragment StoreEntitySet="Tbl_ClienteTmp">
-                <ScalarProperty Name="nuevo" ColumnName="nuevo" />
                 <ScalarProperty Name="id_clienteTmp" ColumnName="id_clienteTmp" />
                 <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
                 <ScalarProperty Name="apellidos_cliente" ColumnName="apellidos_cliente" />
@@ -2530,6 +2559,8 @@
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="cedula" ColumnName="cedula" />
                 <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="nuevo" ColumnName="nuevo" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2552,6 +2583,19 @@
                 <ScalarProperty Name="iva_compra" ColumnName="iva_compra" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_CompraTmp">
+            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_CompraTmp">
+              <MappingFragment StoreEntitySet="Tbl_CompraTmp">
+                <ScalarProperty Name="id_compraTmp" ColumnName="id_compraTmp" />
+                <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2587,7 +2631,6 @@
                 <ScalarProperty Name="fecha_consolidacion" ColumnName="fecha_consolidacion" />
                 <ScalarProperty Name="cuotas" ColumnName="cuotas" />
                 <ScalarProperty Name="interesPorMora" ColumnName="interesPorMora" />
-                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2714,7 +2757,8 @@
                 <ScalarProperty Name="estado_orden" ColumnName="estado_orden" />
                 <ScalarProperty Name="tipo_orden" ColumnName="tipo_orden" />
                 <ScalarProperty Name="fact_Orden" ColumnName="fact_Orden" />
-                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="tipo_pago" ColumnName="tipo_pago" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2725,6 +2769,7 @@
                 <ScalarProperty Name="id_Articulo" ColumnName="id_Articulo" />
                 <ScalarProperty Name="user" ColumnName="user" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2771,6 +2816,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ProveedorTmp">
+            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ProveedorTmp">
+              <MappingFragment StoreEntitySet="Tbl_ProveedorTmp">
+                <ScalarProperty Name="id_proveedorTmp" ColumnName="id_proveedorTmp" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="nuevo" ColumnName="nuevo" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Salida">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Salida">
               <MappingFragment StoreEntitySet="Tbl_Salida">
@@ -2811,18 +2869,6 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Tbl_ProveedorTmp">
-            <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ProveedorTmp">
-              <MappingFragment StoreEntitySet="Tbl_ProveedorTmp">
-                <ScalarProperty Name="user" ColumnName="user" />
-                <ScalarProperty Name="nuevo" ColumnName="nuevo" />
-                <ScalarProperty Name="ruc" ColumnName="ruc" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_proveedorTmp" ColumnName="id_proveedorTmp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

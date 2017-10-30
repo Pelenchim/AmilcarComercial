@@ -10,6 +10,7 @@ using AmilcarComercial.Models;
 
 namespace AmilcarComercial.Controllers
 {
+    [Authorize]
     public class MarcasController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();

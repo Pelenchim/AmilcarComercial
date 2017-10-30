@@ -19,6 +19,7 @@ namespace AmilcarComercial.Models
         {
             this.SalidaDetalle = new HashSet<SalidaDetalle>();
             this.Tbl_bodega_productos = new HashSet<Tbl_bodega_productos>();
+            this.Tbl_CompraTmp = new HashSet<Tbl_CompraTmp>();
             this.Tbl_DescripcionValores = new HashSet<Tbl_DescripcionValores>();
             this.Tbl_Detalle_Compra = new HashSet<Tbl_Detalle_Compra>();
             this.Tbl_Detalle_Orden = new HashSet<Tbl_Detalle_Orden>();
@@ -44,6 +45,8 @@ namespace AmilcarComercial.Models
         public virtual Tbl_Marca Tbl_Marca { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_bodega_productos> Tbl_bodega_productos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_CompraTmp> Tbl_CompraTmp { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DescripcionValores> Tbl_DescripcionValores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

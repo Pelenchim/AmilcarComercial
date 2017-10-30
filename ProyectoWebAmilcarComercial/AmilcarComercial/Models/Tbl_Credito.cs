@@ -28,9 +28,7 @@ namespace AmilcarComercial.Models
         public System.DateTime fecha_consolidacion { get; set; }
         public int cuotas { get; set; }
         public Nullable<double> interesPorMora { get; set; }
-        public int id_cliente { get; set; }
     
-        public virtual Tbl_Clientes Tbl_Clientes { get; set; }
         public virtual Tbl_Orden Tbl_Orden { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Pago_Credito> Tbl_Pago_Credito { get; set; }

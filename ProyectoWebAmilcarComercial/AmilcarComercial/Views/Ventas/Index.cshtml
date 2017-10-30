@@ -40,46 +40,52 @@
                 <thead>
                     <tr>
                         <th>N°</th>
-                        <th>Tipo</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
+                        <th>Factura</th>
+                        <th>Cliente</th>
                         <th>Fecha</th>
+                        <th>Tipo Venta</th>
+                        <th>Articulos</th>
+                        <th>Pago Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                        <td>$0.87</td>
-                    </tr>
-                    <tr>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                        <td>$3.76</td>
-                        <td>$0.87</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan</td>
-                        <td>Lollipop</td>
-                        <td>$7.00</td>
-                        <td>$0.87</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
-        
-
-
-
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Ventas")"><i class="material-icons">add</i></a>
+        <div class="col l12 center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
         </div>
     </div>
 
     <aside class="ventas-details white z-depth-1">
-        khgjhkg
+        <div class="row z-depth-1-half">
+            <div class="col l12 blue darken-1 title">
+                <h5><i class="material-icons left">business_center</i>Detalle de Venta<i class="material-icons right info-sidenav">clear</i></h5>
+            </div>
+            <div class="col l12 blue darken-1">
+                <ul class="tabs blue darken-1">
+                    <li class="tab col l6"><a class="active" href="#general">General</a></li>
+                    <li class="tab col l6"><a href="#detalle">Detalle</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="general" class="general col s12"></div>
+            <div id="detalle" class="detalle col s12"></div>
+        </div>
     </aside>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Ventas")"><i class="material-icons">add</i></a>
+    </div>
 </div>
 
 @section Scripts{
@@ -98,6 +104,36 @@
                     $(".ventas .ventas-opciones .info-sidenav").toggleClass('show hiden');
                 }
             });
+            listaVentas();
         });
+        function listaVentas() {
+            $.ajax({
+                url: '/ventas/listaventas',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".listado-ventas table tbody").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".listado-ventas table tbody").append(
+                                '<tr onclick="informacionVenta(' + value.ID + ')">' +
+                                '<td>' + value.Venta + '</td>' +
+                                '<td>' + value.Factura + '</td>' +
+                                '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
+                                '<td>' + value.Fecha + '</td>' +
+                                '<td>' + value.Tipo + '</td>' +
+                                '<td>' + value.Articulos + ' Unidades</td>' +
+                                '<td>C$ ' + value.PagoTotal + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
     </script>    
 }

@@ -23,6 +23,7 @@ namespace AmilcarComercial.Models
         public string cedula { get; set; }
         public string user { get; set; }
         public bool nuevo { get; set; }
+        public Nullable<int> id_cliente { get; set; }
     
         public virtual Tbl_Departamentos Tbl_Departamentos { get; set; }
     }

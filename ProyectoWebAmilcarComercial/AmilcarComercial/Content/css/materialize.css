@@ -5436,13 +5436,6 @@ button.btn-floating {
   will-change: width, height;
 }
 
-header .dropdown-content {
-    margin: 10px 0 0 0;
-    right: 10px;
-    min-width: 200px;
-    border-radius: 3px;
-}
-
 .dropdown-content li {
   clear: both;
   color: rgba(0, 0, 0, 0.87);
@@ -7489,7 +7482,7 @@ input[type=range]:focus::-ms-fill-upper {
 .side-nav .user-view .background img,
 .side-nav .userView .background img {
     width: 260px;
-    height: 220px;
+    height: 190px;
     -webkit-transition: transform 0.4s ease-out;
     -moz-transition: transform 0.4s ease-out;
     -o-transition: transform 0.4s ease-out;

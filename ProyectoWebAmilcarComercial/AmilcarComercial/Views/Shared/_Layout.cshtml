@@ -17,8 +17,11 @@
             <nav>
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
                 <div class="nav-wrapper @ViewBag.PrimaryColor z-depth-2">
-                    <a href="#!" class="brand-logo center">Logo</a>
-                    <a class="show-hidde hidde-side-nav hide-on-med-and-down"><i class="material-icons">menu</i></a>
+                    <div class="logo-container">
+                        <a href="#!" class="brand-logo center hide-on-med-and-down"><img src="~/Content/system-resources/AM-Logo2.png"/></a>
+                        <a class="show-hidde hidde-side-nav hide-on-med-and-down"><i class="material-icons">menu</i></a>
+                    </div>
+                    <a href="#!" class="brand-logo center hide-on-large-only"><img src="~/Content/system-resources/AM-Logo2.png" /></a>
                     @Html.Partial("_LoginPartial")
                 </div>
             </nav>
@@ -32,9 +35,9 @@
                         <div class="background">
                             <img src="~/Content/system-resources/side-nav-background.jpg" class="responsive-img">
                         </div>
-                        <a href="#!user"><img class="circle" src="~/Content/images/avatar-male-default.png"></a>
-                        <a href="#!name"><span class="grey-text text-darken-3 name">John Doe</span></a>
-                        <a href="#!email"><span class="grey-text text-darken-3 email">jdandturk@gmail.com</span></a>
+                        <a href="#!user"><img class="circle avatar" src=""></a>
+                        <a href="#!name"><span class="grey-text text-darken-3 name"></span></a>
+                        <a href="#!email"><span class="grey-text text-darken-3 email rol"></span></a>
                     </div>
                 </li>
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inicio" href="@Url.Action("Index", "Home")">
@@ -48,14 +51,24 @@
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas" href="@Url.Action("Index","Ventas")">
                     <i class="icono ventas"></i><span>Ventas</span></a>
                 </li>
+                <li>
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Compras" href="@Url.Action("Index","Compras")">
+                        <i class="icono compras"></i><span>Compras</span>
+                    </a>
+                </li>
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="#!">
                     <i class="icono credito"></i><span>Credito</span></a>
                 </li>
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario" href="@Url.Action("Index","Inventario")">
                     <i class="icono inventario"></i><span>Inventario</span></a>
                 </li>
+                <li>
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Kardex" href="@Url.Action("Index","Kardex")">
+                        <i class="icono kardex"></i><span>Kardex</span>
+                    </a>
+                </li>
                 <li class="item-hidden hide">
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos" href="#!">
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos" href="@Url.Action("Catalogos","Home")">
                         <i class="icono catalogos"></i>
                     </a>
                 </li>
@@ -71,9 +84,9 @@
                                 <ul>
                                     <li><a href="@Url.Action("Index","Articulos")"><i class="material-icons tiny">subdirectory_arrow_right</i>Articulos</a></li>
                                     <li><a href="@Url.Action("Index","Categorias")"><i class="material-icons tiny">subdirectory_arrow_right</i>Categorias</a></li>
-                                    <li><a href="@Url.Action("Index","Marcas")"><i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono marcas"></i>Marcas</a></li>
+                                    <li><a href="@Url.Action("Index","Marcas")"><i class="material-icons tiny">subdirectory_arrow_right</i></i>Marcas</a></li>
                                     <li><a href="@Url.Action("Index","Proveedores")"><i class="material-icons tiny">subdirectory_arrow_right</i>Proveedores</a></li>
-                                    <li><a href="@Url.Action("Index","Clientes")"><i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono cliente"></i>Clientes</a></li>
+                                    <li><a href="@Url.Action("Index","Clientes")"><i class="material-icons tiny">subdirectory_arrow_right</i>Clientes</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -110,7 +123,7 @@
                     </ul>
                 </li>
                 <li class="item-hidden hide">
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Configuracion" href="#!">
+                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Configuracion" href="@Url.Action("Configuracion","Home")">
                         <i class="icono config"></i>
                     </a>
                 </li>
@@ -137,8 +150,8 @@
     @Scripts.Render("~/bundles/libraries")
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
-        //mejorar esto
         $(document).ready(function () {
+            user();
             $('.button-collapse').sideNav({
                 menuWidth: 260,
                 draggable: true
@@ -146,8 +159,13 @@
             $(window).resize(function () {
                 var ventana_ancho = $(window).width();
 
-                if (ventana_ancho <= 992 /*&& $("aside .show-hidde").hasClass('show-side-nav')*/) {
-                    //mostrar();
+                if (ventana_ancho <= 992 /*&& $("aside .show-hidde").hasClass('.show-side-nav') === true*/) {
+                    mostrar();
+                    $('body main.layout .content').css("padding-left", "0px").fadeIn("4000");
+                    $('a.show-hidde').addClass('hidde-side-nav');
+                }
+                else if (ventana_ancho > 992) {
+                    $('body main.layout .content').css("padding-left", "260px").fadeIn("4000");
                 }
             })
             $(".show-hidde").on("click", function () {
@@ -199,6 +217,21 @@
             $('.side-nav li.item-hidden').addClass("hide");
 
             $('.tooltipped').tooltip('remove');
+        }
+        function user() {
+            $.ajax({
+                url: '/home/user',
+                type: 'GET',
+                'success': function (data) {
+                    $(".user-view .name").text(data.Nombre + ' ' + data.Apellidos);
+                    $(".user-view .rol").text(data.Rol);
+                    $(".user-view .avatar").attr("src", "../Content/images/usuarios/" + data.Foto);
+                    $(".option-system .name").text(data.Nombre + ' ' + data.Apellidos);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
         }
     </script>
 </body>

@@ -27,15 +27,15 @@
                 <div class="datosCliente"></div>
             </div>
         </div>
-        <div class="articulosVenta row blue">
+        <div class="articulosVenta row white">
             <div class="head col l12 white z-depth-1">
                 <div class="opcionesArticulos col l12">
                     <p class="col l6">
-                        <strong>Lista de Articulos a Facturar</strong>
+                        <strong>Lista de Articulos a Vender</strong>
                     </p>
                     <div class="acciones col l6">
                         <div>
-                            <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Agregar Producto" onclick="articulos(0)"><i class="material-icons">add_box</i></a>
+                            <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Agregar Producto" onclick="articulos(1)"><i class="material-icons">add_box</i></a>
                             <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
                             <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
                             <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="eliminarProductosTodos()"><i class="material-icons">delete</i></a>
@@ -58,38 +58,31 @@
             </div>
             <div class="col l12">
                 <p><strong>General:</strong></p>
-                <div class="col l12">
-                    <span class="left"><strong>Venta N°: </strong>0021</span>
-                    <span class="right"><strong>Fecha: </strong>@System.DateTime.Now</span>
-                </div>
-                <div class="col l12">
-                    <span class="left"><strong>Vendedor: </strong>@User.Identity.Name</span>
-                    <span class="right"><strong>otro: </strong>24245</span>
-                </div>
+                <div class="datosGenerales"></div>
             </div>
             <div class="col l12">
                 <p><strong>Preferencias:</strong></p>
                 <div class="input-field col l6">
-                    <select>
-                        <option selected value="1">Contado</option>
-                        <option value="2">Credito</option>
-                        <option value="3">Apartado</option>
+                    <select id="tipoOrden">
+                        <option selected value="Contado">Contado</option>
+                        <option value="Credito">Credito</option>
+                        <option value="Apartado">Apartado</option>
+                    </select>
+                    <label>Tipo de Orden</label>
+                </div>
+                <div class="input-field col l6">
+                    <select id="tipoPago">
+                        <option selected value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
                     </select>
                     <label>Tipo de Pago</label>
                 </div>
                 <div class="input-field col l6">
-                    <select>
-                        <option selected value="1">Efectivo</option>
-                        <option value="2">Tarjeta</option>
-                    </select>
-                    <label>Tipo de Pago</label>
-                </div>
-                <div class="input-field col l6">
-                    <select>
-                        <option selected value="1">0%</option>
-                        <option value="2">5%</option>
-                        <option value="2">10%</option>
-                        <option value="2">15%</option>
+                    <select id="iva">
+                        <option selected value="0">0%</option>
+                        <option value="5">5%</option>
+                        <option value="10">10%</option>
+                        <option value="15">15%</option>
                     </select>
                     <label>IVA</label>
                 </div>
@@ -113,8 +106,8 @@
                 </div>
             </div>
             <div class="acciones col l12 center-align">
-                <button class="btn btn-flat red white-text">Cancelar</button>
-                <button class="btn btn-flat blue white-text">Facturar</button>
+                <button class="btn btn-flat red white-text" onclick="$('#cancelarVenta').modal('open');">Cancelar</button>
+                <button class="btn btn-flat blue white-text" onclick="facturar()">Facturar</button>
             </div>
         </div>
     </div>
@@ -124,7 +117,8 @@
     <div id="articulos" class="modal modal-giant">
         <div class="articulos blue">
             <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>Buscar Articulo</h4>
+                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>Buscar Articulo
+                <i class="material-icons modal-close right">clear</i></h4>
             </div>
             <div class="modal-content row white-text">
                 <div class="col l12">
@@ -284,449 +278,26 @@
             </div>
         </div>
     </div>
+    <div id="cancelarVenta" class="modal modal-mini">
+        <div class="cancelarVenta blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">cancel</i>
+                    Cancelar Venta
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea cancelar la venta?</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarVenta()">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.modal').modal({
-                opacity: 0.5,
-                inDuration: 350,
-                outDuration: 250,
-                ready: undefined,
-                complete: undefined,
-                dismissible: false,
-                startingTop: '4%',
-                endingTop: '10%'
-            });
-            $('.tooltipped').tooltip({ delay: 50 });
-            $('select').material_select();
-            $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
-                $('.nueva-venta .articulosVenta .acciones input').toggle(500);
-            });
-            mostrarClienteTmp();
-            mostrarProductosTmp(0);
-        });
-        function articulos(vista) {
-            $.ajax({
-                url: '/obtener/articulos',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    if (vista === 0) {
-                        articulosCard(data)
-                    }
-                    if (vista === 1) {
-                        articulosTable(data);
-                    }
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-            $('#articulos').modal('open');
-        };
-        function clientes() {
-            $.ajax({
-                url: '/obtener/clientes',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".lista-clientes").empty();
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            $(".lista-clientes").append(                                
-                                '<a onclick="agregarClienteExistente(' + value.ID + ')">' + 
-                                '<div class="col l4">' +
-                                '<div class="card white grey-text text-darken-3">'+
-                                '<div class="card-content">' +
-                                '<span class="card-title truncate">' + value.Nombre +' '+ value.Apellido + '</span>' +
-                                '<p>Dep: ' + value.Departamento + '</p>' +
-                                '<p>Tel: ' + value.Telefono + '</p>' +
-                                    '</div>'+
-                                '</div>'+
-                                    '</div>' +
-                                '</a>'
-                            );
-                        });
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-            $('#clientes').modal('open');
-        };
-        function CancelArticulos() {
-            $('#articulos').modal('close');
-            $(".lista-articulos").empty();
-        }
-        function CancelCliente() {
-            $('#clientes').modal('close');
-            $(".lista-clientes").empty();
-        }
-        function CancelNuevoClientes() {
-            $('#nuevoCliente').modal('close');
-        }
-        function agregarClienteTmp() {
-            var datos = {
-                Nombre: $(".nuevoCliente #nombre_cliente").val(),
-                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-                Direccion: $('.nuevoCliente #direccion').val(),
-                Departamento: $('.nuevoCliente #departamento').val(),
-                Telefono: $('.nuevoCliente #telefono').val(),
-                Cedula: $('.nuevoCliente #cedula').val()
-            };
-            $.ajax({
-                url: '/agregar/clienteTmp',
-                type: 'POST',
-                data: datos,
-                'success': function (data) {
-                    mostrarClienteTmp();
-                    $('#nuevoCliente').modal('close');
-                    Materialize.toast('Cliente agregado exitosamente', 4000);
-                    $(".nuevoCliente #nombre_cliente").val('');
-                    $('.nuevoCliente #apellidos_cliente').val('');
-                    $('.nuevoCliente #direccion').val('');
-                    $('.nuevoCliente #departamento').val('');
-                    $('.nuevoCliente #telefono').val('');
-                    $('.nuevoCliente #cedula').val('');
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function agregarClienteExistente(id) {
-            $.ajax({
-                url: '/agregar/clienteExistente/' + id,
-                type: 'GET',
-                'success': function (data) {
-                    mostrarClienteTmp();
-                    $('#clientes').modal('close');
-                    Materialize.toast('Cliente definido exitosamente', 4000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function agregarCliente() {
-            $('#nuevoCliente').modal('open');
-        }
-        function editarCliente() {
-            $('#editarCliente').modal('open');
-            $.ajax({
-                url: '/editar/clienteTmp',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $.each(data, function () {
-                        $(".editarCliente #nombre_cliente").val(data.Nombre);
-                        $(".editarCliente #apellidos_cliente").val(data.Apellido)
-                        $(".editarCliente #cedula").val(data.Cedula)
-                        $(".editarCliente #telefono").val(data.Telefono)
-                        $(".editarCliente #departamento").val(data.Departamento)
-                        $(".editarCliente #direccion").val(data.Direccion)
-                    });                    
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function editarGuardarCliente() {
-            var datos = {
-                Nombre: $(".nuevoCliente #nombre_cliente").val(),
-                Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-                Direccion: $('.nuevoCliente #direccion').val(),
-                Departamento: $('.nuevoCliente #departamento').val(),
-                Telefono: $('.nuevoCliente #telefono').val(),
-                Cedula: $('.nuevoCliente #cedula').val()
-            };
-            $.ajax({
-                url: '/editar/clienteGuardarTmp',
-                type: 'POST',
-                data: datos,
-                'success': function (data) {
-                    mostrarClienteTmp();
-                    $('#editarCliente').modal('close');
-                    Materialize.toast('Cliente editado exitosamente', 4000);
-                    $(".nuevoCliente #nombre_cliente").val('');
-                    $('.nuevoCliente #apellidos_cliente').val('');
-                    $('.nuevoCliente #direccion').val('');
-                    $('.nuevoCliente #departamento').val('');
-                    $('.nuevoCliente #telefono').val('');
-                    $('.nuevoCliente #cedula').val('');
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function eliminarCliente() {
-            $.ajax({
-                url: '/eliminar/clienteTmp',
-                type: 'GET',
-                'success': function (data) {
-                    mostrarClienteTmp();
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function mostrarClienteTmp() {
-            $.ajax({
-                url: '/obtener/clienteTmp',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    if (data === 0) {
-                        $(".cliente .opcionesCliente a").hide();
-                        $(".datosCliente").empty();
-                        $(".datosCliente").append(
-                            '<div class="center-align">'+
-                                '<p style="padding-bottom: 10px">Aun no a definido cliente para esta venta</p>'+
-                                '<button class="btn btn-flat green white-text" onclick="agregarCliente()">Agregar</button>'+ ' ' +
-                                '<button class="btn btn-flat green white-text" onclick="clientes()">Buscar</button>'+
-                            '</div>'
-                        );
-                    }
-                    else {
-                        $(".cliente .opcionesCliente a").show();
-                        $(".datosCliente").empty();
-                        $(".datosCliente").append(
-                            '<div class="col l6">' +
-                            '<p><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
-                            '</div>' +
-                            '<div class="col l3">' +
-                            '<p><strong>Cedula: </strong>' + data.Cedula + '</p>' +
-                            '</div>' +
-                            '<div class="col l3">' +
-                            '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
-                            '</div>' +
-                            '<div class="col l3">' +
-                            '<p><strong>Departamento: </strong>' + data.Departamento + '</p>' +
-                            '</div>' +
-                            '<div class="col l9">' +
-                            '<p><strong>Direccion: </strong>' + data.Direccion + '</p>' +
-                            '</div>'
-                        );
-                    }
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function agregarArticuloTmp(id) {
-            var cant = $(".articulos #cant" + id).val();
-            $.ajax({
-                url: '/agregar/producto/' + id + '/' + cant,
-                type: 'GET',
-                'success': function (data) {
-                    CancelArticulos();
-                    mostrarProductosTmp(0);
-                    Materialize.toast('Articulo agregado a la orden', 4000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function eliminarProductoTmp(id) {
-            $.ajax({
-                url: '/eliminar/productoTmp/' + id,
-                type: 'GET',
-                'success': function (data) {
-                    mostrarProductosTmp(0);
-                    Materialize.toast('Articulo eliminado de la orden', 4000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function eliminarProductosTodos() {
-            $.ajax({
-                url: '/eliminar/eliminarProductosTodos',
-                type: 'GET',
-                'success': function (data) {
-                    mostrarProductosTmp(0);
-                    Materialize.toast('A eliminado todos los articulos de la orden', 4000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function mostrarProductosTmp(view) {
-            $.ajax({
-                url: '/obtener/productosTmp',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".articulos-orden").empty();
-                    $(".articulos-orden").append(
-                        '<div class="articulosLista col l12 mCustomScrollbar" data-mcs-theme="minimal-dark"></div>'
-                    );
-                    if (view === 0) {
-                        articulosOrdenCard(data);
-                    }
-                    if (view === 1) {
-                        articulosOrdenTable(data);
-                    }                    
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function articulosCard(data) {
-            $.each(data, function () {
-                $(".modal-ventas .articulos .card-v").hide();
-                $(".modal-ventas .articulos .table-v").show();
-                $(".lista-articulos").empty();
-                $.each(this, function (name, value) {
-                    $(".lista-articulos").append(
-                        '<div class="col l4">' +
-                        '<div class="card horizontal">' +
-                        '<div class="card-image">' +
-                        '<img src="https://lorempixel.com/100/190/nature/6">' +
-                        '</div>' +
-                        '<div class="card-stacked">' +
-                        '<div class="card-content grey-text text-darken-3">' +
-                        '<p class="nombre truncate"><strong>' + value.Nombre + '</strong></p>' +
-                        '<p><strong class="left">Stock: 102<strong/><strong class="rigth">$ 2,500<strong/></p>' +
-
-                        '</div>' +
-                        '<div class="card-action">' +
-                        '<input class="left browser-default" placeholder="Cantidad" id="cant' + value.ID + '" type="text"></input>' +
-                        '<a class="btn btn-flat green white-text right" onclick="agregarArticuloTmp(' + value.ID + ')">Agregar</a>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    );
-                });
-            });            
-        }
-        function articulosTable(data) {
-            $(".modal-ventas .articulos .table-v").hide();
-            $(".modal-ventas .articulos .card-v").show();
-            $(".lista-articulos").empty();
-            $(".lista-articulos").append(
-                '<table class="responsive-table bordered highlight">' +
-                '<thead>' +
-                '<tr>' +
-                '<th>Cod</th>' +
-                '<th>Nombre</th>' +
-                '<th>Stock</th>' +
-                '<th>Precio</th>' +
-                '<th>Cantidad</th>' +
-                '<th class="right-align">Acciones</th>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody>' +
-                '</tbody>' +
-                '</table>'
-            );
-            $.each(data, function () {
-                $.each(this, function (name, value) {
-                    $(".lista-articulos table tbody").append(
-                        '<tr>' +
-                        '<td>' + value.ID + '</td>' +
-                        '<td>' + value.Nombre + '</td>' +
-                        '<td>120</td>' +
-                        '<td>$7.00</td>' +
-                        '<td>' +
-                        '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
-                        '</td > ' +
-                        '<td class="right-align">' +
-                        '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add</i></a>' +
-                        '</td > ' +
-                        '</tr>'
-                    );
-                });
-            });
-        }
-        function articulosOrdenCard(data) {
-            $(".articulosVenta .opcionesArticulos .table-v").show();
-            $(".articulosVenta .opcionesArticulos .card-v").hide();
-            $(".lista-articulos").empty();
-            $.each(data, function () {
-                $.each(this, function (name, value) {
-                    $(".articulos-orden .articulosLista").append(
-                        '<div class="col l3">' +
-                        '<div class="card hoverable">' +
-                        '<div class="card-image">' +
-                        '<div class="top">' +
-                        '<span class="left white-text">Cod: 001</span>' +
-                        '<a class="right" onclick="eliminarProductoTmp(' + value.ID + ')"><i class="material-icons">cancel</i></a>' +
-                        '</div>' +
-                        '<img src="https://lorempixel.com/100/190/nature/6">' +
-                        '<span class="card-title">' + value.Nombre + '</span>' +
-                        '</div>' +
-                        '<div class="card-content">' +
-                        '<div>' +
-                        '<label class="grey-text text-darken-2">Cantidad</label>' +
-                        '<input class="browser-default" type="text"></input>' +
-                        '</div>' +
-                        '<div>' +
-                        '<label class="grey-text text-darken-2">Sub-Total</label>' +
-                        '<input class="browser-default" type="text"></input>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    );
-                });
-            });
-        }
-        function articulosOrdenTable(data) {
-            $(".articulosVenta .opcionesArticulos .table-v").hide();
-            $(".articulosVenta .opcionesArticulos .card-v").show();
-            $(".lista-articulos").empty();
-            $(".articulos-orden .articulosLista").append(
-                '<table class="bordered highlight responsive-table white">'+
-                    '<thead>'+
-                        '<tr>'+
-                '<th>Cod</th>' +
-                '<th>Img</th>'+
-                            '<th>Nombre</th>'+
-                '<th>Precio</th>' +
-                '<th>Cantidad</th>' +
-                '<th>Subtotal</th>' +
-                '<th></th>' +
-                        '</tr>'+
-                    '</thead>'+
-                    '<tbody>'+
-                    '</tbody>'+
-                '</table>'
-            );
-            $.each(data, function () {
-                $.each(this, function (name, value) {
-                    $(".articulosLista table tbody").append(    
-                        '<tr>' +
-                        '<td>' + value.ID + '</td>' +
-                        '<td>' + '<img src="https://lorempixel.com/100/190/nature/6">' + '</td>' +
-                        '<td>' + value.Nombre + '</td>' +
-                        '<td>C$ 2342</td>' +
-                        '<td>' +
-                        '<input class="browser-default" type="text"></input>' +
-                        '</td>' +
-                        '<td>C$ 98829</td>' +
-                        '<td>'+'<a class="right" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">cancel</i>'+'</a >'+'</td>' +
-                        '</tr>'
-                    );
-                });
-            });
-        }
-    </script>
+        @Scripts.Render("~/bundles/ventas")
 }
