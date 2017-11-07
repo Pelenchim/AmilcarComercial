@@ -94,7 +94,18 @@
     width: 30%;
     max-width: 35%;
 }
+.spinner-white,
+.spinner-white-only {
+    border-color: #ffffff;
+}
+nav.breadcrumb-nav {
+    height: 50px !important;
+    line-height: 50px;
+}
 
+nav.breadcrumb-nav .nav-wrapper {
+    min-height: 50px;
+}
 /*#endregion */
 
 /*#region Layout */
@@ -1304,10 +1315,36 @@ background-color: #37474f;
     padding: 0;
     transition: padding 0.3s ease-in;
 }
-.ventas .ventas-content .ventas-opciones{
+.ventas .ventas-content .ventas-opciones {
     padding: 30px 0 40px 0;
 }
-.ventas .listado-ventas{
+.ventas .ventas-content .ventas-opciones .icons,
+.ventas .ventas-content .ventas-opciones form,
+.ventas .ventas-content .ventas-opciones form .col:not(.filtro),
+.ventas .ventas-content .ventas-opciones form .search {
+    padding: 0;
+}
+
+.ventas .ventas-content .ventas-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+
+.ventas .ventas-content .ventas-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+
+.ventas .ventas-content .ventas-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.ventas .ventas-content .ventas-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
 }
 .ventas .listado-ventas table{
     border-radius: 2px;
@@ -1321,6 +1358,14 @@ background-color: #37474f;
 .ventas .listado-ventas table tbody tr:last-child
 {
     border-bottom: 0px solid grey;
+}
+.ventas .listado-ventas table tbody tr {
+    cursor: pointer;
+}
+.ventas .listado-ventas table tbody tr.active {
+    background-color: #2196f3 !important;
+    border-bottom: 1px solid #fff;
+    color: #fff;
 }
 .ventas .pagination {
     margin-top: 2rem;
@@ -1341,11 +1386,13 @@ background-color: #37474f;
     right: -300px;
     margin-top: 50px;
     padding: 10px 0 30px 0;
-    transition: right 0.3s ease-in;
+    transition: all 0.3s ease-in;
 }
+
 .ventas .ventas-details .row {
     margin-bottom: 0;
 }
+
 .ventas .ventas-details .title {
     margin-bottom: 0;
     padding: 10px 15px;
@@ -1372,33 +1419,72 @@ background-color: #37474f;
 }
 .ventas .ventas-details .general,
 .ventas .ventas-details .detalle {
-    padding: 5px 25px;
+    padding: 5px 25px 20px 25px;
+    position: absolute;
+    height: calc(100% - 135px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.ventas .ventas-details .general p {
+.ventas .ventas-details .general .no-selected,
+.ventas .ventas-details .detalle .no-selected {
+    margin-top: 2rem;
+}
+.ventas .ventas-details .general p:not(.no) {
     text-align: end;
     font-size: 13px;
 }
 .ventas .ventas-details .general p span {
     color: rgba(0, 0, 0, 0.55);
 }
-.ventas .ventas-details .detalle p:not(.name) {
+
+.ventas .ventas-details .individual {
+    padding: 15px 0 10px 0;
+}
+
+.ventas .ventas-details .detalle p:not(.no) {
     margin: 0;
+    opacity: 0.9;
+}
+
+.ventas .ventas-details .detalle .individual .name {
+    opacity: 0.85;
+    padding-left: 5px;
+}
+
+.ventas .ventas-details .detalle .individual .cate {
+    padding-left: 5px;
+}
+
+.ventas .ventas-details .detalle .individual > .col {
+    padding: 0;
+    margin: 0;
+}
+
+.ventas .ventas-details .detalle .individual img {
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0;
 }
 
 /*#endregion */
 /*#region NuevaVenta */
 
-.nueva-venta > div:first-child{
-    padding-left: 1.5rem;
-}
-.nueva-venta > div:last-child{
-    padding-right: 1.5rem;
-}
-.nueva-venta .cliente,
-.nueva-venta .detalle{
-    margin-top: 1rem;
+.nueva-venta > div:first-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
 }
 
+.nueva-venta > div:last-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nueva-venta .cliente,
+.nueva-venta .general{
+    margin-top: 1.5rem;
+}
 .nueva-venta .cliente .opcionesCliente a{
     padding: 0 5px;
     margin: 0 1px;
@@ -1409,27 +1495,36 @@ background-color: #37474f;
 .nueva-venta .articulosVenta .opcionesArticulos a:hover {
     color: #212121;
 }
-.nueva-venta .cliente .datosCliente div:last-child {
+.nueva-venta .cliente .datosCliente div:not(.vacio):last-child,
+.nueva-venta .general .datosGenerales div:last-child{
     margin-bottom: 1.5rem;
 }
-.nueva-venta .cliente .datosCliente p{
+.nueva-venta .cliente .datosCliente .vacio {
+    margin-bottom: 1rem;
+}
+.nueva-venta .general .datosGenerales p{
     margin-bottom: 0px;
 }
-
-.nueva-venta .detalle .acciones{
-    padding: 0.75rem;
+.nueva-venta .cliente .datosCliente div:not(.vacio) p {
+    margin-bottom: 0px;
+}
+.nueva-venta .cliente .datosCliente .vacio p {
+    margin-top: 12px;
+    margin-bottom: 3px;
 }
 
 .articulos > .row,
 .clientes > .row,
 .nuevoCliente > .row,
-.cancelarVenta > .row{
+.cancelarVenta > .row,
+.eliminartodos > .row{
     margin: 0;
 }
 .articulos h4,
 .clientes h4,
 .nuevoCliente h4,
-.cancelarVenta h4{
+.cancelarVenta h4,
+.eliminartodos h4{
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -1437,16 +1532,59 @@ background-color: #37474f;
 }
 .clientes h4 .salir,
 .nuevoCliente h4 .salir,
-.cancelarVenta h4 .salir{
+.cancelarVenta h4 .salir,
+.eliminartodos h4 .salir{
     cursor: pointer;
 }
 .articulos .option-bar,
 .clientes .option-bar{
     margin-bottom: 15px;
 }
+.modal-ventas .clientes .pagination li a,
+.modal-ventas .articulos .pagination li a {
+    color: #fff !important;
+}
 
+.modal-ventas .clientes .pagination li.active,
+.modal-ventas .articulos .pagination li.active {
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
 
+.modal-ventas .clientes .pagination li.active a,
+.modal-ventas .articulos .pagination li.active a {
+    color: #444 !important;
+}
 
+.nueva-venta .detalle p:not(.title) {
+    margin: 5px 0 3px 0;
+}
+
+.nueva-venta .detalle .input-field input {
+    margin: 0;
+}
+
+.nueva-venta .detalle .input-field:last-child {
+    margin: 25px 0 5px 0;
+}
+
+.nueva-venta .detalle .detalles span {
+    margin-bottom: 3px;
+}
+
+.nueva-venta .detalle .acciones {
+    margin-top: 5px;
+    padding: 0;
+}
+.nueva-venta .detalle .acciones .calcularVuelto {
+    margin-top: 0.75rem;
+    padding: 1px 0 2px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.50);
+}
+.nueva-venta .detalle .acciones .calcularVuelto i{
+    margin-right: 5px;
+}
 
 .modal-ventas .input-field label {
     color: #fff !important;
@@ -1590,48 +1728,55 @@ background-color: #37474f;
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text] {
     width: 60px;
 }
+.articulosVenta .articulos-orden .articulosLista table tbody input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
 .articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text]:focus {
     background-color: #f9f9f9 !important;
     border-bottom: 0;
     box-shadow: 0 0 2px #727272 !important;
 }
-
 .articulosVenta .articulos-orden .articulosLista{
     padding: 0;
 }
-
 .articulosVenta .articulos-orden .articulosLista table {
     width: 100%;
 }
-
-    .articulosVenta .articulos-orden .articulosLista table thead {
-        width: calc( 100% - 1em );
-        border-bottom: 0px;
-    }
-
-    .articulosVenta .articulos-orden .articulosLista table tbody {
-        display: block;
-        height: 42vh;
-        min-height: 280px;
-        overflow: auto;
-    }
-
-        .articulosVenta .articulos-orden .articulosLista table thead tr,
-        .articulosVenta .articulos-orden .articulosLista table tbody tr {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-        }
-
-    .articulosVenta .articulos-orden .articulosLista table thead tr {
-        border-bottom: 0px;
-    }
+.articulosVenta .articulos-orden .articulosLista table thead {
+    width: calc( 100% - 1em );
+    border-bottom: 0px;
+}
+.articulosVenta .articulos-orden .articulosLista table tbody {
+    display: block;
+    height: 42vh;
+    min-height: 280px;
+    overflow: auto;
+}
+.articulosVenta .articulos-orden .articulosLista table thead tr,
+.articulosVenta .articulos-orden .articulosLista table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.articulosVenta .articulos-orden .articulosLista table thead tr {
+    border-bottom: 0px;
+}
 
 /*modal de articulos*/
 
 .modal-ventas .articulos .card-v,
 .modal-ventas .articulos .table-v {
     display: none;
+}
+.modal-ventas .articulos .lista-articulos table td {
+    padding: 5px;
+}
+.modal-ventas .articulos .lista-articulos table tbody img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
 .modal-ventas .lista-articulos table.highlight > tbody > tr:hover {
 }
@@ -1754,7 +1899,8 @@ background-color: #37474f;
 }
 .compras .listado-compras table tbody tr.active {
     background-color: #2196f3 !important;
-    border-bottom: 2px solid blue;
+    border-bottom: 1px solid #fff;
+    color: #fff;
 }
 .compras .pagination{
     margin-top: 2rem;
@@ -1805,8 +1951,12 @@ background-color: #37474f;
     height: 3px;
 }
 .compras .compras-details .general,
-.compras .compras-details .detalle{
+.compras .compras-details .detalle {
     padding: 5px 25px;
+    position: absolute;
+    height: calc(100% - 135px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .compras .compras-details .general .no-selected,
 .compras .compras-details .detalle .no-selected{
@@ -1870,7 +2020,6 @@ background-color: #37474f;
 .nueva-compra .proveedor .opcionesProveedor a:hover {
     color: #212121;
 }
-
 .nueva-compra .proveedor .datosProveedor div:not(.vacio):last-child,
 .nueva-compra .general .datosGenerales div:last-child{
     margin-bottom: 1.5rem;
@@ -1970,18 +2119,15 @@ background-color: #37474f;
     cursor: pointer;
 }
 .articulosCompra .articulos-orden .articulosLista table td a:hover {
-    color: #f44336;
+    color: #2196F3;
 }
-
 .articulosCompra .articulos-orden .articulosLista .top a:hover {
     color: #e1e1e1;
 }
-
 .articulosCompra .articulos-orden .articulosLista .card img {
     width: 100%;
     max-height: 180px;
 }
-
 .articulosCompra .articulos-orden .articulosLista table img {
     width: 50px;
     height: 50px;
@@ -1990,7 +2136,6 @@ background-color: #37474f;
 .articulosCompra .articulos-orden .articulosLista .card-title {
     padding: 5px 10px;
 }
-
 .articulosCompra .articulos-orden .articulosLista .card .card-content {
     display: flex;
     flex-direction: row;
@@ -2134,6 +2279,14 @@ background-color: #37474f;
 .modal-compras .articulos .acciones .card-v,
 .modal-compras .articulos .acciones .table-v{
     display: none;
+}
+.modal-compras .articulos .lista-articulos table td{
+    padding: 5px;
+}
+.modal-compras .articulos .lista-articulos table tbody img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
 .modal-compras .articulos .lista-articulos table tbody input[type=text] {
     margin: 0;

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBAmilcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBAmilcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -338,7 +338,7 @@
           <Property Name="Entrada" Type="int" Nullable="false" />
           <Property Name="salida" Type="int" Nullable="false" />
           <Property Name="saldo" Type="int" Nullable="false" />
-          <Property Name="precio" Type="float" Nullable="false" />
+          <Property Name="ultimoCosto" Type="float" Nullable="false" />
           <Property Name="costoPromedio" Type="float" Nullable="false" />
           <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="id_sucursal" Type="int" Nullable="false" />
@@ -420,7 +420,7 @@
           <Key>
             <PropertyRef Name="id_proveedorTmp" />
           </Key>
-          <Property Name="id_proveedorTmp" Type="int" Nullable="false" />
+          <Property Name="id_proveedorTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ruc" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -1165,8 +1165,7 @@
             <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBAmilcarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1551,7 +1550,6 @@
           <Property Name="Entrada" Type="Int32" Nullable="false" />
           <Property Name="salida" Type="Int32" Nullable="false" />
           <Property Name="saldo" Type="Int32" Nullable="false" />
-          <Property Name="precio" Type="Double" Nullable="false" />
           <Property Name="costoPromedio" Type="Double" Nullable="false" />
           <Property Name="usuario" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="id_sucursal" Type="Int32" Nullable="false" />
@@ -1560,6 +1558,7 @@
           <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Compra" />
           <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Orden" />
           <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Kardex_Tbl_Sucursal" FromRole="Tbl_Kardex" ToRole="Tbl_Sucursal" />
+          <Property Name="ultimoCosto" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Marca">
           <Key>
@@ -2722,6 +2721,7 @@
           <EntitySetMapping Name="Tbl_Kardex">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Kardex">
               <MappingFragment StoreEntitySet="Tbl_Kardex">
+                <ScalarProperty Name="ultimoCosto" ColumnName="ultimoCosto" />
                 <ScalarProperty Name="id_Kardex" ColumnName="id_Kardex" />
                 <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
                 <ScalarProperty Name="fechaKardex" ColumnName="fechaKardex" />
@@ -2729,7 +2729,6 @@
                 <ScalarProperty Name="Entrada" ColumnName="Entrada" />
                 <ScalarProperty Name="salida" ColumnName="salida" />
                 <ScalarProperty Name="saldo" ColumnName="saldo" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
                 <ScalarProperty Name="costoPromedio" ColumnName="costoPromedio" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />

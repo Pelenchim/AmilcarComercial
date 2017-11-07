@@ -344,6 +344,7 @@
     <EntitySetMapping Name="Tbl_Kardex">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Kardex">
         <MappingFragment StoreEntitySet="Tbl_Kardex">
+          <ScalarProperty Name="ultimoCosto" ColumnName="ultimoCosto" />
           <ScalarProperty Name="id_Kardex" ColumnName="id_Kardex" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
           <ScalarProperty Name="fechaKardex" ColumnName="fechaKardex" />
@@ -351,7 +352,6 @@
           <ScalarProperty Name="Entrada" ColumnName="Entrada" />
           <ScalarProperty Name="salida" ColumnName="salida" />
           <ScalarProperty Name="saldo" ColumnName="saldo" />
-          <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="costoPromedio" ColumnName="costoPromedio" />
           <ScalarProperty Name="usuario" ColumnName="usuario" />
           <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />

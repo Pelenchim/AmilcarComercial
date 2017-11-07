@@ -7,7 +7,7 @@
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
-<nav class="nav-extended @ViewBag.NavExtendedColor">
+<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
     @Html.Partial("_breadcrumbPartial")
 </nav>
 <div class="nueva-compra row">
@@ -24,6 +24,20 @@
                 </div>
                 <div class="divider-mio"></div>
                 <div class="datosProveedor"></div>
+                <div class="col l12 center" id="pre-Proveedor" style="padding-top: 10px; display: none;">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top:0">Cargando datos del proveedor..</p>
+                </div>
             </div>
         </div>
         <div class="general col l6">
@@ -33,6 +47,20 @@
                 </div>
                 <div class="divider-mio"></div>
                 <div class="datosGenerales"></div>
+                <div class="col l12 center" id="pre-General" style="padding-top: 10px; display: none;">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top:0">Cargando datos de la compra..</p>
+                </div>
             </div>
         </div>
     </div>
@@ -58,6 +86,20 @@
                     </div>
                 </div>
                 <div class="articulos-orden"></div>
+                <div class="col l12 center" id="pre-ArticulosOrden" style="padding-top: 100px; display: none;">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top:0">Cargando articulos de la orden..</p>
+                </div>
             </div>
         </div>
         <div class="detalle col l3">
@@ -69,14 +111,14 @@
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
                     <div class="input-field col l6">
-                        <input placeholder="" id="N_factura" name="N_factura" type="text" required>
+                        <input placeholder="" id="N_factura" name="N_factura" type="text" disabled>
                         <label for="N_factura">N° Factura</label>
                     </div>
                     <div class="input-field col l6">
                         <select id="iva">
-                            <option value="1">5%</option>
-                            <option value="2">10%</option>
-                            <option value="3">15%</option>
+                            <option value="5">5%</option>
+                            <option value="10">10%</option>
+                            <option value="15">15%</option>
                         </select>
                         <label>IVA</label>
                     </div>
@@ -93,7 +135,7 @@
                 <div class="acciones col l12 blue center-align">
                     <h5 class="center-align white-text total"></h5>
                     <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Compra" onclick="$('#cancelarCompra').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
-                    <a class="btn white blue-text text-darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Compra" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
+                    <a id="comprar" class="btn white blue-text text-darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Compra" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
                 </div>
             </div>
         </div>        
@@ -135,6 +177,20 @@
                     </div>
                 </div>
                 <div class="lista-proveedores"></div>
+                <div class="col l12 center" id="pre-Proveedores" style="padding-top: 30px; padding-bottom: 20px; display: none;">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-white-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
+                </div>
                 <div class="col l12 center">
                     <ul class="pagination">
                         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -149,7 +205,7 @@
             </div>
         </div>
     </div>
-    <div id="nuevoProveedor" class="modal modal-middle">
+    <div id="nuevoProveedor" class="modal modal-small">
         <div class="nuevoProveedor blue">
             <div class="row white z-depth-1">
                 <h4 class="grey-text text-darken-3 left-align">
@@ -163,29 +219,17 @@
                     <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
                 </div>
                 <div class="col l9">
-                    <div class="input-field col l6">
-                        <input placeholder="" autofocus="autofocus" id="nombre_cliente" name="nombre_cliente" type="text">
-                        <label for="nombre_cliente">Nombre</label>
-                    </div>
-                    <div class="input-field col l6">
-                        <input id="apellidos_cliente" name="apellidos_cliente" type="text">
-                        <label for="apellidos_cliente">Apellidos</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input id="cedula" name="cedula" type="text" class="validate">
-                        <label for="cedula">Cedula</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input id="telefono" name="telefono" type="text" class="validate">
-                        <label for="telefono">Telefono</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input id="departamento" name="departamento" type="text" class="validate">
-                        <label for="departamento">Departamento</label>
-                    </div>
                     <div class="input-field col l12">
-                        <input id="direccion" name="direccion" type="text" class="validate">
-                        <label for="direccion">Direccion</label>
+                        <input placeholder="" autofocus="autofocus" id="nombre-p" name="nombre-p" type="text">
+                        <label for="nombre-p">Nombre</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input id="telefono-p" name="telefono-p" type="text">
+                        <label for="telefono-p">Telefono</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input id="ruc-p" name="ruc-p" type="text" class="validate">
+                        <label for="ruc-p">N° Ruc</label>
                     </div>
                     <div class="col l12 right-align">
                         <br />
@@ -196,7 +240,7 @@
             </div>
         </div>
     </div>
-    <div id="editarProveedor" class="modal modal-middle">
+    <div id="editarProveedor" class="modal modal-small">
         <div class="editarProveedor blue">
             <div class="row white z-depth-1">
                 <h4 class="grey-text text-darken-3 left-align">
@@ -210,34 +254,25 @@
                     <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
                 </div>
                 <div class="col l9">
-                    <div class="input-field col l6">
-                        <input placeholder="" id="nombre_cliente" name="nombre_cliente" type="text">
-                        <label for="nombre_cliente">Nombre</label>
-                    </div>
-                    <div class="input-field col l6">
-                        <input placeholder="" id="apellidos_cliente" name="apellidos_cliente" type="text">
-                        <label for="apellidos_cliente">Apellidos</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input placeholder="" id="cedula" name="cedula" type="text" class="validate">
-                        <label for="cedula">Cedula</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input placeholder="" id="telefono" name="telefono" type="text" class="validate">
-                        <label for="telefono">Telefono</label>
-                    </div>
-                    <div class="input-field col l4">
-                        <input placeholder="" id="departamento" name="departamento" type="text" class="validate">
-                        <label for="departamento">Departamento</label>
-                    </div>
                     <div class="input-field col l12">
-                        <input placeholder="" id="direccion" name="direccion" type="text" class="validate">
-                        <label for="direccion">Direccion</label>
+                        <input placeholder="" id="nombre-p" name="nombre-p" type="text">
+                        <label for="nombre-p">Nombre</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input id="telefono-p" name="telefono-p" type="text">
+                        <label for="telefono-p">Telefono</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input id="ruc-p" name="ruc-p" type="text" class="validate">
+                        <label for="ruc-p">N° Ruc</label>
+                    </div>
+                    <div class="input-field col l6 hide">
+                        <input id="id-p" name="id-p" type="text" class="validate">
                     </div>
                     <div class="col l12 right-align">
                         <br />
-                        <button class="btn btn-flat white pink-text" type="button" onclick="$('#editarProveedor').modal('close');">Cancelar</button>
-                        <button class="btn btn-flat white blue-text" type="button" onclick="editarProveedorTmp()">Agregar</button>
+                        <button class="btn btn-flat white pink-text" type="button" onclick="CancelEditarProveedor()">Cancelar</button>
+                        <button class="btn btn-flat white blue-text" type="button" onclick="editarGuardarProveedor()">Agregar</button>
                     </div>
                 </div>
             </div>
@@ -274,6 +309,20 @@
                     </div>
                 </div>
                 <div class="lista-articulos"></div>
+                <div class="col l12 center" id="pre-Articulos" style="padding-top: 30px; padding-bottom: 20px; display: none;">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-white-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
+                </div>
                 <div class="col l12 center">
                     <ul class="pagination">
                         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>

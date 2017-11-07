@@ -9,7 +9,7 @@
 
 <div class="compras">
     <div class="compras-content row">
-        <nav class="nav-extended @ViewBag.NavExtendedColor">
+        <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
             @Html.Partial("_breadcrumbPartial")
         </nav>
         <div class="compras-opciones col l12">
@@ -27,12 +27,12 @@
                         </select>
                     </div> 
                     <div class="col l1 center search">
-                        <a class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">search</i></a>
+                        <a class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Buscar"><i class="material-icons">search</i></a>
                     </div>
                 </form>      
                 <div class="col l2 center-align icons">
-                    <a class="tooltipped  last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
-                    <a class="tooltipped  info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                    <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col l12 center">
+        <div class="paginacion col l12 center">
             <ul class="pagination">
                 <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
                 <li class="active"><a href="#!">1</a></li>
@@ -79,22 +79,8 @@
             </div>
         </div>
         <div class="row">
-            <div id="general" class="general col s12">
-                <div class="no-selected">
-                    <div class="center">
-                        <i class="grey-text text-darken-1 material-icons large">touch_app</i>
-                    </div>
-                    <p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>
-                </div>
-            </div>
-            <div id="detalle" class="detalle col s12">
-                <div class="no-selected">
-                    <div class="center">
-                        <i class="grey-text text-darken-1 material-icons large">touch_app</i>
-                    </div>
-                    <p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>
-                </div>
-            </div>
+            <div id="general" class="general col s12"></div>
+            <div id="detalle" class="detalle col s12"></div>
         </div>
     </aside>
 
@@ -112,22 +98,31 @@
                     $(".compras .compras-content").css("padding", "0 280px 0 0");
                     $(".compras .compras-details").toggleClass('show hiden');
                 }
-                else if ($(".compras .compras-details").hasClass('hiden'))
-                {
+                else if ($(".compras .compras-details").hasClass('hiden')) {
                     $(".compras .compras-details").css("right", "-300px");
                     $(".compras .compras-content").css("padding", "0");
                     $(".compras .compras-details").toggleClass('show hiden');
+                    $(".compras .listado-compras table tbody .item").removeClass("active");
+                    vacio();
                 }
             });
             $('ul.tabs').tabs();
             $('select').material_select();
             listaCompras();
-            $(".compras .listado-compras table.highlight tbody .item td").click(function () {
-                alert("f");
+            vacio();
+            
+            $(".compras .listado-compras table tbody").on('click', '.item', function () {
+                $(".compras .listado-compras table tbody .item").removeClass("active");
+                $(this).addClass("active");
+            });
+            $('.compras .compras-content, .compras .compras-content .compras-opciones, .compras .compras-content .paginacion').on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                $(".compras .listado-compras table tbody .item").removeClass("active");
+                vacio();
             });
         });
-        function listaCompras()
-        {
+        function listaCompras() {
             $.ajax({
                 url: '/compras/listacompras',
                 type: 'GET',
@@ -154,7 +149,27 @@
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));
                 }
-            });
+            });     
+        }
+        function vacio() {
+            $(".compras-details .general").empty();
+            $(".compras-details .detalle").empty();
+            $(".compras-details .general").append(
+                '<div class="no-selected">'+
+                    '<div class="center">'+
+                        '<i class="grey-text text-darken-1 material-icons large">touch_app</i>'+
+                    '</div>'+
+                    '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un compra para ver la informacion</p>'+
+                '</div>'
+            );
+            $(".compras-details .detalle").append(
+                '<div class="no-selected">' +
+                '<div class="center">' +
+                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
+                '</div>' +
+                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un compra para ver la informacion</p>' +
+                '</div>'
+            );
         }
         function informacionCompra(id) {
             var id = id;
@@ -209,7 +224,7 @@
                             $(".compras-details .detalle").append(
                                 '<div class="individual col l12">' +   
                                 '<div class="col l2">' +
-                                '<img src="https://lorempixel.com/100/190/nature/6">'+
+                                '<img src="/Content/images/articulos/' + value.Img + '">' +
                                 '</div>' +
                                 '<div class="col l10">' +
                                 '<p class="name"><strong>' + value.Articulo + '</strong></p>' +

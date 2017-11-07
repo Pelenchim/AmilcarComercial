@@ -31,7 +31,7 @@ namespace AmilcarComercial.Controllers
                              Cod = p.codigo_articulo,
                              Nombre = p.nombre_articulo,
                              Categoria = p.Tbl_Categorias.Nombre,
-                             Precio = p.Tbl_Kardex.FirstOrDefault().precio,
+                             Precio = p.Tbl_Kardex.FirstOrDefault().ultimoCosto,
                              Stock = p.Tbl_bodega_productos.FirstOrDefault().stock
                          }).ToList();
 

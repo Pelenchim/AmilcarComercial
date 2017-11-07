@@ -333,7 +333,7 @@
     <Property Name="Entrada" Type="int" Nullable="false" />
     <Property Name="salida" Type="int" Nullable="false" />
     <Property Name="saldo" Type="int" Nullable="false" />
-    <Property Name="precio" Type="float" Nullable="false" />
+    <Property Name="ultimoCosto" Type="float" Nullable="false" />
     <Property Name="costoPromedio" Type="float" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="id_sucursal" Type="int" Nullable="false" />
@@ -415,7 +415,7 @@
     <Key>
       <PropertyRef Name="id_proveedorTmp" />
     </Key>
-    <Property Name="id_proveedorTmp" Type="int" Nullable="false" />
+    <Property Name="id_proveedorTmp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="ruc" Type="nvarchar" MaxLength="50" Nullable="false" />

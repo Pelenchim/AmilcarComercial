@@ -10,16 +10,17 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
-    $('select').material_select();
     $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });
+
     mostrarClienteTmp();
     mostrarProductosTmp(1);
     generales();
+    detectarCambios();
 });
-
 function generales() {
+    $("#pre-General").css("display", "inline");
     $.ajax({
         url: '/ventas/obtener/generales',
         type: 'GET',
@@ -27,42 +28,25 @@ function generales() {
         dataType: "json",
         'success': function (data) {
             $(".datosGenerales").empty();
-            $(".datosGenerales").append(
+            $(".datosGenerales").append(                
                 '<div class="col l12">' +
-                '<span class="left"><strong>Vendedor: </strong>' + data[1] + '</span>' +
+                '<p class="left"><strong>Venta N°: </strong>' + data[2] + '</p>' +
+                '<p class="right"><strong>Fecha: </strong>' + data[0] + '</p>' +
                 '</div>' +
                 '<div class="col l12">' +
-                '<span class="left"><strong>Venta N°: </strong>' + data[2] + '</span>' +
-                '<span class="right"><strong>Fecha: </strong>' + data[0] + '</span>' +
-                '</div>'
+                '<p><strong class="left">Vendedor: </strong> <span class="right">' + data[1] + '</span></p>' +
+                '</div>' 
             );
+            $("#pre-General").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
         }
     });
 }
-function articulos(vista) {
-    $.ajax({
-        url: '/ventas/obtener/articulos',
-        type: 'GET',
-        contentType: "application/json",
-        dataType: "json",
-        'success': function (data) {
-            if (vista === 0) {
-                articulosCard(data)
-            }
-            if (vista === 1) {
-                articulosTable(data);
-            }
-        },
-        'error': function (request, error) {
-            alert("Request: " + JSON.stringify(request));
-        }
-    });
-    $('#articulos').modal('open');
-};
 function clientes() {
+    $(".lista-clientes").empty();
+    $("#pre-Clientes").css("display", "inline");
     $.ajax({
         url: '/ventas/obtener/clientes',
         type: 'GET',
@@ -87,6 +71,7 @@ function clientes() {
                     );
                 });
             });
+            $("#pre-Clientes").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -94,10 +79,6 @@ function clientes() {
     });
     $('#clientes').modal('open');
 };
-function CancelArticulos() {
-    $('#articulos').modal('close');
-    $(".lista-articulos").empty();
-}
 function CancelCliente() {
     $('#clientes').modal('close');
     $(".lista-clientes").empty();
@@ -208,6 +189,7 @@ function eliminarCliente() {
         type: 'GET',
         'success': function (data) {
             mostrarClienteTmp();
+            Materialize.toast("Cliente removido exitosamente",2000);
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -215,6 +197,8 @@ function eliminarCliente() {
     });
 }
 function mostrarClienteTmp() {
+    $(".datosCliente").empty();
+    $("#pre-Cliente").css("display", "inline");
     $.ajax({
         url: '/ventas/obtener/clienteTmp',
         type: 'GET',
@@ -225,7 +209,7 @@ function mostrarClienteTmp() {
                 $(".cliente .opcionesCliente a").hide();
                 $(".datosCliente").empty();
                 $(".datosCliente").append(
-                    '<div class="center-align">' +
+                    '<div class="center-align vacio">' +
                     '<p style="padding-bottom: 10px">Aun no a definido cliente para esta venta</p>' +
                     '<button class="btn btn-flat green white-text" onclick="agregarCliente()">Agregar</button>' + ' ' +
                     '<button class="btn btn-flat green white-text" onclick="clientes()">Buscar</button>' +
@@ -236,10 +220,10 @@ function mostrarClienteTmp() {
                 $(".cliente .opcionesCliente a").show();
                 $(".datosCliente").empty();
                 $(".datosCliente").append(
-                    '<div class="col l6">' +
-                    '<p><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
+                    '<div class="col l5">' +
+                    '<p class="truncate"><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
                     '</div>' +
-                    '<div class="col l3">' +
+                    '<div class="col l4">' +
                     '<p><strong>Cedula: </strong>' + data.Cedula + '</p>' +
                     '</div>' +
                     '<div class="col l3">' +
@@ -253,14 +237,69 @@ function mostrarClienteTmp() {
                     '</div>'
                 );
             }
+            $("#pre-Cliente").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
         }
     });
 }
+
+function articulos(vista) {
+    $(".lista-articulos").empty();
+    $("#pre-Articulos").css("display", "inline");
+    $.ajax({
+        url: '/ventas/obtener/articulos',
+        type: 'GET',
+        contentType: "application/json",
+        dataType: "json",
+        'success': function (data) {
+            if (vista === 0) {
+                articulosCard(data)
+            }
+            if (vista === 1) {
+                articulosTable(data);
+            }
+            $("#pre-Articulos").css("display", "none");
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
+    $('#articulos').modal('open');
+};
+function CancelArticulos() {
+    $('#articulos').modal('close');
+    $(".lista-articulos").empty();
+}
 function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
+    var stock = $(".articulos #stock" + id).text();
+    if (cant === '') {
+        Materialize.toast("Debe agregar la cantidad", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (cant === 0) {
+        Materialize.toast("La cantidad no puede ser igual a 0", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (cant < 0) {
+        Materialize.toast("La cantidad no es valida", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (cant > stock) {
+        Materialize.toast("No hay suficientes productos en stock", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(cant)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
     $.ajax({
         url: '/ventas/agregar/producto/' + id + '/' + cant,
         type: 'GET',
@@ -300,30 +339,33 @@ function eliminarProductosTodos() {
         }
     });
 }
-function abrirArticulos() {
-    $('#articulos').modal('open');
-    articulos(1);
-}
 function mostrarProductosTmp(view) {
+    $(".articulos-orden").empty();
+    $("#pre-ArticulosOrden").css("display", "inline");
     $.ajax({
         url: '/ventas/obtener/productosTmp',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
         'success': function (data) {
-            $(".articulos-orden").empty();
             $(".articulos-orden").append(
-                '<div class="articulosLista col l12 mCustomScrollbar" data-mcs-theme="minimal-dark"></div>'
+                '<div class="divider-mio"></div>' +
+                '<div class="articulosLista col l12 mCustomScrollbar blue" data-mcs-theme="minimal-dark"></div>'
             );
             if (data === 0) {
+                $(".opcionesArticulos .card-v").hide();
+                $(".opcionesArticulos .table-v").hide();
+                $(".opcionesArticulos .delete").hide();
+                $(".opcionesArticulos .search").hide();
                 $(".articulos-orden .articulosLista").empty();
                 $(".articulos-orden .articulosLista").append(
                     '<div class="center" style="margin-top:15vh; margin-bottom:5vh;">' +
                     '<p class="white-text">No hay articulos agregados a la orden, por favor seleccione o agregue los </br> articulos para poder realizar la venta.</p>' +
-                    '<a class="btn btn-large blue white-text text-darken-2" onclick="abrirArticulos()">Seleccionar</a>' +
+                    '<a class="btn btn-large white grey-text text-darken-2" onclick="abrirArticulos()">Seleccionar</a>' +
                     '</div > '
                 );
-                detalles(0, 0);
+                //detalles(0, 0);
+                $("#pre-ArticulosOrden").css("display", "none");
             }
             else {
                 if (view === 0) {
@@ -333,11 +375,16 @@ function mostrarProductosTmp(view) {
                     articulosOrdenTable(data);
                 }
             }
+            $("#pre-ArticulosOrden").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
         }
     });
+}
+function abrirArticulos() {
+    $('#articulos').modal('open');
+    articulos(1);
 }
 function articulosCard(data) {
     $.each(data, function () {
@@ -370,18 +417,19 @@ function articulosCard(data) {
 }
 function articulosTable(data) {
     $(".modal-ventas .articulos .table-v").hide();
-    $(".modal-ventas .articulos .card-v").show();
+    $(".modal-ventas .articulos .delete").show();
     $(".lista-articulos").empty();
     $(".lista-articulos").append(
-        '<table class="responsive-table white grey-text text-darken-3 z-depth-1 bordered highlight">' +
+        '<table class="responsive-table centered white z-depth-1 bordered highlight">' +
         '<thead>' +
         '<tr>' +
         '<th>Cod</th>' +
+        '<th>Img</th>' +
         '<th>Nombre</th>' +
         '<th>Stock</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
-        '<th class="right-align">Acciones</th>' +
+        '<th class="right-align">Agregar</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -393,14 +441,15 @@ function articulosTable(data) {
             $(".lista-articulos table tbody").append(
                 '<tr>' +
                 '<td>' + value.ID + '</td>' +
+                '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
-                '<td>' + value.Stock + '</td>' +
+                '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
                 '<td>$7.00</td>' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td class="right-align">' +
-                '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add</i></a>' +
+                '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
                 '</td > ' +
                 '</tr>'
             );
@@ -443,18 +492,22 @@ function articulosOrdenCard(data) {
 function articulosOrdenTable(data) {
     $(".articulosVenta .opcionesArticulos .table-v").hide();
     $(".articulosVenta .opcionesArticulos .card-v").show();
+    $(".articulosVenta .opcionesArticulos .delete").show();
+    $(".articulosVenta .opcionesArticulos .search").show();
+    $(".articulos-orden .articulosLista").toggleClass("blue white");
     $(".lista-articulos").empty();
     $(".articulos-orden .articulosLista").append(
-        '<table class="bordered highlight responsive-table white">' +
+        '<table class="bordered highlight centered responsive-table white">' +
         '<thead class="z-depth-1">' +
         '<tr>' +
         '<th>Cod</th>' +
         '<th>Img</th>' +
         '<th>Nombre</th>' +
+        '<th>Existencia</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
         '<th>Subtotal</th>' +
-        '<th></th>' +
+        '<th>Opciones</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -466,18 +519,80 @@ function articulosOrdenTable(data) {
             $(".articulosLista table tbody").append(
                 '<tr>' +
                 '<td>' + value.ID + '</td>' +
-                '<td>' + '<img src="https://lorempixel.com/100/190/nature/6">' + '</td>' +
+                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
-                '<td>C$ 2342</td>' +
+                '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
+                '<td>C$ ' + value.Precio + '</td>' +
                 '<td>' +
-                '<input class="browser-default" type="text" value="' + value.Cantidad + '"></input>' +
+                '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>C$ 98829</td>' +
-                '<td>' + '<a class="right" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">cancel</i>' + '</a >' + '</td>' +
+                '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
         });
     });
+}
+function detectarCambios() {
+    var ID_Obj;
+    var AnteriorValor, NuevoValor;
+    var dividiendo;
+    var id;
+
+    $(document).on({
+        'focusin': function () {
+            ID_Obj = $(this).attr("id");
+            dividiendo = ID_Obj.split("-", 2);
+            id = dividiendo[1];
+            AnteriorValor = $(this).val();
+        },
+        'focusout': function () {
+            NuevoValor = $(this).val();
+
+            if (NuevoValor === '') {
+                Materialize.toast("Debe ingresar la cantidad", 2000);
+                $(this).focus();
+                return;
+            }
+            else if (NuevoValor === 0) {
+                Materialize.toast("La cantidad no puede ser 0", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor < 0) {
+                Materialize.toast("La cantidad no es valida", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor === AnteriorValor) {
+                return;
+            }
+            else if (!/^([0-9])*$/.test(NuevoValor)) {
+                Materialize.toast("La cantidad no es valida", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+
+            var exist = parseInt($("#exist-" + id).text());
+            if (NuevoValor > exist) {
+                Materialize.toast("No hay sufucientes productos para realizar el pedido", 2000);
+                $("#cant-" + id).val(AnteriorValor);
+                return;
+            }
+
+            $.ajax({
+                url: '/ventas/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
+                type: 'GET',
+                'success': function (data) {
+                    mostrarProductosTmp(1);
+                    Materialize.toast('Cantidad del articulo actualizado', 2000);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    }, '.articulosLista table tbody input');
 }
 
 function facturar() {

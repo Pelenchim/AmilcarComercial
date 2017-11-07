@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -33,13 +34,15 @@ namespace AmilcarComercial.Controllers
             var compra = (db.Tbl_Compra.OrderByDescending(m => m.id_compra).First().id_compra + 1).ToString();
             var UserLastName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().LastName;
             var UserFirtsName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().FirstName;
+            var fact = String.Concat("Comp" + compra);
 
             List<string> lista = new List<string>();
             lista.Add(DateTime.Now.ToString());
             lista.Add((UserFirtsName + ' ' + UserLastName).ToString());
             lista.Add(sucursal);
             lista.Add(compra);
-
+            lista.Add(fact);
+            
             return Json( lista, JsonRequestBehavior.AllowGet);
         }
 
@@ -62,13 +65,14 @@ namespace AmilcarComercial.Controllers
         }
 
         [Route("compras/agregar/proveedorTmp")]
-        [HttpPost]
+        [HttpGet]
         public JsonResult AgregarProveedor(Tbl_ProveedorTmp proveedor)
         {
-            proveedor.user = User.Identity.Name;
-
             if (ModelState.IsValid)
             {
+                EliminarProveedoresTmp();
+
+                proveedor.user = User.Identity.Name;
                 proveedor.nuevo = true;
                 proveedor.id_proveedor = null;
                 db.Tbl_ProveedorTmp.Add(proveedor);
@@ -91,6 +95,7 @@ namespace AmilcarComercial.Controllers
                                 Telefono = p.telefono,
                                 Ruc = p.ruc
                             }).First();
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             else
@@ -147,21 +152,27 @@ namespace AmilcarComercial.Controllers
                                Telefono = p.telefono,
                                Ruc = p.ruc
                            }).FirstOrDefault();
-            return Json(new { data = proveedor }, JsonRequestBehavior.AllowGet);
+            return Json(proveedor, JsonRequestBehavior.AllowGet);
         }
 
         [Route("compras/editar/proveedorGuardarTmp")]
         [HttpPost]
         public JsonResult EditarGuardarProveedorTmp(Tbl_ProveedorTmp proveedor)
         {
-            if (proveedor.id_proveedor == null)
-            {
-                proveedor.user = User.Identity.Name;
-                proveedor.nuevo = true;
+            var nuevo = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault().nuevo;
 
-                db.Entry(proveedor).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-            }            
+            if (nuevo == true)
+            {
+                if (ModelState.IsValid)
+                {
+                    proveedor.user = User.Identity.Name;
+                    proveedor.nuevo = true;
+                    proveedor.id_proveedor = null;
+
+                    db.Entry(proveedor).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
 
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
@@ -184,7 +195,7 @@ namespace AmilcarComercial.Controllers
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen
                              }).ToList();
-
+            
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
@@ -246,7 +257,7 @@ namespace AmilcarComercial.Controllers
                                  Precio = p.costo,
                                  Descuento = p.descuento
                              }).ToList();
-
+                
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -255,6 +266,39 @@ namespace AmilcarComercial.Controllers
 
                 return Json(datos, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [Route("compras/actualizar/costo/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarCosto(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
+            dato.costo = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("compras/actualizar/cantidad/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarCantidad(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
+            dato.cantidad = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("compras/actualizar/descuento/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarDescuento(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
+            dato.descuento = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -299,7 +343,7 @@ namespace AmilcarComercial.Controllers
                             Entrada = articulo.cantidad,
                             salida = 0,
                             saldo = articulo.cantidad,
-                            precio = articulo.costo,
+                            ultimoCosto = articulo.costo,
                             costoPromedio = articulo.costo,
                             usuario = User.Identity.Name,
                             id_sucursal = (int)suc
@@ -413,7 +457,7 @@ namespace AmilcarComercial.Controllers
                               Articulos = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Count(),
                               CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
-                          }).ToList();
+                          }).OrderByDescending(m => m.Fecha).ToList();
 
 
             return Json(new { data = compras }, JsonRequestBehavior.AllowGet);

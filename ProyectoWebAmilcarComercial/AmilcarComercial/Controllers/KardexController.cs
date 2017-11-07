@@ -34,7 +34,7 @@ namespace AmilcarComercial.Controllers
                               SalidaFecha = db.Tbl_Kardex.Where(m => m.id_articulo == k.id_articulo && m.salida > 0).FirstOrDefault().fechaKardex.ToString(),
                               Entrada = db.Tbl_Kardex.Where(m => m.id_articulo == k.id_articulo && m.Entrada > 0).OrderByDescending(m => m.fechaKardex).FirstOrDefault().saldo,
                               EntradaFecha = db.Tbl_Kardex.Where(m => m.id_articulo == k.id_articulo && m.Entrada > 0).OrderByDescending(m => m.fechaKardex).FirstOrDefault().fechaKardex.ToString()
-                          }).ToList();
+                          }).OrderByDescending(m => m.EntradaFecha).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }

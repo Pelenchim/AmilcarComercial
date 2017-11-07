@@ -9,29 +9,30 @@
 
 <div class="ventas">
     <div class="ventas-content row">
-        <nav class="nav-extended @ViewBag.NavExtendedColor">
+        <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
             @Html.Partial("_breadcrumbPartial")
         </nav>
         <div class="ventas-opciones col l12">
             <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
-                <form class="col l9">
-                    <div class="input-field">
+                <form class="col l10">
+                    <div class="input-field col l8">
                         <input id="search" type="search" placeholder="Buscar Venta" required>
                     </div>
+                    <div class="input-field col l3 filtro">
+                        <select>
+                            <option value="" selected>Todo</option>
+                            <option value="1">Factura</option>
+                            <option value="2">Cliente</option>
+                            <option value="3">Fecha</option>
+                        </select>
+                    </div>
+                    <div class="col l1 center search">
+                        <a class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Buscar"><i class="material-icons">search</i></a>
+                    </div>
                 </form>
-                <div class="col l3">
-                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
-                    <a class="tooltipped info-sidenav show" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
-                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Actualizar"><i class="material-icons">refresh</i></a>
-                    <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="bottomMio" data-delay="50" data-tooltip="Opciones">
-                        <i class="material-icons right">more_vert</i>
-                    </a>
-                    <!-- Dropdown Structure -->
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li><a href="#!">one</a></li>
-                        <li><a href="#!">two</a></li>
-                    </ul>
-
+                <div class="col l2 center-align icons">
+                    <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
                 </div>
             </div>
         </div>
@@ -52,7 +53,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col l12 center">
+        <div class="paginacion col l12 center">
             <ul class="pagination">
                 <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
                 <li class="active"><a href="#!">1</a></li>
@@ -65,7 +66,7 @@
         </div>
     </div>
 
-    <aside class="ventas-details white z-depth-1">
+    <aside class="ventas-details show white z-depth-1">
         <div class="row z-depth-1-half">
             <div class="col l12 blue darken-1 title">
                 <h5><i class="material-icons left">business_center</i>Detalle de Venta<i class="material-icons right info-sidenav">clear</i></h5>
@@ -91,20 +92,34 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".ventas .ventas-opciones .info-sidenav").click(function () {
-                if ($(this).hasClass('show')) {
+            $(".ventas .info-sidenav").click(function () {
+                if ($(".ventas .ventas-details").hasClass('show')) {
                     $(".ventas .ventas-details").css("right", "0px");
                     $(".ventas .ventas-content").css("padding", "0 280px 0 0");
-                    $(".ventas .ventas-opciones .info-sidenav").toggleClass('show hiden');
+                    $(".ventas .ventas-details").toggleClass('show hiden');
                 }
-                else if ($(this).hasClass('hiden'))
-                {
+                else if ($(".ventas .ventas-details").hasClass('hiden')) {
                     $(".ventas .ventas-details").css("right", "-300px");
                     $(".ventas .ventas-content").css("padding", "0");
-                    $(".ventas .ventas-opciones .info-sidenav").toggleClass('show hiden');
+                    $(".ventas .ventas-details").toggleClass('show hiden');
+                    $(".ventas .listado-ventas table tbody .item").removeClass("active");
+                    vacio();
                 }
             });
+            $('ul.tabs').tabs();
+            $('select').material_select();
             listaVentas();
+            vacio();
+            $(".ventas .listado-ventas table tbody").on('click', '.item', function () {
+                $(".ventas .listado-ventas table tbody .item").removeClass("active");
+                $(this).addClass("active");
+            });
+            $('.ventas .ventas-content, .ventas .ventas-content .ventas-opciones, .ventas .ventas-content .paginacion').on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                $(".ventas .listado-ventas table tbody .item").removeClass("active");
+                vacio();
+            });
         });
         function listaVentas() {
             $.ajax({
@@ -117,7 +132,7 @@
                     $.each(data, function () {
                         $.each(this, function (name, value) {
                             $(".listado-ventas table tbody").append(
-                                '<tr onclick="informacionVenta(' + value.ID + ')">' +
+                                '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
                                 '<td>' + value.Venta + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
                                 '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
@@ -126,6 +141,100 @@
                                 '<td>' + value.Articulos + ' Unidades</td>' +
                                 '<td>C$ ' + value.PagoTotal + '</td>' +
                                 '</tr>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function vacio() {
+            $(".ventas-details .general").empty();
+            $(".ventas-details .detalle").empty();
+            $(".ventas-details .general").append(
+                '<div class="no-selected">' +
+                '<div class="center">' +
+                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
+                '</div>' +
+                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>' +
+                '</div>'
+            );
+            $(".ventas-details .detalle").append(
+                '<div class="no-selected">' +
+                '<div class="center">' +
+                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
+                '</div>' +
+                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>' +
+                '</div>'
+            );
+        }
+        function informacionVenta(id) {
+            var id = id;
+            detalleVentaGeneral(id);
+            detalleVentaEspecifico(id);
+        }
+        function detalleVentaGeneral(id) {
+            $.ajax({
+                url: '/ventas/detalleventa/general/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".ventas-details .general").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".ventas-details .general").append(
+                                '<div>' +
+                                '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
+                                '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
+                                '<p><span class="left">Vendedor</span>' + value.Usuario + '</p>' +
+                                '<p><span class="left">Cliente</span>' + value.ClienteN + ' ' + value.ClienteA + '</p>' +
+                                '<p><span class="left">Sucursal</span>' + value.Sucursal + '</p>' +
+                                '<p><span class="left">Fecha</span>' + value.Fecha + '</td>' +
+                                '<p><span class="left">Tipos Articulos</span>' + value.Articulos + '</p>' +
+                                '<p><span class="left">Cantidad Articulos</span>' + value.CantidadTotal + ' Unds</p>' +
+                                '<p><span class="left">SubTotal</span>C$ ' + value.SubTotal + '</p>' +
+                                '<p><span class="left">Iva %</span>' + value.Iva + '%</p>' +
+                                '<p><span class="left">Iva Total</span>C$ ' + value.Iva + '</p>' +
+                                '<p><span class="left">Descuento Total</span>C$ ' + value.DescuentoTotal + '</p>' +
+                                '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
+                                '</div>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function detalleVentaEspecifico(id) {
+            $.ajax({
+                url: '/ventas/detalleventa/especifico/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".ventas-details .detalle").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".ventas-details .detalle").append(
+                                '<div class="individual col l12">' +
+                                '<div class="col l2">' +
+                                '<img src="/Content/images/articulos/' + value.Img + '">' +
+                                '</div>' +
+                                '<div class="col l10">' +
+                                '<p class="name"><strong>' + value.Articulo + '</strong></p>' +
+                                '<p class="cate">' + value.Categoria + '</p>' +
+                                '</div>' +
+                                '<div class="col l12">' +
+                                '<p><span>Cant: ' + value.Cantidad + ' </span>' + '<span class="right">Costo: ' + value.Costo + '</span>' + '</p>' +
+                                '<p><span>SubTotal: ' + value.SubTotal + ' </span>' + '<span class="right">Total: ' + value.Total + '</span>' + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col l12 divider-mio"></div>'
                             );
                         });
                     });

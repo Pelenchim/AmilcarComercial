@@ -362,6 +362,7 @@
     <Compile Include="ViewsModels\UsuariosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\system-resources\AM-Logo.ico" />
     <Content Include="Content\css\basic.css" />
     <Content Include="Content\css\basic.min.css" />
     <Content Include="Content\css\dropzone.css" />

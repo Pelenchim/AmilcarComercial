@@ -10,16 +10,18 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
-    $('select').material_select();
     $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });
+   
     mostrarProveedorTmp();
     generales();
     mostrarProductosTmp(1);
+    detectarCambios();
+    var proveedor = false, articulo = false;
 });
-
 function generales() {
+    $("#pre-General").css("display", "inline");
     $.ajax({
         url: '/compra/obtener/generales',
         type: 'GET',
@@ -37,6 +39,8 @@ function generales() {
                 '<p class=""><strong>Sucursal: </strong>' + data[2] + '</p>' +
                 '</div>'
             );
+            $("#N_factura").val(data[4]);
+            $("#pre-General").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -44,6 +48,8 @@ function generales() {
     });
 }
 function proveedores() {
+    $(".lista-proveedores").empty();
+    $("#pre-Proveedores").css("display", "inline");
     $.ajax({
         url: '/compras/obtener/proveedores',
         type: 'GET',
@@ -68,6 +74,7 @@ function proveedores() {
                     );
                 });
             });
+            $("#pre-Proveedores").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -80,27 +87,21 @@ function agregarProveedor() {
 }
 function agregarProveedorTmp() {
     var datos = {
-        Nombre: $(".nuevoCliente #nombre_cliente").val(),
-        Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-        Direccion: $('.nuevoCliente #direccion').val(),
-        Departamento: $('.nuevoCliente #departamento').val(),
-        Telefono: $('.nuevoCliente #telefono').val(),
-        Cedula: $('.nuevoCliente #cedula').val()
+        nombre: $(".modal-compras .nuevoProveedor #nombre-p").val(),
+        telefono: $('.modal-compras .nuevoProveedor #telefono-p').val(),
+        ruc: $('.modal-compras .nuevoProveedor #ruc-p').val()
     };
     $.ajax({
         url: '/compras/agregar/proveedorTmp',
-        type: 'POST',
+        type: 'GET',
         data: datos,
         'success': function (data) {
-            mostrarClienteTmp();
+            mostrarProveedorTmp();
             $('#nuevoProveedor').modal('close');
             Materialize.toast('Proveedor agregado exitosamente', 4000);
-            $(".nuevoCliente #nombre_cliente").val('');
-            $('.nuevoCliente #apellidos_cliente').val('');
-            $('.nuevoCliente #direccion').val('');
-            $('.nuevoCliente #departamento').val('');
-            $('.nuevoCliente #telefono').val('');
-            $('.nuevoCliente #cedula').val('');
+            $(".modal-compras .nuevoProveedor #nombre-p").val('');
+            $('.modal-compras .nuevoProveedor #telefono-p').val('');
+            $('.modal-compras .nuevoProveedor #ruc-p').val('');
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -129,14 +130,10 @@ function editarProveedor() {
         contentType: "application/json",
         dataType: "json",
         'success': function (data) {
-            $.each(data, function () {
-                $(".editarCliente #nombre_cliente").val(data.Nombre);
-                $(".editarCliente #apellidos_cliente").val(data.Apellido)
-                $(".editarCliente #cedula").val(data.Cedula)
-                $(".editarCliente #telefono").val(data.Telefono)
-                $(".editarCliente #departamento").val(data.Departamento)
-                $(".editarCliente #direccion").val(data.Direccion)
-            });
+            $('.modal-compras .editarProveedor #nombre-p').val(data.Nombre).focus();
+            $(".modal-compras .editarProveedor #telefono-p").val(data.Telefono).focus();
+            $(".modal-compras .editarProveedor #ruc-p").val(data.Ruc).focus();
+            $(".modal-compras .editarProveedor #id-p").val(data.ID);
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -145,27 +142,22 @@ function editarProveedor() {
 }
 function editarGuardarProveedor() {
     var datos = {
-        Nombre: $(".nuevoCliente #nombre_cliente").val(),
-        Apellido: $('.nuevoCliente #apellidos_cliente').val(),
-        Direccion: $('.nuevoCliente #direccion').val(),
-        Departamento: $('.nuevoCliente #departamento').val(),
-        Telefono: $('.nuevoCliente #telefono').val(),
-        Cedula: $('.nuevoCliente #cedula').val()
+        nombre: $(".modal-compras .editarProveedor #nombre-p").val(),
+        telefono: $('.modal-compras .editarProveedor #telefono-p').val(),
+        ruc: $('.modal-compras .editarProveedor #ruc-p').val(),
+        id_proveedorTmp: $('.modal-compras .editarProveedor #id-p').val()
     };
     $.ajax({
         url: '/compras/editar/proveedorGuardarTmp',
         type: 'POST',
         data: datos,
         'success': function (data) {
-            mostrarClienteTmp();
+            mostrarProveedorTmp();
             $('#editarProveedor').modal('close');
             Materialize.toast('Proveedor editado exitosamente', 4000);
-            $(".nuevoCliente #nombre_cliente").val('');
-            $('.nuevoCliente #apellidos_cliente').val('');
-            $('.nuevoCliente #direccion').val('');
-            $('.nuevoCliente #departamento').val('');
-            $('.nuevoCliente #telefono').val('');
-            $('.nuevoCliente #cedula').val('');
+            $(".modal-compras .editarProveedor #nombre-p").val('');
+            $('.modal-compras .editarProveedor #telefono-p').val('');
+            $('.modal-compras .editarProveedor #ruc-p').val('');
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -186,6 +178,8 @@ function eliminarProveedor() {
     });
 }
 function mostrarProveedorTmp() {
+    $(".datosProveedor").empty();
+    $("#pre-Proveedor").css("display","inline");
     $.ajax({
         url: '/compras/obtener/proveedorTmp',
         type: 'GET',
@@ -194,7 +188,6 @@ function mostrarProveedorTmp() {
         'success': function (data) {
             if (data === 0) {
                 $(".proveedor .opcionesProveedor a").hide();
-                $(".datosProveedor").empty();
                 $(".datosProveedor").append(
                     '<div class="center-align vacio">' +
                     '<p>Aun no a definido cliente para esta venta</p>' +
@@ -202,22 +195,26 @@ function mostrarProveedorTmp() {
                     '<button class="btn btn-flat green white-text" onclick="proveedores()">Buscar</button>' +
                     '</div>'
                 );
+                proveedor = false;
             }
             else {
                 $(".proveedor .opcionesProveedor a").show();
                 $(".datosProveedor").empty();
                 $(".datosProveedor").append(
-                    '<div class="col l12">' +
+                    '<div class="col l7">' +
                     '<p><strong>Nombre: </strong>' + data.Nombre + '</p>' +
                     '</div>' +
-                    '<div class="col l4">' +
-                    '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
-                    '</div>' +
-                    '<div class="col l4">' +
+                    '<div class="col l5">' +
                     '<p><strong>N° Ruc: </strong>' + data.Ruc + '</p>' +
+                    '</div>' +
+                    '<div class="col l12">' +
+                    '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
                     '</div>'
                 );
+                proveedor = true;
             }
+            $("#pre-Proveedor").css("display", "none");
+            proveedorSelected = true;
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -230,6 +227,15 @@ function CancelProveedor() {
 }
 function CancelNuevoProveedor() {
     $('#nuevoProveedor').modal('close');
+    $(".modal-compras .nuevoProveedor #nombre-p").val('');
+    $('.modal-compras .nuevoProveedor #telefono-p').val('');
+    $('.modal-compras .nuevoProveedor #ruc-p').val('');
+}
+function CancelEditarProveedor() {
+    $('#editarProveedor').modal('close');
+    $(".modal-compras .editarProveedor #nombre-p").val('');
+    $('.modal-compras .editarProveedor #telefono-p').val('');
+    $('.modal-compras .editarProveedor #ruc-p').val('');
 }
 
 function abrirArticulos() {
@@ -237,18 +243,30 @@ function abrirArticulos() {
     articulos(1);
 }
 function articulos(vista) {
+    $(".lista-articulos").empty();
+    $("#pre-Articulos").css("display","inline");
     $.ajax({
         url: '/compras/obtener/productos',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
         'success': function (data) {
+            //if (data.length === 0) {
+            //    $(".modal-compras .articulos .acciones .table-v").hide();
+            //    $(".modal-compras .articulos .acciones .card-v").hide();
+            //    $(".lista-articulos").empty();
+            //    $(".lista-articulos").append(
+            //        '<p class="center-align">No hay articulos para agregar a la compra </br> ya has agregado todos los articulos.</p>'
+            //    );
+            //    return;
+            //}
             if (vista === 0) {
                 articulosCard(data)
             }
             if (vista === 1) {
                 articulosTable(data);
             }
+            $("#pre-Articulos").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -263,11 +281,74 @@ function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
     var precio = $(".articulos #precio" + id).val();
     var desc = $(".articulos #desc" + id).val();
+
+    if (precio === '') {
+        Materialize.toast("Debe agregar el costo", 2000);
+        $(".articulos #precio" + id).focus();
+        return;
+    }
+    if (precio === 0) {
+        Materialize.toast("El costo no puede ser igual a 0", 2000);
+        $(".articulos #precio" + id).focus();
+        return;
+    }
+    if (precio < 0) {
+        Materialize.toast("El costo no es valido", 2000);
+        $(".articulos #precio" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(precio)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #precio" + id).focus();
+        return;
+    }
+    if (cant === '') {
+        Materialize.toast("Debe agregar la cantidad", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (cant === 0) {
+        Materialize.toast("La cantidad no puede ser igual a 0", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (cant < 0) {
+        Materialize.toast("La cantidad no es valida", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(cant)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (desc === '') {
+        Materialize.toast("Debe agregar el descuento", 2000);
+        $(".articulos #desc" + id).focus();
+        return;
+    }
+    if (desc < 0) {
+        Materialize.toast("El descuento no es valido", 2000);
+        $(".articulos #desc" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(desc)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #desc" + id).focus();
+        return;
+    }
+    if (desc > precio) {
+        Materialize.toast("El descuento no puede ser mayor que el costo", 2000);
+        $(".articulos #desc" + id).focus();
+        return;
+    }
+
     $.ajax({
         url: '/compras/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc,
         type: 'GET',
         'success': function (data) {
-            $('#articulos').modal('close');
+            //$('#articulos').modal('close');
+            articulos(1);
             mostrarProductosTmp(1);
             Materialize.toast('Articulo agregado a la orden', 2000);
         },
@@ -282,7 +363,7 @@ function eliminarProductoTmp(id) {
         type: 'GET',
         'success': function (data) {
             mostrarProductosTmp(1);
-            Materialize.toast('Articulo eliminado de la compra', 4000);
+            Materialize.toast('Articulo eliminado de la compra', 2000);
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -303,13 +384,14 @@ function eliminarProductosTodos() {
     });
 }
 function mostrarProductosTmp(view) {
+    $(".articulos-orden").empty();
+    $("#pre-ArticulosOrden").css("display","inline");
     $.ajax({
         url: '/compras/obtener/productosTmp',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
         'success': function (data) {
-            $(".articulos-orden").empty();
             $(".articulos-orden").append(
                 '<div class="divider-mio"></div>' +
                 '<div class="articulosLista col l12 mCustomScrollbar blue" data-mcs-theme="minimal-dark"></div>'
@@ -327,6 +409,7 @@ function mostrarProductosTmp(view) {
                     '</div > '
                 );
                 detalles(0, 0);
+                articulo = false;
             }
             else {
                 if (view === 0) {
@@ -336,7 +419,9 @@ function mostrarProductosTmp(view) {
                     $(".articulos-orden .articulosLista").css("padding", "0px");
                     articulosOrdenTable(data);
                 }
+                articulo = true;
             }
+            $("#pre-ArticulosOrden").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -398,7 +483,7 @@ function articulosTable(data) {
             $(".lista-articulos table tbody").append(
                 '<tr>' +
                 '<td>' + value.Codigo + '</td>' +
-                '<td>' + value.Imagen + '</td>' +
+                '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td>' +
                 '<input placeholder="Precio" id="precio' + value.ID + '" type="text" class="browser-default">' +
@@ -435,7 +520,7 @@ function articulosOrdenCard(data) {
                 '<span class="left white-text">Cod: 001</span>' +
                 '<a class="right" onclick="eliminarProductoTmp(' + value.ID + ')"><i class="material-icons">cancel</i></a>' +
                 '</div>' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
+                '<img class="blue" src="/Content/images/articulos/' + value.Imagen + '">' +
                 '<span class="card-title">' + value.Nombre + '</span>' +
                 '</div>' +
                 '<div class="card-content">' +
@@ -468,11 +553,11 @@ function articulosOrdenTable(data) {
         '<th>Cod</th>' +
         '<th>Img</th>' +
         '<th>Nombre</th>' +
-        '<th>Precio</th>' +
+        '<th>Costo</th>' +
         '<th>Cantidad</th>' +
         '<th>Descuento</th>' +
         '<th>Subtotal</th>' +
-        '<th>Eliminar</th>' +
+        '<th>Opciones</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -486,19 +571,20 @@ function articulosOrdenTable(data) {
             $(".articulosLista table tbody").append(
                 '<tr>' +
                 '<td>' + value.ID + '</td>' +
-                '<td>' + '<img src="https://lorempixel.com/100/190/nature/6">' + '</td>' +
+                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td>' +
-                '<input class="browser-default precio" type="text" id="precio' + value.ID + '" value="' + value.Precio + '"></input>' +
+                '<input class="browser-default precio" type="text" id="precio-' + value.ID + '" value="' + value.Precio + '"></input>' +
                 '</td>' +
                 '<td>' +
-                '<input class="browser-default" type="text" id="cant' + value.ID + '" value="' + value.Cantidad + '"></input>' +
+                '<input class="browser-default" type="text" id="cant-' + value.ID + '" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>' +
-                '<input class="browser-default" type="text" id="desc' + value.ID + '" value="' + value.Descuento + '"></input>' +
+                '<input class="browser-default" type="text" id="desc-' + value.ID + '" value="' + value.Descuento + '"></input>' +
                 '</td>' +
-                '<td>C$' + ((value.Precio * value.Cantidad) + value.Descuento) + '</td>' +
-                '<td>' + '<a class="center" onclick="eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
+                '<td>C$' + ((value.Precio * value.Cantidad) - value.Descuento) + '</td>' +
+                '<td>' + '<a class="center" onclick="eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' +
+                '</td>' +
                 '</tr>'
             );
             cantidadTotal = cantidadTotal + value.Cantidad;
@@ -507,8 +593,114 @@ function articulosOrdenTable(data) {
     });
     detalles(cantidadTotal, subTotal);
 }
+function detectarCambios() {
+    var ID_Obj;
+    var AnteriorValor, NuevoValor; 
+    var dividiendo;
+    var id, campo;
+
+    $(document).on({
+        'focusin': function () {
+            ID_Obj = $(this).attr("id");
+            dividiendo = ID_Obj.split("-", 2);
+            campo = dividiendo[0];
+            id = dividiendo[1];
+            AnteriorValor = $(this).val();
+        },
+        'focusout': function () {
+            NuevoValor = $(this).val();
+
+            if (NuevoValor === '') {
+                Materialize.toast("Debe ingresar un valor", 2000);
+                $(this).focus();
+                return;
+            }
+            else if (NuevoValor === 0) {
+                Materialize.toast("El valor no puede ser 0", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor < 0) {
+                Materialize.toast("El valor no es valido", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor === AnteriorValor) {
+                return;
+            }
+            else if (!/^([0-9])*$/.test(NuevoValor)) {
+                Materialize.toast("El valor no es valido", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+
+            if (campo === "precio") {
+                $.ajax({
+                    url: '/compras/actualizar/costo/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Costo del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                }); 
+            }
+
+            if (campo === "cant") {
+                $.ajax({
+                    url: '/compras/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizada', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                }); 
+            }
+
+            if (campo === "desc") {
+
+                var costo = $("#precio-" + id).val();
+                if (NuevoValor >= costo) {
+                    Materialize.toast("El descuento no puede ser mayor que el costo", 2000);
+                    $("#desc-" + id).val(AnteriorValor);
+                    return;
+                }
+
+                $.ajax({
+                    url: '/compras/actualizar/descuento/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Descuento del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });    
+            }   
+        }
+    }, '.articulosLista table tbody input');
+}
 
 function detalles(cantidadTotal, SubTotal) {
+    if (cantidadTotal === 0) {
+        $(".detalle .detalles").empty();
+        $(".detalle .detalles").append(
+            '<p><strong>Detalle:</strong></p>' +
+            '<div class="col l12">' +
+            '<p class="center-align"><strong>No hay articulos en la orden, agrege para realizar la compra.</strong></span>' +
+            '</div>'
+        );
+        $(".detalle .total").text("");
+        $("#comprar").addClass('disabled');
+        return;
+    }
+
     iva = (subTotal * parseFloat($('#iva').val() / 100));
     Total = subTotal + iva;
     $(".detalle .detalles").empty();
@@ -525,6 +717,7 @@ function detalles(cantidadTotal, SubTotal) {
         '</div>'
     );
     $(".detalle .total").text("Total: C$" + Total);
+    $("#comprar").removeClass('disabled');
 }
 function cancelarCompra() {
     $.ajax({
@@ -540,8 +733,13 @@ function cancelarCompra() {
 }
 function facturar() {
 
-    if ($("#N_factura").empty()){
-        Materialize.toast('No a ingresado el numero de la factura', 2000);
+    if (proveedor === false) {
+        Materialize.toast("Debe definir un proveedor", 3000);
+        return;
+    }
+    if (articulo === false) {
+        Materialize.toast("Debe seleccionar productos a comprar", 3000);
+        return;
     }
 
     var datos = {

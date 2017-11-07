@@ -177,7 +177,10 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerArticulos()
         {
-            var Articulos = (from p in db.Tbl_Articulo.Where(m => m.estado == true).OrderByDescending(m => m.id_articulo)
+            var articulosOrden = (from p in db.Tbl_OrdenTmp where (p.user == User.Identity.Name) select p.id_Articulo).ToArray();
+
+            var Articulos = (from p in db.Tbl_Articulo
+                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true)
                              select new
                              {
                                  ID = p.id_articulo,
@@ -242,7 +245,9 @@ namespace AmilcarComercial.Controllers
                                  ID = p.id_OrdenTmp,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
-                                 Cantidad = p.cantidad
+                                 Cantidad = p.cantidad,
+                                 Existecia = 233,
+                                 Precio = 500
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -254,6 +259,18 @@ namespace AmilcarComercial.Controllers
                 return Json(datos, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [Route("ventas/actualizar/cantidad/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarCantidad(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            dato.cantidad = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
 
         #endregion
 
@@ -299,7 +316,7 @@ namespace AmilcarComercial.Controllers
                             Entrada = 0,
                             salida = (int)articulo.cantidad,
                             saldo = (int)articulo.cantidad,
-                            precio = 0,
+                            ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
                             id_sucursal = (int)suc
@@ -399,7 +416,6 @@ namespace AmilcarComercial.Controllers
 
         #endregion
 
-
         #region ListaVentas
 
         [Route("ventas/listaventas")]
@@ -419,9 +435,56 @@ namespace AmilcarComercial.Controllers
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
                               PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta)
-                          }).ToList();
+                          }).OrderByDescending(m => m.Fecha).ToList();
 
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("ventas/detalleventa/general/{id}")]
+        [HttpGet]
+        public JsonResult DetalleVentaGeneral(int id)
+        {
+            var detalle = from c in db.Tbl_Orden
+                          where c.usuario == User.Identity.Name && c.id_orden == id
+                          select new
+                          {
+                              Usuario = c.usuario,
+                              Venta = c.id_orden,
+                              Factura = c.fact_Orden,
+                              Fecha = c.fecha_orden.ToString(),
+                              ClienteN = c.Tbl_Clientes.nombre_cliente,
+                              ClienteA = c.Tbl_Clientes.apellidos_cliente,
+                              Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Count(),
+                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
+                              Iva = c.iva_orden,
+                              DescuentoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.descuento),
+                              SubTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta),
+                              PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
+                              Sucursal = c.Tbl_Sucursal.Nombre
+                          };
+
+            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("ventas/detalleventa/especifico/{id}")]
+        [HttpGet]
+        public JsonResult DetalleVentaEspecifico(int id)
+        {
+            var detalle = (from c in db.Tbl_Detalle_Orden
+                           where c.id_orden == id
+                           select new
+                           {
+                               Articulo = c.Tbl_Articulo.nombre_articulo,
+                               Img = c.Tbl_Articulo.imagen,
+                               Categoria = c.Tbl_Articulo.Tbl_Categorias.Nombre,
+                               Cantidad = c.cantidad,
+                               Descuento = c.descuento,
+                               Precio = c.precio_venta,
+                               SubTotal = c.cantidad * c.precio_venta,
+                               Total = ((c.cantidad * c.precio_venta) - c.descuento) * c.Tbl_Orden.iva_orden
+                           }).ToList();
+
+            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

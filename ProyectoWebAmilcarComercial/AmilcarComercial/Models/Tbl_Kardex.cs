@@ -29,10 +29,10 @@ namespace AmilcarComercial.Models
         public int Entrada { get; set; }
         public int salida { get; set; }
         public int saldo { get; set; }
-        public double precio { get; set; }
         public double costoPromedio { get; set; }
         public string usuario { get; set; }
         public int id_sucursal { get; set; }
+        public double ultimoCosto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalidaDetalle> SalidaDetalle { get; set; }

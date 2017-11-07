@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Content/system-resources/AM-Logo.ico" />
     <title>@ViewBag.Title - AmilcarComercial</title>
     @Styles.Render("~/Content/fonts")
     @Styles.Render("~/Content/css")
@@ -18,7 +19,7 @@
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
                 <div class="nav-wrapper @ViewBag.PrimaryColor z-depth-2">
                     <div class="logo-container">
-                        <a href="#!" class="brand-logo center hide-on-med-and-down"><img src="~/Content/system-resources/AM-Logo2.png"/></a>
+                        <a href="@Url.Action("Index","Home")" class="brand-logo center hide-on-med-and-down"><img src="~/Content/system-resources/AM-Logo2.png"/></a>
                         <a class="show-hidde hidde-side-nav hide-on-med-and-down"><i class="material-icons">menu</i></a>
                     </div>
                     <a href="#!" class="brand-logo center hide-on-large-only"><img src="~/Content/system-resources/AM-Logo2.png" /></a>
@@ -156,6 +157,7 @@
                 menuWidth: 260,
                 draggable: true
             });
+            $('select').material_select();
             $(window).resize(function () {
                 var ventana_ancho = $(window).width();
 
