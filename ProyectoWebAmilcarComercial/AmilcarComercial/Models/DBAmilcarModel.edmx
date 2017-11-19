@@ -140,6 +140,10 @@
           <Property Name="id_sucursal" Type="int" Nullable="false" />
           <Property Name="id_articulo" Type="int" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="precio" Type="float" />
+          <Property Name="preciocredito" Type="float" />
+          <Property Name="credito" Type="bit" />
+          <Property Name="apartado" Type="bit" />
         </EntityType>
         <EntityType Name="Tbl_Categorias">
           <Key>
@@ -376,6 +380,8 @@
           <Property Name="user" Type="nvarchar(max)" />
           <Property Name="cantidad" Type="int" />
           <Property Name="fecha" Type="datetime" />
+          <Property Name="credito_meses" Type="int" />
+          <Property Name="apartado_fecha" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
           <Key>
@@ -1323,6 +1329,10 @@
           <NavigationProperty Name="Bodega_Detalle" Relationship="Self.FK_Bodega_Detalle_Tbl_bodega_productos" FromRole="Tbl_bodega_productos" ToRole="Bodega_Detalle" />
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Articulo" FromRole="Tbl_bodega_productos" ToRole="Tbl_Articulo" />
           <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Sucursal" FromRole="Tbl_bodega_productos" ToRole="Tbl_Sucursal" />
+          <Property Name="precio" Type="Double" />
+          <Property Name="preciocredito" Type="Double" />
+          <Property Name="credito" Type="Boolean" />
+          <Property Name="apartado" Type="Boolean" />
         </EntityType>
         <EntityType Name="Tbl_Categorias">
           <Key>
@@ -1600,6 +1610,8 @@
           <Property Name="cantidad" Type="Int32" />
           <Property Name="fecha" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
+          <Property Name="credito_meses" Type="Int32" />
+          <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
           <Key>
@@ -2507,6 +2519,10 @@
           <EntitySetMapping Name="Tbl_bodega_productos">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega_productos">
               <MappingFragment StoreEntitySet="Tbl_bodega_productos">
+                <ScalarProperty Name="apartado" ColumnName="apartado" />
+                <ScalarProperty Name="credito" ColumnName="credito" />
+                <ScalarProperty Name="preciocredito" ColumnName="preciocredito" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
                 <ScalarProperty Name="id_bodega_productos" ColumnName="id_bodega_productos" />
                 <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
                 <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
@@ -2764,6 +2780,8 @@
           <EntitySetMapping Name="Tbl_OrdenTmp">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
               <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
+                <ScalarProperty Name="apartado_fecha" ColumnName="apartado_fecha" />
+                <ScalarProperty Name="credito_meses" ColumnName="credito_meses" />
                 <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />
                 <ScalarProperty Name="id_Articulo" ColumnName="id_Articulo" />
                 <ScalarProperty Name="user" ColumnName="user" />

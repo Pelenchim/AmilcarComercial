@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Venta Finalizada";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
+}
+
+<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+    <div class="nav-wrapper">
+        <div class="col l12">
+            <a href="#" class="breadcrumb">@ViewBag.Title</a>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col l6 offset-l3 white border-radius-4 z-depth-1">
+        <div class="col l12 center">
+            <p><i class="material-icons large green-text">check_circle</i></p>
+            <p>Venta al Contado Finalizada</p>
+        </div>
+        <div class="col l12 center">
+            <a class="btn btn-large btn-flat blue white-text">Ver ventas</a>
+            <a class="btn btn-large btn-flat blue white-text">Imprimir</a>
+            <a class="btn btn-large btn-flat blue white-text">Nueva Venta</a>
+        </div>
+    </div>
+</div>

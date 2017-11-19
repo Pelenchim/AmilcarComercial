@@ -1,8 +1,7 @@
-﻿
-@{
-    ViewBag.Title = "Ventas";
-    ViewBag.SubTitle = "Nueva";
-    ViewBag.ControllerGeneral = "Ventas";
+﻿@{
+    ViewBag.Title = "Apartado";
+    ViewBag.SubTitle = "Nuevo";
+    ViewBag.ControllerGeneral = "Apartado";
     ViewBag.PrimaryColor = "blue";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
@@ -11,7 +10,7 @@
     @Html.Partial("_breadcrumbPartial")
 </nav>
 
-<div class="nueva-venta row">
+<div class="nuevo-apartado row">
     <div class="row">
         <div class="cliente col l8">
             <div class="row white z-depth-1">
@@ -39,7 +38,7 @@
                     </div>
                     <p style="margin-top:0">Cargando datos del cliente..</p>
                 </div>
-            </div>            
+            </div>
         </div>
         <div class="general col l4">
             <div class="row white z-depth-1">
@@ -64,103 +63,61 @@
                         <p style="margin-top:0">Cargando datos de la venta..</p>
                     </div>
                 </div>
-            </div>           
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="articulosVenta col l9">
-            <div class="row">
-                <div class="head col l12 white z-depth-1">
-                    <div class="opcionesArticulos col l12">
-                        <p class="col l6">
-                            <strong>Lista de Articulos a Vender</strong>
-                        </p>
-                        <div class="acciones col l6">
-                            <div>
-                                <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="articulos(1)"><i class="material-icons">add_shopping_cart</i></a>
-                                <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
-                                <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
-                                <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
-                                <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
-                            </div>
-                            <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
+        <div class="articulosApartado col l12">
+            <div class="head col l12 white z-depth-1">
+                <div class="opcionesArticulos col l12">
+                    <p class="col l6">
+                        <strong>Lista de Articulos a Vender</strong>
+                    </p>
+                    <div class="acciones col l6">
+                        <div>
+                            <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="articulos(1)"><i class="material-icons">add_shopping_cart</i></a>
+                            <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
+                            <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
+                            <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
+                            <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
+                        </div>
+                        <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
+                    </div>
+                </div>                
+            </div>
+            <div class="articulos-orden"></div>
+            <div class="col l12 center" id="pre-ArticulosOrden" style="padding-top: 10px; display: none;">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
                         </div>
                     </div>
                 </div>
-                <div class="articulos-orden"></div>
-                <div class="col l12 center" id="pre-ArticulosOrden" style="padding-top: 10px; display: none;">
-                    <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="margin-top:0">Cargando articulos de la orden..</p>
-                </div>
-            </div>          
-        </div>
-        <div class="detalle col l3">
-            <div class="row white z-depth-1">
-                <div class="col l12">
-                    <p class="title"><strong>Detalle de la Venta</strong></p>
-                </div>
-                <div class="divider-mio"></div>
-                <div class="col l12">
-                    <p><strong>Preferencias:</strong></p>
-                    <div class="input-field col l6">
-                        <input placeholder="Placeholder" id="N_factura" type="text" class="validate">
-                        <label for="N_factura">N° Factura</label>
-                    </div>
-                    <div class="input-field col l6">
-                        <select id="iva">
-                            <option selected value="0">0%</option>
-                            <option value="5">5%</option>
-                            <option value="10">10%</option>
-                            <option value="15">15%</option>
-                        </select>
-                        <label>IVA</label>
-                    </div>
-                    <div class="input-field col l12">
-                        <select id="tipoPago">
-                            <option selected value="Efectivo">Efectivo</option>
-                            <option value="Tarjeta">Tarjeta</option>
-                        </select>
-                        <label>Tipo de Pago</label>
-                    </div>                    
-                </div>
-                <div class="col l12">
-                    <p><strong>Detalle:</strong></p>
-                    <div class="col l12">
-                        <span class="left"><strong>Articulos: </strong>25</span>
-                        <span class="right"><strong>Subtotal: C$</strong>2,556</span>
-                    </div>
-                    <div class="col l12">
-                        <span class="left"><strong>Iva: C$</strong>25.4</span>
-                        <span class="right"><strong>Total: C$</strong>24,245</span>
-                    </div>
-                </div>
-                <div class="acciones col l12 blue center-align">
-                    <h5 class="center-align white-text total"></h5>
+                <p style="margin-top:0">Cargando articulos de la orden..</p>
+            </div>
+            <div class="col l12 blue">
+                <div class="right">
                     <button class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></button>
                     <button class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></button>
-                    <a class="calcularVuelto col l12 white-text" href="#calcularVuelto"><i class="material-icons tiny">receipt</i>Calcular Vuelto</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal-ventas">
+<div class="modal-apartado">
     <div id="articulos" class="modal modal-giant">
         <div class="articulos blue">
             <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>Buscar Articulo
-                <i class="material-icons modal-close right">clear</i></h4>
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">search</i>Buscar Articulo
+                    <i class="material-icons modal-close right">clear</i>
+                </h4>
             </div>
             <div class="modal-content row">
                 <div class="col l12">
@@ -416,12 +373,32 @@
                 </h4>
             </div>
             <div class="modal-content">
-
+                <div class="row" style="margin-bottom: 0">
+                    <div class="input-field col l6">
+                        <input placeholder="Cantidad a pagar" id="total" type="text" disabled>
+                        <label for="total">Total a pagar</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input placeholder="Cantidad con que pago" id="pago" type="text">
+                        <label for="pago">Pago</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <select>
+                            <option selected value="1">Cordobas</option>
+                            <option value="2">Dolares</option>
+                        </select>
+                        <label>Moneda</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input placeholder="Cantidad a retornar" id="cambio" type="text" disabled>
+                        <label for="cambio">Cambio</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts{
-        @Scripts.Render("~/bundles/ventas")
+    @Scripts.Render("~/bundles/apartado")
 }

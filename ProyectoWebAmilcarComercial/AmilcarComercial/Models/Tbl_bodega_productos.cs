@@ -24,6 +24,10 @@ namespace AmilcarComercial.Models
         public int id_sucursal { get; set; }
         public int id_articulo { get; set; }
         public int stock { get; set; }
+        public Nullable<double> precio { get; set; }
+        public Nullable<double> preciocredito { get; set; }
+        public Nullable<bool> credito { get; set; }
+        public Nullable<bool> apartado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bodega_Detalle> Bodega_Detalle { get; set; }

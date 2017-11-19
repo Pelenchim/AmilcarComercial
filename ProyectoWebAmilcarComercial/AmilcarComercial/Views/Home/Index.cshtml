@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
 }
 
 <div class="home">
@@ -54,6 +54,14 @@
                 </a>
             </div>
             <div class="col l4 center">
+                <a href="@Url.Action("Index","Apartado")">
+                    <figure>
+                        <img src="~/Content/system-resources/credito.png" class="responsive-img" />
+                        <figcaption>Apartado</figcaption>
+                    </figure>
+                </a>
+            </div>
+            <div class="col l4 center">
                 <a href="@Url.Action("Index","Kardex")">
                     <figure>
                         <img src="~/Content/system-resources/kardex.png" class="responsive-img" />
@@ -69,7 +77,7 @@
                     </figure>
                 </a>
             </div>
-            <div class="col l4 offset-l2 center">
+            <div class="col l4 center">
                 <a href="@Url.Action("Catalogos","Home")">
                     <figure>
                         <img src="~/Content/system-resources/catalogos.png" class="responsive-img" />

@@ -1307,7 +1307,254 @@ background-color: #37474f;
 
 /*#endregion */
 
-/*#region ventas */
+/*#region VentaGeneral */
+
+/*lista de articulos en la orden*/
+.nueva-venta .articulosVenta .articulosLista {
+    height: 50vh;
+    min-height: 300px;
+    overflow-x: hidden;
+}
+.articulosVenta .opcionesArticulos:first-child,
+.articulosCredito .opcionesArticulos:first-child,
+.articulosApartado .opcionesArticulos:first-child{
+    padding: 0 0.75rem 0 0;
+}
+.articulosVenta .opcionesArticulos .acciones,
+.articulosCredito .opcionesArticulos .acciones,
+.articulosApartado .opcionesArticulos .acciones{
+    padding: 0;
+}
+.articulosVenta .opcionesArticulos .acciones div,
+.articulosCredito .opcionesArticulos .acciones div,
+.articulosApartado .opcionesArticulos .acciones div {
+    height: 100%;
+}
+.articulosVenta .opcionesArticulos .acciones a,
+.articulosCredito .opcionesArticulos .acciones a,
+.articulosApartado .opcionesArticulos .acciones a {
+    padding: 0 5px;
+    margin: 1rem 1px 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+.articulosVenta .opcionesArticulos .acciones a.card-v,
+.articulosVenta .opcionesArticulos .acciones a.table-v,
+.articulosCredito .opcionesArticulos .acciones a.card-v,
+.articulosCredito .opcionesArticulos .acciones a.table-v,
+.articulosApartado .opcionesArticulos .acciones a.card-v,
+.articulosApartado .opcionesArticulos .acciones a.table-v {
+    display: none;
+}
+.articulosVenta .opcionesArticulos .acciones input,
+.articulosCredito .opcionesArticulos .acciones input,
+.articulosApartado .opcionesArticulos .acciones input {
+    width: 65%;
+    margin: 0.3rem 0 0 0;
+    border-bottom: 1px solid transparent;
+}
+.articulosVenta .opcionesArticulos input[type=text]:focus,
+.articulosCredito .opcionesArticulos input[type=text]:focus,
+.articulosApartado .opcionesArticulos input[type=text]:focus {
+    border-bottom: 1px solid #424242 !important;
+    box-shadow: 0 1px 0 0 #424242 !important;
+}
+.articulosVenta .articulosLista .articulosLista .card .card-content,
+.articulosCredito .articulosLista .articulosLista .card .card-content,
+.articulosApartado .articulosLista .articulosLista .card .card-content {
+    padding: 0;
+}
+.articulosVenta .articulos-orden .articulosLista table td,
+.articulosCredito .articulos-orden .articulosLista table td,
+.articulosApartado .articulos-orden .articulosLista table td {
+    padding: 5px;
+}
+.articulosVenta .articulos-orden .articulosLista .top {
+    position: absolute;
+    width: 100%;
+    padding-left: 5px;
+    z-index: 50;
+}
+.articulosVenta .articulos-orden .articulosLista .top a {
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
+}
+.articulosVenta .articulos-orden .articulosLista .top a:hover {
+    color: #e1e1e1;
+}
+
+.articulosVenta .articulos-orden .articulosLista table td a,
+.articulosCredito .articulos-orden .articulosLista table td a,
+.articulosApartado .articulos-orden .articulosLista table td a {
+    color: #424242;
+    cursor: pointer;
+}
+.articulosVenta .articulos-orden .articulosLista table td a:hover,
+.articulosCredito .articulos-orden .articulosLista table td a:hover,
+.articulosApartado .articulos-orden .articulosLista table td a:hover {
+    color: #212121;
+}
+.articulosVenta .articulos-orden .articulosLista .card img,
+.articulosCredito .articulos-orden .articulosLista .card img,
+.articulosApartado .articulos-orden .articulosLista .card img {
+    width: 100%;
+    max-height: 180px;
+}
+
+.articulosVenta .articulos-orden .articulosLista table img,
+.articulosCredito .articulos-orden .articulosLista table img,
+.articulosApartado .articulos-orden .articulosLista table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.articulosVenta .articulos-orden .articulosLista .card-title {
+    padding: 5px 10px;
+}
+
+.articulosVenta .articulos-orden .articulosLista .card .card-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0.3rem;
+}
+
+    .articulosVenta .articulos-orden .articulosLista .card .card-content div {
+        width: 50%;
+        margin: 0.3rem;
+    }
+.articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text],
+.articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
+.articulosCredito .articulos-orden .articulosLista .card .card-content input[type=text],
+.articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
+.articulosApartado .articulos-orden .articulosLista .card .card-content input[type=text],
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text] {
+    width: 100%;
+    margin: 0;
+    color: #333;
+    border: none !important;
+    border-radius: 2px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background: #dbdbdb !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
+.articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text] {
+    width: 60px;
+}
+.articulosVenta .articulos-orden .articulosLista table tbody input[type=text]:focus,
+.articulosCredito .articulos-orden .articulosLista table tbody input[type=text]:focus,
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+
+.articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.articulosVenta .articulos-orden .articulosLista,
+.articulosCredito .articulos-orden .articulosLista,
+.articulosApartado .articulos-orden .articulosLista {
+    padding: 0;
+}
+.articulosVenta .articulos-orden .articulosLista table,
+.articulosCredito .articulos-orden .articulosLista table,
+.articulosApartado .articulos-orden .articulosLista table {
+    width: 100%;
+}
+.articulosVenta .articulos-orden .articulosLista table thead,
+.articulosCredito .articulos-orden .articulosLista table thead,
+.articulosApartado .articulos-orden .articulosLista table thead {
+    width: calc( 100% - 1em );
+    border-bottom: 0px;
+}
+
+.articulosVenta .articulos-orden .articulosLista table tbody,
+.articulosCredito .articulos-orden .articulosLista table tbody,
+.articulosApartado .articulos-orden .articulosLista table tbody {
+    display: block;
+    height: 42vh;
+    min-height: 280px;
+    overflow: auto;
+}
+.articulosVenta .articulos-orden .articulosLista table thead tr,
+.articulosVenta .articulos-orden .articulosLista table tbody tr,
+.articulosCredito .articulos-orden .articulosLista table thead tr,
+.articulosCredito .articulos-orden .articulosLista table tbody tr,
+.articulosApartado .articulos-orden .articulosLista table thead tr,
+.articulosApartado .articulos-orden .articulosLista table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.articulosVenta .articulos-orden .articulosLista table thead tr,
+.articulosCredito .articulos-orden .articulosLista table thead tr,
+.articulosApartado .articulos-orden .articulosLista table thead tr {
+    border-bottom: 0px;
+}
+
+/*Modales Generales*/
+.articulos > .row,
+.clientes > .row,
+.nuevoCliente > .row,
+.cancelarVenta > .row,
+.eliminartodos > .row,
+.calcularVuelto > .row {
+    margin: 0;
+}
+.articulos h4,
+.clientes h4,
+.nuevoCliente h4,
+.cancelarVenta h4,
+.eliminartodos h4,
+.calcularVuelto h4 {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.8rem;
+}
+.clientes h4 .salir,
+.nuevoCliente h4 .salir,
+.cancelarVenta h4 .salir,
+.eliminartodos h4 .salir,
+.calcularVuelto h4 .salir {
+    cursor: pointer;
+}
+.articulos .option-bar,
+.clientes .option-bar {
+    margin-bottom: 15px;
+}
+.eliminartodos .modal-content p{
+    margin-top:0;
+}
+.clientes .pagination li a,
+.articulos .pagination li a {
+    color: #fff !important;
+}
+.clientes .pagination li.active,
+.articulos .pagination li.active {
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.clientes .pagination li.active a,
+.articulos .pagination li.active a {
+    color: #444 !important;
+}
+
+/*#endregion */
+
+/*#region Contado */
 
 .ventas{
 }
@@ -1468,14 +1715,13 @@ background-color: #37474f;
 }
 
 /*#endregion */
-/*#region NuevaVenta */
+/*#region NuevoContado */
 
 .nueva-venta > div:first-child {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     margin-bottom: 0;
 }
-
 .nueva-venta > div:last-child {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -1512,67 +1758,18 @@ background-color: #37474f;
     margin-top: 12px;
     margin-bottom: 3px;
 }
-
-.articulos > .row,
-.clientes > .row,
-.nuevoCliente > .row,
-.cancelarVenta > .row,
-.eliminartodos > .row{
-    margin: 0;
-}
-.articulos h4,
-.clientes h4,
-.nuevoCliente h4,
-.cancelarVenta h4,
-.eliminartodos h4{
-    font-size: 1.5rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    padding-top: 0.8rem;
-}
-.clientes h4 .salir,
-.nuevoCliente h4 .salir,
-.cancelarVenta h4 .salir,
-.eliminartodos h4 .salir{
-    cursor: pointer;
-}
-.articulos .option-bar,
-.clientes .option-bar{
-    margin-bottom: 15px;
-}
-.modal-ventas .clientes .pagination li a,
-.modal-ventas .articulos .pagination li a {
-    color: #fff !important;
-}
-
-.modal-ventas .clientes .pagination li.active,
-.modal-ventas .articulos .pagination li.active {
-    background-color: #fff;
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-}
-
-.modal-ventas .clientes .pagination li.active a,
-.modal-ventas .articulos .pagination li.active a {
-    color: #444 !important;
-}
-
 .nueva-venta .detalle p:not(.title) {
     margin: 5px 0 3px 0;
 }
-
 .nueva-venta .detalle .input-field input {
     margin: 0;
 }
-
 .nueva-venta .detalle .input-field:last-child {
     margin: 25px 0 5px 0;
 }
-
 .nueva-venta .detalle .detalles span {
     margin-bottom: 3px;
 }
-
 .nueva-venta .detalle .acciones {
     margin-top: 5px;
     padding: 0;
@@ -1582,190 +1779,29 @@ background-color: #37474f;
     padding: 1px 0 2px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.50);
 }
-.nueva-venta .detalle .acciones .calcularVuelto i{
+.nueva-venta .detalle .acciones .calcularVuelto i {
     margin-right: 5px;
 }
 
+
+/*textbox's de los modals*/
 .modal-ventas .input-field label {
     color: #fff !important;
 }
-/* underline color */
 .modal-ventas .input-field input[type=text] {
     border-bottom: 1px solid #fff;
     box-shadow: 0 1px 0 0 #fff;
 }
-/* label focus color */
 .modal-ventas .input-field input[type=password]:focus + label {
     color: #fff !important;
 }
-/* label underline focus color */
 .modal-ventas .input-field input[type=text]:focus {
     border-bottom: 1px solid #fff !important;
     box-shadow: 0 1px 0 0 #fff !important;
 }
-/* valid color */
-.modal-ventas .input-field input[type=text].valid {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
-}
 
-/* invalid color */
-.input-field input[type=text].invalid {
-    border-bottom: 1px solid #000 !important;
-    box-shadow: 0 1px 0 0 #000 !important;
-}
-/* icon prefix focus color */
-.modal-ventas .input-field .prefix.active {
-    color: #fff !important;
-}
-
-
-
-
-/*lista de articulos en la orden*/
-
-.nueva-venta .articulosVenta .articulosLista {
-    height: 50vh;
-    min-height: 300px;
-    overflow-x: hidden;
-}
-.articulosVenta .opcionesArticulos:first-child{
-    padding: 0 0.75rem 0 0;
-}
-.articulosVenta .opcionesArticulos .acciones {
-    padding: 0;
-}
-.articulosVenta .opcionesArticulos .acciones div {
-    height: 100%;
-}
-.articulosVenta .opcionesArticulos .acciones a {
-    padding: 0 5px;
-    margin: 1rem 1px 0 1px;
-    cursor: pointer;
-    color: #424242;
-}
-.articulosVenta .opcionesArticulos .acciones a.card-v,
-.articulosVenta .opcionesArticulos .acciones a.table-v{
-    display:none;
-}
-.articulosVenta .opcionesArticulos .acciones input {
-    width: 65%;
-    margin: 0.3rem 0 0 0;
-    display: none;
-}
-.articulosVenta .opcionesArticulos input[type=text]:focus {
-    border-bottom: 1px solid #424242 !important;
-    box-shadow: 0 1px 0 0 #424242 !important;
-}
-.articulosVenta .opcionesArticulos input[type=text].valid {
-    border-bottom: 1px solid #424242 !important;
-    box-shadow: 0 1px 0 0 #424242 !important;
-}
-.articulosVenta .articulosLista .articulosLista .card .card-content {
-    padding: 0;
-}
-.articulosVenta .articulos-orden .articulosLista table td {
-    padding: 5px;
-}
-.articulosVenta .articulos-orden .articulosLista .top {
-    position: absolute;
-    width: 100%;
-    padding-left: 5px;
-    z-index: 50;
-}
-.articulosVenta .articulos-orden .articulosLista .top a {
-    color: #fff;
-    cursor: pointer;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
-}
-.articulosVenta .articulos-orden .articulosLista table td a {
-    color: #424242;
-    cursor: pointer;
-}
-.articulosVenta .articulos-orden .articulosLista table td a:hover {
-    color: #212121;
-}
-.articulosVenta .articulos-orden .articulosLista .top a:hover {
-    color: #e1e1e1;
-}
-.articulosVenta .articulos-orden .articulosLista .card img {
-    width: 100%;
-    max-height: 180px;
-}
-.articulosVenta .articulos-orden .articulosLista table img {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-}
-.articulosVenta .articulos-orden .articulosLista .card-title{
-    padding: 5px 10px;
-}
-.articulosVenta .articulos-orden .articulosLista .card .card-content {
-    display: flex;
-    flex-direction: row;
-    padding: 0.5rem 0.3rem;
-}
-.articulosVenta .articulos-orden .articulosLista .card .card-content div{
-    width: 50%;
-    margin: 0.3rem;
-}
-.articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosVenta .articulos-orden .articulosLista table tbody input[type=text]{
-    width: 100%;
-    margin: 0;
-    color: #333;
-    border: none !important;
-    border-radius: 2px;
-    height: 35px !important;
-    outline: none !important;
-    padding: 1px 10px 1px 10px !important;
-    background: #dbdbdb !important;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box !important;
-    transition: background-color 0.4s;
-    text-align: center;
-}
-.articulosVenta .articulos-orden .articulosLista table tbody input[type=text] {
-    width: 60px;
-}
-.articulosVenta .articulos-orden .articulosLista table tbody input[type=text]:focus {
-    background-color: #f9f9f9 !important;
-    border-bottom: 0;
-    box-shadow: 0 0 2px #727272 !important;
-}
-.articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text]:focus {
-    background-color: #f9f9f9 !important;
-    border-bottom: 0;
-    box-shadow: 0 0 2px #727272 !important;
-}
-.articulosVenta .articulos-orden .articulosLista{
-    padding: 0;
-}
-.articulosVenta .articulos-orden .articulosLista table {
-    width: 100%;
-}
-.articulosVenta .articulos-orden .articulosLista table thead {
-    width: calc( 100% - 1em );
-    border-bottom: 0px;
-}
-.articulosVenta .articulos-orden .articulosLista table tbody {
-    display: block;
-    height: 42vh;
-    min-height: 280px;
-    overflow: auto;
-}
-.articulosVenta .articulos-orden .articulosLista table thead tr,
-.articulosVenta .articulos-orden .articulosLista table tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-.articulosVenta .articulos-orden .articulosLista table thead tr {
-    border-bottom: 0px;
-}
 
 /*modal de articulos*/
-
 .modal-ventas .articulos .card-v,
 .modal-ventas .articulos .table-v {
     display: none;
@@ -1842,6 +1878,232 @@ background-color: #37474f;
 /*modal cancelar*/
 .cancelarVenta p{
     margin-top: 0;
+}
+
+/*#endregion */
+
+/*#region Credito */
+
+.credito {
+}
+.credito .credito-content .credito-opciones {
+    padding: 30px 0 40px 0;
+}
+.credito .credito-content .credito-opciones .icons,
+.credito .credito-content .credito-opciones form,
+.credito .credito-content .credito-opciones form .col:not(.filtro),
+.credito .credito-content .credito-opciones form .search {
+    padding: 0;
+}
+.credito .credito-content .credito-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.credito .credito-content .credito-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.credito .credito-content .credito-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.credito .credito-content .credito-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.ventas .listado-ventas table {
+    border-radius: 2px;
+}
+.ventas .listado-ventas table thead tr th:first-child {
+    padding-left: 20px;
+}
+
+.ventas .listado-ventas table tbody tr td:first-child {
+    padding-left: 20px;
+}
+
+.ventas .listado-ventas table tbody tr:last-child {
+    border-bottom: 0px solid grey;
+}
+
+.ventas .listado-ventas table tbody tr {
+    cursor: pointer;
+}
+
+.ventas .listado-ventas table tbody tr.active {
+    background-color: #2196f3 !important;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.credito .pagination {
+    margin-top: 2rem;
+}
+
+.credito .pagination li.active {
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+/*#endregion */
+/*#region NuevoCredito */
+
+.nuevo-credito > div:first-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nuevo-credito > div:last-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nuevo-credito .cliente,
+.nuevo-credito .general {
+    margin-top: 1.5rem;
+}
+.nuevo-credito .cliente .opcionesCliente a {
+    padding: 0 5px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+.nuevo-credito .cliente .opcionesCliente a:hover,
+.nuevo-credito .articulosVenta .opcionesArticulos a:hover {
+    color: #212121;
+}
+.nuevo-credito .cliente .datosCliente div:not(.vacio):last-child,
+.nuevo-credito .general .datosGenerales div:last-child {
+    margin-bottom: 1.5rem;
+}
+
+.nuevo-credito .cliente .datosCliente .vacio {
+    margin-bottom: 1rem;
+}
+
+.nuevo-credito .general .datosGenerales p {
+    margin-bottom: 0px;
+}
+
+.nuevo-credito .cliente .datosCliente div:not(.vacio) p {
+    margin-bottom: 0px;
+}
+
+.nuevo-credito .cliente .datosCliente .vacio p {
+    margin-top: 12px;
+    margin-bottom: 3px;
+}
+
+/*#endregion */
+
+/*#region Apartado */
+
+.apartado {
+}
+.apartado .apartado-content .apartado-opciones {
+    padding: 30px 0 40px 0;
+}
+.apartado .apartado-content .apartado-opciones .icons,
+.apartado .apartado-content .apartado-opciones form,
+.apartado .apartado-content .apartado-opciones form .col:not(.filtro),
+.apartado .apartado-content .apartado-opciones form .search {
+    padding: 0;
+}
+.apartado .apartado-content .apartado-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.apartado .apartado-content .apartado-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.apartado .apartado-content .apartado-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.apartado .apartado-content .apartado-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.apartado .listado-apartado table {
+    border-radius: 2px;
+}
+.apartado .listado-apartado table thead tr th:first-child {
+    padding-left: 20px;
+}
+.apartado .listado-apartado table tbody tr td:first-child {
+    padding-left: 20px;
+}
+.apartado .listado-apartado table tbody tr:last-child {
+    border-bottom: 0px solid grey;
+}
+.apartado .listado-apartado table tbody tr {
+    cursor: pointer;
+}
+.apartado .listado-apartado table tbody tr.active {
+    background-color: #2196f3 !important;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+.apartado .pagination {
+    margin-top: 2rem;
+}
+.apartado .pagination li.active {
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+/*#endregion */
+/*#region NuevoApartado */
+
+.nuevo-apartado > div:first-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nuevo-apartado > div:last-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nuevo-apartado .cliente,
+.nuevo-apartado .general {
+    margin-top: 1.5rem;
+}
+.nuevo-apartado .cliente .opcionesCliente a {
+    padding: 0 5px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+.nuevo-apartado .cliente .opcionesCliente a:hover,
+.nuevo-apartado .articulosVenta .opcionesArticulos a:hover {
+    color: #212121;
+}
+.nuevo-apartado .cliente .datosCliente div:not(.vacio):last-child,
+.nuevo-apartado .general .datosGenerales div:last-child {
+    margin-bottom: 1.5rem;
+}
+.nuevo-apartado .cliente .datosCliente .vacio {
+    margin-bottom: 1rem;
+}
+.nuevo-apartado .general .datosGenerales p {
+    margin-bottom: 0px;
+}
+.nuevo-apartado .cliente .datosCliente div:not(.vacio) p {
+    margin-bottom: 0px;
+}
+.nuevo-apartado .cliente .datosCliente .vacio p {
+    margin-top: 12px;
+    margin-bottom: 3px;
 }
 
 /*#endregion */

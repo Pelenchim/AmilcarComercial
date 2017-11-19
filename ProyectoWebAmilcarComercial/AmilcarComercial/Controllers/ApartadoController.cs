@@ -8,22 +8,20 @@ using System.Web.Mvc;
 namespace AmilcarComercial.Controllers
 {
     [Authorize]
-    public class VentasController : Controller
+    public class ApartadoController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
-        // GET: Ventas
+        // GET: Apartado
         public ActionResult Index()
         {
             return View();
         }
-
         public ActionResult Nueva()
         {
             return View();
         }
-
-        [Route("ventas/obtener/generales")]
+        [Route("apartado/obtener/generales")]
         [HttpGet]
         public JsonResult Generales()
         {
@@ -41,7 +39,7 @@ namespace AmilcarComercial.Controllers
 
         #region Clientes
 
-        [Route("ventas/obtener/clientes")]
+        [Route("apartado/obtener/clientes")]
         [HttpGet]
         public JsonResult ObtenerClientes()
         {
@@ -58,7 +56,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Clientes }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/agregar/clienteTmp")]
+        [Route("apartado/agregar/clienteTmp")]
         [HttpPost]
         public JsonResult AgregarCliente(Tbl_ClienteTmp cliente)
         {
@@ -75,7 +73,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/obtener/clienteTmp")]
+        [Route("apartado/obtener/clienteTmp")]
         [HttpGet]
         public JsonResult MostrarClienteTmp(Tbl_ClienteTmp cliente)
         {
@@ -100,7 +98,7 @@ namespace AmilcarComercial.Controllers
             }
         }
 
-        [Route("ventas/agregar/clienteExistente/{id}")]
+        [Route("apartado/agregar/clienteExistente/{id}")]
         [HttpGet]
         public JsonResult AgregarClienteExistente(int id)
         {
@@ -125,7 +123,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/eliminar/clienteTmp")]
+        [Route("apartado/eliminar/clienteTmp")]
         public JsonResult EliminarClientesTmp()
         {
             var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
@@ -138,7 +136,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/editar/clienteTmp")]
+        [Route("apartado/editar/clienteTmp")]
         [HttpGet]
         public JsonResult EditarClienteTmp()
         {
@@ -156,7 +154,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = cliente }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/editar/clienteGuardarTmp")]
+        [Route("apartado/editar/clienteGuardarTmp")]
         [HttpPost]
         public JsonResult EditarGuardarClienteTmp(Tbl_ClienteTmp cliente)
         {
@@ -173,7 +171,7 @@ namespace AmilcarComercial.Controllers
 
         #region Articulos
 
-        [Route("ventas/obtener/articulos")]
+        [Route("apartado/obtener/articulos")]
         [HttpGet]
         public JsonResult ObtenerArticulos()
         {
@@ -193,7 +191,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/agregar/producto/{id}/{cant}")]
+        [Route("apartado/agregar/producto/{id}/{cant}")]
         [HttpGet]
         public JsonResult AgregarProducto(int id, int cant)
         {
@@ -211,7 +209,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/eliminar/productoTmp/{id}")]
+        [Route("apartado/eliminar/productoTmp/{id}")]
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
@@ -222,7 +220,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/eliminar/eliminarProductosTodos")]
+        [Route("apartado/eliminar/eliminarProductosTodos")]
         [HttpGet]
         public JsonResult EliminarProductosTodos()
         {
@@ -233,7 +231,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/obtener/productosTmp")]
+        [Route("apartado/obtener/productosTmp")]
         [HttpGet]
         public JsonResult MostrarProductosTmp()
         {
@@ -260,7 +258,7 @@ namespace AmilcarComercial.Controllers
             }
         }
 
-        [Route("ventas/actualizar/cantidad/productoTmp/{id}/{nuevoValor}")]
+        [Route("apartado/actualizar/cantidad/productoTmp/{id}/{nuevoValor}")]
         [HttpGet]
         public JsonResult ActualizarCantidad(int id, int nuevoValor)
         {
@@ -274,156 +272,12 @@ namespace AmilcarComercial.Controllers
 
         #endregion
 
-        #region Facturacion
-
-        [Route("ventas/facturar")]
-        [HttpGet]
-        public JsonResult Facturar(Tbl_Orden venta)
-        {
-            bool data = false;
-
-            using (var tran = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
-                    var cliente = guardarCliente(); 
-
-                    Tbl_Orden maestro = new Tbl_Orden()
-                    {
-                        id_sucursal = (int)suc,
-                        usuario = User.Identity.Name,
-                        fecha_orden = DateTime.Now,
-                        iva_orden = venta.iva_orden,
-                        estado_orden = "nose",
-                        tipo_orden = venta.tipo_orden,
-                        fact_Orden = "df",
-                        id_cliente = cliente,
-                        tipo_pago = venta.tipo_pago
-                    };
-                    db.Tbl_Orden.Add(maestro);
-                    db.SaveChanges();
-
-                    var detalleTmp = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
-
-                    foreach (var articulo in detalleTmp)
-                    {
-                        Tbl_Kardex kardex = new Tbl_Kardex()
-                        {
-                            id_articulo = (int)articulo.id_Articulo,
-                            fechaKardex = (DateTime)articulo.fecha,
-                            num_factura = maestro.fact_Orden,
-                            Entrada = 0,
-                            salida = (int)articulo.cantidad,
-                            saldo = (int)articulo.cantidad,
-                            ultimoCosto = 0,
-                            costoPromedio = 0,
-                            usuario = User.Identity.Name,
-                            id_sucursal = (int)suc
-                        };
-                        db.Tbl_Kardex.Add(kardex);
-                        db.SaveChanges();
-
-                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_Articulo).FirstOrDefault();
-                        stock.stock = (int)stock.stock - (int)articulo.cantidad;
-                        db.SaveChanges();
-
-                        Tbl_Detalle_Orden detalle = new Tbl_Detalle_Orden()
-                        {
-                            id_orden = maestro.id_orden,
-                            id_articulo = (int)articulo.id_Articulo,
-                            id_kardex = kardex.id_Kardex,
-                            cantidad = (int)articulo.cantidad,
-                            precio_venta = 0,
-                            descuento = 0
-                        };
-                        db.Tbl_Detalle_Orden.Add(detalle);
-                        db.SaveChanges();
-                    }
-                    db.Tbl_OrdenTmp.RemoveRange(detalleTmp);
-                    db.SaveChanges();
-
-                    tran.Commit();
-                    data = true;
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                }
-            }
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("ventas/cancelar")]
-        [HttpPost]
-        public JsonResult CancelarCompra()
-        {
-            var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
-            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
-
-            if (cliente != null)
-            {
-                db.Tbl_ClienteTmp.RemoveRange(cliente);
-                db.SaveChanges();
-            }
-            if (articulos != null)
-            {
-                db.Tbl_OrdenTmp.RemoveRange(articulos);
-                db.SaveChanges();
-            }
-
-            return Json(Url.Action("Index","Ventas"));
-        }
-
-        public int guardarCliente()
-        {
-            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-
-                Tbl_Clientes cliente = new Tbl_Clientes()
-                {
-                    nombre_cliente = clienteTmp.nombre_cliente,
-                    apellidos_cliente = clienteTmp.apellidos_cliente,
-                    direccion = clienteTmp.direccion,
-                    departamento = clienteTmp.departamento,
-                    telefono = (int)clienteTmp.telefono,
-                    cedula = clienteTmp.cedula,
-                    estado = true
-                };
-                db.Tbl_Clientes.Add(cliente);
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
-                return ultimo;
-            }
-            else
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                var id = clienteTmp.id_cliente;
-
-                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                return cliente;
-            }
-        }
-
-        #endregion
-
-        #region ListaVentas
-
-        [Route("ventas/listaventas")]
+        [Route("apartado/listaventas")]
         [HttpGet]
         public JsonResult ListaVentas()
         {
             var ventas = (from v in db.Tbl_Orden
-                          where v.usuario == User.Identity.Name
+                          where v.usuario == User.Identity.Name && v.tipo_orden == "Apartado"
                           select new
                           {
                               ID = v.id_orden,
@@ -439,54 +293,5 @@ namespace AmilcarComercial.Controllers
 
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
         }
-
-        [Route("ventas/detalleventa/general/{id}")]
-        [HttpGet]
-        public JsonResult DetalleVentaGeneral(int id)
-        {
-            var detalle = from c in db.Tbl_Orden
-                          where c.usuario == User.Identity.Name && c.id_orden == id
-                          select new
-                          {
-                              Usuario = c.usuario,
-                              Venta = c.id_orden,
-                              Factura = c.fact_Orden,
-                              Fecha = c.fecha_orden.ToString(),
-                              ClienteN = c.Tbl_Clientes.nombre_cliente,
-                              ClienteA = c.Tbl_Clientes.apellidos_cliente,
-                              Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Count(),
-                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
-                              Iva = c.iva_orden,
-                              DescuentoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.descuento),
-                              SubTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta),
-                              PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
-                              Sucursal = c.Tbl_Sucursal.Nombre
-                          };
-
-            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("ventas/detalleventa/especifico/{id}")]
-        [HttpGet]
-        public JsonResult DetalleVentaEspecifico(int id)
-        {
-            var detalle = (from c in db.Tbl_Detalle_Orden
-                           where c.id_orden == id
-                           select new
-                           {
-                               Articulo = c.Tbl_Articulo.nombre_articulo,
-                               Img = c.Tbl_Articulo.imagen,
-                               Categoria = c.Tbl_Articulo.Tbl_Categorias.Nombre,
-                               Cantidad = c.cantidad,
-                               Descuento = c.descuento,
-                               Precio = c.precio_venta,
-                               SubTotal = c.cantidad * c.precio_venta,
-                               Total = ((c.cantidad * c.precio_venta) - c.descuento) * c.Tbl_Orden.iva_orden
-                           }).ToList();
-
-            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
     }
 }

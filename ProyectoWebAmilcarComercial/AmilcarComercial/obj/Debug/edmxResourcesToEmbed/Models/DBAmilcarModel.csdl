@@ -154,6 +154,10 @@
     <NavigationProperty Name="Bodega_Detalle" Relationship="Self.FK_Bodega_Detalle_Tbl_bodega_productos" FromRole="Tbl_bodega_productos" ToRole="Bodega_Detalle" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Articulo" FromRole="Tbl_bodega_productos" ToRole="Tbl_Articulo" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Sucursal" FromRole="Tbl_bodega_productos" ToRole="Tbl_Sucursal" />
+    <Property Name="precio" Type="Double" />
+    <Property Name="preciocredito" Type="Double" />
+    <Property Name="credito" Type="Boolean" />
+    <Property Name="apartado" Type="Boolean" />
   </EntityType>
   <EntityType Name="Tbl_Categorias">
     <Key>
@@ -431,6 +435,8 @@
     <Property Name="cantidad" Type="Int32" />
     <Property Name="fecha" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
+    <Property Name="credito_meses" Type="Int32" />
+    <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

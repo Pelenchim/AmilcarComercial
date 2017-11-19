@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Credito";
+    ViewBag.SubTitle = "Todos";
+    ViewBag.ControllerGeneral = "Credito";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
+}
+
+<div class="credito">
+    <div class="credito-content row">
+        <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+            @Html.Partial("_breadcrumbPartial")
+        </nav>
+        <div class="credito-opciones col l12">
+            <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
+                <form class="col l10">
+                    <div class="input-field col l8">
+                        <input id="search" type="search" placeholder="Buscar Credito" required>
+                    </div>
+                    <div class="input-field col l3 filtro">
+                        <select>
+                            <option value="" selected>Todo</option>
+                            <option value="1">Factura</option>
+                            <option value="2">Cliente</option>
+                            <option value="3">Fecha</option>
+                        </select>
+                    </div>
+                    <div class="col l1 center search">
+                        <a class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Buscar"><i class="material-icons">search</i></a>
+                    </div>
+                </form>
+                <div class="col l2 center-align icons">
+                    <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
+                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="listado-credito container-mio">
+            <table class="bordered highlight white z-depth-1">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Factura</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Tipo Venta</th>
+                        <th>Articulos</th>
+                        <th>Pago Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="paginacion col l12 center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Credito")"><i class="material-icons">add</i></a>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            listaVentas();
+        });
+        function listaVentas() {
+            $.ajax({
+                url: '/credito/listaventas',
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".listado-ventas table tbody").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".listado-credito table tbody").append(
+                                '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
+                                '<td>' + value.Venta + '</td>' +
+                                '<td>' + value.Factura + '</td>' +
+                                '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
+                                '<td>' + value.Fecha + '</td>' +
+                                '<td>' + value.Tipo + '</td>' +
+                                '<td>' + value.Articulos + ' Unidades</td>' +
+                                '<td>C$ ' + value.PagoTotal + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    </script>    
+}

@@ -19,6 +19,8 @@ namespace AmilcarComercial.Models
         public string user { get; set; }
         public Nullable<int> cantidad { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
+        public Nullable<int> credito_meses { get; set; }
+        public string apartado_fecha { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }

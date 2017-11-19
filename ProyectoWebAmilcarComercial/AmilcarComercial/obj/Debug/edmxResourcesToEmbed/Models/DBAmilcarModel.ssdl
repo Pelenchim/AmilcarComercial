@@ -135,6 +135,10 @@
     <Property Name="id_sucursal" Type="int" Nullable="false" />
     <Property Name="id_articulo" Type="int" Nullable="false" />
     <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="precio" Type="float" />
+    <Property Name="preciocredito" Type="float" />
+    <Property Name="credito" Type="bit" />
+    <Property Name="apartado" Type="bit" />
   </EntityType>
   <EntityType Name="Tbl_Categorias">
     <Key>
@@ -371,6 +375,8 @@
     <Property Name="user" Type="nvarchar(max)" />
     <Property Name="cantidad" Type="int" />
     <Property Name="fecha" Type="datetime" />
+    <Property Name="credito_meses" Type="int" />
+    <Property Name="apartado_fecha" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

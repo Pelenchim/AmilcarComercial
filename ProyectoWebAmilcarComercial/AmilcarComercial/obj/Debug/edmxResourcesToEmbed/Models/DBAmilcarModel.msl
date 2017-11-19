@@ -130,6 +130,10 @@
     <EntitySetMapping Name="Tbl_bodega_productos">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega_productos">
         <MappingFragment StoreEntitySet="Tbl_bodega_productos">
+          <ScalarProperty Name="apartado" ColumnName="apartado" />
+          <ScalarProperty Name="credito" ColumnName="credito" />
+          <ScalarProperty Name="preciocredito" ColumnName="preciocredito" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="id_bodega_productos" ColumnName="id_bodega_productos" />
           <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
@@ -387,6 +391,8 @@
     <EntitySetMapping Name="Tbl_OrdenTmp">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
         <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
+          <ScalarProperty Name="apartado_fecha" ColumnName="apartado_fecha" />
+          <ScalarProperty Name="credito_meses" ColumnName="credito_meses" />
           <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />
           <ScalarProperty Name="id_Articulo" ColumnName="id_Articulo" />
           <ScalarProperty Name="user" ColumnName="user" />

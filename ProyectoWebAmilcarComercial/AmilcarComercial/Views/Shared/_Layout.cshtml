@@ -48,17 +48,41 @@
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Estadisticas" href="@Url.Action("Index","Estadisticas")">
                     <i class="icono estadisticas"></i><span>Estadisticas</span></a>
                 </li>
-                <li class="sub"><a class="subheader">Opciones</a></li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas" href="@Url.Action("Index","Ventas")">
-                    <i class="icono ventas"></i><span>Ventas</span></a>
-                </li>
+                <li class="sub"><a class="subheader">Opciones</a></li>               
                 <li>
                     <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Compras" href="@Url.Action("Index","Compras")">
                         <i class="icono compras"></i><span>Compras</span>
                     </a>
-                </li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="#!">
-                    <i class="icono credito"></i><span>Credito</span></a>
+                </li>               
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas">
+                                <i class="icono ventas left"></i>
+                                <span>Ventas</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Contado" href="@Url.Action("Index","Contado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono ventas"></i><span>Contado</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="@Url.Action("Index","Credito")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono credito"></i><span>Credito</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Index","Apartado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono credito"></i><span>Apartado</span>
+                                        </a>
+                                    </li>   
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario" href="@Url.Action("Index","Inventario")">
                     <i class="icono inventario"></i><span>Inventario</span></a>

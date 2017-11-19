@@ -196,10 +196,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApartadoController.cs" />
     <Compile Include="Controllers\ArticulosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
+    <Compile Include="Controllers\CreditoController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
@@ -210,7 +212,7 @@
     <Compile Include="Controllers\SucursalesController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
-    <Compile Include="Controllers\VentasController.cs" />
+    <Compile Include="Controllers\ContadoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -496,8 +498,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TransactionScripts\Apartado.js" />
     <Content Include="Scripts\TransactionScripts\Compras.js" />
-    <Content Include="Scripts\TransactionScripts\Ventas.js" />
+    <Content Include="Scripts\TransactionScripts\Credito.js" />
+    <Content Include="Scripts\TransactionScripts\Contado.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -539,7 +543,7 @@
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutAccountOptions.cshtml" />
-    <Content Include="Views\Ventas\Index.cshtml" />
+    <Content Include="Views\Contado\Index.cshtml" />
     <Content Include="Views\Estadisticas\Index.cshtml" />
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
@@ -576,10 +580,15 @@
     <Content Include="Views\Home\Configuracion.cshtml" />
     <Content Include="Views\Home\Catalogos.cshtml" />
     <Content Include="Views\Articulos\Listar.cshtml" />
-    <Content Include="Views\Ventas\Nueva.cshtml" />
+    <Content Include="Views\Contado\Nueva.cshtml" />
     <Content Include="Views\Compras\Nueva.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />
     <Content Include="Views\Kardex\Index.cshtml" />
+    <Content Include="Views\Credito\Nueva.cshtml" />
+    <Content Include="Views\Credito\Index.cshtml" />
+    <Content Include="Views\Apartado\Index.cshtml" />
+    <Content Include="Views\Apartado\Nueva.cshtml" />
+    <Content Include="Views\Contado\Facturado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,12 +13,18 @@
     $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });
-   
+
+    var proveedor = false, articulo = false;
+    var total, subTotal, cantidadTotal, iva;
     mostrarProveedorTmp();
     generales();
     mostrarProductosTmp(1);
-    detectarCambios();
-    var proveedor = false, articulo = false;
+    detectarCambios();  
+    $('.nueva-compra .detalle').on('change', '#iva', function (e) {
+        iva = this.value;
+        detalles();
+    });
+    detalles();
 });
 function generales() {
     $("#pre-General").css("display", "inline");
@@ -369,6 +375,7 @@ function eliminarProductoTmp(id) {
             alert("Request: " + JSON.stringify(request));
         }
     });
+    detalles();
 }
 function eliminarProductosTodos() {
     $.ajax({
@@ -382,8 +389,12 @@ function eliminarProductosTodos() {
             alert("Request: " + JSON.stringify(request));
         }
     });
+    cantidadTotal = 0;
+    subTotal = 0;
+    detalles();
 }
 function mostrarProductosTmp(view) {
+    cantidadTotal = 0;
     $(".articulos-orden").empty();
     $("#pre-ArticulosOrden").css("display","inline");
     $.ajax({
@@ -408,7 +419,7 @@ function mostrarProductosTmp(view) {
                     '<a class="btn btn-large white grey-text text-darken-2" onclick="abrirArticulos()">Seleccionar</a>' +
                     '</div > '
                 );
-                detalles(0, 0);
+                detalles();
                 articulo = false;
             }
             else {
@@ -591,7 +602,7 @@ function articulosOrdenTable(data) {
             subTotal = subTotal + (value.Precio * value.Cantidad);
         });
     });
-    detalles(cantidadTotal, subTotal);
+    detalles();
 }
 function detectarCambios() {
     var ID_Obj;
@@ -687,7 +698,7 @@ function detectarCambios() {
     }, '.articulosLista table tbody input');
 }
 
-function detalles(cantidadTotal, SubTotal) {
+function detalles() {
     if (cantidadTotal === 0) {
         $(".detalle .detalles").empty();
         $(".detalle .detalles").append(
@@ -708,13 +719,13 @@ function detalles(cantidadTotal, SubTotal) {
         '<p><strong>Detalle:</strong></p>' +
         '<div class="col l12">' +
         '<span class="left"><strong>Articulos: </strong>' + cantidadTotal + '</span>' +
+        '</div>' +        
+        '<div class="col l12">' +
+        '<span class="left"><strong>Subtotal: C$</strong>' + subTotal + '</span>' +
         '</div>' +
         '<div class="col l12">' +
         '<span class="left"><strong>Iva: C$</strong>' + iva + '</span>' +
-        '</div>' +
-        '<div class="col l12">' +
-        '<span class="left"><strong>Subtotal: C$</strong>' + subTotal + '</span>' +
-        '</div>'
+        '</div>' 
     );
     $(".detalle .total").text("Total: C$" + Total);
     $("#comprar").removeClass('disabled');
