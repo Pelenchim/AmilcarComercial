@@ -66,6 +66,7 @@ namespace AmilcarComercial.Controllers
             {
                 cliente.id_cliente = null;
                 cliente.nuevo = true;
+                cliente.tipoventa = "Credito";
                 db.Tbl_ClienteTmp.Add(cliente);
                 db.SaveChanges();
             }
@@ -79,7 +80,7 @@ namespace AmilcarComercial.Controllers
         {
             if (db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
             {
-                var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).OrderByDescending(m => m.id_clienteTmp)
+                var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").OrderByDescending(m => m.id_clienteTmp)
                             select new
                             {
                                 Nombre = c.nombre_cliente,
@@ -115,6 +116,7 @@ namespace AmilcarComercial.Controllers
             clienteTmp.departamento = cliente.departamento;
             clienteTmp.direccion = cliente.direccion;
             clienteTmp.nuevo = false;
+            clienteTmp.tipoventa = "Credito";
             clienteTmp.id_cliente = cliente.id_cliente;
 
             db.Tbl_ClienteTmp.Add(clienteTmp);
@@ -126,7 +128,7 @@ namespace AmilcarComercial.Controllers
         [Route("credito/eliminar/clienteTmp")]
         public JsonResult EliminarClientesTmp()
         {
-            var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
+            var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").ToList();
 
             if (lista != null)
             {
@@ -140,7 +142,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EditarClienteTmp()
         {
-            var cliente = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name)
+            var cliente = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito")
                            select new
                            {
                                ID = c.id_clienteTmp,
@@ -175,33 +177,43 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerArticulos()
         {
-            var articulosOrden = (from p in db.Tbl_OrdenTmp where (p.user == User.Identity.Name) select p.id_Articulo).ToArray();
+            var articulosOrden = (from p in db.Tbl_OrdenTmp
+                                  where (p.user == User.Identity.Name && p.tipoventa == "Credito")
+                                  select p.id_Articulo).ToArray();
 
-            var Articulos = (from p in db.Tbl_Articulo
-                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true)
+            var sucursal = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().Sucursal;
+
+            var Articulos = (from p in db.Tbl_Articulo join b in db.Tbl_bodega_productos on p.id_articulo equals b.id_articulo
+                             where (b.credito == true && b.id_sucursal == sucursal && p.estado == true &&
+                                    !(articulosOrden.Contains((int)p.id_articulo)))
                              select new
                              {
                                  ID = p.id_articulo,
                                  Codigo = p.codigo_articulo,
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen,
-                                 Stock = p.Tbl_bodega_productos.Where(m => m.id_articulo == p.id_articulo).FirstOrDefault().stock
+                                 Stock = b.stock,
+                                 Precio = b.preciocredito,
+                                 Prima = b.preciocredito * 0.20
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("credito/agregar/producto/{id}/{cant}")]
+        [Route("credito/agregar/producto/{id}/{cant}/{meses}/{prima}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant)
+        public JsonResult AgregarProducto(int id, int cant, int meses, float prima)
         {
             var user = User.Identity.Name;
             Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
 
             orden.id_Articulo = id;
             orden.cantidad = cant;
+            orden.credito_meses = meses;
+            orden.prima = prima * cant;
             orden.fecha = DateTime.Now;
             orden.user = user;
+            orden.tipoventa = "Credito";
 
             db.Tbl_OrdenTmp.Add(orden);
             db.SaveChanges();
@@ -213,7 +225,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
-            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name).FirstOrDefault();
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name && m.tipoventa == "Credito").FirstOrDefault();
             db.Tbl_OrdenTmp.Remove(articulo);
             db.SaveChanges();
 
@@ -224,7 +236,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProductosTodos()
         {
-            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").ToList();
             db.Tbl_OrdenTmp.RemoveRange(articulos);
             db.SaveChanges();
 
@@ -235,17 +247,26 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult MostrarProductosTmp()
         {
-            if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
+            if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").Count() != 0)
             {
-                var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name)
+                var fechapago = DateTime.Today.Day;
+                var fechafin = DateTime.Today.ToShortDateString();
+
+                var datos = (from p in db.Tbl_OrdenTmp join b in db.Tbl_bodega_productos on p.id_Articulo equals b.id_articulo
+                             where (p.user == User.Identity.Name && p.tipoventa == "Credito")
                              select new
                              {
                                  ID = p.id_OrdenTmp,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
-                                 Existecia = 233,
-                                 Precio = 500
+                                 Existecia = b.stock,
+                                 Precio = b.preciocredito,
+                                 Prima = p.prima,
+                                 PrimaMinima = b.preciocredito * 0.20,
+                                 Meses = p.credito_meses,
+                                 FechaPago = fechapago,
+                                 FechaFin = fechafin
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -262,13 +283,34 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ActualizarCantidad(int id, int nuevoValor)
         {
-            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.tipoventa == "Credito").FirstOrDefault();
             dato.cantidad = nuevoValor;
             db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("credito/actualizar/prima/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarPrima(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.tipoventa == "Credito").FirstOrDefault();
+            dato.prima = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("credito/actualizar/meses/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarMeses(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.tipoventa == "Credito").FirstOrDefault();
+            dato.credito_meses = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

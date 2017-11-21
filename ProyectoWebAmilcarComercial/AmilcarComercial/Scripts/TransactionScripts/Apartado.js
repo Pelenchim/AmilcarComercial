@@ -216,21 +216,15 @@ function mostrarClienteTmp() {
                 $(".cliente .opcionesCliente a").show();
                 $(".datosCliente").empty();
                 $(".datosCliente").append(
-                    '<div class="col l5">' +
+                    '<div class="col l12">' +
                     '<p class="truncate"><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
                     '</div>' +
-                    '<div class="col l4">' +
+                    '<div class="col l6">' +
                     '<p><strong>Cedula: </strong>' + data.Cedula + '</p>' +
                     '</div>' +
-                    '<div class="col l3">' +
+                    '<div class="col l6">' +
                     '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
-                    '</div>' +
-                    '<div class="col l3">' +
-                    '<p><strong>Departamento: </strong>' + data.Departamento + '</p>' +
-                    '</div>' +
-                    '<div class="col l9">' +
-                    '<p><strong>Direccion: </strong>' + data.Direccion + '</p>' +
-                    '</div>'
+                    '</div>' 
                 );
             }
             $("#pre-Cliente").css("display", "none");

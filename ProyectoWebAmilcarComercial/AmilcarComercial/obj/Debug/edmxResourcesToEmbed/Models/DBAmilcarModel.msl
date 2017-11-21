@@ -177,6 +177,7 @@
     <EntitySetMapping Name="Tbl_ClienteTmp">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ClienteTmp">
         <MappingFragment StoreEntitySet="Tbl_ClienteTmp">
+          <ScalarProperty Name="tipoventa" ColumnName="tipoventa" />
           <ScalarProperty Name="id_clienteTmp" ColumnName="id_clienteTmp" />
           <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
           <ScalarProperty Name="apellidos_cliente" ColumnName="apellidos_cliente" />
@@ -391,6 +392,8 @@
     <EntitySetMapping Name="Tbl_OrdenTmp">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
         <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
+          <ScalarProperty Name="tipoventa" ColumnName="tipoventa" />
+          <ScalarProperty Name="prima" ColumnName="prima" />
           <ScalarProperty Name="apartado_fecha" ColumnName="apartado_fecha" />
           <ScalarProperty Name="credito_meses" ColumnName="credito_meses" />
           <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />

@@ -12,7 +12,7 @@
 
 <div class="nuevo-apartado row">
     <div class="row">
-        <div class="cliente col l8">
+        <div class="cliente col l5">
             <div class="row white z-depth-1">
                 <div class="opcionesCliente col l12">
                     <p>
@@ -23,7 +23,7 @@
                     </p>
                 </div>
                 <div class="divider-mio"></div>
-                <div class="datosCliente"></div>
+                <div class="datosCliente col l12"></div>
                 <div class="col l12 center" id="pre-Cliente" style="padding-top: 10px; display: none;">
                     <div class="preloader-wrapper small active">
                         <div class="spinner-layer spinner-blue-only">
@@ -65,6 +65,33 @@
                 </div>
             </div>
         </div>
+        <div class="preferencias col l3">
+            <div class="row white z-depth-1">
+                <div class="col l12">
+                    <p><strong>Preferencias</strong></p>
+                </div>
+                <div class="divider-mio"></div>
+                <div class="opciones col l12">
+                    <div class="input-field col l6">
+                        <select>
+                            <option value="0">0%</option>
+                            <option value="5">5%</option>
+                            <option value="10">10%</option>
+                            <option value="15">15%</option>
+                        </select>
+                        <label>Iva</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <select>
+                            <option value="0">Efectivo</option>
+                            <option value="5">Tarjeta</option>
+                            <option value="10">Ambos</option>
+                        </select>
+                        <label>Tipo de Pago</label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="articulosApartado col l12">
@@ -100,10 +127,25 @@
                 </div>
                 <p style="margin-top:0">Cargando articulos de la orden..</p>
             </div>
-            <div class="col l12 blue">
-                <div class="right">
-                    <button class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></button>
-                    <button class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></button>
+        </div>
+        <div class="detalle col l12">
+            <div class="col l12 blue z-depth-1">
+                <div class="detalles col l6 white-text">
+                    <div class="info1 col l5">
+                        <p>Articulos: 6</p>
+                        <p>Sub-Total: C$ 9764</p>
+                    </div>
+                    <div class="info1 col l5">
+                        <p>Iva Total: 6</p>
+                        <p>Prima Total: C$ 9764</p>
+                    </div>
+                </div>
+                <div class="info2 col l4 right-align">
+                    <span class="total">Total: C$ 356456</span>
+                </div>
+                <div class="acciones col l2 center-align">
+                    <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
+                    <a class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
                 </div>
             </div>
         </div>

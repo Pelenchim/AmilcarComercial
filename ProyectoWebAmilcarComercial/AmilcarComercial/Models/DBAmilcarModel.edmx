@@ -189,6 +189,7 @@
           <Property Name="user" Type="nvarchar(max)" Nullable="false" />
           <Property Name="nuevo" Type="bit" Nullable="false" />
           <Property Name="id_cliente" Type="int" />
+          <Property Name="tipoventa" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tbl_Color">
           <Key>
@@ -382,6 +383,8 @@
           <Property Name="fecha" Type="datetime" />
           <Property Name="credito_meses" Type="int" />
           <Property Name="apartado_fecha" Type="nchar" MaxLength="10" />
+          <Property Name="prima" Type="float" />
+          <Property Name="tipoventa" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
           <Key>
@@ -1385,6 +1388,7 @@
           <Property Name="nuevo" Type="Boolean" Nullable="false" />
           <Property Name="id_cliente" Type="Int32" />
           <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
+          <Property Name="tipoventa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Color">
           <Key>
@@ -1612,6 +1616,8 @@
           <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
           <Property Name="credito_meses" Type="Int32" />
           <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="prima" Type="Double" />
+          <Property Name="tipoventa" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Pago_Apartado">
           <Key>
@@ -2566,6 +2572,7 @@
           <EntitySetMapping Name="Tbl_ClienteTmp">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_ClienteTmp">
               <MappingFragment StoreEntitySet="Tbl_ClienteTmp">
+                <ScalarProperty Name="tipoventa" ColumnName="tipoventa" />
                 <ScalarProperty Name="id_clienteTmp" ColumnName="id_clienteTmp" />
                 <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
                 <ScalarProperty Name="apellidos_cliente" ColumnName="apellidos_cliente" />
@@ -2780,6 +2787,8 @@
           <EntitySetMapping Name="Tbl_OrdenTmp">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_OrdenTmp">
               <MappingFragment StoreEntitySet="Tbl_OrdenTmp">
+                <ScalarProperty Name="tipoventa" ColumnName="tipoventa" />
+                <ScalarProperty Name="prima" ColumnName="prima" />
                 <ScalarProperty Name="apartado_fecha" ColumnName="apartado_fecha" />
                 <ScalarProperty Name="credito_meses" ColumnName="credito_meses" />
                 <ScalarProperty Name="id_OrdenTmp" ColumnName="id_OrdenTmp" />

@@ -209,6 +209,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcasController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SucursalesController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
@@ -364,6 +365,7 @@
     <Compile Include="ViewsModels\UsuariosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\public.css" />
     <Content Include="Content\system-resources\AM-Logo.ico" />
     <Content Include="Content\css\basic.css" />
     <Content Include="Content\css\basic.min.css" />
@@ -494,6 +496,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pace.js" />
     <Content Include="Scripts\pace.min.js" />
+    <Content Include="Scripts\public.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -589,6 +592,7 @@
     <Content Include="Views\Apartado\Index.cshtml" />
     <Content Include="Views\Apartado\Nueva.cshtml" />
     <Content Include="Views\Contado\Facturado.cshtml" />
+    <Content Include="Views\Public\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

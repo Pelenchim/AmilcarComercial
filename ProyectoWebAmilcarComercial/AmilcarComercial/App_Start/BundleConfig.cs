@@ -45,10 +45,18 @@ namespace AmilcarComercial
             bundles.Add(new ScriptBundle("~/bundles/credito").Include(
                       "~/Scripts/TransactionScripts/Credito.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/public").Include(
+                      "~/Scripts/public.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/normalize.css",
                       "~/Content/css/materialize.css",
                       "~/Content/css/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/public").Include(
+                      "~/Content/css/normalize.css",
+                      "~/Content/css/materialize.css",
+                      "~/Content/css/public.css"));
 
             bundles.Add(new StyleBundle("~/Content/fonts").Include(
                       "~/Content/css/fonts.css", new CssRewriteUrlTransform()));

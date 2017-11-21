@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Amilcar Comercial</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+    @Styles.Render("~/Content/public")
+</head>
+<body>
+    <header class="navbar-fixed">
+        <nav class="z-depth-0">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo"><img src="~/Content/system-resources/AM-Logo2.png"/></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <li><a href="@Url.Action("Login","Account")">Acceder</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="banner row pink">
+            <div class="carousel carousel-slider center" data-indicators="true">
+                <div class="carousel-fixed-item center">
+                    <h1>Amilcar Comercial</h1>
+                </div>
+                <div class="carousel-item white-text" href="#one!">
+                    <h2>First Panel</h2>
+                    <p class="white-text">This is your first panel</p>
+                </div>
+                <div class="carousel-item white-text" href="#two!">
+                    <h2>Second Panel</h2>
+                    <p class="white-text">This is your second panel</p>
+                </div>
+                <div class="carousel-item white-text" href="#three!">
+                    <h2>Third Panel</h2>
+                    <p class="white-text">This is your third panel</p>
+                </div>
+            </div>
+        </section>
+        <section class="lema row">
+            <h4>Titulo de esto</h4>
+            <div class="line center-block"></div>
+            <p>sgsg sdgsdg sgsdg sgsg sdgsdgsg sgsdgs sdgsgs sgs sgsgsg gsgs.</p>
+        </section>
+        <section class="fundadores row">
+
+        </section>
+        <section class="contacto row">
+
+        </section>
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Footer Content</h5>
+                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2014 Copyright Text
+                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+    </footer>    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    @Scripts.Render("~/bundles/materialize")
+    @Scripts.Render("~/bundles/public")
+</body>
+</html>

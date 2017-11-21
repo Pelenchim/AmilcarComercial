@@ -217,21 +217,15 @@ function mostrarClienteTmp() {
                 $(".cliente .opcionesCliente a").show();
                 $(".datosCliente").empty();
                 $(".datosCliente").append(
-                    '<div class="col l5">' +
+                    '<div class="col l12">' +
                     '<p class="truncate"><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
                     '</div>' +
-                    '<div class="col l4">' +
+                    '<div class="col l6">' +
                     '<p><strong>Cedula: </strong>' + data.Cedula + '</p>' +
                     '</div>' +
-                    '<div class="col l3">' +
+                    '<div class="col l6">' +
                     '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
-                    '</div>' +
-                    '<div class="col l3">' +
-                    '<p><strong>Departamento: </strong>' + data.Departamento + '</p>' +
-                    '</div>' +
-                    '<div class="col l9">' +
-                    '<p><strong>Direccion: </strong>' + data.Direccion + '</p>' +
-                    '</div>'
+                    '</div>' 
                 );
             }
             $("#pre-Cliente").css("display", "none");
@@ -271,6 +265,8 @@ function CancelArticulos() {
 }
 function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
+    var prima = $(".articulos #prima" + id).val();
+    var meses = $(".articulos #meses" + id).val();
     var stock = $(".articulos #stock" + id).text();
     if (cant === '') {
         Materialize.toast("Debe agregar la cantidad", 2000);
@@ -298,7 +294,7 @@ function agregarArticuloTmp(id) {
         return;
     }
     $.ajax({
-        url: '/credito/agregar/producto/' + id + '/' + cant,
+        url: '/credito/agregar/producto/' + id + '/' + cant + '/' + meses + '/' + prima,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -347,7 +343,7 @@ function mostrarProductosTmp(view) {
         'success': function (data) {
             $(".articulos-orden").append(
                 '<div class="divider-mio"></div>' +
-                '<div class="articulosLista col l12 mCustomScrollbar blue" data-mcs-theme="minimal-dark"></div>'
+                '<div class="articulosLista col l12 blue"></div>'
             );
             if (data === 0) {
                 $(".opcionesArticulos .card-v").hide();
@@ -425,7 +421,9 @@ function articulosTable(data) {
         '<th>Nombre</th>' +
         '<th>Stock</th>' +
         '<th>Precio</th>' +
+        '<th>Prima</th>' +
         '<th>Cantidad</th>' +
+        '<th>Meses</th>' +
         '<th class="right-align">Agregar</th>' +
         '</tr>' +
         '</thead>' +
@@ -441,9 +439,16 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
-                '<td>$7.00</td>' +
+                '<td> C$ ' + value.Precio + '</td>' +
+                '<td> C$ ' + value.Prima + '</td>' +
+                '<td class="hide">' +
+                '<input placeholder="Prima" id="prima' + value.ID + '" value="' + value.Prima + '" type="text" class="browser-default">' +
+                '</td > ' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
+                '</td > ' +
+                '<td>' +
+                '<input placeholder="Meses" id="meses' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td class="right-align">' +
                 '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
@@ -500,14 +505,16 @@ function articulosOrdenTable(data) {
         '<th>Cod</th>' +
         '<th>Img</th>' +
         '<th>Nombre</th>' +
-        '<th>Existencia</th>' +
+        '<th>Stock</th>' +
         '<th>Precio</th>' +
+        '<th>Prima</th>' +
+        '<th>Prima SubTotal</th>' +
         '<th>Cantidad</th>' +
         '<th>Meses</th>' +
         '<th>Cuota</th>' +
         '<th>Fecha Pago</th>' +
         '<th>Ultimo Pago</th>' +
-        '<th>Opciones</th>' +
+        '<th>Opc</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -523,22 +530,19 @@ function articulosOrdenTable(data) {
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
                 '<td>C$ ' + value.Precio + '</td>' +
+                '<td>C$ ' + value.PrimaMinima + '</td>' +
+                '<td>' +
+                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + value.Prima + '"></input>' +
+                '</td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>' +
-                '<div class="input-field col l12">'+
-                    '<select class="browser-default">'+
-                        '<option value="1">Option 1</option>'+
-                        '<option value="2">Option 2</option>'+
-                        '<option value="3">Option 3</option>'+
-                    '</select>'+
-                    '<label> Select</label>'+
-                '</div>' +
+                '<input class="browser-default" id="meses-' + value.ID + '" type="text" value="' + value.Meses + '"></input>' +
                 '</td>' +
-                '<td>C$ ' + value.Precio + '</td>' +
-                '<td>C$ ' + value.Precio + '</td>' +
-                '<td>C$ 98829</td>' +
+                '<td>C$ ' + ((value.Precio * 0.80) / value.Meses) + '</td>' +
+                '<td>' + value.FechaPago + ' C/Mes</td>' +
+                '<td>' + value.FechaFin + '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
@@ -555,6 +559,7 @@ function detectarCambios() {
         'focusin': function () {
             ID_Obj = $(this).attr("id");
             dividiendo = ID_Obj.split("-", 2);
+            campo = dividiendo[0];
             id = dividiendo[1];
             AnteriorValor = $(this).val();
         },
@@ -583,26 +588,54 @@ function detectarCambios() {
                 Materialize.toast("La cantidad no es valida", 2000);
                 $(this).val(AnteriorValor);
                 return;
-            }
+            }            
 
-            var exist = parseInt($("#exist-" + id).text());
-            if (NuevoValor > exist) {
-                Materialize.toast("No hay sufucientes productos para realizar el pedido", 2000);
-                $("#cant-" + id).val(AnteriorValor);
-                return;
-            }
-
-            $.ajax({
-                url: '/credito/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
-                type: 'GET',
-                'success': function (data) {
-                    mostrarProductosTmp(1);
-                    Materialize.toast('Cantidad del articulo actualizado', 2000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
+            if (campo == "cant") {
+                var exist = parseInt($("#exist-" + id).text());
+                if (NuevoValor > exist) {
+                    Materialize.toast("No hay sufucientes productos para realizar el pedido", 2000);
+                    $("#cant-" + id).val(AnteriorValor);
+                    return;
                 }
-            });
+
+                $.ajax({
+                    url: '/credito/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+            if (campo == "prima") {
+                $.ajax({
+                    url: '/credito/actualizar/prima/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+            if (campo == "meses") {
+                $.ajax({
+                    url: '/credito/actualizar/meses/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
         }
     }, '.articulosLista table tbody input');
 }

@@ -1310,11 +1310,6 @@ background-color: #37474f;
 /*#region VentaGeneral */
 
 /*lista de articulos en la orden*/
-.nueva-venta .articulosVenta .articulosLista {
-    height: 50vh;
-    min-height: 300px;
-    overflow-x: hidden;
-}
 .articulosVenta .opcionesArticulos:first-child,
 .articulosCredito .opcionesArticulos:first-child,
 .articulosApartado .opcionesArticulos:first-child{
@@ -1483,7 +1478,7 @@ background-color: #37474f;
 .articulosCredito .articulos-orden .articulosLista table tbody,
 .articulosApartado .articulos-orden .articulosLista table tbody {
     display: block;
-    height: 42vh;
+    height: 30vh;
     min-height: 280px;
     overflow: auto;
 }
@@ -1782,7 +1777,10 @@ background-color: #37474f;
 .nueva-venta .detalle .acciones .calcularVuelto i {
     margin-right: 5px;
 }
-
+.nueva-venta .articulosVenta .articulosLista {
+    height: 50vh;
+    min-height: 300px;
+}
 
 /*textbox's de los modals*/
 .modal-ventas .input-field label {
@@ -1963,7 +1961,8 @@ background-color: #37474f;
     margin-bottom: 0;
 }
 .nuevo-credito .cliente,
-.nuevo-credito .general {
+.nuevo-credito .general,
+.nuevo-credito .preferencias{
     margin-top: 1.5rem;
 }
 .nuevo-credito .cliente .opcionesCliente a {
@@ -1996,6 +1995,97 @@ background-color: #37474f;
 .nuevo-credito .cliente .datosCliente .vacio p {
     margin-top: 12px;
     margin-bottom: 3px;
+}
+.nuevo-credito .preferencias .opciones{
+    padding-top: 1rem;
+    padding-bottom: 0.1rem; 
+}
+.nuevo-credito .articulosCredito .articulosLista {
+    height: 43vh;
+    min-height: 300px;
+}
+.nuevo-credito .detalle .detalles .info1{
+    padding: 0.7rem 0;
+}
+.nuevo-credito .detalle .detalles p{
+    margin:0;
+}
+.nuevo-credito .detalle .info2{
+    padding-top: 0.8rem;
+}
+.nuevo-credito .detalle .info2 .total{
+    color: #fff;
+    font-size: 2rem;
+}
+.nuevo-credito .detalle .acciones{
+    padding: 1rem 0;
+}
+
+/*modal de articulos*/
+.modal-credito .articulos .card-v,
+.modal-credito .articulos .table-v {
+    display: none;
+}
+.modal-credito .articulos .lista-articulos table td {
+    padding: 5px;
+}
+.modal-credito .articulos .lista-articulos table tbody img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.modal-credito .articulos .lista-articulos .card .nombre {
+    font-size: 1.3rem;
+}
+.modal-credito .articulos .lista-articulos .card a {
+    padding: 0 0.5rem;
+}
+.modal-credito .articulos .lista-articulos .card a:hover {
+    background-color: #66bb6a !important;
+}
+.modal-credito .articulos .lista-articulos .card input[type=text] {
+    margin: 0 15px 0 0;
+    color: #3c3c3c;
+    border: none !important;
+    border-radius: 2px;
+    width: 60px;
+    height: 36px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background-color: #ECEFF1 !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-credito .articulos .lista-articulos .card input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-credito .articulos .lista-articulos table tbody input[type=text] {
+    margin: 0;
+    color: #555;
+    border: none !important;
+    border-radius: 2px;
+    width: 80px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background: rgba(183, 183, 183, 0.50) !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-credito .articulos .lista-articulos table tbody input[type=text]:focus {
+    background-color: #fff !important;
+    color: #3d3d3d;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-credito .articulos .lista-articulos table tbody a {
+    padding: 0 0.7rem;
 }
 
 /*#endregion */
@@ -2075,7 +2165,8 @@ background-color: #37474f;
     margin-bottom: 0;
 }
 .nuevo-apartado .cliente,
-.nuevo-apartado .general {
+.nuevo-apartado .general,
+.nuevo-apartado .preferencias{
     margin-top: 1.5rem;
 }
 .nuevo-apartado .cliente .opcionesCliente a {
@@ -2105,6 +2196,98 @@ background-color: #37474f;
     margin-top: 12px;
     margin-bottom: 3px;
 }
+.nuevo-apartado .preferencias .opciones {
+    padding-top: 1rem;
+    padding-bottom: 0.1rem;
+}
+.nuevo-apartado .articulosApartado .articulosLista {
+    height: 43vh;
+    min-height: 300px;
+}
+.nuevo-apartado .detalle .detalles .info1 {
+    padding: 0.7rem 0;
+}
+.nuevo-apartado .detalle .detalles p {
+    margin: 0;
+}
+.nuevo-apartado .detalle .info2 {
+    padding-top: 0.8rem;
+}
+.nuevo-apartado .detalle .info2 .total {
+    color: #fff;
+    font-size: 2rem;
+}
+.nuevo-apartado .detalle .acciones {
+    padding: 1rem 0;
+}
+
+/*modal de articulos*/
+.modal-apartado .articulos .card-v,
+.modal-apartado .articulos .table-v {
+    display: none;
+}
+.modal-apartado .articulos .lista-articulos table td {
+    padding: 5px;
+}
+.modal-apartado .articulos .lista-articulos table tbody img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.modal-apartado .articulos .lista-articulos .card .nombre {
+    font-size: 1.3rem;
+}
+.modal-apartado .articulos .lista-articulos .card a {
+    padding: 0 0.5rem;
+}
+.modal-apartado .articulos .lista-articulos .card a:hover {
+    background-color: #66bb6a !important;
+}
+.modal-apartado .articulos .lista-articulos .card input[type=text] {
+    margin: 0 15px 0 0;
+    color: #3c3c3c;
+    border: none !important;
+    border-radius: 2px;
+    width: 60px;
+    height: 36px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background-color: #ECEFF1 !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-apartado .articulos .lista-articulos .card input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-apartado .articulos .lista-articulos table tbody input[type=text] {
+    margin: 0;
+    color: #555;
+    border: none !important;
+    border-radius: 2px;
+    width: 80px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background: rgba(183, 183, 183, 0.50) !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-apartado .articulos .lista-articulos table tbody input[type=text]:focus {
+    background-color: #fff !important;
+    color: #3d3d3d;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-apartado .articulos .lista-articulos table tbody a {
+    padding: 0 0.7rem;
+}
+
 
 /*#endregion */
 

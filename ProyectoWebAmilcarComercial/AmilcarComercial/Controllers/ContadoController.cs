@@ -73,6 +73,7 @@ namespace AmilcarComercial.Controllers
             {
                 cliente.id_cliente = null;
                 cliente.nuevo = true;
+                cliente.tipoventa = "Contado";
                 db.Tbl_ClienteTmp.Add(cliente);
                 db.SaveChanges();
             }
@@ -84,9 +85,9 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult MostrarClienteTmp(Tbl_ClienteTmp cliente)
         {
-            if (db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
+            if (db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").Count() != 0)
             {
-                var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).OrderByDescending(m => m.id_clienteTmp)
+                var data = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").OrderByDescending(m => m.id_clienteTmp)
                             select new
                             {
                                 Nombre = c.nombre_cliente,
@@ -122,6 +123,7 @@ namespace AmilcarComercial.Controllers
             clienteTmp.departamento = cliente.departamento;
             clienteTmp.direccion = cliente.direccion;
             clienteTmp.nuevo = false;
+            clienteTmp.tipoventa = "Contado";
             clienteTmp.id_cliente = cliente.id_cliente;
 
             db.Tbl_ClienteTmp.Add(clienteTmp);
@@ -133,7 +135,7 @@ namespace AmilcarComercial.Controllers
         [Route("ventas/eliminar/clienteTmp")]
         public JsonResult EliminarClientesTmp()
         {
-            var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
+            var lista = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
 
             if (lista != null)
             {
@@ -147,7 +149,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EditarClienteTmp()
         {
-            var cliente = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name)
+            var cliente = (from c in db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado")
                            select new
                            {
                                ID = c.id_clienteTmp,
@@ -182,17 +184,22 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerArticulos()
         {
-            var articulosOrden = (from p in db.Tbl_OrdenTmp where (p.user == User.Identity.Name) select p.id_Articulo).ToArray();
+            var articulosOrden = (from p in db.Tbl_OrdenTmp
+                                  where (p.user == User.Identity.Name && p.tipoventa == "Contado")
+                                  select p.id_Articulo).ToArray();
 
-            var Articulos = (from p in db.Tbl_Articulo
-                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true)
+            var sucursal = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().Sucursal;
+
+            var Articulos = (from p in db.Tbl_Articulo join b in db.Tbl_bodega_productos on p.id_articulo equals b.id_articulo
+                             where (b.id_sucursal == sucursal && p.estado == true &&
+                                    !(articulosOrden.Contains((int)p.id_articulo)))
                              select new
                              {
                                  ID = p.id_articulo,
                                  Codigo = p.codigo_articulo,
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen,
-                                 Stock = p.Tbl_bodega_productos.Where(m => m.id_articulo == p.id_articulo).FirstOrDefault().stock
+                                 Stock = b.stock
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
@@ -207,6 +214,7 @@ namespace AmilcarComercial.Controllers
 
             orden.id_Articulo = id;
             orden.cantidad = cant;
+            orden.tipoventa = "Contado";
             orden.fecha = DateTime.Now;
             orden.user = user;
 
@@ -220,7 +228,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
-            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name).FirstOrDefault();
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault();
             db.Tbl_OrdenTmp.Remove(articulo);
             db.SaveChanges();
 
@@ -231,7 +239,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProductosTodos()
         {
-            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
             db.Tbl_OrdenTmp.RemoveRange(articulos);
             db.SaveChanges();
 
@@ -242,9 +250,9 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult MostrarProductosTmp()
         {
-            if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
+            if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").Count() != 0)
             {
-                var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name)
+                var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado")
                              select new
                              {
                                  ID = p.id_OrdenTmp,
@@ -275,7 +283,6 @@ namespace AmilcarComercial.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
 
         #endregion
 

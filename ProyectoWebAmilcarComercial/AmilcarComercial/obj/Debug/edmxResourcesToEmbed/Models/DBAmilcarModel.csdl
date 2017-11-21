@@ -210,6 +210,7 @@
     <Property Name="nuevo" Type="Boolean" Nullable="false" />
     <Property Name="id_cliente" Type="Int32" />
     <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
+    <Property Name="tipoventa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Color">
     <Key>
@@ -437,6 +438,8 @@
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
     <Property Name="credito_meses" Type="Int32" />
     <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="prima" Type="Double" />
+    <Property Name="tipoventa" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

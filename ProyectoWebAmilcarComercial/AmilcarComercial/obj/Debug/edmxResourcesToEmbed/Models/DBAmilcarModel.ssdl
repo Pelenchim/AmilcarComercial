@@ -184,6 +184,7 @@
     <Property Name="user" Type="nvarchar(max)" Nullable="false" />
     <Property Name="nuevo" Type="bit" Nullable="false" />
     <Property Name="id_cliente" Type="int" />
+    <Property Name="tipoventa" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_Color">
     <Key>
@@ -377,6 +378,8 @@
     <Property Name="fecha" Type="datetime" />
     <Property Name="credito_meses" Type="int" />
     <Property Name="apartado_fecha" Type="nchar" MaxLength="10" />
+    <Property Name="prima" Type="float" />
+    <Property Name="tipoventa" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>
