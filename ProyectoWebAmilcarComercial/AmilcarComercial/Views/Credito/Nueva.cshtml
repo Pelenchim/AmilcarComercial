@@ -20,6 +20,7 @@
                         <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Eliminar Cliente" onclick="eliminarCliente()"><i class="material-icons">clear</i></a>
                         <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Cliente" onclick="clientes()"><i class="material-icons">search</i></a>
                         <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Editar Cliente" onclick="editarCliente()"><i class="material-icons">edit</i></a>
+                        <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Detalles del Cliente" onclick="detallesCliente()"><i class="material-icons">info</i></a>
                     </p>
                 </div>
                 <div class="divider-mio"></div>
@@ -73,11 +74,11 @@
                 <div class="divider-mio"></div>
                 <div class="opciones col l12">
                     <div class="input-field col l6">
-                        <select>
+                        <select id="iva">
                             <option value="0">0%</option>
                             <option value="5">5%</option>
                             <option value="10">10%</option>
-                            <option value="15">15%</option>
+                            <option selected value="15">15%</option>
                         </select>
                         <label>Iva</label>
                     </div>
@@ -130,22 +131,13 @@
         </div>
         <div class="detalle col l12">
             <div class="col l12 blue z-depth-1">
-                <div class="detalles col l6 white-text">                    
-                    <div class="info1 col l5">
-                        <p>Articulos: 6</p>
-                        <p>Sub-Total: C$ 9764</p>
-                    </div>
-                    <div class="info1 col l5">
-                        <p>Iva Total: 6</p>
-                        <p>Prima Total: C$ 9764</p>
-                    </div>
-                </div>                
+                <div class="detalles col l6 white-text"></div>                
                 <div class="info2 col l4 right-align">
-                    <span class="total">Total: C$ 356456</span>
+                    <span class="total"></span>
                 </div>
                 <div class="acciones col l2 center-align">
                     <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
-                    <a class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
+                    <a id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
                 </div>  
             </div>
         </div>
@@ -366,6 +358,23 @@
                         <button class="btn btn-flat white blue-text" type="button" onclick="editarClienteTmp()">Agregar</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="detalleCliente" class="modal modal-middle">
+        <div class="detalleCliente blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">info</i>
+                    Detalle Cliente
+                    <i class="salir material-icons right" onclick="$('#detalleCliente').modal('close');">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content row white-text">
+                <div class="col l3">
+                    <img src="~/Content/system-resources/clientes.png" class="responsive-img" />
+                </div>
+                <div class="detalle col l9"></div>
             </div>
         </div>
     </div>

@@ -10,11 +10,16 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
-    $('select').material_select();
+    var total, subTotal, cantidadTotal, iva, prima;
     mostrarClienteTmp();
     mostrarProductosTmp(1);
     generales();
     detectarCambios();
+    $('.nuevo-credito .preferencias').on('change', '#iva', function (e) {
+        iva = this.value;
+        detalles();
+    });
+    detalles();
 });
 function generales() {
     $("#pre-General").css("display", "inline");
@@ -235,6 +240,36 @@ function mostrarClienteTmp() {
         }
     });
 }
+function detallesCliente() {
+    $('#detalleCliente').modal('open');
+    $(".detalleCliente .detalle").empty();
+    $.ajax({
+        url: '/apartado/obtener/clienteTmp',
+        type: 'GET',
+        contentType: "application/json",
+        dataType: "json",
+        'success': function (data) {
+            $(".detalleCliente .detalle").empty();
+            $(".detalleCliente .detalle").append(
+                '<div class="col l12">' +
+                '<p><strong>Nombre: </strong> ' + data.Nombre + ' ' + data.Apellido + '</p>' +
+                '</div>' +
+                '<div class="col l6">' +
+                '<p><strong>Cedula: </strong> ' + data.Cedula + '</p>' +
+                '</div>' +
+                '<div class="col l6">' +
+                '<p><strong>Telefono: </strong> ' + data.Telefono + '</p>' +
+                '</div>' +
+                '<div class="col l12">' +
+                '<p><strong>Direccion: </strong> ' + data.Direccion + ', ' + data.Departamento + '</p>' +
+                '</div>'
+            );
+        },
+        'error': function (request, error) {
+            $('#detalleCliente').modal('close');
+        }
+    });
+}
 
 function articulos(vista) {
     $(".lista-articulos").empty();
@@ -331,8 +366,13 @@ function eliminarProductosTodos() {
             alert("Request: " + JSON.stringify(request));
         }
     });
+    subTotal = 0;
+    cantidadTotal = 0;
+    prima = 0;
+    detalles();
 }
 function mostrarProductosTmp(view) {
+    cantidadTotal = 0;
     $(".articulos-orden").empty();
     $("#pre-ArticulosOrden").css("display", "inline");
     $.ajax({
@@ -502,18 +542,18 @@ function articulosOrdenTable(data) {
         '<table class="bordered highlight centered responsive-table white">' +
         '<thead class="z-depth-1">' +
         '<tr>' +
-        '<th>Cod</th>' +
-        '<th>Img</th>' +
         '<th>Nombre</th>' +
+        '<th>Img</th>' +
         '<th>Stock</th>' +
         '<th>Precio</th>' +
         '<th>Prima</th>' +
-        '<th>Prima SubTotal</th>' +
         '<th>Cantidad</th>' +
+        '<th>PrimaSubTotal</th>' +
         '<th>Meses</th>' +
         '<th>Cuota</th>' +
-        '<th>Fecha Pago</th>' +
-        '<th>Ultimo Pago</th>' +
+        '<th>FechaPago</th>' +
+        '<th>UltimoPago</th>' +
+        '<th>SubTotal</th>' +
         '<th>Opc</th>' +
         '</tr>' +
         '</thead>' +
@@ -521,33 +561,40 @@ function articulosOrdenTable(data) {
         '</tbody>' +
         '</table>'
     );
+    cantidadTotal = 0;
+    subTotal = 0;
+    prima = 0;  
     $.each(data, function () {
         $.each(this, function (name, value) {
             $(".articulosLista table tbody").append(
                 '<tr>' +
-                '<td>' + value.ID + '</td>' +
-                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
+                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
                 '<td>C$ ' + value.Precio + '</td>' +
-                '<td>C$ ' + value.PrimaMinima + '</td>' +
-                '<td>' +
-                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + value.Prima + '"></input>' +
-                '</td>' +
+                '<td>C$ ' + (value.PrimaMinima).toFixed(2) + '</td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>' +
+                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + (value.Prima).toFixed(2) + '"></input>' +
+                '</td>' +                
+                '<td>' +
                 '<input class="browser-default" id="meses-' + value.ID + '" type="text" value="' + value.Meses + '"></input>' +
                 '</td>' +
-                '<td>C$ ' + ((value.Precio * 0.80) / value.Meses) + '</td>' +
+                '<td>C$ ' + ((value.Precio * 0.80) / value.Meses).toFixed(2) + '</td>' +
                 '<td>' + value.FechaPago + ' C/Mes</td>' +
                 '<td>' + value.FechaFin + '</td>' +
+                '<td>C$ ' + (value.Precio * value.Cantidad).toFixed(2) + '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
+            cantidadTotal = cantidadTotal + value.Cantidad;
+            subTotal = subTotal + (value.Precio * value.Cantidad);
+            prima = prima + value.Prima;
         });
     });
+    detalles();
 }
 function detectarCambios() {
     var ID_Obj;
@@ -638,4 +685,82 @@ function detectarCambios() {
             }
         }
     }, '.articulosLista table tbody input');
+}
+
+function detalles() {
+    if (cantidadTotal === 0) {
+        $(".detalle .detalles").empty();
+        $(".detalle .detalles").append(
+            '<div class="vacio col l12">' +
+            '<p><strong>No hay articulos en la orden, agrege para realizar la venta.</strong></span>' +
+            '</div>'
+        );
+        $(".detalle .total").text("");
+        $("#vender").addClass('disabled');
+        return;
+    }
+
+    iva = (subTotal * parseFloat($('#iva').val() / 100));
+    Total = subTotal + iva;
+    $(".detalle .detalles").empty();
+    $(".detalle .detalles").append(
+        '<div class="info1 col l5">' +
+        '<p>Articulos: ' + cantidadTotal + '</p>' +
+        '<p>SubTotal: C$ ' + (subTotal).toFixed(2) + '</p>'+
+        '</div>'+
+        '<div class="info1 col l5">'+
+        '<p>Iva Total: C$ ' + (iva).toFixed(2) + '</p>' +
+        '<p>Prima Total: C$ ' + (prima).toFixed(2) + '</p>' +
+        '</div>'
+    );
+    $(".detalle .total").text("Total: C$" + (Total).toFixed(2));
+    $("#vender").removeClass('disabled');
+}
+function cancelarVenta() {
+    $.ajax({
+        url: '/credito/cancelar',
+        type: 'POST',
+        contentType: "application/json",
+        dataType: "json",
+        crossDomain: true,
+        success: function (data) {
+            window.location.href = data;
+        }
+    });
+}
+function facturar() {
+
+    if (proveedor === false) {
+        Materialize.toast("Debe definir un proveedor", 3000);
+        return;
+    }
+    if (articulo === false) {
+        Materialize.toast("Debe seleccionar productos a comprar", 3000);
+        return;
+    }
+
+    var datos = {
+        fact_compra: $("#N_factura").val(),
+        tipo_comprobante_compra: $('#comprobante').val(),
+        iva_compra: $('#iva').val()
+    };
+
+    $.ajax({
+        url: '/compras/facturar',
+        type: 'GET',
+        contentType: "application/json",
+        dataType: "json",
+        data: datos,
+        'success': function (data) {
+            if (data === true) {
+                window.location.href = "/Compras/Index";
+            }
+            else {
+                Materialize.toast('Error, no se pudo realizar la compra', 2000);
+            }
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
 }

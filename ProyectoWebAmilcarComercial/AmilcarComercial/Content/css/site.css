@@ -1444,6 +1444,10 @@ background-color: #37474f;
 .articulosApartado .articulos-orden .articulosLista table tbody input[type=text] {
     width: 60px;
 }
+.articulosCredito .articulos-orden .articulosLista table tbody input[id^="prima"],
+.articulosApartado .articulos-orden .articulosLista table tbody input[id^="prima"] {
+    width: 90px;
+}
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text]:focus,
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text]:focus,
 .articulosApartado .articulos-orden .articulosLista table tbody input[type=text]:focus {
@@ -1504,7 +1508,8 @@ background-color: #37474f;
 .nuevoCliente > .row,
 .cancelarVenta > .row,
 .eliminartodos > .row,
-.calcularVuelto > .row {
+.calcularVuelto > .row,
+.detalleCliente > .row{
     margin: 0;
 }
 .articulos h4,
@@ -1512,7 +1517,8 @@ background-color: #37474f;
 .nuevoCliente h4,
 .cancelarVenta h4,
 .eliminartodos h4,
-.calcularVuelto h4 {
+.calcularVuelto h4,
+.detalleCliente h4{
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -1522,7 +1528,8 @@ background-color: #37474f;
 .nuevoCliente h4 .salir,
 .cancelarVenta h4 .salir,
 .eliminartodos h4 .salir,
-.calcularVuelto h4 .salir {
+.calcularVuelto h4 .salir,
+.detalleCliente h4 .salir{
     cursor: pointer;
 }
 .articulos .option-bar,
@@ -2010,7 +2017,8 @@ background-color: #37474f;
 .nuevo-credito .detalle .detalles p{
     margin:0;
 }
-.nuevo-credito .detalle .info2{
+.nuevo-credito .detalle .info2,
+.nuevo-credito .detalle .vacio{
     padding-top: 0.8rem;
 }
 .nuevo-credito .detalle .info2 .total{
@@ -2210,7 +2218,8 @@ background-color: #37474f;
 .nuevo-apartado .detalle .detalles p {
     margin: 0;
 }
-.nuevo-apartado .detalle .info2 {
+.nuevo-apartado .detalle .info2,
+.nuevo-apartado .detalle .vacio{
     padding-top: 0.8rem;
 }
 .nuevo-apartado .detalle .info2 .total {

@@ -1,8 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "Ventas";
+    ViewBag.Title = "Contado";
     ViewBag.SubTitle = "Nueva";
-    ViewBag.ControllerGeneral = "Ventas";
+    ViewBag.ControllerGeneral = "Contado";
     ViewBag.PrimaryColor = "blue";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
@@ -113,15 +113,15 @@
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
                     <div class="input-field col l6">
-                        <input placeholder="Placeholder" id="N_factura" type="text" class="validate">
+                        <input placeholder="Placeholder" id="N_factura" name="N_factura" type="text" disabled>
                         <label for="N_factura">N° Factura</label>
                     </div>
                     <div class="input-field col l6">
                         <select id="iva">
-                            <option selected value="0">0%</option>
+                            <option value="0">0%</option>
                             <option value="5">5%</option>
                             <option value="10">10%</option>
-                            <option value="15">15%</option>
+                            <option value="15" selected>15%</option>
                         </select>
                         <label>IVA</label>
                     </div>
@@ -133,21 +133,11 @@
                         <label>Tipo de Pago</label>
                     </div>                    
                 </div>
-                <div class="col l12">
-                    <p><strong>Detalle:</strong></p>
-                    <div class="col l12">
-                        <span class="left"><strong>Articulos: </strong>25</span>
-                        <span class="right"><strong>Subtotal: C$</strong>2,556</span>
-                    </div>
-                    <div class="col l12">
-                        <span class="left"><strong>Iva: C$</strong>25.4</span>
-                        <span class="right"><strong>Total: C$</strong>24,245</span>
-                    </div>
-                </div>
+                <div class="detalles col l12"></div>
                 <div class="acciones col l12 blue center-align">
                     <h5 class="center-align white-text total"></h5>
                     <button class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></button>
-                    <button class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></button>
+                    <button id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar()"><i class="material-icons">shopping_cart</i></button>
                     <a class="calcularVuelto col l12 white-text" href="#calcularVuelto"><i class="material-icons tiny">receipt</i>Calcular Vuelto</a>
                 </div>
             </div>

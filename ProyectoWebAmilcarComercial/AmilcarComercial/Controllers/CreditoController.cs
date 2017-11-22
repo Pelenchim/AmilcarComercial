@@ -314,6 +314,31 @@ namespace AmilcarComercial.Controllers
 
         #endregion
 
+        #region Facturacion
+
+        [Route("credito/cancelar")]
+        [HttpPost]
+        public JsonResult CancelarCompra()
+        {
+            var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").ToList();
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Credito").ToList();
+
+            if (cliente != null)
+            {
+                db.Tbl_ClienteTmp.RemoveRange(cliente);
+                db.SaveChanges();
+            }
+            if (articulos != null)
+            {
+                db.Tbl_OrdenTmp.RemoveRange(articulos);
+                db.SaveChanges();
+            }
+
+            return Json(Url.Action("Index", "Credito"));
+        }
+
+        #endregion
+
         [Route("credito/listaventas")]
         [HttpGet]
         public JsonResult ListaVentas()

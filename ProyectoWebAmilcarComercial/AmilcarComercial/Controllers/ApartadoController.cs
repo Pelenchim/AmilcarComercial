@@ -192,15 +192,17 @@ namespace AmilcarComercial.Controllers
                                  Codigo = p.codigo_articulo,
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen,
-                                 Stock = b.stock
+                                 Stock = b.stock,
+                                 Precio = b.precio,
+                                 Prima = b.precio * 0.20
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("apartado/agregar/producto/{id}/{cant}")]
+        [Route("apartado/agregar/producto/{id}/{cant}/{prima}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant)
+        public JsonResult AgregarProducto(int id, int cant, float prima)
         {
             var user = User.Identity.Name;
             Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
@@ -208,6 +210,7 @@ namespace AmilcarComercial.Controllers
             orden.id_Articulo = id;
             orden.cantidad = cant;
             orden.fecha = DateTime.Now;
+            orden.prima = prima * cant;
             orden.user = user;
             orden.tipoventa = "Apartado";
 
@@ -245,15 +248,21 @@ namespace AmilcarComercial.Controllers
         {
             if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Apartado").Count() != 0)
             {
-                var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Apartado")
+                var fechafin = DateTime.Today.ToShortDateString();
+
+                var datos = (from p in db.Tbl_OrdenTmp join b in db.Tbl_bodega_productos on p.id_Articulo equals b.id_articulo
+                             where (p.user == User.Identity.Name && p.tipoventa == "Apartado")
                              select new
                              {
                                  ID = p.id_OrdenTmp,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
-                                 Existecia = 233,
-                                 Precio = 500
+                                 Existecia = b.stock,
+                                 Precio = b.precio,
+                                 PrimaMinima = b.precio * 0.20,
+                                 Prima = p.prima,
+                                 FechaLimite = fechafin
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -277,6 +286,31 @@ namespace AmilcarComercial.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+
+        #endregion
+
+        #region Facturacion
+
+        [Route("apartado/cancelar")]
+        [HttpPost]
+        public JsonResult CancelarCompra()
+        {
+            var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Apartado").ToList();
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Apartado").ToList();
+
+            if (cliente != null)
+            {
+                db.Tbl_ClienteTmp.RemoveRange(cliente);
+                db.SaveChanges();
+            }
+            if (articulos != null)
+            {
+                db.Tbl_OrdenTmp.RemoveRange(articulos);
+                db.SaveChanges();
+            }
+
+            return Json(Url.Action("Index", "Apartado"));
+        }
 
         #endregion
 

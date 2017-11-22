@@ -593,7 +593,7 @@ function articulosOrdenTable(data) {
                 '<td>' +
                 '<input class="browser-default" type="text" id="desc-' + value.ID + '" value="' + value.Descuento + '"></input>' +
                 '</td>' +
-                '<td>C$' + ((value.Precio * value.Cantidad) - value.Descuento) + '</td>' +
+                '<td>C$' + ((value.Precio * value.Cantidad) - value.Descuento).toFixed(2) + '</td>' +
                 '<td>' + '<a class="center" onclick="eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' +
                 '</td>' +
                 '</tr>'
@@ -721,13 +721,13 @@ function detalles() {
         '<span class="left"><strong>Articulos: </strong>' + cantidadTotal + '</span>' +
         '</div>' +        
         '<div class="col l12">' +
-        '<span class="left"><strong>Subtotal: C$</strong>' + subTotal + '</span>' +
+        '<span class="left"><strong>Subtotal: C$</strong>' + (subTotal).toFixed(2) + '</span>' +
         '</div>' +
         '<div class="col l12">' +
-        '<span class="left"><strong>Iva: C$</strong>' + iva + '</span>' +
+        '<span class="left"><strong>Iva: C$</strong>' + (iva).toFixed(2) + '</span>' +
         '</div>' 
     );
-    $(".detalle .total").text("Total: C$" + Total);
+    $(".detalle .total").text("Total: C$" + (Total).toFixed(2));
     $("#comprar").removeClass('disabled');
 }
 function cancelarCompra() {

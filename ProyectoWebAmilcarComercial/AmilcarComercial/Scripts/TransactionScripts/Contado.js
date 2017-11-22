@@ -10,14 +10,16 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
-    $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
-        $('.nueva-venta .articulosVenta .acciones input').toggle(500);
-    });
-
+    var total, subTotal, cantidadTotal, iva;
     mostrarClienteTmp();
     mostrarProductosTmp(1);
     generales();
     detectarCambios();
+    $('.nueva-venta .detalle').on('change', '#iva', function (e) {
+        iva = this.value;
+        detalles();
+    });
+    detalles();
 });
 function generales() {
     $("#pre-General").css("display", "inline");
@@ -37,6 +39,7 @@ function generales() {
                 '<p><strong class="left">Vendedor: </strong> <span class="right">' + data[1] + '</span></p>' +
                 '</div>' 
             );
+            $("#N_factura").val(data[4]);
             $("#pre-General").css("display", "none");
         },
         'error': function (request, error) {
@@ -338,8 +341,12 @@ function eliminarProductosTodos() {
             alert("Request: " + JSON.stringify(request));
         }
     });
+    cantidadTotal = 0;
+    subTotal = 0;
+    detalles();
 }
 function mostrarProductosTmp(view) {
+    cantidadTotal = 0;
     $(".articulos-orden").empty();
     $("#pre-ArticulosOrden").css("display", "inline");
     $.ajax({
@@ -364,7 +371,7 @@ function mostrarProductosTmp(view) {
                     '<a class="btn btn-large white grey-text text-darken-2" onclick="abrirArticulos()">Seleccionar</a>' +
                     '</div > '
                 );
-                //detalles(0, 0);
+                detalles();
                 $("#pre-ArticulosOrden").css("display", "none");
             }
             else {
@@ -514,6 +521,8 @@ function articulosOrdenTable(data) {
         '</tbody>' +
         '</table>'
     );
+    cantidadTotal = 0;
+    subTotal = 0;
     $.each(data, function () {
         $.each(this, function (name, value) {
             $(".articulosLista table tbody").append(
@@ -526,12 +535,15 @@ function articulosOrdenTable(data) {
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
-                '<td>C$ 98829</td>' +
+                '<td>' + value.Cantidad * value.Precio + '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
+            cantidadTotal = cantidadTotal + value.Cantidad;
+            subTotal = subTotal + (value.Precio * value.Cantidad);
         });
     });
+    detalles();
 }
 function detectarCambios() {
     var ID_Obj;
@@ -623,7 +635,7 @@ function facturar() {
 }
 function cancelarVenta() {
     $.ajax({
-        url: '/ventas/cancelar',
+        url: '/contado/cancelar',
         type: 'POST',
         contentType: "application/json",
         dataType: "json",
@@ -632,4 +644,36 @@ function cancelarVenta() {
             window.location.href = data;
         }
     });
+}
+function detalles() {
+    if (cantidadTotal === 0) {
+        $(".detalle .detalles").empty();
+        $(".detalle .detalles").append(
+            '<p><strong>Detalle:</strong></p>' +
+            '<div class="col l12">' +
+            '<p class="center-align"><strong>No hay articulos en la orden, agrege para realizar la venta.</strong></span>' +
+            '</div>'
+        );
+        $(".detalle .total").text("");
+        $("#vender").addClass('disabled');
+        return;
+    }
+
+    iva = (subTotal * parseFloat($('#iva').val() / 100));
+    Total = subTotal + iva;
+    $(".detalle .detalles").empty();
+    $(".detalle .detalles").append(
+        '<p><strong>Detalle:</strong></p>' +
+        '<div class="col l12">' +
+        '<span class="left"><strong>Articulos: </strong>' + cantidadTotal + '</span>' +
+        '</div>' +
+        '<div class="col l12">' +
+        '<span class="left"><strong>SubTotal: C$</strong>' + (subTotal).toFixed(2) + '</span>' +
+        '</div>' +
+        '<div class="col l12">' +
+        '<span class="left"><strong>Iva: C$</strong>' + (iva).toFixed(2) + '</span>' +
+        '</div>'
+    );
+    $(".detalle .total").text("Total: C$" + (Total).toFixed(2));
+    $("#vender").removeClass('disabled');
 }

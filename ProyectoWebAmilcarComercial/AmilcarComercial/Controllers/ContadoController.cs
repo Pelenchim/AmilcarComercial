@@ -32,14 +32,20 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult Generales()
         {
-            var venta = (db.Tbl_Compra.OrderByDescending(m => m.id_compra).First().id_compra + 1).ToString();
+
+            var ID_sucursal = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+            var sucursal = db.Tbl_Sucursal.FirstOrDefault(m => m.id_sucursal == ID_sucursal).Nombre;
+            var venta = (db.Tbl_Orden.OrderByDescending(m => m.id_orden).First().id_orden + 1).ToString();
             var UserLastName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().LastName;
             var UserFirtsName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().FirstName;
+            var fact = String.Concat("Cont" + venta);
 
             List<string> lista = new List<string>();
             lista.Add(DateTime.Now.ToString());
             lista.Add((UserFirtsName + ' ' + UserLastName).ToString());
+            lista.Add(sucursal);
             lista.Add(venta);
+            lista.Add(fact);
 
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
@@ -252,15 +258,16 @@ namespace AmilcarComercial.Controllers
         {
             if (db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").Count() != 0)
             {
-                var datos = (from p in db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado")
+                var datos = (from p in db.Tbl_OrdenTmp join b in db.Tbl_bodega_productos on p.id_Articulo equals b.id_articulo
+                             where (p.user == User.Identity.Name && p.tipoventa == "Contado")
                              select new
                              {
-                                 ID = p.id_OrdenTmp,
+                                 ID = p.Tbl_Articulo.id_articulo,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
-                                 Existecia = 233,
-                                 Precio = 500
+                                 Existecia = b.stock,
+                                 Precio = b.precio
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -367,12 +374,12 @@ namespace AmilcarComercial.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/cancelar")]
+        [Route("contado/cancelar")]
         [HttpPost]
         public JsonResult CancelarCompra()
         {
-            var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).ToList();
-            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
+            var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
+            var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
 
             if (cliente != null)
             {
@@ -385,7 +392,7 @@ namespace AmilcarComercial.Controllers
                 db.SaveChanges();
             }
 
-            return Json(Url.Action("Index","Ventas"));
+            return Json(Url.Action("Index","Contado"));
         }
 
         public int guardarCliente()
