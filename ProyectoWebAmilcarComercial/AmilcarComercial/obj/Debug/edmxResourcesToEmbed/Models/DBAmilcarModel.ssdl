@@ -205,6 +205,7 @@
     <Property Name="iva_compra" Type="float" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="id_sucursal" Type="int" Nullable="false" />
+    <Property Name="estado_compra" Type="bit" />
   </EntityType>
   <EntityType Name="Tbl_CompraTmp">
     <Key>
@@ -361,11 +362,11 @@
     <Property Name="usuario" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="fecha_orden" Type="date" Nullable="false" />
     <Property Name="iva_orden" Type="float" Nullable="false" />
-    <Property Name="estado_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="tipo_orden" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="fact_Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="id_cliente" Type="int" Nullable="false" />
     <Property Name="tipo_pago" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="estado" Type="bit" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
     <Key>

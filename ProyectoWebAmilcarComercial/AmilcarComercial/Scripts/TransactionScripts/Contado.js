@@ -10,6 +10,7 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
+    var cliente = false, articulo = false;
     var total, subTotal, cantidadTotal, iva;
     mostrarClienteTmp();
     mostrarProductosTmp(1);
@@ -32,7 +33,7 @@ function generales() {
             $(".datosGenerales").empty();
             $(".datosGenerales").append(                
                 '<div class="col l12">' +
-                '<p class="left"><strong>Venta N°: </strong>' + data[2] + '</p>' +
+                '<p class="left"><strong>Venta N°: </strong>' + data[3] + '</p>' +
                 '<p class="right"><strong>Fecha: </strong>' + data[0] + '</p>' +
                 '</div>' +
                 '<div class="col l12">' +
@@ -218,6 +219,7 @@ function mostrarClienteTmp() {
                     '<button class="btn btn-flat green white-text" onclick="clientes()">Buscar</button>' +
                     '</div>'
                 );
+                cliente = false;
             }
             else {
                 $(".cliente .opcionesCliente a").show();
@@ -239,6 +241,7 @@ function mostrarClienteTmp() {
                     '<p><strong>Direccion: </strong>' + data.Direccion + '</p>' +
                     '</div>'
                 );
+                cliente = true;
             }
             $("#pre-Cliente").css("display", "none");
         },
@@ -372,6 +375,7 @@ function mostrarProductosTmp(view) {
                     '</div > '
                 );
                 detalles();
+                articulo = false;
                 $("#pre-ArticulosOrden").css("display", "none");
             }
             else {
@@ -381,6 +385,7 @@ function mostrarProductosTmp(view) {
                 if (view === 1) {
                     articulosOrdenTable(data);
                 }
+                articulo = true;
             }
             $("#pre-ArticulosOrden").css("display", "none");
         },
@@ -608,25 +613,34 @@ function detectarCambios() {
 }
 
 function facturar() {
+    if (cliente === false) {
+        Materialize.toast("Debe definir un cliente", 3000);
+        return;
+    }
+    if (articulo === false) {
+        Materialize.toast("Debe seleccionar productos a comprar", 3000);
+        return;
+    }
+
     var datos = {
+        fact_Orden: $("#N_factura").val(),
         iva_orden: $("#iva").val(),
-        tipo_orden: $("#tipoOrden").val(),
         tipo_pago: $("#tipoPago").val()
     };
 
     $.ajax({
-        url: '/ventas/facturar',
+        url: '/contado/facturar',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
         data: datos,
         'success': function (data) {
-            if (data === true) {
-                window.location.href = "/Ventas/Index";
-            }
-            else {
-                Materialize.toast('Error, no se pudo realizar la compra', 2000);
-            }
+            //if (data[0] === "true") {
+                window.location.href = '/contado/facturado/' + data[1];
+            //}
+            //else if(data[0] === "false") {
+            //    Materialize.toast('Error, no se pudo realizar la compra', 2000);
+            //}
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));

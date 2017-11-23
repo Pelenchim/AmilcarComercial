@@ -28,6 +28,7 @@ namespace AmilcarComercial.Models
         public double iva_compra { get; set; }
         public string usuario { get; set; }
         public int id_sucursal { get; set; }
+        public Nullable<bool> estado_compra { get; set; }
     
         public virtual Tbl_Proveedor Tbl_Proveedor { get; set; }
         public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }

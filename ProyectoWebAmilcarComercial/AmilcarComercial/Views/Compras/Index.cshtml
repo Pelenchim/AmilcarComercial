@@ -42,6 +42,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Factura</th>
+                        <th>Estado</th>
                         <th>Proveedor</th>
                         <th>Fecha</th>
                         <th>Articulos</th>
@@ -132,10 +133,20 @@
                     $(".listado-compras table tbody").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
+                            var estado,color;
+                            if (value.Estado === true) {
+                                estado = "Aprovada";
+                                color = "green"
+                            }
+                            else {
+                                estado = "Anulada";
+                                color = "red";
+                            }
                             $(".listado-compras table tbody").append(
                                 '<tr class="item" onclick="informacionCompra(' + value.ID + ')">' +
                                 '<td>' + value.Compra + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
+                                '<td> <span class="' + color + ' badge estado red">' + estado + '</span></td>' +
                                 '<td>' + value.Proveedor + '</td>' +
                                 '<td>' + value.Fecha + '</td>' +
                                 '<td>' + value.Articulos + '</td>' +

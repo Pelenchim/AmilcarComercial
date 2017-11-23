@@ -593,6 +593,8 @@
     <Content Include="Views\Apartado\Nueva.cshtml" />
     <Content Include="Views\Contado\Facturado.cshtml" />
     <Content Include="Views\Public\Index.cshtml" />
+    <Content Include="Views\Apartado\Facturado.cshtml" />
+    <Content Include="Views\Credito\Facturado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

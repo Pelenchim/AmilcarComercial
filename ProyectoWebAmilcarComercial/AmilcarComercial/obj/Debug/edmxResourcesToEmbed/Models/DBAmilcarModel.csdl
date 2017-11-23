@@ -235,6 +235,7 @@
     <NavigationProperty Name="Tbl_Proveedor" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Compra" ToRole="Tbl_Proveedor" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Compra_Tbl_Sucursal" FromRole="Tbl_Compra" ToRole="Tbl_Sucursal" />
     <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Compra" FromRole="Tbl_Compra" ToRole="Tbl_Detalle_Compra" />
+    <Property Name="estado_compra" Type="Boolean" />
   </EntityType>
   <EntityType Name="Tbl_CompraTmp">
     <Key>
@@ -415,7 +416,6 @@
     <Property Name="usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="fecha_orden" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="iva_orden" Type="Double" Nullable="false" />
-    <Property Name="estado_orden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="tipo_orden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="fact_Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="id_cliente" Type="Int32" Nullable="false" />
@@ -425,6 +425,7 @@
     <NavigationProperty Name="Tbl_Credito" Relationship="Self.FK_Tbl_Credito_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Credito" />
     <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Detalle_Orden" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Orden" ToRole="Tbl_Sucursal" />
+    <Property Name="estado" Type="Boolean" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
     <Key>

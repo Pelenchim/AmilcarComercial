@@ -102,9 +102,26 @@ nav.breadcrumb-nav {
     height: 50px !important;
     line-height: 50px;
 }
-
 nav.breadcrumb-nav .nav-wrapper {
     min-height: 50px;
+}
+span.badge.estado {
+    font-weight: 300;
+    font-size: 0.8rem !important;
+    color: #fff;
+    background-color: #26a69a;
+    border-radius: 2px;
+    min-width: 3rem;
+    padding: 4px 10px;
+    margin-left: 0 !important;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 22px;
+    height: 22px;
+    color: #fff;
+    float: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 /*#endregion */
 
@@ -1774,7 +1791,8 @@ background-color: #37474f;
 }
 .nueva-venta .detalle .acciones {
     margin-top: 5px;
-    padding: 0;
+    padding-top: 0rem;
+    padding-bottom: 1rem;
 }
 .nueva-venta .detalle .acciones .calcularVuelto {
     margin-top: 0.75rem;

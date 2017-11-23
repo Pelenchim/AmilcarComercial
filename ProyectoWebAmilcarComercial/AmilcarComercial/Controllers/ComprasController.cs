@@ -445,7 +445,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ListaCompras()
         {
-            var compras = (from c in db.Tbl_Compra
+            var compras = (from c in db.Tbl_Compra join d in db.Tbl_Detalle_Compra on c.id_compra equals d.id_compra
                           where c.usuario == User.Identity.Name
                           select new
                           {
@@ -457,6 +457,7 @@ namespace AmilcarComercial.Controllers
                               Articulos = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Count(),
                               CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
+                              Estado = c.estado_compra
                           }).OrderByDescending(m => m.Fecha).ToList();
 
 

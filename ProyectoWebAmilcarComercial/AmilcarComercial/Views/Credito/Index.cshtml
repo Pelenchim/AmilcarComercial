@@ -41,6 +41,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Factura</th>
+                        <th>Estado</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
                         <th>Tipo Venta</th>
@@ -84,10 +85,20 @@
                     $(".listado-ventas table tbody").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
+                            var estado, color;
+                            if (value.Estado === true) {
+                                estado = "Aprovada";
+                                color = "green";
+                            }
+                            else {
+                                estado = "Anulada";
+                                color = "red";
+                            }
                             $(".listado-credito table tbody").append(
                                 '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
                                 '<td>' + value.Venta + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
+                                '<td><span class="' + color + ' badge estado">' + estado + '</span></td>' +
                                 '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
                                 '<td>' + value.Fecha + '</td>' +
                                 '<td>' + value.Tipo + '</td>' +

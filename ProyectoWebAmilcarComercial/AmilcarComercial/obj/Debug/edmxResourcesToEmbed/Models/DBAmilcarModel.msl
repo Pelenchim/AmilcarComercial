@@ -202,6 +202,7 @@
     <EntitySetMapping Name="Tbl_Compra">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Compra">
         <MappingFragment StoreEntitySet="Tbl_Compra">
+          <ScalarProperty Name="estado_compra" ColumnName="estado_compra" />
           <ScalarProperty Name="id_compra" ColumnName="id_compra" />
           <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
           <ScalarProperty Name="fecha_compra" ColumnName="fecha_compra" />
@@ -376,12 +377,12 @@
     <EntitySetMapping Name="Tbl_Orden">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Orden">
         <MappingFragment StoreEntitySet="Tbl_Orden">
+          <ScalarProperty Name="estado" ColumnName="estado" />
           <ScalarProperty Name="id_orden" ColumnName="id_orden" />
           <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
           <ScalarProperty Name="usuario" ColumnName="usuario" />
           <ScalarProperty Name="fecha_orden" ColumnName="fecha_orden" />
           <ScalarProperty Name="iva_orden" ColumnName="iva_orden" />
-          <ScalarProperty Name="estado_orden" ColumnName="estado_orden" />
           <ScalarProperty Name="tipo_orden" ColumnName="tipo_orden" />
           <ScalarProperty Name="fact_Orden" ColumnName="fact_Orden" />
           <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />

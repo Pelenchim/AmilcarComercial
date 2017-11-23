@@ -12,6 +12,7 @@ namespace AmilcarComercial.Controllers
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
+        #region vistas
         // GET: Ventas
         public ActionResult Index()
         {
@@ -23,10 +24,12 @@ namespace AmilcarComercial.Controllers
             return View();
         }
 
-        public ActionResult Facturado()
+        [Route("contado/facturado/{id}")]
+        public ActionResult Facturado(string id)
         {
             return View();
-        }
+        } 
+        #endregion
 
         [Route("ventas/obtener/generales")]
         [HttpGet]
@@ -182,6 +185,44 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
+        public int guardarCliente()
+        {
+            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault().nuevo;
+
+            if (nuevo == true)
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+
+                Tbl_Clientes cliente = new Tbl_Clientes()
+                {
+                    nombre_cliente = clienteTmp.nombre_cliente,
+                    apellidos_cliente = clienteTmp.apellidos_cliente,
+                    direccion = clienteTmp.direccion,
+                    departamento = clienteTmp.departamento,
+                    telefono = (int)clienteTmp.telefono,
+                    cedula = clienteTmp.cedula,
+                    estado = true
+                };
+                db.Tbl_Clientes.Add(cliente);
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
+                return ultimo;
+            }
+            else
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var id = clienteTmp.id_cliente;
+
+                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                return cliente;
+            }
+        }
+
         #endregion
 
         #region Articulos
@@ -295,38 +336,44 @@ namespace AmilcarComercial.Controllers
 
         #region Facturacion
 
-        [Route("ventas/facturar")]
+        [Route("contado/facturar")]
         [HttpGet]
         public JsonResult Facturar(Tbl_Orden venta)
         {
-            bool data = false;
+            string[] valores = new string[2];
+            valores[0] = "false";
 
             using (var tran = db.Database.BeginTransaction())
             {
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
-                    var cliente = guardarCliente(); 
+                    var fecha = DateTime.Now.Date;
+                    var cliente = guardarCliente();
 
                     Tbl_Orden maestro = new Tbl_Orden()
                     {
                         id_sucursal = (int)suc,
                         usuario = User.Identity.Name,
-                        fecha_orden = DateTime.Now,
+                        fecha_orden = fecha,
                         iva_orden = venta.iva_orden,
-                        estado_orden = "nose",
-                        tipo_orden = venta.tipo_orden,
-                        fact_Orden = "df",
+                        estado = true,
+                        tipo_orden = "Contado",
+                        fact_Orden = venta.fact_Orden,
                         id_cliente = cliente,
                         tipo_pago = venta.tipo_pago
                     };
                     db.Tbl_Orden.Add(maestro);
                     db.SaveChanges();
 
-                    var detalleTmp = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name).ToList();
+                    var detalleTmp = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
 
                     foreach (var articulo in detalleTmp)
                     {
+                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_Articulo).FirstOrDefault();
+                        stock.stock = (int)stock.stock - (int)articulo.cantidad;
+                        db.SaveChanges();
+
                         Tbl_Kardex kardex = new Tbl_Kardex()
                         {
                             id_articulo = (int)articulo.id_Articulo,
@@ -334,17 +381,13 @@ namespace AmilcarComercial.Controllers
                             num_factura = maestro.fact_Orden,
                             Entrada = 0,
                             salida = (int)articulo.cantidad,
-                            saldo = (int)articulo.cantidad,
+                            saldo = (int)stock.stock,
                             ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
                             id_sucursal = (int)suc
                         };
                         db.Tbl_Kardex.Add(kardex);
-                        db.SaveChanges();
-
-                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_Articulo).FirstOrDefault();
-                        stock.stock = (int)stock.stock - (int)articulo.cantidad;
                         db.SaveChanges();
 
                         Tbl_Detalle_Orden detalle = new Tbl_Detalle_Orden()
@@ -363,7 +406,8 @@ namespace AmilcarComercial.Controllers
                     db.SaveChanges();
 
                     tran.Commit();
-                    data = true;
+                    valores[0] = "true";
+                    valores[1] = (maestro.id_orden + 1).ToString();
                 }
                 catch (Exception ex)
                 {
@@ -371,7 +415,7 @@ namespace AmilcarComercial.Controllers
                 }
             }
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(new { data = valores }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("contado/cancelar")]
@@ -395,44 +439,6 @@ namespace AmilcarComercial.Controllers
             return Json(Url.Action("Index","Contado"));
         }
 
-        public int guardarCliente()
-        {
-            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-
-                Tbl_Clientes cliente = new Tbl_Clientes()
-                {
-                    nombre_cliente = clienteTmp.nombre_cliente,
-                    apellidos_cliente = clienteTmp.apellidos_cliente,
-                    direccion = clienteTmp.direccion,
-                    departamento = clienteTmp.departamento,
-                    telefono = (int)clienteTmp.telefono,
-                    cedula = clienteTmp.cedula,
-                    estado = true
-                };
-                db.Tbl_Clientes.Add(cliente);
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
-                return ultimo;
-            }
-            else
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                var id = clienteTmp.id_cliente;
-
-                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                return cliente;
-            }
-        }
-
         #endregion
 
         #region ListaVentas
@@ -453,7 +459,8 @@ namespace AmilcarComercial.Controllers
                               ClienteNom = v.Tbl_Clientes.nombre_cliente,
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
-                              PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta)
+                              PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta),
+                              Estado = v.estado                            
                           }).OrderByDescending(m => m.Fecha).ToList();
 
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
