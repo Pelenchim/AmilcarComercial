@@ -10,6 +10,7 @@
         endingTop: '10%'
     });
     $('.tooltipped').tooltip({ delay: 50 });
+    var cliente = false, articulo = false;
     var total, subTotal, cantidadTotal, iva, prima;
     mostrarClienteTmp();
     mostrarProductosTmp(1);
@@ -39,6 +40,7 @@ function generales() {
                 '<p><strong class="left">Vendedor: </strong> <span class="right">' + data[1] + '</span></p>' +
                 '</div>'
             );
+            $("#N_factura").val(data[4]);
             $("#pre-General").css("display", "none");
         },
         'error': function (request, error) {
@@ -217,6 +219,7 @@ function mostrarClienteTmp() {
                     '<button class="btn btn-flat green white-text" onclick="clientes()">Buscar</button>' +
                     '</div>'
                 );
+                cliente = false;
             }
             else {
                 $(".cliente .opcionesCliente a").show();
@@ -232,6 +235,7 @@ function mostrarClienteTmp() {
                     '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
                     '</div>' 
                 );
+                cliente = true;
             }
             $("#pre-Cliente").css("display", "none");
         },
@@ -397,7 +401,8 @@ function mostrarProductosTmp(view) {
                     '<a class="btn btn-large white grey-text text-darken-2" onclick="abrirArticulos()">Seleccionar</a>' +
                     '</div > '
                 );
-                //detalles(0, 0);
+                detalles();
+                articulo = false;
                 $("#pre-ArticulosOrden").css("display", "none");
             }
             else {
@@ -407,6 +412,7 @@ function mostrarProductosTmp(view) {
                 if (view === 1) {
                     articulosOrdenTable(data);
                 }
+                articulo = true;
             }
             $("#pre-ArticulosOrden").css("display", "none");
         },
@@ -729,9 +735,8 @@ function cancelarVenta() {
     });
 }
 function facturar() {
-
-    if (proveedor === false) {
-        Materialize.toast("Debe definir un proveedor", 3000);
+    if (cliente === false) {
+        Materialize.toast("Debe definir un cliente", 3000);
         return;
     }
     if (articulo === false) {
@@ -740,20 +745,20 @@ function facturar() {
     }
 
     var datos = {
-        fact_compra: $("#N_factura").val(),
-        tipo_comprobante_compra: $('#comprobante').val(),
-        iva_compra: $('#iva').val()
+        fact_Orden: $("#N_factura").val(),
+        iva_orden: $("#iva").val(),
+        tipo_pago: $("#tipoPago").val()
     };
 
     $.ajax({
-        url: '/compras/facturar',
+        url: '/credito/facturar',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
         data: datos,
         'success': function (data) {
             if (data === true) {
-                window.location.href = "/Compras/Index";
+                window.location.href = '/credito/facturado';
             }
             else {
                 Materialize.toast('Error, no se pudo realizar la compra', 2000);

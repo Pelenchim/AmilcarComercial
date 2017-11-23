@@ -1,7 +1,63 @@
 ﻿
 @{
-    ViewBag.Title = "Facturado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Venta Finalizada";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
 }
 
-<h2>Facturado</h2>
+<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+    <div class="nav-wrapper">
+        <div class="col l12">
+            <a href="#" class="breadcrumb">@ViewBag.Title</a>
+        </div>
+    </div>
+</nav>
 
+<div class="detalleVenta row">
+    <div class="col l4 offset-l4 white border-radius-4 z-depth-1">
+        <div class="title col l12 center">
+            <p><i class="material-icons green-text">check_circle</i></p>
+            <p>Venta Realizada Exitosamente</p>
+        </div>
+        <div class="detalle col l12 center"></div>
+    </div>
+    <div class="col l12 center">
+        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Ventas">Lista</a>
+        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
+        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Venta">Anular</a>
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Apartado")"><i class="material-icons">add</i></a>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            detalle();
+        });
+        function detalle() {
+            $.ajax({
+                url: '/apartado/detallefactura',
+                type: 'GET',
+                contentType: "application/json",
+                'success': function (data) {
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".detalleVenta .detalle").append(
+                                '<p><span></span><span>' + value.SubTotal + '</span></p>' +
+                                '<div class="divider-mio"></div>' +
+                                '<p><span></span><span>' + value.PagoTotal + '</span></p>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    </script>
+}

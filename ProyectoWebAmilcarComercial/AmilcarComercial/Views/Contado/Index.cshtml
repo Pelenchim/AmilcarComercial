@@ -7,12 +7,12 @@
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
-<div class="ventas">
-    <div class="ventas-content row">
+<div class="contado">
+    <div class="contado-content row">
         <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
             @Html.Partial("_breadcrumbPartial")
         </nav>
-        <div class="ventas-opciones col l12">
+        <div class="contado-opciones col l12">
             <div class="option-bar col l6 offset-l3 white z-depth-1 border-radius-2">
                 <form class="col l10">
                     <div class="input-field col l8">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="listado-ventas container-mio">
+        <div class="listado-contado container-mio">
             <table class="bordered highlight white z-depth-1">
                 <thead>
                     <tr>
@@ -45,7 +45,6 @@
                         <th>Estado</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
-                        <th>Tipo Venta</th>
                         <th>Articulos</th>
                         <th>Pago Total</th>
                     </tr>
@@ -66,8 +65,7 @@
             </ul>
         </div>
     </div>
-
-    <aside class="ventas-details show white z-depth-1">
+    <aside class="contado-details show white z-depth-1">
         <div class="row z-depth-1-half">
             <div class="col l12 blue darken-1 title">
                 <h5><i class="material-icons left">business_center</i>Detalle de Venta<i class="material-icons right info-sidenav">clear</i></h5>
@@ -84,7 +82,6 @@
             <div id="detalle" class="detalle col s12"></div>
         </div>
     </aside>
-
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Contado")"><i class="material-icons">add</i></a>
     </div>
@@ -93,17 +90,17 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".ventas .info-sidenav").click(function () {
-                if ($(".ventas .ventas-details").hasClass('show')) {
-                    $(".ventas .ventas-details").css("right", "0px");
-                    $(".ventas .ventas-content").css("padding", "0 280px 0 0");
-                    $(".ventas .ventas-details").toggleClass('show hiden');
+            $(".contado .info-sidenav").click(function () {
+                if ($(".contado .contado-details").hasClass('show')) {
+                    $(".contado .contado-details").css("right", "0px");
+                    $(".contado .contado-content").css("padding", "0 280px 0 0");
+                    $(".contado .contado-details").toggleClass('show hiden');
                 }
-                else if ($(".ventas .ventas-details").hasClass('hiden')) {
-                    $(".ventas .ventas-details").css("right", "-300px");
-                    $(".ventas .ventas-content").css("padding", "0");
-                    $(".ventas .ventas-details").toggleClass('show hiden');
-                    $(".ventas .listado-ventas table tbody .item").removeClass("active");
+                else if ($(".contado .contado-details").hasClass('hiden')) {
+                    $(".contado .contado-details").css("right", "-300px");
+                    $(".contado .contado-content").css("padding", "0");
+                    $(".contado .contado-details").toggleClass('show hiden');
+                    $(".contado .listado-contado table tbody .item").removeClass("active");
                     vacio();
                 }
             });
@@ -111,25 +108,25 @@
             $('select').material_select();
             listaVentas();
             vacio();
-            $(".ventas .listado-ventas table tbody").on('click', '.item', function () {
-                $(".ventas .listado-ventas table tbody .item").removeClass("active");
+            $(".contado .listado-contado table tbody").on('click', '.item', function () {
+                $(".contado .listado-contado table tbody .item").removeClass("active");
                 $(this).addClass("active");
             });
-            $('.ventas .ventas-content, .ventas .ventas-content .ventas-opciones, .ventas .ventas-content .paginacion').on('click', function (e) {
+            $('.contado .contado-content, .contado .contado-content .contado-opciones, .contado .contado-content .paginacion').on('click', function (e) {
                 if (e.target !== this)
                     return;
-                $(".ventas .listado-ventas table tbody .item").removeClass("active");
+                $(".contado .listado-contado table tbody .item").removeClass("active");
                 vacio();
             });
         });
         function listaVentas() {
             $.ajax({
-                url: '/ventas/listaventas',
+                url: '/contado/listaventas',
                 type: 'GET',
                 contentType: "application/json",
                 dataType: "json",
                 'success': function (data) {
-                    $(".listado-ventas table tbody").empty();
+                    $(".listado-contado table tbody").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
                             var estado, color;
@@ -141,14 +138,13 @@
                                 estado = "Anulada";
                                 color = "red";
                             }
-                            $(".listado-ventas table tbody").append(
+                            $(".listado-contado table tbody").append(
                                 '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
                                 '<td>' + value.Venta + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
                                 '<td><span class="' + color + ' badge estado">' + estado + '</span></td>' +
                                 '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
                                 '<td>' + value.Fecha + '</td>' +
-                                '<td>' + value.Tipo + '</td>' +
                                 '<td>' + value.Articulos + ' Unidades</td>' +
                                 '<td>C$ ' + value.PagoTotal + '</td>' +
                                 '</tr>'
@@ -162,9 +158,9 @@
             });
         }
         function vacio() {
-            $(".ventas-details .general").empty();
-            $(".ventas-details .detalle").empty();
-            $(".ventas-details .general").append(
+            $(".contado-details .general").empty();
+            $(".contado-details .detalle").empty();
+            $(".contado-details .general").append(
                 '<div class="no-selected">' +
                 '<div class="center">' +
                 '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
@@ -172,7 +168,7 @@
                 '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>' +
                 '</div>'
             );
-            $(".ventas-details .detalle").append(
+            $(".contado-details .detalle").append(
                 '<div class="no-selected">' +
                 '<div class="center">' +
                 '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
@@ -188,15 +184,15 @@
         }
         function detalleVentaGeneral(id) {
             $.ajax({
-                url: '/ventas/detalleventa/general/' + id,
+                url: '/contado/detalleventa/general/' + id,
                 type: 'GET',
                 contentType: "application/json",
                 dataType: "json",
                 'success': function (data) {
-                    $(".ventas-details .general").empty();
+                    $(".contado-details .general").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
-                            $(".ventas-details .general").append(
+                            $(".contado-details .general").append(
                                 '<div>' +
                                 '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
                                 '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
@@ -223,15 +219,15 @@
         }
         function detalleVentaEspecifico(id) {
             $.ajax({
-                url: '/ventas/detalleventa/especifico/' + id,
+                url: '/contado/detalleventa/especifico/' + id,
                 type: 'GET',
                 contentType: "application/json",
                 dataType: "json",
                 'success': function (data) {
-                    $(".ventas-details .detalle").empty();
+                    $(".contado-details .detalle").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
-                            $(".ventas-details .detalle").append(
+                            $(".contado-details .detalle").append(
                                 '<div class="individual col l12">' +
                                 '<div class="col l2">' +
                                 '<img src="/Content/images/articulos/' + value.Img + '">' +

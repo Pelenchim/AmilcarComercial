@@ -44,7 +44,6 @@
                         <th>Estado</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
-                        <th>Tipo Venta</th>
                         <th>Articulos</th>
                         <th>Pago Total</th>
                     </tr>
@@ -64,7 +63,23 @@
             </ul>
         </div>
     </div>
-
+    <aside class="apartado-details show white z-depth-1">
+        <div class="row z-depth-1-half">
+            <div class="col l12 blue darken-1 title">
+                <h5><i class="material-icons left">business_center</i>Detalle de Venta<i class="material-icons right info-sidenav">clear</i></h5>
+            </div>
+            <div class="col l12 blue darken-1">
+                <ul class="tabs blue darken-1">
+                    <li class="tab col l6"><a class="active" href="#general">General</a></li>
+                    <li class="tab col l6"><a href="#detalle">Detalle</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="general" class="general col s12"></div>
+            <div id="detalle" class="detalle col s12"></div>
+        </div>
+    </aside>
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Apartado")"><i class="material-icons">add</i></a>
     </div>
@@ -73,8 +88,34 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            $(".apartado .info-sidenav").click(function () {
+                if ($(".apartado .apartado-details").hasClass('show')) {
+                    $(".apartado .apartado-details").css("right", "0px");
+                    $(".apartado .apartado-content").css("padding", "0 280px 0 0");
+                    $(".apartado .apartado-details").toggleClass('show hiden');
+                }
+                else if ($(".apartado .apartado-details").hasClass('hiden')) {
+                    $(".apartado .apartado-details").css("right", "-300px");
+                    $(".apartado .apartado-content").css("padding", "0");
+                    $(".apartado .apartado-details").toggleClass('show hiden');
+                    $(".apartado .listado-apartado table tbody .item").removeClass("active");
+                    vacio();
+                }
+            });
+            $('ul.tabs').tabs();
+            $('select').material_select();
             listaVentas();
-        });
+            vacio();
+            $(".apartado .listado-apartado table tbody").on('click', '.item', function () {
+                $(".apartado .listado-apartado table tbody .item").removeClass("active");
+                $(this).addClass("active");
+            });
+            $('.apartado .apartado-content, .apartado .apartado-content .apartado-opciones, .apartado .apartado-content .paginacion').on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                $(".apartado .listado-apartado table tbody .item").removeClass("active");
+                vacio();
+            });        });
         function listaVentas() {
             $.ajax({
                 url: '/apartado/listaventas',
@@ -101,10 +142,103 @@
                                 '<td><span class="' + color + ' badge estado">' + estado + '</span></td>' +
                                 '<td>' + value.ClienteNom + ' ' + value.ClienteApell + '</td>' +
                                 '<td>' + value.Fecha + '</td>' +
-                                '<td>' + value.Tipo + '</td>' +
                                 '<td>' + value.Articulos + ' Unidades</td>' +
                                 '<td>C$ ' + value.PagoTotal + '</td>' +
                                 '</tr>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function vacio() {
+            $(".apartado-details .general").empty();
+            $(".apartado-details .detalle").empty();
+            $(".apartado-details .general").append(
+                '<div class="no-selected">' +
+                '<div class="center">' +
+                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
+                '</div>' +
+                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>' +
+                '</div>'
+            );
+            $(".apartado-details .detalle").append(
+                '<div class="no-selected">' +
+                '<div class="center">' +
+                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
+                '</div>' +
+                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni un venta para ver la informacion</p>' +
+                '</div>'
+            );
+        }
+        function informacionVenta(id) {
+            var id = id;
+            detalleVentaGeneral(id);
+            detalleVentaEspecifico(id);
+        }
+        function detalleVentaGeneral(id) {
+            $.ajax({
+                url: '/apartado/detalleventa/general/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".apartado-details .general").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".apartado-details .general").append(
+                                '<div>' +
+                                '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
+                                '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
+                                '<p><span class="left">Vendedor</span>' + value.Usuario + '</p>' +
+                                '<p><span class="left">Cliente</span>' + value.ClienteN + ' ' + value.ClienteA + '</p>' +
+                                '<p><span class="left">Sucursal</span>' + value.Sucursal + '</p>' +
+                                '<p><span class="left">Fecha</span>' + value.Fecha + '</td>' +
+                                '<p><span class="left">Tipos Articulos</span>' + value.Articulos + '</p>' +
+                                '<p><span class="left">Cantidad Articulos</span>' + value.CantidadTotal + ' Unds</p>' +
+                                '<p><span class="left">SubTotal</span>C$ ' + value.SubTotal + '</p>' +
+                                '<p><span class="left">Iva %</span>' + value.Iva + '%</p>' +
+                                '<p><span class="left">Iva Total</span>C$ ' + value.Iva + '</p>' +
+                                '<p><span class="left">Descuento Total</span>C$ ' + value.DescuentoTotal + '</p>' +
+                                '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
+                                '</div>'
+                            );
+                        });
+                    });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function detalleVentaEspecifico(id) {
+            $.ajax({
+                url: '/apartado/detalleventa/especifico/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    $(".apartado-details .detalle").empty();
+                    $.each(data, function () {
+                        $.each(this, function (name, value) {
+                            $(".apartado-details .detalle").append(
+                                '<div class="individual col l12">' +
+                                '<div class="col l2">' +
+                                '<img src="/Content/images/articulos/' + value.Img + '">' +
+                                '</div>' +
+                                '<div class="col l10">' +
+                                '<p class="name"><strong>' + value.Articulo + '</strong></p>' +
+                                '<p class="cate">' + value.Categoria + '</p>' +
+                                '</div>' +
+                                '<div class="col l12">' +
+                                '<p><span>Cant: ' + value.Cantidad + ' </span>' + '<span class="right">Costo: ' + value.Costo + '</span>' + '</p>' +
+                                '<p><span>SubTotal: ' + value.SubTotal + ' </span>' + '<span class="right">Total: ' + value.Total + '</span>' + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col l12 divider-mio"></div>'
                             );
                         });
                     });

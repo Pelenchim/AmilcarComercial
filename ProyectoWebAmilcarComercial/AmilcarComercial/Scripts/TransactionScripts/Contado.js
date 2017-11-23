@@ -635,12 +635,12 @@ function facturar() {
         dataType: "json",
         data: datos,
         'success': function (data) {
-            //if (data[0] === "true") {
-                window.location.href = '/contado/facturado/' + data[1];
-            //}
-            //else if(data[0] === "false") {
-            //    Materialize.toast('Error, no se pudo realizar la compra', 2000);
-            //}
+            if (data === true) {
+                window.location.href = '/contado/facturado';
+            }
+            else {
+                Materialize.toast('Error, no se pudo realizar la compra', 2000);
+            }
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));

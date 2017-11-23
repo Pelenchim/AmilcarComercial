@@ -24,8 +24,8 @@ namespace AmilcarComercial.Controllers
             return View();
         }
 
-        [Route("contado/facturado/{id}")]
-        public ActionResult Facturado(string id)
+        [Route("contado/facturado")]
+        public ActionResult Facturado()
         {
             return View();
         } 
@@ -35,7 +35,6 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult Generales()
         {
-
             var ID_sucursal = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
             var sucursal = db.Tbl_Sucursal.FirstOrDefault(m => m.id_sucursal == ID_sucursal).Nombre;
             var venta = (db.Tbl_Orden.OrderByDescending(m => m.id_orden).First().id_orden + 1).ToString();
@@ -340,8 +339,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult Facturar(Tbl_Orden venta)
         {
-            string[] valores = new string[2];
-            valores[0] = "false";
+            var dato = false;
 
             using (var tran = db.Database.BeginTransaction())
             {
@@ -406,8 +404,7 @@ namespace AmilcarComercial.Controllers
                     db.SaveChanges();
 
                     tran.Commit();
-                    valores[0] = "true";
-                    valores[1] = (maestro.id_orden + 1).ToString();
+                    dato = true;
                 }
                 catch (Exception ex)
                 {
@@ -415,12 +412,12 @@ namespace AmilcarComercial.Controllers
                 }
             }
 
-            return Json(new { data = valores }, JsonRequestBehavior.AllowGet);
+            return Json(dato , JsonRequestBehavior.AllowGet);
         }
 
         [Route("contado/cancelar")]
         [HttpPost]
-        public JsonResult CancelarCompra()
+        public JsonResult CancelarVenta()
         {
             var cliente = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
             var articulos = db.Tbl_OrdenTmp.Where(m => m.user == User.Identity.Name && m.tipoventa == "Contado").ToList();
@@ -439,11 +436,20 @@ namespace AmilcarComercial.Controllers
             return Json(Url.Action("Index","Contado"));
         }
 
+        [Route("contado/detallefactura")]
+        public ActionResult Detalle()
+        {
+            var ultimo = db.Tbl_Orden.Where(m => m.usuario == User.Identity.Name && m.tipo_orden == "Contado")
+                        .OrderByDescending(m => m.id_orden).First().id_orden;
+
+            return RedirectToAction("DetalleVentaGeneral", new { id = ultimo });
+        }
+
         #endregion
 
         #region ListaVentas
 
-        [Route("ventas/listaventas")]
+        [Route("contado/listaventas")]
         [HttpGet]
         public JsonResult ListaVentas()
         {
@@ -455,7 +461,6 @@ namespace AmilcarComercial.Controllers
                               Venta = v.id_orden,
                               Fecha = v.fecha_orden.ToString(),
                               Factura = v.fact_Orden,
-                              Tipo = v.tipo_orden,
                               ClienteNom = v.Tbl_Clientes.nombre_cliente,
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
@@ -466,7 +471,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/detalleventa/general/{id}")]
+        [Route("contado/detalleventa/general/{id}")]
         [HttpGet]
         public JsonResult DetalleVentaGeneral(int id)
         {
@@ -492,7 +497,7 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/detalleventa/especifico/{id}")]
+        [Route("contado/detalleventa/especifico/{id}")]
         [HttpGet]
         public JsonResult DetalleVentaEspecifico(int id)
         {

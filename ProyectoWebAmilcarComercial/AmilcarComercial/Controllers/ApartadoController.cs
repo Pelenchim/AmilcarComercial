@@ -22,8 +22,8 @@ namespace AmilcarComercial.Controllers
         {
             return View();
         }
-        [Route("apartado/facturado/{id}")]
-        public ActionResult Facturado(string id)
+        [Route("apartado/facturado")]
+        public ActionResult Facturado()
         {
             return View();
         } 
@@ -33,14 +33,19 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult Generales()
         {
+            var ID_sucursal = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+            var sucursal = db.Tbl_Sucursal.FirstOrDefault(m => m.id_sucursal == ID_sucursal).Nombre;
             var venta = (db.Tbl_Orden.OrderByDescending(m => m.id_orden).First().id_orden + 1).ToString();
             var UserLastName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().LastName;
             var UserFirtsName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().FirstName;
+            var fact = String.Concat("Apart" + venta);
 
             List<string> lista = new List<string>();
             lista.Add(DateTime.Now.ToString());
             lista.Add((UserFirtsName + ' ' + UserLastName).ToString());
+            lista.Add(sucursal);
             lista.Add(venta);
+            lista.Add(fact);
 
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
@@ -341,8 +346,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult Facturar(Tbl_Orden venta)
         {
-            string[] valores = new string[2];
-            valores[0] = "false";
+            var dato = false;
 
             using (var tran = db.Database.BeginTransaction())
             {
@@ -407,8 +411,7 @@ namespace AmilcarComercial.Controllers
                     db.SaveChanges();
 
                     tran.Commit();
-                    valores[0] = "true";
-                    valores[1] = (maestro.id_orden + 1).ToString();
+                    dato = true;
                 }
                 catch (Exception ex)
                 {
@@ -416,7 +419,7 @@ namespace AmilcarComercial.Controllers
                 }
             }
 
-            return Json(new { data = valores }, JsonRequestBehavior.AllowGet);
+            return Json(dato, JsonRequestBehavior.AllowGet);
         }
 
         [Route("apartado/cancelar")]
@@ -440,8 +443,18 @@ namespace AmilcarComercial.Controllers
             return Json(Url.Action("Index", "Apartado"));
         }
 
+        [Route("apartado/detallefactura")]
+        public ActionResult Detalle()
+        {
+            var ultimo = db.Tbl_Orden.Where(m => m.usuario == User.Identity.Name && m.tipo_orden == "Apartado")
+                        .OrderByDescending(m => m.id_orden).First().id_orden;
+
+            return RedirectToAction("DetalleVentaGeneral", new { id = ultimo });
+        }
+
         #endregion
 
+        #region ListaVentas
         [Route("apartado/listaventas")]
         [HttpGet]
         public JsonResult ListaVentas()
@@ -464,5 +477,53 @@ namespace AmilcarComercial.Controllers
 
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
         }
+
+        [Route("apartado/detalleventa/general/{id}")]
+        [HttpGet]
+        public JsonResult DetalleVentaGeneral(int id)
+        {
+            var detalle = from c in db.Tbl_Orden
+                          where c.usuario == User.Identity.Name && c.id_orden == id
+                          select new
+                          {
+                              Usuario = c.usuario,
+                              Venta = c.id_orden,
+                              Factura = c.fact_Orden,
+                              Fecha = c.fecha_orden.ToString(),
+                              ClienteN = c.Tbl_Clientes.nombre_cliente,
+                              ClienteA = c.Tbl_Clientes.apellidos_cliente,
+                              Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Count(),
+                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
+                              Iva = c.iva_orden,
+                              DescuentoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.descuento),
+                              SubTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta),
+                              PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
+                              Sucursal = c.Tbl_Sucursal.Nombre
+                          };
+
+            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("apartado/detalleventa/especifico/{id}")]
+        [HttpGet]
+        public JsonResult DetalleVentaEspecifico(int id)
+        {
+            var detalle = (from c in db.Tbl_Detalle_Orden
+                           where c.id_orden == id
+                           select new
+                           {
+                               Articulo = c.Tbl_Articulo.nombre_articulo,
+                               Img = c.Tbl_Articulo.imagen,
+                               Categoria = c.Tbl_Articulo.Tbl_Categorias.Nombre,
+                               Cantidad = c.cantidad,
+                               Descuento = c.descuento,
+                               Precio = c.precio_venta,
+                               SubTotal = c.cantidad * c.precio_venta,
+                               Total = ((c.cantidad * c.precio_venta) - c.descuento) * c.Tbl_Orden.iva_orden
+                           }).ToList();
+
+            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
+        } 
+        #endregion
     }
 }

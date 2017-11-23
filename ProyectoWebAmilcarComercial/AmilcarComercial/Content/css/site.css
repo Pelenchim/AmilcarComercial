@@ -1571,80 +1571,11 @@ background-color: #37474f;
     color: #444 !important;
 }
 
-/*#endregion */
-
-/*#region Contado */
-
-.ventas{
-}
-.ventas .ventas-content {
-    padding: 0;
-    transition: padding 0.3s ease-in;
-}
-.ventas .ventas-content .ventas-opciones {
-    padding: 30px 0 40px 0;
-}
-.ventas .ventas-content .ventas-opciones .icons,
-.ventas .ventas-content .ventas-opciones form,
-.ventas .ventas-content .ventas-opciones form .col:not(.filtro),
-.ventas .ventas-content .ventas-opciones form .search {
-    padding: 0;
-}
-
-.ventas .ventas-content .ventas-opciones input.select-dropdown {
-    border-bottom: 0px solid #000;
-    box-shadow: 0 0 0 0 #000;
-}
-
-.ventas .ventas-content .ventas-opciones .search a {
-    width: 100%;
-    height: 90%;
-    margin-top: 1px;
-}
-
-.ventas .ventas-content .ventas-opciones .icons i {
-    height: 35px;
-    line-height: 35px;
-    margin: 7px 0;
-    padding: 0 5px;
-}
-.ventas .ventas-content .ventas-opciones .icons .last i {
-    border-left: 1px solid grey;
-    padding-left: 10px;
-}
-.ventas .listado-ventas table{
-    border-radius: 2px;
-}
-.ventas .listado-ventas table thead tr th:first-child{
-    padding-left: 20px;
-}
-.ventas .listado-ventas table tbody tr td:first-child {
-    padding-left: 20px;
-}
-.ventas .listado-ventas table tbody tr:last-child
-{
-    border-bottom: 0px solid grey;
-}
-.ventas .listado-ventas table tbody tr {
-    cursor: pointer;
-}
-.ventas .listado-ventas table tbody tr.active {
-    background-color: #2196f3 !important;
-    border-bottom: 1px solid #fff;
-    color: #fff;
-}
-.ventas .pagination {
-    margin-top: 2rem;
-}
-.ventas .pagination li.active {
-    background-color: #2196f3;
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-}
-
 /*aside de detalles*/
 
-.ventas .ventas-details {
+.contado .contado-details,
+.apartado .apartado-details,
+.credito .credito-details{
     width: 300px;
     height: calc(100% - 50px);
     position: fixed;
@@ -1654,83 +1585,181 @@ background-color: #37474f;
     padding: 10px 0 30px 0;
     transition: all 0.3s ease-in;
 }
-
-.ventas .ventas-details .row {
+.contado .contado-details .row,
+.apartado .apartado-details .row,
+.credito .credito-details .row{
     margin-bottom: 0;
 }
-
-.ventas .ventas-details .title {
+.contado .contado-details .title,
+.apartado .apartado-details .title,
+.credito .credito-details .title{
     margin-bottom: 0;
     padding: 10px 15px;
 }
-.ventas .ventas-details .title i:last-child {
+.contado .contado-details .title i:last-child,
+.apartado .apartado-details .title i:last-child,
+.credito .credito-details .title i:last-child {
     color: rgba(255, 255, 255, 0.85);
     cursor: pointer;
 }
-.ventas .ventas-details .title i:last-child:hover {
+.contado .contado-details .title i:last-child:hover,
+.apartado .apartado-details .title i:last-child:hover,
+.credito .credito-details .title i:last-child:hover {
     color: rgba(255,255,255,1);
 }
-.ventas .ventas-details .title h5 {
+.contado .contado-details .title h5,
+.apartado .apartado-details .title h5,
+.credito .credito-details .title h5 {
     font-size: 1.3rem;
     color: #fff;
     line-height: 1.8rem;
 }
-.ventas .ventas-details .tabs .tab a {
+.contado .contado-details .tabs .tab a,
+.apartado .apartado-details .tabs .tab a,
+.credito .credito-details .tabs .tab a {
     color: #fff;
     font-weight: 500;
 }
-.ventas .ventas-details .tabs .indicator {
+.contado .contado-details .tabs .indicator,
+.apartado .apartado-details .tabs .indicator,
+.credito .credito-details .tabs .indicator {
     background-color: #fff !important;
     height: 3px;
 }
-.ventas .ventas-details .general,
-.ventas .ventas-details .detalle {
+.contado .contado-details .general,
+.contado .contado-details .detalle,
+.apartado .apartado-details .general,
+.apartado .apartado-details .detalle,
+.credito .credito-details .general,
+.credito .credito-details .detalle {
     padding: 5px 25px 20px 25px;
     position: absolute;
     height: calc(100% - 135px);
     overflow-y: auto;
     overflow-x: hidden;
 }
-.ventas .ventas-details .general .no-selected,
-.ventas .ventas-details .detalle .no-selected {
+.contado .contado-details .general .no-selected,
+.contado .contado-details .detalle .no-selected,
+.apartado .apartado-details .general .no-selected,
+.apartado .apartado-details .detalle .no-selected,
+.credito .credito-details .general .no-selected,
+.credito .credito-details .detalle .no-selected {
     margin-top: 2rem;
 }
-.ventas .ventas-details .general p:not(.no) {
+.contado .contado-details .general p:not(.no),
+.apartado .apartadoapartado-details .general p:not(.no),
+.credito .credito-details .general p:not(.no) {
     text-align: end;
     font-size: 13px;
 }
-.ventas .ventas-details .general p span {
+.contado .contado-details .general p span,
+.apartado .apartado-details .general p span,
+.credito .credito-details .general p span {
     color: rgba(0, 0, 0, 0.55);
 }
-
-.ventas .ventas-details .individual {
+.contado .contado-details .individual,
+.apartado .apartado-details .individual,
+.credito .credito-details .individual {
     padding: 15px 0 10px 0;
 }
-
-.ventas .ventas-details .detalle p:not(.no) {
+.contado .contado-details .detalle p:not(.no),
+.apartado .apartado-details .detalle p:not(.no),
+.credito .credito-details .detalle p:not(.no) {
     margin: 0;
     opacity: 0.9;
 }
-
-.ventas .ventas-details .detalle .individual .name {
+.contado .contado-details .detalle .individual .name,
+.apartado .apartado-details .detalle .individual .name,
+.credito .credito-details .detalle .individual .name {
     opacity: 0.85;
     padding-left: 5px;
 }
-
-.ventas .ventas-details .detalle .individual .cate {
+.contado .contado-details .detalle .individual .cate,
+.apartado .apartado-details .detalle .individual .cate,
+.credito .credito-details .detalle .individual .cate {
     padding-left: 5px;
 }
-
-.ventas .ventas-details .detalle .individual > .col {
+.contado .contado-details .detalle .individual > .col,
+.apartado .apartado-details .detalle .individual > .col,
+.credito .credito-details .detalle .individual > .col {
     padding: 0;
     margin: 0;
 }
-
-.ventas .ventas-details .detalle .individual img {
+.contado .contado-details .detalle .individual img,
+.apartado .apartado-details .detalle .individual img,
+.credito .credito-details .detalle .individual img {
     width: 100%;
     height: 40px;
     margin: 0;
     padding: 0;
+}
+
+/*#endregion */
+
+/*#region Contado */
+
+.contado{
+}
+.contado .contado-content {
+    padding: 0;
+    transition: padding 0.3s ease-in;
+}
+.contado .contado-content .contado-opciones {
+    padding: 30px 0 40px 0;
+}
+.contado .contado-content .contado-opciones .icons,
+.contado .contado-content .contado-opciones form,
+.contado .contado-content .contado-opciones form .col:not(.filtro),
+.contado .contado-content .contado-opciones form .search {
+    padding: 0;
+}
+
+.contado .contado-content .contado-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.contado .contado-content .contado-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.contado .contado-content .contado-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.contado .contado-content .contado-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.contado .listado-contado table {
+    border-radius: 2px;
+}
+.contado .listado-contado table thead tr th:first-child {
+    padding-left: 20px;
+}
+.contado .listado-contado table tbody tr td:first-child {
+    padding-left: 20px;
+}
+.contado .listado-contado table tbody tr:last-child {
+    border-bottom: 0px solid grey;
+}
+.contado .listado-contado table tbody tr {
+    cursor: pointer;
+}
+.contado .listado-contado table tbody tr.active {
+    background-color: #2196f3 !important;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+.contado .pagination {
+    margin-top: 2rem;
+}
+.contado .pagination li.active {
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 /*#endregion */
@@ -1905,9 +1934,38 @@ background-color: #37474f;
 
 /*#endregion */
 
+/*#region DetalleFactura */
+.detalleVenta{
+    padding-top: 4rem;
+}
+.detalleVenta>div:first-child{
+    margin-bottom: 2rem;
+}
+.detalleVenta .title{
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+.detalleVenta .title p{
+    margin: 0;
+}
+.detalleVenta .title p i{
+    font-size: 5rem;
+}
+.detalleVenta .title p:last-child {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #424242;
+}
+
+/*#endregion */
+
 /*#region Credito */
 
 .credito {
+}
+.credito .credito-content {
+    padding: 0;
+    transition: padding 0.3s ease-in;
 }
 .credito .credito-content .credito-opciones {
     padding: 30px 0 40px 0;
@@ -1937,35 +1995,30 @@ background-color: #37474f;
     border-left: 1px solid grey;
     padding-left: 10px;
 }
-.ventas .listado-ventas table {
+.credito .listado-credito table {
     border-radius: 2px;
 }
-.ventas .listado-ventas table thead tr th:first-child {
+.credito .listado-credito table thead tr th:first-child {
     padding-left: 20px;
 }
-
-.ventas .listado-ventas table tbody tr td:first-child {
+.credito .listado-credito table tbody tr td:first-child {
     padding-left: 20px;
 }
-
-.ventas .listado-ventas table tbody tr:last-child {
+.credito .listado-credito table tbody tr:last-child {
     border-bottom: 0px solid grey;
 }
 
-.ventas .listado-ventas table tbody tr {
+.credito .listado-credito table tbody tr {
     cursor: pointer;
 }
-
-.ventas .listado-ventas table tbody tr.active {
+.credito .listado-credito table tbody tr.active {
     background-color: #2196f3 !important;
     border-bottom: 1px solid #fff;
     color: #fff;
 }
-
 .credito .pagination {
     margin-top: 2rem;
 }
-
 .credito .pagination li.active {
     background-color: #2196f3;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -2119,6 +2172,10 @@ background-color: #37474f;
 /*#region Apartado */
 
 .apartado {
+}
+.apartado .apartado-content {
+    padding: 0;
+    transition: padding 0.3s ease-in;
 }
 .apartado .apartado-content .apartado-opciones {
     padding: 30px 0 40px 0;
