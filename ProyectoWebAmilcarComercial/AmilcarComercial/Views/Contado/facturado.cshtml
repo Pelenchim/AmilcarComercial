@@ -22,21 +22,33 @@
         </div>
         <div class="detalle col l12 center"></div>
     </div>
-    <div class="col l12 center">
-        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Ventas">Lista</a>
-        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
-        <a class="btn btn-large blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Venta">Anular</a>
+    <div class="col l4 offset-l4 blue border-radius-4 z-depth-1 center">
+        <a href="@Url.Action("Index","Contado")" class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Ventas">Lista</a>
+        <a class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
+        <a id="" class="anular btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Venta">Anular</a>
     </div>
 </div>
 
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Contado")"><i class="material-icons">add</i></a>
+</div>
+<div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large green pulse">
+        <i class="large material-icons">more_horiz</i>
+    </a>
+    <ul>
+        <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Nueva Venta"><a class="btn-floating blue" href="@Url.Action("Nueva","Contado")"><i class="material-icons">add</i></a></li>
+        <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Calcular Vuelto"><a class="btn-floating pink" href=""><i class="material-icons">attach_money</i></a></li>
+    </ul>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             detalle();
+            $(".anular").on("click", function () {
+                var id = $(this).attr("id");
+                anular(id);
+            });
         });
         function detalle() {
             $.ajax({
@@ -44,15 +56,32 @@
                 type: 'GET',
                 contentType: "application/json",
                 'success': function (data) {
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            $(".detalleVenta .detalle").append(
-                                '<p><span></span><span>' + value.SubTotal + '</span></p>' + 
-                                '<div class="divider-mio"></div>' +
-                                '<p><span></span><span>' + value.PagoTotal + '</span></p>'
-                            );
-                        });
-                    });
+                    $(".detalleVenta .detalle").append(
+                        '<p><span class="left">Cantidad de Articulos: </span><span class="right">' + data[0] + ' Unds</span></p>' +
+                        '<div class="divider-mio"></div>' +
+                        '<p><span class="left">SubTotal: </span><span class="right"> C$ ' + data[1].toFixed(2) + '</span></p>' +
+                        '<div class="divider-mio"></div>' +
+                            '<p><span class="left">Iva Total: </span><span class="right"> C$ ' + data[2].toFixed(2) + '</span></p>' +
+                        '<div class="divider-mio"></div>' +
+                        '<p><span class="left">Descuento Total: </span><span class="right"> C$ ' + data[3].toFixed(2) + '</span></p>' +
+                        '<div class="divider-mio"></div>' +
+                        '<p><span class="left">Total a Pagar: </span><span class="right"> C$ ' + data[4].toFixed(2) + '</span></p>'
+                    );
+                    $(".detalleVenta .anular").attr("id", data[5]);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function anular(id) {
+            $.ajax({
+                url: '/contado/anular/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    window.location.href = '/contado/index';
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));

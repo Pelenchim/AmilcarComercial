@@ -123,7 +123,7 @@
                 contentType: "application/json",
                 dataType: "json",
                 'success': function (data) {
-                    $(".listado-ventas table tbody").empty();
+                    $(".listado-apartado table tbody").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
                             var estado, color;
@@ -189,8 +189,20 @@
                     $(".apartado-details .general").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
+                            var color, estado;
+                            if (value.Estado === true) {
+                                estado = "Aprovada";
+                                color = "green";
+                            }
+                            else {
+                                estado = "Anulada";
+                                color = "red";
+                            }
                             $(".apartado-details .general").append(
                                 '<div>' +
+                                '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
+                                '<span class="white-text">Venta ' + estado + '</span>' +
+                                '</div>' +
                                 '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
                                 '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
                                 '<p><span class="left">Vendedor</span>' + value.Usuario + '</p>' +
@@ -206,6 +218,13 @@
                                 '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
                                 '</div>'
                             );
+                            if (value.Estado === true) {
+                                $(".apartado-details .general").append(
+                                    '<div class="center">' +
+                                    '<a class="btn btn-flat white grey-text text-darken-2" onclick="anular(' + value.Venta + ')">Anular Venta</a>' +
+                                    '</div > '
+                                );
+                            }
                         });
                     });
                 },
@@ -242,6 +261,22 @@
                             );
                         });
                     });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function anular(id) {
+            $.ajax({
+                url: '/apartado/anular/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    listaVentas();
+                    detalleVentaGeneral(id);
+                    alert(Eliminada);
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));

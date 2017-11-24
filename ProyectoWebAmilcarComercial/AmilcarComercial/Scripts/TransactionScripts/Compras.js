@@ -38,7 +38,7 @@ function generales() {
             $(".datosGenerales").append(
                 '<div class="col l6">' +
                 '<p class=""><strong>Compra N°: </strong>' + data[3] + '</p>' +
-                '<p class=""><strong>Gerente: </strong>' + data[1] + '</p>' +
+                '<p class="truncate"><strong>Gerente: </strong>' + data[1] + '</p>' +
                 '</div>' +
                 '<div class="col l6">' +
                 '<p class=""><strong>Fecha: </strong>' + data[0] + '</p>' +

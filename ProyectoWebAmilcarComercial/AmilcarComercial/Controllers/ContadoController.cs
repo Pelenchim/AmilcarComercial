@@ -31,7 +31,7 @@ namespace AmilcarComercial.Controllers
         } 
         #endregion
 
-        [Route("ventas/obtener/generales")]
+        [Route("contado/obtener/generales")]
         [HttpGet]
         public JsonResult Generales()
         {
@@ -50,6 +50,60 @@ namespace AmilcarComercial.Controllers
             lista.Add(fact);
 
             return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("contado/anular/{id}")]
+        [HttpGet]
+        public JsonResult AnularVenta(int id)
+        {
+            var dato = false;
+
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+
+                    var orden = db.Tbl_Orden.Where(m => m.id_orden == id).FirstOrDefault();
+                    orden.estado = false;
+                    db.SaveChanges();
+
+                    var detalleOrden = db.Tbl_Detalle_Orden.Where(m => m.id_orden == orden.id_orden).ToList();
+
+                    foreach (var articulo in detalleOrden)
+                    {
+                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
+                        stock.stock = (int)stock.stock + (int)articulo.cantidad;
+                        db.SaveChanges();
+
+                        Tbl_Kardex kardex = new Tbl_Kardex()
+                        {
+                            id_articulo = (int)articulo.id_articulo,
+                            fechaKardex = DateTime.Today,
+                            num_factura = orden.fact_Orden,
+                            salida = 0,
+                            Entrada = (int)articulo.cantidad,
+                            saldo = (int)stock.stock,
+                            ultimoCosto = 0,
+                            costoPromedio = 0,
+                            usuario = User.Identity.Name,
+                            id_sucursal = (int)suc
+                        };
+                        db.Tbl_Kardex.Add(kardex);
+                        db.SaveChanges();                        
+                    }
+                    db.SaveChanges();
+
+                    tran.Commit();
+                    dato = true;
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                }
+            }
+
+            return Json(dato, JsonRequestBehavior.AllowGet);
         }
 
         #region Clientes
@@ -346,7 +400,7 @@ namespace AmilcarComercial.Controllers
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
-                    var fecha = DateTime.Now.Date;
+                    var fecha = DateTime.Now;
                     var cliente = guardarCliente();
 
                     Tbl_Orden maestro = new Tbl_Orden()
@@ -437,12 +491,33 @@ namespace AmilcarComercial.Controllers
         }
 
         [Route("contado/detallefactura")]
-        public ActionResult Detalle()
+        public JsonResult Detalle()
         {
             var ultimo = db.Tbl_Orden.Where(m => m.usuario == User.Identity.Name && m.tipo_orden == "Contado")
-                        .OrderByDescending(m => m.id_orden).First().id_orden;
+                        .OrderByDescending(m => m.id_orden).First();
 
-            return RedirectToAction("DetalleVentaGeneral", new { id = ultimo });
+            var cantidad = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.cantidad);
+            var descuento = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.descuento);
+            var subtotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.precio_venta);
+            var ivatotal = subtotal * (ultimo.iva_orden / 100);
+            //var ivatotal = (from v in db.Tbl_Orden
+            //               where v.id_orden == ultimo
+            //               select new
+            //               {
+            //                   iva = (v.iva_orden / 100) * v.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).FirstOrDefault().precio_venta
+            //               }).Sum(m => m.iva);
+            var total = subtotal + ivatotal - descuento;
+            var id = ultimo.id_orden;
+
+            List<double> datos = new List<double>();
+            datos.Add(cantidad);
+            datos.Add(subtotal);
+            datos.Add(ivatotal);
+            datos.Add((double)descuento);
+            datos.Add((double)total);
+            datos.Add(id);
+
+            return Json(datos, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -491,7 +566,8 @@ namespace AmilcarComercial.Controllers
                               DescuentoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.descuento),
                               SubTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta),
                               PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad),
-                              Sucursal = c.Tbl_Sucursal.Nombre
+                              Sucursal = c.Tbl_Sucursal.Nombre,
+                              Estado = c.estado
                           };
 
             return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);

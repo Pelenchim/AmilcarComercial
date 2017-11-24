@@ -1647,7 +1647,7 @@ background-color: #37474f;
     margin-top: 2rem;
 }
 .contado .contado-details .general p:not(.no),
-.apartado .apartadoapartado-details .general p:not(.no),
+.apartado .apartado-details .general p:not(.no),
 .credito .credito-details .general p:not(.no) {
     text-align: end;
     font-size: 13px;
@@ -1693,7 +1693,6 @@ background-color: #37474f;
     margin: 0;
     padding: 0;
 }
-
 /*#endregion */
 
 /*#region Contado */
@@ -1935,26 +1934,43 @@ background-color: #37474f;
 /*#endregion */
 
 /*#region DetalleFactura */
-.detalleVenta{
+.detalleVenta,
+.detalleCompra{
     padding-top: 4rem;
 }
-.detalleVenta>div:first-child{
-    margin-bottom: 2rem;
+.detalleVenta > div:first-child,
+.detalleCompra > div:first-child {
+    margin-bottom: 1.5rem;
 }
-.detalleVenta .title{
+.detalleVenta .title,
+.detalleCompra .title {
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
 }
-.detalleVenta .title p{
+.detalleVenta .title p,
+.detalleCompra .title p {
     margin: 0;
 }
-.detalleVenta .title p i{
+.detalleVenta .title p i,
+.detalleCompra .title p i {
     font-size: 5rem;
 }
-.detalleVenta .title p:last-child {
+.detalleVenta .title p:last-child,
+.detalleCompra .title p:last-child {
     font-size: 1.5rem;
     font-weight: 600;
     color: #424242;
+}
+.detalleVenta .detalle,
+.detalleCompra .detalle {
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+}
+.detalleVenta .detalle p,
+.detalleCompra .detalle p {
+    margin: 0;
+    font-weight: 500;
+    color: #616161;
 }
 
 /*#endregion */

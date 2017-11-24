@@ -66,19 +66,74 @@
                                 <ul>
                                     <li>
                                         <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Contado" href="@Url.Action("Index","Contado")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono ventas"></i><span>Contado</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Listado Ventas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="@Url.Action("Index","Credito")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono credito"></i><span>Credito</span>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="@Url.Action("Nueva","Contado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nueva Venta</span>
+                                        </a>
+                                    </li> 
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas">
+                                <i class="icono credito left"></i>
+                                <span>Credito</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Contado" href="@Url.Action("Index","Credito")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Listado Creditos</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Index","Apartado")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono credito"></i><span>Apartado</span>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="@Url.Action("Nueva","Credito")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nuevo Credito</span>
                                         </a>
-                                    </li>   
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Abono","Credito")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">monetization_on</i><span>Abono Creditos</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Ventas">
+                                <i class="icono apartado left"></i>
+                                <span>Apartado</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Contado" href="@Url.Action("Index","Apartado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Listado Apartados</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Credito" href="@Url.Action("Nueva","Apartado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nuevo Apartado</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Abono","Apartado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">monetization_on</i><span>Abono Apartado</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

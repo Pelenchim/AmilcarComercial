@@ -87,6 +87,28 @@
     </div>
 </div>
 
+<div class="modal">
+    <div id="eliminartodos" class="modal modal-mini">
+        <div class="eliminartodos blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">delete_forever</i>
+                    Vaciar orden
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light btn-flat white blue-text" onclick="eliminarProductosTodos()">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -192,8 +214,20 @@
                     $(".contado-details .general").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
+                            var color, estado;
+                            if (value.Estado === true) {
+                                estado = "Aprovada";
+                                color = "green";
+                            }
+                            else {
+                                estado = "Anulada";
+                                color = "red";
+                            }
                             $(".contado-details .general").append(
                                 '<div>' +
+                                '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
+                                '<span class="white-text">Venta ' + estado + '</span>' +
+                                '</div>' +
                                 '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
                                 '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
                                 '<p><span class="left">Vendedor</span>' + value.Usuario + '</p>' +
@@ -207,8 +241,15 @@
                                 '<p><span class="left">Iva Total</span>C$ ' + value.Iva + '</p>' +
                                 '<p><span class="left">Descuento Total</span>C$ ' + value.DescuentoTotal + '</p>' +
                                 '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
-                                '</div>'
+                                '</div>'                                 
                             );
+                            if (value.Estado === true) {
+                                $(".contado-details .general").append(
+                                    '<div class="center">' +
+                                    '<a class="btn btn-flat white grey-text text-darken-2" onclick="anular(' + value.Venta + ')">Anular Venta</a>' +
+                                    '</div > '
+                                );
+                            }
                         });
                     });
                 },
@@ -245,6 +286,22 @@
                             );
                         });
                     });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function anular(id) {
+            $.ajax({
+                url: '/contado/anular/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    listaVentas();
+                    detalleVentaGeneral(id);
+                    alert(Eliminada);
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));

@@ -1,7 +1,7 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Venta Finalizada";
+    ViewBag.Title = "Compra Finalizada";
     ViewBag.PrimaryColor = "blue";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
@@ -14,18 +14,18 @@
     </div>
 </nav>
 
-<div class="detalleVenta row">
+<div class="detalleCompra row">
     <div class="col l4 offset-l4 white border-radius-4 z-depth-1">
         <div class="title col l12 center">
             <p><i class="material-icons green-text">check_circle</i></p>
-            <p>Venta Realizada Exitosamente</p>
+            <p>Compra Realizada Exitosamente</p>
         </div>
         <div class="detalle col l12 center"></div>
     </div>
     <div class="col l4 offset-l4 blue border-radius-4 z-depth-1 center">
-        <a href="@Url.Action("Index","Apartado")" class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Ventas">Lista</a>
+        <a href="@Url.Action("Index","Compra")" class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Compras">Lista</a>
         <a class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
-        <a id="" class="anular btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Venta">Anular</a>
+        <a id="" class="anular btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Compra">Anular</a>
     </div>
 </div>
 
@@ -36,7 +36,7 @@
         <i class="large material-icons">more_horiz</i>
     </a>
     <ul>
-        <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Nueva Venta"><a class="btn-floating blue" href="@Url.Action("Nueva","Apartado")"><i class="material-icons">add</i></a></li>
+        <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Nueva Compra"><a class="btn-floating blue" href="@Url.Action("Nueva","Compra")"><i class="material-icons">add</i></a></li>
         <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Calcular Vuelto"><a class="btn-floating pink" href=""><i class="material-icons">attach_money</i></a></li>
     </ul>
 </div>
@@ -52,11 +52,11 @@
         });
         function detalle() {
             $.ajax({
-                url: '/apartado/detallefactura',
+                url: '/compras/detallefactura',
                 type: 'GET',
                 contentType: "application/json",
                 'success': function (data) {
-                    $(".detalleVenta .detalle").append(
+                    $(".detalleCompra .detalle").append(
                         '<p><span class="left">Cantidad de Articulos: </span><span class="right">' + data[0] + ' Unds</span></p>' +
                         '<div class="divider-mio"></div>' +
                         '<p><span class="left">SubTotal: </span><span class="right"> C$ ' + data[1].toFixed(2) + '</span></p>' +
@@ -67,7 +67,7 @@
                         '<div class="divider-mio"></div>' +
                         '<p><span class="left">Total a Pagar: </span><span class="right"> C$ ' + data[4].toFixed(2) + '</span></p>'
                     );
-                    $(".detalleVenta .anular").attr("id", data[5]);
+                    $(".detalleCompra .anular").attr("id", data[5]);
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));
@@ -76,12 +76,12 @@
         }
         function anular(id) {
             $.ajax({
-                url: '/apartado/anular/' + id,
+                url: '/compras/anular/' + id,
                 type: 'GET',
                 contentType: "application/json",
                 dataType: "json",
                 'success': function (data) {
-                    window.location.href = '/apartado/index';
+                    window.location.href = '/compras/index';
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));

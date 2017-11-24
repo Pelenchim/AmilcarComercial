@@ -25,7 +25,7 @@
 function generales() {
     $("#pre-General").css("display", "inline");
     $.ajax({
-        url: '/ventas/obtener/generales',
+        url: '/contado/obtener/generales',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",

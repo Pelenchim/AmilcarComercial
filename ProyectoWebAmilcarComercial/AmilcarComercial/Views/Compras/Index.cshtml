@@ -146,7 +146,7 @@
                                 '<tr class="item" onclick="informacionCompra(' + value.ID + ')">' +
                                 '<td>' + value.Compra + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
-                                '<td> <span class="' + color + ' badge estado red">' + estado + '</span></td>' +
+                                '<td> <span class="' + color + ' badge estado">' + estado + '</span></td>' +
                                 '<td>' + value.Proveedor + '</td>' +
                                 '<td>' + value.Fecha + '</td>' +
                                 '<td>' + value.Articulos + '</td>' +
@@ -197,8 +197,21 @@
                     $(".compras-details .general").empty();
                     $.each(data, function () {
                         $.each(this, function (name, value) {
+                            var color, estado;
+                            if (value.Estado === true) {
+                                estado = "Aprovada";
+                                color = "green";
+                            }
+                            else {
+                                estado = "Anulada";
+                                color = "red";
+                            }
                             $(".compras-details .general").append(
                                 '<div>' +
+                                '<div>' +
+                                '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
+                                '<span class="white-text">Venta ' + estado + '</span>' +
+                                '</div>' +
                                 '<p><span class="left">N° Compra</span>' + value.Compra + '</p>' +
                                 '<p><span class="left">N° Factura</span>C$ ' + value.Factura + '</p>' +
                                 '<p><span class="left">Comprador</span>' + value.Usuario + '</p>' +
@@ -214,6 +227,13 @@
                                 '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
                                 '</div>'
                             );
+                            if (value.Estado === true) {
+                                $(".compras-details .general").append(
+                                    '<div class="center">' +
+                                    '<a class="btn btn-flat white grey-text text-darken-2" onclick="anular(' + value.Compra + ')">Anular Venta</a>' +
+                                    '</div > '
+                                );
+                            }
                         });
                     });
                 },
@@ -250,6 +270,22 @@
                             );
                         });
                     });
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function anular(id) {
+            $.ajax({
+                url: '/compra/anular/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                dataType: "json",
+                'success': function (data) {
+                    listaCompras();
+                    detalleCompraGeneral(id);
+                    alert(Eliminada);
                 },
                 'error': function (request, error) {
                     alert("Request: " + JSON.stringify(request));
