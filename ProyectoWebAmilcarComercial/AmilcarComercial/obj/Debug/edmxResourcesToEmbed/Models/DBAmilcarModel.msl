@@ -350,6 +350,8 @@
     <EntitySetMapping Name="Tbl_Kardex">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Kardex">
         <MappingFragment StoreEntitySet="Tbl_Kardex">
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
           <ScalarProperty Name="ultimoCosto" ColumnName="ultimoCosto" />
           <ScalarProperty Name="id_Kardex" ColumnName="id_Kardex" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />

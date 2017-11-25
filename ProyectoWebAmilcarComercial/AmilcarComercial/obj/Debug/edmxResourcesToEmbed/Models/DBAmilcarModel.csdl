@@ -396,6 +396,8 @@
     <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Orden" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Kardex_Tbl_Sucursal" FromRole="Tbl_Kardex" ToRole="Tbl_Sucursal" />
     <Property Name="ultimoCosto" Type="Double" Nullable="false" />
+    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="observaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Marca">
     <Key>

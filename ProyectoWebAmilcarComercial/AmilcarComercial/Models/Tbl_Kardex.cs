@@ -33,6 +33,8 @@ namespace AmilcarComercial.Models
         public string usuario { get; set; }
         public int id_sucursal { get; set; }
         public double ultimoCosto { get; set; }
+        public string tipo { get; set; }
+        public string observaciones { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalidaDetalle> SalidaDetalle { get; set; }

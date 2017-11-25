@@ -343,6 +343,8 @@
     <Property Name="costoPromedio" Type="float" Nullable="false" />
     <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="id_sucursal" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="nvarchar" MaxLength="20" />
+    <Property Name="observaciones" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_Marca">
     <Key>

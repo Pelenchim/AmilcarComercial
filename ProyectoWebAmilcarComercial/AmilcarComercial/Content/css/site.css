@@ -1324,6 +1324,48 @@ background-color: #37474f;
 
 /*#endregion */
 
+/*#region Consulta */
+
+.consulta .consulta-content .consulta-opciones {
+    padding: 30px 0 40px 0;
+}
+.consulta .consulta-content .consulta-opciones .icons,
+.consulta .consulta-content .consulta-opciones form,
+.consulta .consulta-content .consulta-opciones form .col:not(.filtro),
+.consulta .consulta-content .consulta-opciones form .search {
+    padding: 0;
+}
+.consulta .consulta-content .consulta-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.consulta .consulta-content .consulta-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.consulta .consulta-content .consulta-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.consulta .consulta-content .consulta-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.consulta .consulta-content .detalle-consulta .vacio{
+    margin-top: 4rem;
+}
+.consulta .consulta-content .detalle-consulta .vacio i{
+    font-size: 9rem;
+}
+.consulta .consulta-content .detalle-consulta .vacio p{
+    font-size: 1.4rem;
+}
+
+/*#endregion */
+
 /*#region VentaGeneral */
 
 /*lista de articulos en la orden*/
@@ -1526,7 +1568,8 @@ background-color: #37474f;
 .cancelarVenta > .row,
 .eliminartodos > .row,
 .calcularVuelto > .row,
-.detalleCliente > .row{
+.detalleCliente > .row,
+.anularVenta > .row{
     margin: 0;
 }
 .articulos h4,
@@ -1535,7 +1578,8 @@ background-color: #37474f;
 .cancelarVenta h4,
 .eliminartodos h4,
 .calcularVuelto h4,
-.detalleCliente h4{
+.detalleCliente h4,
+.anularVenta h4{
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -1546,7 +1590,8 @@ background-color: #37474f;
 .cancelarVenta h4 .salir,
 .eliminartodos h4 .salir,
 .calcularVuelto h4 .salir,
-.detalleCliente h4 .salir{
+.detalleCliente h4 .salir,
+.anularVenta h4 .salir{
     cursor: pointer;
 }
 .articulos .option-bar,
@@ -1569,6 +1614,12 @@ background-color: #37474f;
 .clientes .pagination li.active a,
 .articulos .pagination li.active a {
     color: #444 !important;
+}
+.anularVenta .modal-content p {
+    margin-top: 0;
+}
+.anularVenta .modal-content p:first-child {
+    margin-bottom: 3px;
 }
 
 /*aside de detalles*/
@@ -2539,6 +2590,27 @@ background-color: #37474f;
     padding: 0;
 }
 
+/*modales*/
+
+.anularCompra > .row{
+    margin: 0;
+}
+.anularCompra h4 {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.8rem;
+}
+.anularCompra h4 .salir {
+    cursor: pointer;
+}
+.anularCompra .modal-content p{
+    margin-top: 0;
+}
+.anularCompra .modal-content p:first-child{
+    margin-bottom: 3px;
+}
+
 /*#endregion */
 /*#region NuevaCompra */
 
@@ -2646,14 +2718,12 @@ background-color: #37474f;
 .articulosCompra .articulos-orden .articulosLista table td {
     padding: 5px;
 }
-
 .articulosCompra .articulos-orden .articulosLista .top {
     position: absolute;
     width: 100%;
     padding-left: 5px;
     z-index: 50;
 }
-
 .articulosCompra .articulos-orden .articulosLista .top a {
     color: #fff;
     cursor: pointer;
@@ -2905,35 +2975,95 @@ background-color: #37474f;
 
 /*#endregion */
 
-/*#region Kardex */
+/*#region Bodega */
 
-.kardex .kardex-content .kardex-opciones {
+.inventario .inventario-content .inventario-opciones,
+.kardex .kardex-content .kardex-opciones{
     padding: 30px 0 40px 0;
 }
-.kardex .kardex-content table tbody i{
+.inventario .inventario-content .inventario-opciones .icons,
+.kardex .kardex-content .kardex-opciones .icons,
+.inventario .inventario-content .inventario-opciones form,
+.kardex .kardex-content .kardex-opciones form,
+.inventario .inventario-content .inventario-opciones form .col:not(.filtro),
+.kardex .kardex-content .kardex-opciones form .col:not(.filtro),
+.inventario .inventario-content .inventario-opciones form .search,
+.kardex .kardex-content .kardex-opciones form .search{
+    padding: 0;
+}
+.inventario .inventario-content .inventario-opciones input.select-dropdown,
+.kardex .kardex-content .kardex-opciones input.select-dropdown{
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.inventario .inventario-content .inventario-opciones .search a,
+.kardex .kardex-content .kardex-opciones .search a{
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.inventario .inventario-content .inventario-opciones .icons i,
+.kardex .kardex-content .kardex-opciones .icons i{
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.inventario .inventario-content .inventario-opciones .icons .last i,
+.kardex .kardex-content .kardex-opciones .icons .last i{
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.inventario .listado-inventario table td,
+.kardex .listado-kardex table td{
+    padding: 5px;
+}
+.inventario .listado-inventario table img,
+.kardex .listado-kardex table img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.inventario .listado-inventario span.cant,
+.modal-kardex .lista-kardex span.obs{
+    border-radius: 2px;
+    padding: 4px 1rem;
+}
+.kardex .kardex-content table tbody i {
     cursor: pointer;
+}
+.inventario .inventario-content .paginacion, 
+.kardex .kardex-content .paginacion{
+    margin-top: 1rem;
+}
+.inventario .pagination li a,
+.kardex .pagination li a{
+    color: #444 !important;
+}
+.inventario .pagination li.active,
+.kardex .pagination li.active{
+    background-color: #2196f3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.inventario .pagination li.active a,
+.kardex .pagination li.active a{
+    color: #fff !important;
 }
 
 /*modal detalle-kardex*/
-.modal-kardex .kardex .row{
+.modal-kardex .kardex .row {
     margin: 0;
 }
+
 .modal-kardex .kardex h4 {
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
     padding-top: 0.8rem;
 }
-.modal-kardex .kardex .modal-content .option-bar{
+
+.modal-kardex .kardex .modal-content .option-bar {
     margin-bottom: 15px;
 }
-
-/*#endregion */
-
-/*#region Inventario */
-
-.inventario .inventario-content .inventario-opciones {
-    padding: 30px 0 40px 0;
-}
-
 /*#endregion */

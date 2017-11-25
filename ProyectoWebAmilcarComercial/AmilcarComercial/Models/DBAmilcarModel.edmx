@@ -348,6 +348,8 @@
           <Property Name="costoPromedio" Type="float" Nullable="false" />
           <Property Name="usuario" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="id_sucursal" Type="int" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="20" />
+          <Property Name="observaciones" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tbl_Marca">
           <Key>
@@ -1575,6 +1577,8 @@
           <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Orden" />
           <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Kardex_Tbl_Sucursal" FromRole="Tbl_Kardex" ToRole="Tbl_Sucursal" />
           <Property Name="ultimoCosto" Type="Double" Nullable="false" />
+          <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="observaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Marca">
           <Key>
@@ -2747,6 +2751,8 @@
           <EntitySetMapping Name="Tbl_Kardex">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Kardex">
               <MappingFragment StoreEntitySet="Tbl_Kardex">
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="ultimoCosto" ColumnName="ultimoCosto" />
                 <ScalarProperty Name="id_Kardex" ColumnName="id_Kardex" />
                 <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />

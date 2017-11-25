@@ -228,11 +228,11 @@ function mostrarClienteTmp() {
                     '<div class="col l12">' +
                     '<p class="truncate"><strong>Nombre: </strong>' + data.Nombre + ' ' + data.Apellido + '</p>' +
                     '</div>' +
-                    '<div class="col l6">' +
+                    '<div class="col l7">' +
                     '<p><strong>Cedula: </strong>' + data.Cedula + '</p>' +
                     '</div>' +
-                    '<div class="col l6">' +
-                    '<p><strong>Telefono: </strong>' + data.Telefono + '</p>' +
+                    '<div class="col l5">' +
+                    '<p><strong>Tel: </strong>' + data.Telefono + '</p>' +
                     '</div>' 
                 );
                 cliente = true;

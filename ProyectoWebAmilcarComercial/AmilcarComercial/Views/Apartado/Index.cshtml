@@ -85,6 +85,28 @@
     </div>
 </div>
 
+<div class="modales">
+    <div id="anularVenta" class="modal modal-mini">
+        <div class="anularVenta blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">cancel</i>
+                    Anular Venta
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea anular la venta?</p>
+                <p class="white-text">Si anula esta venta se agregara nuevamente al inventario los articulos de esta venta.</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="anular modal-action waves-effect waves-light btn-flat white blue-text">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -115,7 +137,17 @@
                     return;
                 $(".apartado .listado-apartado table tbody .item").removeClass("active");
                 vacio();
-            });        });
+            });
+            $(".apartado .apartado-details").on('click', '.btn-anular', function () {
+                var id = $(".apartado .apartado-details .id-venta").attr('id');
+                $('#anularVenta').modal('open');
+            });
+            $(".modales .anularVenta").on('click', '.anular', function () {
+                var id = $(".apartado .apartado-details .id-venta").attr('id');
+                anular(id);
+                $('#anularVenta').modal('close');
+            });
+        });
         function listaVentas() {
             $.ajax({
                 url: '/apartado/listaventas',
@@ -203,7 +235,7 @@
                                 '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
                                 '<span class="white-text">Venta ' + estado + '</span>' +
                                 '</div>' +
-                                '<p><span class="left">N° Venta</span>' + value.Venta + '</p>' +
+                                '<p class="id-venta" id="' + value.Venta + '"><span class="left">N° Venta</span>' + value.Venta + '</p>' +
                                 '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
                                 '<p><span class="left">Vendedor</span>' + value.Usuario + '</p>' +
                                 '<p><span class="left">Cliente</span>' + value.ClienteN + ' ' + value.ClienteA + '</p>' +
@@ -221,7 +253,7 @@
                             if (value.Estado === true) {
                                 $(".apartado-details .general").append(
                                     '<div class="center">' +
-                                    '<a class="btn btn-flat white grey-text text-darken-2" onclick="anular(' + value.Venta + ')">Anular Venta</a>' +
+                                    '<a class="btn btn-flat btn-anular white grey-text text-darken-2">Anular Venta</a>' +
                                     '</div > '
                                 );
                             }

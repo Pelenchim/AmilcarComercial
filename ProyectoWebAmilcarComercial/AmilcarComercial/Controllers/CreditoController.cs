@@ -26,7 +26,16 @@ namespace AmilcarComercial.Controllers
         public ActionResult Facturado()
         {
             return View();
-        } 
+        }
+        public ActionResult Abono()
+        {
+            return View();
+        }
+        public ActionResult Consulta()
+        {
+            return View();
+        }
+
         #endregion
 
         [Route("credito/obtener/generales")]
@@ -85,7 +94,9 @@ namespace AmilcarComercial.Controllers
                             ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
-                            id_sucursal = (int)suc
+                            id_sucursal = (int)suc,
+                            tipo = "Entrada",
+                            observaciones = "Venta-Credito-Anulada"
                         };
                         db.Tbl_Kardex.Add(kardex);
                         db.SaveChanges();
@@ -469,7 +480,9 @@ namespace AmilcarComercial.Controllers
                             ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
-                            id_sucursal = (int)suc
+                            id_sucursal = (int)suc,
+                            tipo = "Salida",
+                            observaciones = "Venta-Credito-Aprovada"
                         };
                         db.Tbl_Kardex.Add(kardex);
                         db.SaveChanges();

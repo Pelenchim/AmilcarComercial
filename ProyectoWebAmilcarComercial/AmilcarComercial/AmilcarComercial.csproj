@@ -204,8 +204,7 @@
     <Compile Include="Controllers\CreditoController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InventarioController.cs" />
-    <Compile Include="Controllers\KardexController.cs" />
+    <Compile Include="Controllers\BodegaController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcasController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
@@ -548,7 +547,7 @@
     <Content Include="Views\Shared\_LayoutAccountOptions.cshtml" />
     <Content Include="Views\Contado\Index.cshtml" />
     <Content Include="Views\Estadisticas\Index.cshtml" />
-    <Content Include="Views\Inventario\Index.cshtml" />
+    <Content Include="Views\Bodega\Inventario.cshtml" />
     <Content Include="Views\Shared\_breadcrumbPartial.cshtml" />
     <Content Include="Views\Sucursales\Index.cshtml" />
     <Content Include="Views\Sucursales\Listar.cshtml" />
@@ -586,7 +585,7 @@
     <Content Include="Views\Contado\Nueva.cshtml" />
     <Content Include="Views\Compras\Nueva.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />
-    <Content Include="Views\Kardex\Index.cshtml" />
+    <Content Include="Views\Bodega\Kardex.cshtml" />
     <Content Include="Views\Credito\Nueva.cshtml" />
     <Content Include="Views\Credito\Index.cshtml" />
     <Content Include="Views\Apartado\Index.cshtml" />
@@ -596,6 +595,12 @@
     <Content Include="Views\Apartado\Facturado.cshtml" />
     <Content Include="Views\Credito\Facturado.cshtml" />
     <Content Include="Views\Compras\Facturado.cshtml" />
+    <Content Include="Views\Apartado\Abono.cshtml" />
+    <Content Include="Views\Credito\Abono.cshtml" />
+    <Content Include="Views\Apartado\Consulta.cshtml" />
+    <Content Include="Views\Credito\Consulta.cshtml" />
+    <Content Include="Views\Contado\Consulta.cshtml" />
+    <Content Include="Views\Compras\Consulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

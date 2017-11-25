@@ -12,7 +12,7 @@
 
 <div class="nuevo-apartado row">
     <div class="row">
-        <div class="cliente col l5">
+        <div class="cliente col l4">
             <div class="row white z-depth-1">
                 <div class="opcionesCliente col l12">
                     <p>
@@ -66,14 +66,18 @@
                 </div>
             </div>
         </div>
-        <div class="preferencias col l3">
+        <div class="preferencias col l4">
             <div class="row white z-depth-1">
                 <div class="col l12">
                     <p><strong>Preferencias</strong></p>
                 </div>
                 <div class="divider-mio"></div>
                 <div class="opciones col l12">
-                    <div class="input-field col l6">
+                    <div class="input-field col l5">
+                        <input placeholder="Placeholder" id="N_factura" name="N_factura" type="text" disabled>
+                        <label for="N_factura">N° Factura</label>
+                    </div>
+                    <div class="input-field col l3">
                         <select id="iva">
                             <option value="0">0%</option>
                             <option value="5">5%</option>
@@ -82,18 +86,14 @@
                         </select>
                         <label>Iva</label>
                     </div>
-                    <div class="input-field col l6">
+                    <div class="input-field col l4">
                         <select id="tipoPago">
                             <option selected value="Efectivo">Efectivo</option>
                             <option value="Tarjeta">Tarjeta</option>
                             <option value="Ambos">Ambos</option>
                         </select>
                         <label>Tipo de Pago</label>
-                    </div>
-                    <div class="input-field col l6 hide">
-                        <input placeholder="Placeholder" id="N_factura" name="N_factura" type="text" disabled>
-                        <label for="N_factura">N° Factura</label>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>

@@ -89,6 +89,27 @@
         <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Compras")"><i class="material-icons">add</i></a>
     </div>
 </div>
+<div class="modales">
+    <div id="anularCompra" class="modal modal-mini">
+        <div class="anularCompra blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">cancel</i>
+                    Anular Compra
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content">
+                <p class="white-text">Esta seguro que desea anular la compra?</p>
+                <p class="white-text">Si anula esta compra se retirara del inventario los articulos agregados.</p>
+                <div class="col l12 right-align">
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="anular modal-action waves-effect waves-light btn-flat white blue-text">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script type="text/javascript">
@@ -121,6 +142,15 @@
                     return;
                 $(".compras .listado-compras table tbody .item").removeClass("active");
                 vacio();
+            });
+            $(".compras .compras-details").on('click', '.btn-anular', function () {
+                var id = $(".compras .compras-details .id-compra").attr('id');
+                $('#anularCompra').modal('open');
+            });
+            $(".modales .anularCompra").on('click', '.anular', function () {
+                var id = $(".compras .compras-details .id-compra").attr('id');
+                anular(id);
+                $('#anularCompra').modal('close');
             });
         });
         function listaCompras() {
@@ -212,7 +242,7 @@
                                 '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
                                 '<span class="white-text">Venta ' + estado + '</span>' +
                                 '</div>' +
-                                '<p><span class="left">N° Compra</span>' + value.Compra + '</p>' +
+                                '<p class="id-compra" id="' + value.Compra + '"><span class="left">N° Compra</span>' + value.Compra + '</p>' +
                                 '<p><span class="left">N° Factura</span>C$ ' + value.Factura + '</p>' +
                                 '<p><span class="left">Comprador</span>' + value.Usuario + '</p>' +
                                 '<p><span class="left">Proveedor</span>' + value.Proveedor + '</p>' +
@@ -230,7 +260,7 @@
                             if (value.Estado === true) {
                                 $(".compras-details .general").append(
                                     '<div class="center">' +
-                                    '<a class="btn btn-flat white grey-text text-darken-2" onclick="anular(' + value.Compra + ')">Anular Venta</a>' +
+                                    '<a class="btn btn-flat btn-anular white grey-text text-darken-2">Anular Venta</a>' +
                                     '</div > '
                                 );
                             }

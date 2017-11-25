@@ -29,6 +29,11 @@ namespace AmilcarComercial.Controllers
         {
             return View();
         } 
+
+        public ActionResult Consulta()
+        {
+            return View();
+        }
         #endregion
 
         [Route("contado/obtener/generales")]
@@ -87,7 +92,9 @@ namespace AmilcarComercial.Controllers
                             ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
-                            id_sucursal = (int)suc
+                            id_sucursal = (int)suc,
+                            tipo = "Entrada",
+                            observaciones = "Venta-Contado-Anulada"
                         };
                         db.Tbl_Kardex.Add(kardex);
                         db.SaveChanges();                        
@@ -328,7 +335,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
-            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault();
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_Articulo == id && m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault();
             db.Tbl_OrdenTmp.Remove(articulo);
             db.SaveChanges();
 
@@ -437,7 +444,9 @@ namespace AmilcarComercial.Controllers
                             ultimoCosto = 0,
                             costoPromedio = 0,
                             usuario = User.Identity.Name,
-                            id_sucursal = (int)suc
+                            id_sucursal = (int)suc,
+                            tipo = "Salida",
+                            observaciones = "Venta-Contado-Aprovada"
                         };
                         db.Tbl_Kardex.Add(kardex);
                         db.SaveChanges();

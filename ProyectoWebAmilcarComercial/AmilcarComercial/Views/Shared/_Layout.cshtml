@@ -48,12 +48,37 @@
                 <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Estadisticas" href="@Url.Action("Index","Estadisticas")">
                     <i class="icono estadisticas"></i><span>Estadisticas</span></a>
                 </li>
-                <li class="sub"><a class="subheader">Opciones</a></li>               
-                <li>
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Compras" href="@Url.Action("Index","Compras")">
-                        <i class="icono compras"></i><span>Compras</span>
-                    </a>
-                </li>               
+                <li class="sub"><a class="subheader">Opciones</a></li>    
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Compras">
+                                <i class="icono compras left"></i>
+                                <span>Compras</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" href="@Url.Action("Index","Compras")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Listado Compras</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" href="@Url.Action("Nueva","Compras")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nueva Compra</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Consulta" href="@Url.Action("Consulta","Compras")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">filter_list</i><span>Consultas</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
                 <li class="submenus no-padding">
                     <ul class="collapsible collapsible-accordion">
                         <li>
@@ -74,6 +99,11 @@
                                             <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nueva Venta</span>
                                         </a>
                                     </li> 
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Consulta" href="@Url.Action("Consulta","Contado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">filter_list</i><span>Consultas</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -101,7 +131,12 @@
                                     </li>
                                     <li>
                                         <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Abono","Credito")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">monetization_on</i><span>Abono Creditos</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">payment</i><span>Abono Creditos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Consulta" href="@Url.Action("Consulta","Credito")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">filter_list</i><span>Consultas</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -131,7 +166,12 @@
                                     </li>
                                     <li>
                                         <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Apartado" href="@Url.Action("Abono","Apartado")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">monetization_on</i><span>Abono Apartado</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">payment</i><span>Abono Apartado</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Consulta" href="@Url.Action("Consulta","Apartado")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">filter_list</i><span>Consultas</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -139,13 +179,30 @@
                         </li>
                     </ul>
                 </li>
-                <li><a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario" href="@Url.Action("Index","Inventario")">
-                    <i class="icono inventario"></i><span>Inventario</span></a>
-                </li>
-                <li>
-                    <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Kardex" href="@Url.Action("Index","Kardex")">
-                        <i class="icono kardex"></i><span>Kardex</span>
-                    </a>
+                <li class="submenus no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario">
+                                <i class="icono inventario left"></i>
+                                <span>Bodega</span>
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a class="item waves-effect" href="@Url.Action("Inventario","Bodega")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono inventario"></i><span>Inventario</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" href="@Url.Action("Kardex","Bodega")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono kardex"></i><span>Kardex</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li class="item-hidden hide">
                     <a class="item waves-effect" data-position="right" data-delay="50" data-tooltip="Catalogos" href="@Url.Action("Catalogos","Home")">
