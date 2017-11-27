@@ -202,7 +202,9 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\CreditoController.cs" />
+    <Compile Include="Controllers\DevolucionesController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
+    <Compile Include="Controllers\GeneralesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BodegaController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -306,6 +308,9 @@
     <Compile Include="Models\Tbl_DescripcionValores.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_DetalleDevolucion.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Detalle_Compra.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
@@ -313,6 +318,18 @@
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Devolucion.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DevolucionCliente.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DevolucionDetalleTmp.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DevolucionProveedor.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DevolucionTmp.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_garantia.cs">
@@ -504,6 +521,7 @@
     <Content Include="Scripts\TransactionScripts\Compras.js" />
     <Content Include="Scripts\TransactionScripts\Credito.js" />
     <Content Include="Scripts\TransactionScripts\Contado.js" />
+    <Content Include="Scripts\TransactionScripts\Devoluciones.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -601,10 +619,13 @@
     <Content Include="Views\Credito\Consulta.cshtml" />
     <Content Include="Views\Contado\Consulta.cshtml" />
     <Content Include="Views\Compras\Consulta.cshtml" />
+    <Content Include="Views\Devoluciones\NuevaCliente.cshtml" />
+    <Content Include="Views\Devoluciones\NuevaProveedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\imagesTemporales\" />
+    <Folder Include="Views\Generales\" />
     <Folder Include="Views\Utilities\" />
   </ItemGroup>
   <ItemGroup>

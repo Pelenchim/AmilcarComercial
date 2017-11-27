@@ -20,6 +20,7 @@ namespace AmilcarComercial.Models
             this.SalidaDetalle = new HashSet<SalidaDetalle>();
             this.Tbl_Detalle_Compra = new HashSet<Tbl_Detalle_Compra>();
             this.Tbl_Detalle_Orden = new HashSet<Tbl_Detalle_Orden>();
+            this.Tbl_DetalleDevolucion = new HashSet<Tbl_DetalleDevolucion>();
         }
     
         public int id_Kardex { get; set; }
@@ -44,5 +45,7 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
         public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DetalleDevolucion> Tbl_DetalleDevolucion { get; set; }
     }
 }

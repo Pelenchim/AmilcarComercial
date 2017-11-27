@@ -20,6 +20,8 @@ namespace AmilcarComercial.Models
             this.Tbl_Apartado = new HashSet<Tbl_Apartado>();
             this.Tbl_Credito = new HashSet<Tbl_Credito>();
             this.Tbl_Detalle_Orden = new HashSet<Tbl_Detalle_Orden>();
+            this.Tbl_DevolucionCliente = new HashSet<Tbl_DevolucionCliente>();
+            this.Tbl_DevolucionTmp = new HashSet<Tbl_DevolucionTmp>();
         }
     
         public int id_orden { get; set; }
@@ -41,5 +43,9 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
         public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DevolucionCliente> Tbl_DevolucionCliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DevolucionTmp> Tbl_DevolucionTmp { get; set; }
     }
 }

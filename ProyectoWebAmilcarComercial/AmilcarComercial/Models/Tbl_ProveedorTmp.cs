@@ -21,5 +21,6 @@ namespace AmilcarComercial.Models
         public bool nuevo { get; set; }
         public string user { get; set; }
         public Nullable<int> id_proveedor { get; set; }
+        public string tipo { get; set; }
     }
 }

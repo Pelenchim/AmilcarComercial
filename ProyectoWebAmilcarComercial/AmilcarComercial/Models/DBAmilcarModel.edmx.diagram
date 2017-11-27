@@ -86,6 +86,20 @@
         <AssociationConnector Association="DBAmilcarModel.FK_Tbl_Orden_Tbl_Sucursal" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.FK_Tbl_Salida_Tbl_Sucursal" ManuallyRouted="false" />
         <AssociationConnector Association="DBAmilcarModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_DetalleDevolucion" Width="1.5" PointX="13.5" PointY="22.25" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_DevolucionCliente" Width="1.5" PointX="8.25" PointY="30.125" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_DevolucionDetalleTmp" Width="1.5" PointX="16.5" PointY="18" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_DevolucionProveedor" Width="2.125" PointX="5.25" PointY="32.75" />
+        <EntityTypeShape EntityType="DBAmilcarModel.Tbl_DevolucionTmp" Width="1.5" PointX="14.25" PointY="18.125" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DetalleDevolucion_Tbl_Articulo" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DevolucionProveedor_Tbl_Compra" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Compra" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DetalleDevolucion_Tbl_DevolucionCliente" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DetalleDevolucion_Tbl_DevolucionProveedor" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DetalleDevolucion_Tbl_Kardex" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DevolucionCliente_Tbl_Orden" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DevolucionDetalleTmp_Tbl_DevolucionTmp" />
+        <AssociationConnector Association="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Orden" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

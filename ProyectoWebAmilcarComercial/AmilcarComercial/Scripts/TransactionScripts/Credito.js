@@ -52,7 +52,7 @@ function clientes() {
     $(".lista-clientes").empty();
     $("#pre-Clientes").css("display", "inline");
     $.ajax({
-        url: '/credito/obtener/clientes',
+        url: '/obtener/clientes',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -99,8 +99,9 @@ function agregarClienteTmp() {
         Telefono: $('.nuevoCliente #telefono').val(),
         Cedula: $('.nuevoCliente #cedula').val()
     };
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/agregar/clienteTmp',
+        url: '/agregar/clienteTmp/' + tipo,
         type: 'POST',
         data: datos,
         'success': function (data) {
@@ -120,8 +121,9 @@ function agregarClienteTmp() {
     });
 }
 function agregarClienteExistente(id) {
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/agregar/clienteExistente/' + id,
+        url: '/agregar/clienteExistente/' + id + '/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarClienteTmp();
@@ -138,8 +140,9 @@ function agregarCliente() {
 }
 function editarCliente() {
     $('#editarCliente').modal('open');
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/editar/clienteTmp',
+        url: '/editar/clienteTmp/' + tipo,
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -167,8 +170,9 @@ function editarGuardarCliente() {
         Telefono: $('.nuevoCliente #telefono').val(),
         Cedula: $('.nuevoCliente #cedula').val()
     };
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/editar/clienteGuardarTmp',
+        url: '/editar/clienteGuardarTmp/' + tipo,
         type: 'POST',
         data: datos,
         'success': function (data) {
@@ -188,8 +192,9 @@ function editarGuardarCliente() {
     });
 }
 function eliminarCliente() {
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/eliminar/clienteTmp',
+        url: '/eliminar/clienteTmp/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarClienteTmp();
@@ -203,8 +208,9 @@ function eliminarCliente() {
 function mostrarClienteTmp() {
     $(".datosCliente").empty();
     $("#pre-Cliente").css("display", "inline");
+    var tipo = "Credito";
     $.ajax({
-        url: '/credito/obtener/clienteTmp',
+        url: '/obtener/clienteTmp/' + tipo,
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -247,8 +253,9 @@ function mostrarClienteTmp() {
 function detallesCliente() {
     $('#detalleCliente').modal('open');
     $(".detalleCliente .detalle").empty();
+    var tipo = "Credito";
     $.ajax({
-        url: '/apartado/obtener/clienteTmp',
+        url: '/obtener/clienteTmp/' + tipo,
         type: 'GET',
         contentType: "application/json",
         dataType: "json",

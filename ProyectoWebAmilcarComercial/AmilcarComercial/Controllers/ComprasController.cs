@@ -13,6 +13,7 @@ namespace AmilcarComercial.Controllers
     public class ComprasController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
+        GeneralesController gen = new GeneralesController();
 
         #region Vistas
         // GET: Compras
@@ -115,183 +116,16 @@ namespace AmilcarComercial.Controllers
             return Json(dato, JsonRequestBehavior.AllowGet);
         }
 
-        #region Proveedores        
-
-        [Route("compras/obtener/proveedores")]
-        [HttpGet]
-        public JsonResult ObtenerProveedores()
-        {
-            var Proveedores = (from p in db.Tbl_Proveedor.Where(m => m.Estado == true).OrderByDescending(m => m.id_proveedor)
-                            select new
-                            {
-                                ID = p.id_proveedor,
-                                Nombre = p.razon_social,
-                                Telefono = p.telefono,
-                                Ruc = p.Ruc
-                            }).ToList();
-
-            return Json(new { data = Proveedores }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("compras/agregar/proveedorTmp")]
-        [HttpGet]
-        public JsonResult AgregarProveedor(Tbl_ProveedorTmp proveedor)
-        {
-            if (ModelState.IsValid)
-            {
-                EliminarProveedoresTmp();
-
-                proveedor.user = User.Identity.Name;
-                proveedor.nuevo = true;
-                proveedor.id_proveedor = null;
-                db.Tbl_ProveedorTmp.Add(proveedor);
-                db.SaveChanges();
-            }
-
-            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("compras/obtener/proveedorTmp")]
-        [HttpGet]
-        public JsonResult MostrarProveedorTmp(Tbl_ClienteTmp cliente)
-        {
-            if (db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).Count() != 0)
-            {
-                var data = (from p in db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).OrderByDescending(m => m.id_proveedorTmp)
-                            select new
-                            {
-                                Nombre = p.nombre,
-                                Telefono = p.telefono,
-                                Ruc = p.ruc
-                            }).First();
-
-                return Json(data, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var data = 0;
-                return Json(data, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [Route("compras/agregar/proveedorExistente/{id}")]
-        [HttpGet]
-        public JsonResult AgregarProveedorExistente(int id)
-        {
-            var user = User.Identity.Name;
-            Tbl_Proveedor proveedor = db.Tbl_Proveedor.Find(id);
-            Tbl_ProveedorTmp proveedorTmp = new Tbl_ProveedorTmp();
-            EliminarProveedoresTmp();
-
-            proveedorTmp.user = user;
-            proveedorTmp.nombre = proveedor.razon_social;
-            proveedorTmp.telefono = proveedor.telefono;
-            proveedorTmp.ruc = proveedor.Ruc;
-            proveedorTmp.nuevo = false;
-            proveedorTmp.id_proveedor = proveedor.id_proveedor;
-
-            db.Tbl_ProveedorTmp.Add(proveedorTmp);
-            db.SaveChanges();
-
-            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("compras/eliminar/proveedorTmp")]
-        public JsonResult EliminarProveedoresTmp()
-        {
-            var lista = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).ToList();
-
-            if (lista != null)
-            {
-                db.Tbl_ProveedorTmp.RemoveRange(lista);
-                db.SaveChanges();
-            }
-            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("compras/editar/proveedorTmp")]
-        [HttpGet]
-        public JsonResult EditarProveedorTmp()
-        {
-            var proveedor = (from p in db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name)
-                           select new
-                           {
-                               ID = p.id_proveedorTmp,
-                               Nombre = p.nombre,
-                               Telefono = p.telefono,
-                               Ruc = p.ruc
-                           }).FirstOrDefault();
-            return Json(proveedor, JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("compras/editar/proveedorGuardarTmp")]
-        [HttpPost]
-        public JsonResult EditarGuardarProveedorTmp(Tbl_ProveedorTmp proveedor)
-        {
-            var nuevo = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                if (ModelState.IsValid)
-                {
-                    proveedor.user = User.Identity.Name;
-                    proveedor.nuevo = true;
-                    proveedor.id_proveedor = null;
-
-                    db.Entry(proveedor).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                }
-            }
-
-            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        public int guardarProveedor()
-        {
-            var nuevo = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-
-                Tbl_Proveedor proveedor = new Tbl_Proveedor()
-                {
-                    razon_social = proveedorTmp.nombre,
-                    telefono = proveedorTmp.telefono,
-                    Ruc = proveedorTmp.ruc,
-                    Estado = true
-                };
-                db.Tbl_Proveedor.Add(proveedor);
-                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
-                db.SaveChanges();
-
-                var ultimo = db.Tbl_Proveedor.OrderByDescending(m => m.id_proveedor).FirstOrDefault().id_proveedor;
-                return ultimo;
-            }
-            else
-            {
-                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                var id = proveedorTmp.id_proveedor;
-
-                var proveedor = db.Tbl_Proveedor.Find(id).id_proveedor;
-                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
-                db.SaveChanges();
-
-                return proveedor;
-            }
-        }
-
-        #endregion
-
         #region Articulos         
 
-        [Route("compras/obtener/productos")]
+        [Route("compras/obtener/productos/")]
         [HttpGet]
         public JsonResult ObtenerProductos()
         {
             var articulosOrden = (from p in db.Tbl_CompraTmp where (p.user == User.Identity.Name) select p.id_articulo).ToArray();
 
-            var Articulos = (from p in db.Tbl_Articulo where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true )
+            var Articulos = (from p in db.Tbl_Articulo
+                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true)
                              select new
                              {
                                  ID = p.id_articulo,
@@ -299,7 +133,7 @@ namespace AmilcarComercial.Controllers
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen
                              }).ToList();
-            
+
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
@@ -420,7 +254,7 @@ namespace AmilcarComercial.Controllers
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
-                    var proveedor = guardarProveedor();
+                    var proveedor = gen.guardarProveedor("Compra");
 
                     Tbl_Compra maestro = new Tbl_Compra()
                     {

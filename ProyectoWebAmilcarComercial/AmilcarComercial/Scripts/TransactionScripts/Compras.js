@@ -13,13 +13,12 @@
     $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });
-
     var proveedor = false, articulo = false;
     var total, subTotal, cantidadTotal, iva;
     mostrarProveedorTmp();
     generales();
     mostrarProductosTmp(1);
-    detectarCambios();  
+    detectarCambios();
     $('.nueva-compra .detalle').on('change', '#iva', function (e) {
         iva = this.value;
         detalles();
@@ -57,7 +56,7 @@ function proveedores() {
     $(".lista-proveedores").empty();
     $("#pre-Proveedores").css("display", "inline");
     $.ajax({
-        url: '/compras/obtener/proveedores',
+        url: '/obtener/proveedores',
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -97,8 +96,9 @@ function agregarProveedorTmp() {
         telefono: $('.modal-compras .nuevoProveedor #telefono-p').val(),
         ruc: $('.modal-compras .nuevoProveedor #ruc-p').val()
     };
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/agregar/proveedorTmp',
+        url: '/agregar/proveedorTmp/' + tipo,
         type: 'GET',
         data: datos,
         'success': function (data) {
@@ -115,8 +115,9 @@ function agregarProveedorTmp() {
     });
 }
 function agregarProveedorExistente(id) {
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/agregar/ProveedorExistente/' + id,
+        url: '/agregar/ProveedorExistente/' + id + '/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarProveedorTmp();
@@ -130,8 +131,9 @@ function agregarProveedorExistente(id) {
 }
 function editarProveedor() {
     $('#editarProveedor').modal('open');
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/editar/proveedorTmp',
+        url: '/editar/proveedorTmp/' + tipo,
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -153,8 +155,9 @@ function editarGuardarProveedor() {
         ruc: $('.modal-compras .editarProveedor #ruc-p').val(),
         id_proveedorTmp: $('.modal-compras .editarProveedor #id-p').val()
     };
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/editar/proveedorGuardarTmp',
+        url: '/editar/proveedorGuardarTmp/' + tipo,
         type: 'POST',
         data: datos,
         'success': function (data) {
@@ -171,8 +174,9 @@ function editarGuardarProveedor() {
     });
 }
 function eliminarProveedor() {
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/eliminar/proveedorTmp',
+        url: '/eliminar/proveedorTmp/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarProveedorTmp();
@@ -185,9 +189,10 @@ function eliminarProveedor() {
 }
 function mostrarProveedorTmp() {
     $(".datosProveedor").empty();
-    $("#pre-Proveedor").css("display","inline");
+    $("#pre-Proveedor").css("display", "inline");
+    var tipo = "Compra";
     $.ajax({
-        url: '/compras/obtener/proveedorTmp',
+        url: '/obtener/proveedorTmp/' + tipo,
         type: 'GET',
         contentType: "application/json",
         dataType: "json",
@@ -278,7 +283,7 @@ function articulos(vista) {
             alert("Request: " + JSON.stringify(request));
         }
     });
-};
+}
 function CancelArticulos() {
     $('#articulos').modal('close');
     $(".lista-articulos").empty();
