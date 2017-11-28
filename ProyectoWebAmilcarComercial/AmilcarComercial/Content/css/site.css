@@ -1330,9 +1330,9 @@ background-color: #37474f;
     padding: 30px 0 40px 0;
 }
 .consulta .consulta-content .consulta-opciones .icons,
-.consulta .consulta-content .consulta-opciones form,
-.consulta .consulta-content .consulta-opciones form .col:not(.filtro),
-.consulta .consulta-content .consulta-opciones form .search {
+.consulta .consulta-content .consulta-opciones .form,
+.consulta .consulta-content .consulta-opciones .form .col:not(.filtro),
+.consulta .consulta-content .consulta-opciones .form .search {
     padding: 0;
 }
 .consulta .consulta-content .consulta-opciones input.select-dropdown {
@@ -3066,4 +3066,88 @@ background-color: #37474f;
 .modal-kardex .kardex .modal-content .option-bar {
     margin-bottom: 15px;
 }
+/*#endregion */
+
+/*#region Devolucion General */
+
+.nueva-devolucion > div:first-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nueva-devolucion > div:last-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+}
+.nueva-devolucion .compra,
+.nueva-devolucion .venta,
+.nueva-devolucion .general {
+    margin-top: 1.5rem;
+}
+.nueva-devolucion .compra .opcionesCompra a,
+.nueva-devolucion .venta .opcionesVenta a {
+    padding: 0 5px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #424242;
+}
+.nueva-devolucion .compra .opcionesCompra a:hover,
+.nueva-devolucion .venta .opcionesCompra a:hover,
+.nueva-devolucion .articulosDevolucion .opcionesArticulos a:hover {
+    color: #212121;
+}
+.nueva-devolucion .compra .datosCompra div:not(.vacio):last-child,
+.nueva-devolucion .venta .datosVenta div:not(.vacio):last-child,
+.nueva-devolucion .general .datosGenerales div:last-child {
+    margin-bottom: 1.5rem;
+}
+.nueva-devolucion .compra .datosCompra .vacio,
+.nueva-devolucion .venta .datosVenta .vacio{
+    margin-bottom: 1rem;
+}
+.nueva-devolucion .general .datosGenerales p {
+    margin-bottom: 0px;
+}
+.nueva-devolucion .compra .datosCompra div:not(.vacio) p,
+.nueva-devolucion .venta .datosVenta div:not(.vacio) p {
+    margin-bottom: 0px;
+}
+.nueva-devolucion .compra .datosCompra .vacio p,
+.nueva-devolucion .venta .datosVenta .vacio p{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/*Modales Generales*/
+.modal-devolucion .articulos > .row,
+.modal-devolucion .ventas > .row,
+.modal-devolucion .compras > .row,
+.modal-devolucion .cancelarVenta > .row,
+.modal-devolucion .eliminartodos > .row {
+    margin: 0;
+}
+.modal-devolucion .articulos h4,
+.modal-devolucion .ventas h4,
+.modal-devolucion .compras h4,
+.modal-devolucion .cancelarVenta h4,
+.modal-devolucion .eliminartodos h4 {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.8rem;
+}
+.modal-devolucion .articulos h4 .salir,
+.modal-devolucion .ventas h4 .salir,
+.modal-devolucion .compras h4 .salir,
+.modal-devolucion .eliminartodos h4 .salir,
+.modal-devolucion .anularVenta h4 .salir {
+    cursor: pointer;
+}
+
+.articulos .option-bar,
+.clientes .option-bar {
+    margin-bottom: 15px;
+}
+
 /*#endregion */

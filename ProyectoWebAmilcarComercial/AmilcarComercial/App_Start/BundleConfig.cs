@@ -45,8 +45,11 @@ namespace AmilcarComercial
             bundles.Add(new ScriptBundle("~/bundles/credito").Include(
                       "~/Scripts/TransactionScripts/Credito.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/devoluciones").Include(
-                      "~/Scripts/TransactionScripts/Devoluciones.js"));
+            bundles.Add(new ScriptBundle("~/bundles/devolucionCliente").Include(
+                      "~/Scripts/TransactionScripts/DevolucionCliente.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/devolucionProveedor").Include(
+                      "~/Scripts/TransactionScripts/DevolucionProveedor.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/public").Include(
                       "~/Scripts/public.js"));

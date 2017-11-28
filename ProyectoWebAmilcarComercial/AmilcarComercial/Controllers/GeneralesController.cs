@@ -251,7 +251,7 @@ namespace AmilcarComercial.Controllers
             var user = User.Identity.Name;
             Tbl_Clientes cliente = db.Tbl_Clientes.Find(id);
             Tbl_ClienteTmp clienteTmp = new Tbl_ClienteTmp();
-            EliminarClientesTmp();
+            EliminarClientesTmp(tipo);
 
             clienteTmp.user = user;
             clienteTmp.nombre_cliente = cliente.nombre_cliente;

@@ -521,7 +521,8 @@
     <Content Include="Scripts\TransactionScripts\Compras.js" />
     <Content Include="Scripts\TransactionScripts\Credito.js" />
     <Content Include="Scripts\TransactionScripts\Contado.js" />
-    <Content Include="Scripts\TransactionScripts\Devoluciones.js" />
+    <Content Include="Scripts\TransactionScripts\DevolucionCliente.js" />
+    <Content Include="Scripts\TransactionScripts\DevolucionProveedor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

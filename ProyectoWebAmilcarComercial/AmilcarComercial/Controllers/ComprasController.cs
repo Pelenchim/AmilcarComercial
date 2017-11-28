@@ -116,6 +116,50 @@ namespace AmilcarComercial.Controllers
             return Json(dato, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("compra/buscar/{fact}")]
+        public JsonResult buscar(string fact)
+        {
+            if (db.Tbl_Compra.Where(m => m.fact_compra == fact).Count() > 0)
+            {
+                var data = (from c in db.Tbl_Compra
+                        join d in db.Tbl_Detalle_Compra on c.id_compra equals d.id_compra
+                        where c.fact_compra == fact
+                        select new
+                        {
+                            Factura = c.fact_compra,
+                            Proveedor = c.Tbl_Proveedor.razon_social,
+                            Fecha = c.fecha_compra,
+                            Iva = c.iva_compra,
+                            Comprador = c.usuario,
+                            Estado = c.estado_compra
+                        }).FirstOrDefault();
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = false;
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [Route("compra/detallebusqueda/{fact}")]
+        public JsonResult detalleBusqueda(string fact)
+        {
+            var id = db.Tbl_Compra.Where(m => m.fact_compra == fact).FirstOrDefault().id_compra;
+            var data = (from c in db.Tbl_Detalle_Compra where c.id_compra == id
+                        select new {
+                            Articulo = c.Tbl_Articulo.nombre_articulo,
+                            Img = c.Tbl_Articulo.imagen,
+                            Cantidad = c.cantidad,
+                            Descuento = c.descuento,
+                            Costo = c.costo
+                        }).ToList();
+
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+
         #region Articulos         
 
         [Route("compras/obtener/productos/")]

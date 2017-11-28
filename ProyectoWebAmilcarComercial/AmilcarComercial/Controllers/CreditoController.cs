@@ -12,6 +12,8 @@ namespace AmilcarComercial.Controllers
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
+        GeneralesController generales = new GeneralesController();
+
         #region vistas
         // GET: Credito
         public ActionResult Index()
@@ -272,7 +274,7 @@ namespace AmilcarComercial.Controllers
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
                     var fecha = DateTime.Now;
-                    var cliente = guardarCliente();
+                    var cliente = generales.guardarCliente("Credito");
 
                     Tbl_Orden maestro = new Tbl_Orden()
                     {
