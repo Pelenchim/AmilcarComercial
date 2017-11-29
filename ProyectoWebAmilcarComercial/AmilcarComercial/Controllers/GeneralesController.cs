@@ -145,41 +145,6 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
         }
 
-        public int guardarProveedor(string tipo)
-        {
-            var nuevo = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-
-                Tbl_Proveedor proveedor = new Tbl_Proveedor()
-                {
-                    razon_social = proveedorTmp.nombre,
-                    telefono = proveedorTmp.telefono,
-                    Ruc = proveedorTmp.ruc,
-                    Estado = true
-                };
-                db.Tbl_Proveedor.Add(proveedor);
-                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
-                db.SaveChanges();
-
-                var ultimo = db.Tbl_Proveedor.OrderByDescending(m => m.id_proveedor).FirstOrDefault().id_proveedor;
-                return ultimo;
-            }
-            else
-            {
-                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                var id = proveedorTmp.id_proveedor;
-
-                var proveedor = db.Tbl_Proveedor.Find(id).id_proveedor;
-                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
-                db.SaveChanges();
-
-                return proveedor;
-            }
-        }
-
         #endregion
 
         #region Clientes
@@ -312,44 +277,6 @@ namespace AmilcarComercial.Controllers
             db.SaveChanges();
 
             return Json(new { data = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        public int guardarCliente(string tipo)
-        {
-            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault().nuevo;
-
-            if (nuevo == true)
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-
-                Tbl_Clientes cliente = new Tbl_Clientes()
-                {
-                    nombre_cliente = clienteTmp.nombre_cliente,
-                    apellidos_cliente = clienteTmp.apellidos_cliente,
-                    direccion = clienteTmp.direccion,
-                    departamento = clienteTmp.departamento,
-                    telefono = (int)clienteTmp.telefono,
-                    cedula = clienteTmp.cedula,
-                    estado = true
-                };
-                db.Tbl_Clientes.Add(cliente);
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
-                return ultimo;
-            }
-            else
-            {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                var id = clienteTmp.id_cliente;
-
-                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
-                db.Tbl_ClienteTmp.Remove(clienteTmp);
-                db.SaveChanges();
-
-                return cliente;
-            }
         }
 
         #endregion

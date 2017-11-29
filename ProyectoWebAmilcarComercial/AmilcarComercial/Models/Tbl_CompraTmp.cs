@@ -21,6 +21,7 @@ namespace AmilcarComercial.Models
         public System.DateTime fecha { get; set; }
         public double costo { get; set; }
         public Nullable<double> descuento { get; set; }
+        public Nullable<double> precioventa { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }

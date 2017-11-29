@@ -123,7 +123,7 @@ function agregarClienteTmp() {
 function agregarClienteExistente(id) {
     var tipo = "Contado";
     $.ajax({
-        url: '/ventas/agregar/clienteExistente/' + id + '/' + tipo,
+        url: '/agregar/clienteExistente/' + id + '/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarClienteTmp();
@@ -287,6 +287,9 @@ function CancelArticulos() {
 function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
     var stock = $(".articulos #stock" + id).text();
+    var precio = $(".articulos #precio" + id).text();
+    var desc = $(".articulos #desc" + id).val();
+
     if (cant === '') {
         Materialize.toast("Debe agregar la cantidad", 2000);
         $(".articulos #cant" + id).focus();
@@ -312,8 +315,28 @@ function agregarArticuloTmp(id) {
         $(".articulos #cant" + id).focus();
         return;
     }
+    if (desc === '') {
+        Materialize.toast("Debe agregar el descuento", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (desc < 0) {
+        Materialize.toast("El descuento no es valido", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (desc > precio) {
+        Materialize.toast("El descuento no puede ser mayor que el precio", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(desc)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #cant" + id).focus();
+        return;
+    }
     $.ajax({
-        url: '/ventas/agregar/producto/' + id + '/' + cant,
+        url: '/ventas/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -447,6 +470,7 @@ function articulosTable(data) {
         '<th>Stock</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
+        '<th>Descuento x Unidad</th>' +
         '<th class="right-align">Agregar</th>' +
         '</tr>' +
         '</thead>' +
@@ -462,9 +486,12 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
-                '<td>$7.00</td>' +
+                '<td>C$ <span id="precio' + value.ID + '">' + value.Precio + '</span></td>' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
+                '</td > ' +
+                '<td>' +
+                '<input placeholder="Descuento" id="desc' + value.ID + '" type="text" class="browser-default" value="0">' +
                 '</td > ' +
                 '<td class="right-align">' +
                 '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
@@ -524,6 +551,7 @@ function articulosOrdenTable(data) {
         '<th>Existencia</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
+        '<th>DescXunidad</th>' +
         '<th>Subtotal</th>' +
         '<th>Opciones</th>' +
         '</tr>' +
@@ -542,11 +570,14 @@ function articulosOrdenTable(data) {
                 '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
-                '<td>C$ ' + value.Precio + '</td>' +
+                '<td>C$ <span id="precio-' + value.ID + '">' + value.Precio + '</span></td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
-                '<td>' + value.Cantidad * value.Precio + '</td>' +
+                '<td>' +
+                '<input class="browser-default" id="desc-' + value.ID + '" type="text" value="' + value.Descuento + '"></input>' +
+                '</td>' +
+                '<td>' + value.Cantidad * (value.Precio - value.Descuento) + '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
@@ -560,13 +591,14 @@ function detectarCambios() {
     var ID_Obj;
     var AnteriorValor, NuevoValor;
     var dividiendo;
-    var id;
+    var id,campo;
 
     $(document).on({
         'focusin': function () {
             ID_Obj = $(this).attr("id");
             dividiendo = ID_Obj.split("-", 2);
             id = dividiendo[1];
+            campo = dividiendo[0]
             AnteriorValor = $(this).val();
         },
         'focusout': function () {
@@ -602,18 +634,39 @@ function detectarCambios() {
                 $("#cant-" + id).val(AnteriorValor);
                 return;
             }
+            var precio = parseInt($("#precio-" + id).text());
+            if (NuevoValor > precio) {
+                Materialize.toast("El descuento no puede ser mayor que el precio", 2000);
+                $("#cant-" + id).val(AnteriorValor);
+                return;
+            }
 
-            $.ajax({
-                url: '/ventas/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
-                type: 'GET',
-                'success': function (data) {
-                    mostrarProductosTmp(1);
-                    Materialize.toast('Cantidad del articulo actualizado', 2000);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
+            if (campo === "cant") {
+                $.ajax({
+                    url: '/ventas/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+            if (campo === "desc") {
+                $.ajax({
+                    url: '/ventas/actualizar/descuento/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
         }
     }, '.articulosLista table tbody input');
 }

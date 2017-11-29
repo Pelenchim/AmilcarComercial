@@ -13,7 +13,6 @@ namespace AmilcarComercial.Controllers
     public class ComprasController : Controller
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
-        GeneralesController gen = new GeneralesController();
 
         #region Vistas
         // GET: Compras
@@ -187,9 +186,9 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("compras/agregar/producto/{id}/{cant}/{precio}/{desc}")]
+        [Route("compras/agregar/producto/{id}/{cant}/{precio}/{desc}/{precioventa}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant, float precio, float desc)
+        public JsonResult AgregarProducto(int id, int cant, float precio, float desc, float precioventa)
         {
             var user = User.Identity.Name;
 
@@ -198,6 +197,7 @@ namespace AmilcarComercial.Controllers
             compra.cantidad = cant;
             compra.costo = precio;
             compra.descuento = desc;
+            compra.precioventa = precioventa;
             compra.user = user;
             compra.fecha = System.DateTime.Now;
 
@@ -243,7 +243,8 @@ namespace AmilcarComercial.Controllers
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
                                  Precio = p.costo,
-                                 Descuento = p.descuento
+                                 Descuento = p.descuento,
+                                 PrecioVenta = p.precioventa
                              }).ToList();
                 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -288,6 +289,16 @@ namespace AmilcarComercial.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+        [Route("compras/actualizar/precioventa/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarPrecioVenta(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
+            dato.precioventa = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
@@ -304,7 +315,7 @@ namespace AmilcarComercial.Controllers
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
-                    var proveedor = gen.guardarProveedor("Compra");
+                    var proveedor = guardarProveedor("Compra");
 
                     Tbl_Compra maestro = new Tbl_Compra()
                     {
@@ -324,6 +335,10 @@ namespace AmilcarComercial.Controllers
 
                     foreach (var articulo in detalleTmp)
                     {
+                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
+                        stock.stock = stock.stock + articulo.cantidad;
+                        db.SaveChanges();
+
                         Tbl_Kardex kardex = new Tbl_Kardex()
                         {
                             id_articulo = articulo.id_articulo,
@@ -331,7 +346,7 @@ namespace AmilcarComercial.Controllers
                             num_factura = maestro.fact_compra,
                             Entrada = articulo.cantidad,
                             salida = 0,
-                            saldo = articulo.cantidad,
+                            saldo = stock.stock,
                             ultimoCosto = articulo.costo,
                             costoPromedio = articulo.costo,
                             usuario = User.Identity.Name,
@@ -340,11 +355,7 @@ namespace AmilcarComercial.Controllers
                             observaciones = "Compra Aprovada"
                         };
                         db.Tbl_Kardex.Add(kardex);
-                        db.SaveChanges();
-
-                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
-                        stock.stock = stock.stock + articulo.cantidad;
-                        db.SaveChanges();
+                        db.SaveChanges();                      
 
                         Tbl_Detalle_Compra detalle = new Tbl_Detalle_Compra()
                         {
@@ -357,6 +368,10 @@ namespace AmilcarComercial.Controllers
                         };
                         db.Tbl_Detalle_Compra.Add(detalle);
                         db.SaveChanges();
+
+                        var precio = db.Tbl_bodega_productos.Where(m => m.id_articulo == articulo.id_articulo).FirstOrDefault();
+                        precio.precio = articulo.precioventa;
+                        precio.preciocredito = articulo.precioventa * 1.10;
                     }
                     db.Tbl_CompraTmp.RemoveRange(detalleTmp);
                     db.SaveChanges();
@@ -416,6 +431,42 @@ namespace AmilcarComercial.Controllers
 
             return Json(datos, JsonRequestBehavior.AllowGet);
         }
+
+        public int guardarProveedor(string tipo)
+        {
+            var nuevo = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
+
+            if (nuevo.nuevo == true)
+            {
+                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+
+                Tbl_Proveedor proveedor = new Tbl_Proveedor()
+                {
+                    razon_social = proveedorTmp.nombre,
+                    telefono = proveedorTmp.telefono,
+                    Ruc = proveedorTmp.ruc,
+                    Estado = true
+                };
+                db.Tbl_Proveedor.Add(proveedor);
+                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
+                db.SaveChanges();
+
+                var ultimo = db.Tbl_Proveedor.OrderByDescending(m => m.id_proveedor).FirstOrDefault().id_proveedor;
+                return ultimo;
+            }
+            else
+            {
+                var proveedorTmp = db.Tbl_ProveedorTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var id = proveedorTmp.id_proveedor;
+
+                var proveedor = db.Tbl_Proveedor.Find(id).id_proveedor;
+                db.Tbl_ProveedorTmp.Remove(proveedorTmp);
+                db.SaveChanges();
+
+                return proveedor;
+            }
+        }
+
         #endregion
 
         #region ListaCompras

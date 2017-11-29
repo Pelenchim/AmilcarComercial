@@ -253,6 +253,7 @@
     <Property Name="costo" Type="Double" Nullable="false" />
     <Property Name="descuento" Type="Double" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_CompraTmp_Tbl_Articulo" FromRole="Tbl_CompraTmp" ToRole="Tbl_Articulo" />
+    <Property Name="precioventa" Type="Double" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -437,6 +438,8 @@
     <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="prima" Type="Double" />
     <Property Name="tipoventa" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="descuento" Type="Double" />
+    <Property Name="precioventa" Type="Double" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

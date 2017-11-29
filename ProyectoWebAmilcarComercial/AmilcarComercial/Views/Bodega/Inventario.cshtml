@@ -96,8 +96,8 @@
                                 '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' +  '</td>' +
                                 '<td>' + value.Nombre + '</td>' +
                                 '<td>' + value.Categoria + '</td>' +
-                                '<td>C$' + value.Precio + '</td>' +
-                                '<td>C$' + value.PrecioCredito + '</td>' +
+                                '<td>C$' + (value.Precio).toFixed(2) + '</td>' +
+                                '<td>C$' + (value.PrecioCredito).toFixed(2) + '</td>' +
                                 '<td><span class="cant white-text ' + color + '">' + value.Stock + '</span></td>' +
                                 '</tr>'
                             );

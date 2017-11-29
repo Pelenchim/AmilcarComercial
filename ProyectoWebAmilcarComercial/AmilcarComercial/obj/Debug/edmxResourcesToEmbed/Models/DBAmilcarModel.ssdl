@@ -218,6 +218,7 @@
     <Property Name="fecha" Type="datetime" Nullable="false" />
     <Property Name="costo" Type="float" Nullable="false" />
     <Property Name="descuento" Type="float" />
+    <Property Name="precioventa" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -425,6 +426,8 @@
     <Property Name="apartado_fecha" Type="nchar" MaxLength="10" />
     <Property Name="prima" Type="float" />
     <Property Name="tipoventa" Type="nvarchar" MaxLength="30" />
+    <Property Name="descuento" Type="float" />
+    <Property Name="precioventa" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

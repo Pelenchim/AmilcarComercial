@@ -12,8 +12,6 @@ namespace AmilcarComercial.Controllers
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
-        GeneralesController generales = new GeneralesController();
-
         #region vistas
         // GET: Ventas
         public ActionResult Index()
@@ -155,15 +153,16 @@ namespace AmilcarComercial.Controllers
                                  Codigo = p.codigo_articulo,
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen,
-                                 Stock = b.stock
+                                 Stock = b.stock,
+                                 Precio = b.precio
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/agregar/producto/{id}/{cant}")]
+        [Route("ventas/agregar/producto/{id}/{cant}/{precio}/{desc}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant)
+        public JsonResult AgregarProducto(int id, int cant, float precio, float desc)
         {
             var user = User.Identity.Name;
             Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
@@ -171,6 +170,8 @@ namespace AmilcarComercial.Controllers
             orden.id_Articulo = id;
             orden.cantidad = cant;
             orden.tipoventa = "Contado";
+            orden.descuento = desc;
+            orden.precioventa = precio;
             orden.fecha = DateTime.Now;
             orden.user = user;
 
@@ -217,7 +218,8 @@ namespace AmilcarComercial.Controllers
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
                                  Existecia = b.stock,
-                                 Precio = b.precio
+                                 Precio = b.precio,
+                                 Descuento = p.descuento
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -241,6 +243,17 @@ namespace AmilcarComercial.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("ventas/actualizar/descuento/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarDescuento(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            dato.descuento = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Facturacion
@@ -257,7 +270,7 @@ namespace AmilcarComercial.Controllers
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
                     var fecha = DateTime.Now;
-                    var cliente = generales.guardarCliente("Contado");
+                    var cliente = guardarCliente("Contado");
 
                     Tbl_Orden maestro = new Tbl_Orden()
                     {
@@ -306,8 +319,8 @@ namespace AmilcarComercial.Controllers
                             id_articulo = (int)articulo.id_Articulo,
                             id_kardex = kardex.id_Kardex,
                             cantidad = (int)articulo.cantidad,
-                            precio_venta = 0,
-                            descuento = 0
+                            precio_venta = (float)(articulo.precioventa - articulo.descuento),
+                            descuento = articulo.descuento
                         };
                         db.Tbl_Detalle_Orden.Add(detalle);
                         db.SaveChanges();
@@ -376,6 +389,44 @@ namespace AmilcarComercial.Controllers
             datos.Add(id);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+        public int guardarCliente(string tipo)
+        {
+            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault().nuevo;
+
+            if (nuevo == true)
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+
+                Tbl_Clientes cliente = new Tbl_Clientes()
+                {
+                    nombre_cliente = clienteTmp.nombre_cliente,
+                    apellidos_cliente = clienteTmp.apellidos_cliente,
+                    direccion = clienteTmp.direccion,
+                    departamento = clienteTmp.departamento,
+                    telefono = (int)clienteTmp.telefono,
+                    cedula = clienteTmp.cedula,
+                    estado = true
+                };
+                db.Tbl_Clientes.Add(cliente);
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
+                return ultimo;
+            }
+            else
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var id = clienteTmp.id_cliente;
+
+                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                return cliente;
+            }
         }
 
         #endregion

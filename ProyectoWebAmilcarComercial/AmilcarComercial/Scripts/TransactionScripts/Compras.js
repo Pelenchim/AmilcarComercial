@@ -292,6 +292,7 @@ function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
     var precio = $(".articulos #precio" + id).val();
     var desc = $(".articulos #desc" + id).val();
+    var vent = $(".articulos #vent" + id).val();
 
     if (precio === '') {
         Materialize.toast("Debe agregar el costo", 2000);
@@ -353,9 +354,29 @@ function agregarArticuloTmp(id) {
         $(".articulos #desc" + id).focus();
         return;
     }
+    if (vent === '') {
+        Materialize.toast("Debe agregar el precio de venta", 2000);
+        $(".articulos #vent" + id).focus();
+        return;
+    }
+    if (vent === 0) {
+        Materialize.toast("El precio de venta no puede ser igual a 0", 2000);
+        $(".articulos #vent" + id).focus();
+        return;
+    }
+    if (vent < 0) {
+        Materialize.toast("El precio de venta no es valido", 2000);
+        $(".articulos #vent" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(vent)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #vent" + id).focus();
+        return;
+    }
 
     $.ajax({
-        url: '/compras/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc,
+        url: '/compras/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc + '/' + vent,
         type: 'GET',
         'success': function (data) {
             //$('#articulos').modal('close');
@@ -487,6 +508,7 @@ function articulosTable(data) {
         '<th>Costo C$</th>' +
         '<th>Cantidad</th>' +
         '<th>Descuento</th>' +
+        '<th>PrecioVenta</th>' +
         '<th class="right-align">Agregar</th>' +
         '</tr>' +
         '</thead>' +
@@ -502,13 +524,16 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td>' +
-                '<input placeholder="Precio" id="precio' + value.ID + '" type="text" class="browser-default">' +
+                '<input placeholder="Costo" id="precio' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td>' +
                 '<input placeholder="Descuento" id="desc' + value.ID + '" type="text" class="browser-default" value="0">' +
+                '</td > ' +
+                '<td>' +
+                '<input placeholder="Precio" id="vent' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td class="right-align">' +
                 '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
@@ -573,6 +598,7 @@ function articulosOrdenTable(data) {
         '<th>Cantidad</th>' +
         '<th>Descuento</th>' +
         '<th>Subtotal</th>' +
+        '<th>PrecioVenta</th>' +
         '<th>Opciones</th>' +
         '</tr>' +
         '</thead>' +
@@ -599,6 +625,9 @@ function articulosOrdenTable(data) {
                 '<input class="browser-default" type="text" id="desc-' + value.ID + '" value="' + value.Descuento + '"></input>' +
                 '</td>' +
                 '<td>C$' + ((value.Precio * value.Cantidad) - value.Descuento).toFixed(2) + '</td>' +
+                '<td>' +
+                '<input class="browser-default" type="text" id="vent-' + value.ID + '" value="' + value.PrecioVenta + '"></input>' +
+                '</td>' +
                 '<td>' + '<a class="center" onclick="eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' +
                 '</td>' +
                 '</tr>'
@@ -676,6 +705,20 @@ function detectarCambios() {
                         alert("Request: " + JSON.stringify(request));
                     }
                 }); 
+            }
+
+            if (campo === "vent") {
+                $.ajax({
+                    url: '/compras/actualizar/precioventa/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('El precio de venta del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
             }
 
             if (campo === "desc") {

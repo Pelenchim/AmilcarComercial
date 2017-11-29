@@ -23,6 +23,8 @@ namespace AmilcarComercial.Models
         public string apartado_fecha { get; set; }
         public Nullable<double> prima { get; set; }
         public string tipoventa { get; set; }
+        public Nullable<double> descuento { get; set; }
+        public Nullable<double> precioventa { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }

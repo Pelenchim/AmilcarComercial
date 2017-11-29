@@ -274,7 +274,7 @@ namespace AmilcarComercial.Controllers
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
                     var fecha = DateTime.Now;
-                    var cliente = generales.guardarCliente("Credito");
+                    var cliente = guardarCliente("Credito");
 
                     Tbl_Orden maestro = new Tbl_Orden()
                     {
@@ -387,6 +387,44 @@ namespace AmilcarComercial.Controllers
             datos.Add(id);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+        public int guardarCliente(string tipo)
+        {
+            var nuevo = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault().nuevo;
+
+            if (nuevo == true)
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+
+                Tbl_Clientes cliente = new Tbl_Clientes()
+                {
+                    nombre_cliente = clienteTmp.nombre_cliente,
+                    apellidos_cliente = clienteTmp.apellidos_cliente,
+                    direccion = clienteTmp.direccion,
+                    departamento = clienteTmp.departamento,
+                    telefono = (int)clienteTmp.telefono,
+                    cedula = clienteTmp.cedula,
+                    estado = true
+                };
+                db.Tbl_Clientes.Add(cliente);
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                var ultimo = db.Tbl_Clientes.OrderByDescending(m => m.id_cliente).FirstOrDefault().id_cliente;
+                return ultimo;
+            }
+            else
+            {
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var id = clienteTmp.id_cliente;
+
+                var cliente = db.Tbl_Clientes.Find(id).id_cliente;
+                db.Tbl_ClienteTmp.Remove(clienteTmp);
+                db.SaveChanges();
+
+                return cliente;
+            }
         }
 
         #endregion
