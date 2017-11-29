@@ -339,6 +339,26 @@ function agregarArticuloTmp(id) {
         $(".articulos #cant" + id).focus();
         return;
     }
+    if (meses === '') {
+        Materialize.toast("Debe agregar los meses", 2000);
+        $(".articulos #meses" + id).focus();
+        return;
+    }
+    if (meses === 0) {
+        Materialize.toast("Los meses no pueden ser igual a 0", 2000);
+        $(".articulos #meses" + id).focus();
+        return;
+    }
+    if (meses < 0) {
+        Materialize.toast("Los meses no son validos", 2000);
+        $(".articulos #meses" + id).focus();
+        return;
+    }
+    if (!/^([0-9])*$/.test(meses)) {
+        Materialize.toast("El valor no es valido", 2000);
+        $(".articulos #meses" + id).focus();
+        return;
+    }
     $.ajax({
         url: '/credito/agregar/producto/' + id + '/' + cant + '/' + meses + '/' + prima,
         type: 'GET',
@@ -492,8 +512,8 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
-                '<td> C$ ' + value.Precio + '</td>' +
-                '<td> C$ ' + value.Prima + '</td>' +
+                '<td> C$ ' + (value.Precio).toFixed(2) + '</td>' +
+                '<td> C$ ' + (value.Prima).toFixed(2) + '</td>' +
                 '<td class="hide">' +
                 '<input placeholder="Prima" id="prima' + value.ID + '" value="' + value.Prima + '" type="text" class="browser-default">' +
                 '</td > ' +

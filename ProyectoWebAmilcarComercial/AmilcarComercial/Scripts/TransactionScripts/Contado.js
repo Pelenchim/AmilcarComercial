@@ -577,7 +577,7 @@ function articulosOrdenTable(data) {
                 '<td>' +
                 '<input class="browser-default" id="desc-' + value.ID + '" type="text" value="' + value.Descuento + '"></input>' +
                 '</td>' +
-                '<td>' + value.Cantidad * (value.Precio - value.Descuento) + '</td>' +
+                '<td>' + ((value.Cantidad * value.Precio) - (value.Descuento * value.Cantidad)) + '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
@@ -598,7 +598,7 @@ function detectarCambios() {
             ID_Obj = $(this).attr("id");
             dividiendo = ID_Obj.split("-", 2);
             id = dividiendo[1];
-            campo = dividiendo[0]
+            campo = dividiendo[0];
             AnteriorValor = $(this).val();
         },
         'focusout': function () {
@@ -628,20 +628,13 @@ function detectarCambios() {
                 return;
             }
 
-            var exist = parseInt($("#exist-" + id).text());
-            if (NuevoValor > exist) {
-                Materialize.toast("No hay sufucientes productos para realizar el pedido", 2000);
-                $("#cant-" + id).val(AnteriorValor);
-                return;
-            }
-            var precio = parseInt($("#precio-" + id).text());
-            if (NuevoValor > precio) {
-                Materialize.toast("El descuento no puede ser mayor que el precio", 2000);
-                $("#cant-" + id).val(AnteriorValor);
-                return;
-            }
-
             if (campo === "cant") {
+                var exist = parseInt($("#exist-" + id).text());
+                if (NuevoValor > exist) {
+                    Materialize.toast("No hay sufucientes productos para realizar el pedido", 2000);
+                    $("#cant-" + id).val(AnteriorValor);
+                    return;
+                }
                 $.ajax({
                     url: '/ventas/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
                     type: 'GET',
@@ -655,12 +648,18 @@ function detectarCambios() {
                 });
             }
             if (campo === "desc") {
+                var precio = parseInt($("#precio-" + id).text());
+                if (NuevoValor > precio) {
+                    Materialize.toast("El descuento no puede ser mayor que el precio", 2000);
+                    $("#desc-" + id).val(AnteriorValor);
+                    return;
+                }
                 $.ajax({
                     url: '/ventas/actualizar/descuento/productoTmp/' + id + '/' + NuevoValor,
                     type: 'GET',
                     'success': function (data) {
                         mostrarProductosTmp(1);
-                        Materialize.toast('Cantidad del articulo actualizado', 2000);
+                        Materialize.toast('Descuento del articulo actualizado', 2000);
                     },
                     'error': function (request, error) {
                         alert("Request: " + JSON.stringify(request));

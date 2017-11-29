@@ -213,7 +213,7 @@ namespace AmilcarComercial.Controllers
                              where (p.user == User.Identity.Name && p.tipoventa == "Contado")
                              select new
                              {
-                                 ID = p.Tbl_Articulo.id_articulo,
+                                 ID = p.id_OrdenTmp,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
@@ -368,24 +368,24 @@ namespace AmilcarComercial.Controllers
                         .OrderByDescending(m => m.id_orden).First();
 
             var cantidad = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.cantidad);
+            var subtotal = (from v in db.Tbl_Detalle_Orden
+                            where v.id_orden == ultimo.id_orden
+                            select new
+                            {
+                                sub = (v.precio_venta - v.descuento) * v.cantidad
+                            }).Sum(m => m.sub);
             var descuento = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.descuento);
-            var subtotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.precio_venta);
-            var ivatotal = subtotal * (ultimo.iva_orden / 100);
-            //var ivatotal = (from v in db.Tbl_Orden
-            //               where v.id_orden == ultimo
-            //               select new
-            //               {
-            //                   iva = (v.iva_orden / 100) * v.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).FirstOrDefault().precio_venta
-            //               }).Sum(m => m.iva);
+            var ivatotal = subtotal * (ultimo.iva_orden / 100);            
+
             var total = subtotal + ivatotal - descuento;
             var id = ultimo.id_orden;
 
             List<double> datos = new List<double>();
             datos.Add(cantidad);
-            datos.Add(subtotal);
-            datos.Add(ivatotal);
-            datos.Add((double)descuento);
-            datos.Add((double)total);
+            datos.Add((float)subtotal);
+            datos.Add((float)ivatotal);
+            datos.Add((float)descuento);
+            datos.Add((float)total);
             datos.Add(id);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
