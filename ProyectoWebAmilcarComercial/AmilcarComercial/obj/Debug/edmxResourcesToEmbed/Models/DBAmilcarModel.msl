@@ -315,18 +315,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tbl_Devolucion">
-      <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_Devolucion">
-        <MappingFragment StoreEntitySet="Tbl_Devolucion">
-          <ScalarProperty Name="id_devolucion" ColumnName="id_devolucion" />
-          <ScalarProperty Name="fecha_devolucion" ColumnName="fecha_devolucion" />
-          <ScalarProperty Name="usuario" ColumnName="usuario" />
-          <ScalarProperty Name="id_garantia" ColumnName="id_garantia" />
-          <ScalarProperty Name="id_orden" ColumnName="id_orden" />
-          <ScalarProperty Name="id_kardex" ColumnName="id_kardex" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tbl_garantia">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_garantia">
         <MappingFragment StoreEntitySet="Tbl_garantia">
@@ -507,6 +495,8 @@
     <EntitySetMapping Name="Tbl_DetalleDevolucion">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DetalleDevolucion">
         <MappingFragment StoreEntitySet="Tbl_DetalleDevolucion">
+          <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
           <ScalarProperty Name="tipo" ColumnName="tipo" />
           <ScalarProperty Name="descuento" ColumnName="descuento" />
           <ScalarProperty Name="iva" ColumnName="iva" />
@@ -515,7 +505,6 @@
           <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="descripcion" ColumnName="descripcion" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
-          <ScalarProperty Name="id_devolucion" ColumnName="id_devolucion" />
           <ScalarProperty Name="id_detalleDevolucion" ColumnName="id_detalleDevolucion" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -532,11 +521,9 @@
     <EntitySetMapping Name="Tbl_DevolucionDetalleTmp">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DevolucionDetalleTmp">
         <MappingFragment StoreEntitySet="Tbl_DevolucionDetalleTmp">
-          <ScalarProperty Name="id_devolucionTmp" ColumnName="id_devolucionTmp" />
-          <ScalarProperty Name="descuento" ColumnName="descuento" />
-          <ScalarProperty Name="id_kardex" ColumnName="id_kardex" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="user" ColumnName="user" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-          <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="descripcion" ColumnName="descripcion" />
           <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
           <ScalarProperty Name="id_detalleDevolucion" ColumnName="id_detalleDevolucion" />
@@ -555,9 +542,9 @@
     <EntitySetMapping Name="Tbl_DevolucionTmp">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DevolucionTmp">
         <MappingFragment StoreEntitySet="Tbl_DevolucionTmp">
+          <ScalarProperty Name="id_venta" ColumnName="id_venta" />
+          <ScalarProperty Name="id_compra" ColumnName="id_compra" />
           <ScalarProperty Name="user" ColumnName="user" />
-          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
-          <ScalarProperty Name="iva" ColumnName="iva" />
           <ScalarProperty Name="tipo" ColumnName="tipo" />
           <ScalarProperty Name="id_devolucion" ColumnName="id_devolucion" />
         </MappingFragment>

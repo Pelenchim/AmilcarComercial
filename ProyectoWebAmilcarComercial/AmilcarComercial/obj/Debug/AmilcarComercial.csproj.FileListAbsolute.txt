@@ -275,7 +275,7 @@ C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarCo
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\obj\Debug\AmilcarComercial.csprojResolveAssemblyReference.cache
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\obj\Debug\AmilcarComercial.csproj.CoreCompileInputs.cache
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\obj\Debug\AmilcarComercial.dll
 C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\obj\Debug\AmilcarComercial.pdb
+C:\Users\HP I7\Documents\GitHub\SistemaWeb\ProyectoWebAmilcarComercial\AmilcarComercial\obj\Debug\AmilcarComercial.csprojResolveAssemblyReference.cache

@@ -128,11 +128,16 @@ namespace AmilcarComercial.Controllers
                         {
                             Factura = c.fact_compra,
                             Proveedor = c.Tbl_Proveedor.razon_social,
-                            Fecha = c.fecha_compra,
-                            Iva = c.iva_compra,
-                            Comprador = c.usuario,
-                            Estado = c.estado_compra
+                            Fecha = c.fecha_compra.ToString(),
+                            Iva = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra / 100),
+                            CompradorN = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().FirstName,
+                            CompradorA = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().LastName,
+                            Estado = c.estado_compra,
+                            Subtotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo),
+                            Total = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) + (db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra/100)),
+                            CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad)
                         }).FirstOrDefault();
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             else
@@ -154,7 +159,8 @@ namespace AmilcarComercial.Controllers
                             Img = c.Tbl_Articulo.imagen,
                             Cantidad = c.cantidad,
                             Descuento = c.descuento,
-                            Costo = c.costo
+                            Costo = c.costo,
+                            Subtotal = c.costo * c.cantidad - c.descuento
                         }).ToList();
 
             return Json(new { data = data }, JsonRequestBehavior.AllowGet);

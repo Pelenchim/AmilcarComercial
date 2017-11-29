@@ -115,6 +115,25 @@ namespace AmilcarComercial.Controllers
             return Json(dato, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("contado/detallebusqueda/{fact}")]
+        public JsonResult detalleBusqueda(string fact)
+        {
+            var id = db.Tbl_Orden.Where(m => m.fact_Orden == fact).FirstOrDefault().id_orden;
+            var data = (from c in db.Tbl_Detalle_Orden
+                        where c.id_orden == id
+                        select new
+                        {
+                            Articulo = c.Tbl_Articulo.nombre_articulo,
+                            Img = c.Tbl_Articulo.imagen,
+                            Cantidad = c.cantidad,
+                            Descuento = c.descuento,
+                            Precio = c.precio_venta,
+                            Subtotal = c.precio_venta * c.cantidad - c.descuento
+                        }).ToList();
+
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+
         #region Articulos
 
         [Route("ventas/obtener/articulos")]

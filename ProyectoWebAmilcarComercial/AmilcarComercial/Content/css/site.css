@@ -1363,6 +1363,51 @@ background-color: #37474f;
 .consulta .consulta-content .detalle-consulta .vacio p{
     font-size: 1.4rem;
 }
+.consulta .consulta-content .detalle-consulta .maestro>div{
+    margin-bottom: 0.6rem;
+}
+.consulta .consulta-content .detalle-consulta span{
+    color: #4a4a4a;
+    font-size: 1.2rem;
+}
+.consulta .consulta-content .detalle-consulta span.estado {
+    border-radius: 2px;
+    padding: 4px 1rem;
+}
+.consulta .consulta-content .detalle-consulta .divider-mio{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.consulta .consulta-content .detalle-consulta h5 {
+    color: #4a4a4a;
+    font-size: 1.1rem;
+}
+.consulta .detalle-consulta table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.consulta .detalle-consulta table td {
+    padding: 5px;
+}
+.consulta .detalle-consulta table {
+    width: 100%;
+}
+.consulta .detalle-consulta table thead {
+    width: calc( 100% - 1em );
+    border-bottom: 0px;
+}
+.consulta .detalle-consulta table tbody {
+    display: block;
+    max-height: 30vh;
+    overflow: auto;
+}
+.consulta .detalle-consulta table thead tr,
+.consulta .detalle-consulta table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
 
 /*#endregion */
 
@@ -1371,22 +1416,26 @@ background-color: #37474f;
 /*lista de articulos en la orden*/
 .articulosVenta .opcionesArticulos:first-child,
 .articulosCredito .opcionesArticulos:first-child,
-.articulosApartado .opcionesArticulos:first-child{
+.articulosApartado .opcionesArticulos:first-child,
+.articulosDevolucion .opcionesArticulos:first-child{
     padding: 0 0.75rem 0 0;
 }
 .articulosVenta .opcionesArticulos .acciones,
 .articulosCredito .opcionesArticulos .acciones,
-.articulosApartado .opcionesArticulos .acciones{
+.articulosApartado .opcionesArticulos .acciones,
+.articulosDevolucion .opcionesArticulos .acciones{
     padding: 0;
 }
 .articulosVenta .opcionesArticulos .acciones div,
 .articulosCredito .opcionesArticulos .acciones div,
-.articulosApartado .opcionesArticulos .acciones div {
+.articulosApartado .opcionesArticulos .acciones div,
+.articulosDevolucion .opcionesArticulos .acciones div{
     height: 100%;
 }
 .articulosVenta .opcionesArticulos .acciones a,
 .articulosCredito .opcionesArticulos .acciones a,
-.articulosApartado .opcionesArticulos .acciones a {
+.articulosApartado .opcionesArticulos .acciones a,
+.articulosDevolucion .opcionesArticulos .acciones a{
     padding: 0 5px;
     margin: 1rem 1px 0 1px;
     cursor: pointer;
@@ -1397,30 +1446,36 @@ background-color: #37474f;
 .articulosCredito .opcionesArticulos .acciones a.card-v,
 .articulosCredito .opcionesArticulos .acciones a.table-v,
 .articulosApartado .opcionesArticulos .acciones a.card-v,
-.articulosApartado .opcionesArticulos .acciones a.table-v {
+.articulosApartado .opcionesArticulos .acciones a.table-v,
+.articulosDevolucion .opcionesArticulos .acciones a.card-v,
+.articulosDevolucion .opcionesArticulos .acciones a.table-v{
     display: none;
 }
 .articulosVenta .opcionesArticulos .acciones input,
 .articulosCredito .opcionesArticulos .acciones input,
-.articulosApartado .opcionesArticulos .acciones input {
+.articulosApartado .opcionesArticulos .acciones input,
+.articulosDevolucion .opcionesArticulos .acciones input{
     width: 65%;
     margin: 0.3rem 0 0 0;
     border-bottom: 1px solid transparent;
 }
 .articulosVenta .opcionesArticulos input[type=text]:focus,
 .articulosCredito .opcionesArticulos input[type=text]:focus,
-.articulosApartado .opcionesArticulos input[type=text]:focus {
+.articulosApartado .opcionesArticulos input[type=text]:focus,
+.articulosDevolucion .opcionesArticulos input[type=text]:focus{
     border-bottom: 1px solid #424242 !important;
     box-shadow: 0 1px 0 0 #424242 !important;
 }
 .articulosVenta .articulosLista .articulosLista .card .card-content,
 .articulosCredito .articulosLista .articulosLista .card .card-content,
-.articulosApartado .articulosLista .articulosLista .card .card-content {
+.articulosApartado .articulosLista .articulosLista .card .card-content,
+.articulosDevolucion .articulosLista .articulosLista .card .card-content{
     padding: 0;
 }
 .articulosVenta .articulos-orden .articulosLista table td,
 .articulosCredito .articulos-orden .articulosLista table td,
-.articulosApartado .articulos-orden .articulosLista table td {
+.articulosApartado .articulos-orden .articulosLista table td,
+.articulosDevolucion .articulos-orden .articulosLista table td{
     padding: 5px;
 }
 .articulosVenta .articulos-orden .articulosLista .top {
@@ -1440,13 +1495,15 @@ background-color: #37474f;
 
 .articulosVenta .articulos-orden .articulosLista table td a,
 .articulosCredito .articulos-orden .articulosLista table td a,
-.articulosApartado .articulos-orden .articulosLista table td a {
+.articulosApartado .articulos-orden .articulosLista table td a,
+.articulosDevolucion .articulos-orden .articulosLista table td a{
     color: #424242;
     cursor: pointer;
 }
 .articulosVenta .articulos-orden .articulosLista table td a:hover,
 .articulosCredito .articulos-orden .articulosLista table td a:hover,
-.articulosApartado .articulos-orden .articulosLista table td a:hover {
+.articulosApartado .articulos-orden .articulosLista table td a:hover,
+.articulosDevolucion .articulos-orden .articulosLista table td a:hover{
     color: #212121;
 }
 .articulosVenta .articulos-orden .articulosLista .card img,
@@ -1458,7 +1515,8 @@ background-color: #37474f;
 
 .articulosVenta .articulos-orden .articulosLista table img,
 .articulosCredito .articulos-orden .articulosLista table img,
-.articulosApartado .articulos-orden .articulosLista table img {
+.articulosApartado .articulos-orden .articulosLista table img,
+.articulosDevolucion .articulos-orden .articulosLista table img{
     width: 50px;
     height: 50px;
     border-radius: 100%;
@@ -1473,17 +1531,18 @@ background-color: #37474f;
     flex-direction: row;
     padding: 0.5rem 0.3rem;
 }
-
-    .articulosVenta .articulos-orden .articulosLista .card .card-content div {
-        width: 50%;
-        margin: 0.3rem;
-    }
+.articulosVenta .articulos-orden .articulosLista .card .card-content div {
+    width: 50%;
+    margin: 0.3rem;
+}
 .articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text],
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
 .articulosCredito .articulos-orden .articulosLista .card .card-content input[type=text],
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
 .articulosApartado .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosApartado .articulos-orden .articulosLista table tbody input[type=text] {
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text],
+.articulosDevolucion .articulos-orden .articulosLista .card .card-content input[type=text],
+.articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text] {
     width: 100%;
     margin: 0;
     color: #333;
@@ -1500,7 +1559,8 @@ background-color: #37474f;
 }
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
-.articulosApartado .articulos-orden .articulosLista table tbody input[type=text] {
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text],
+.articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text] {
     width: 60px;
 }
 .articulosCredito .articulos-orden .articulosLista table tbody input[id^="prima"],
@@ -1509,7 +1569,8 @@ background-color: #37474f;
 }
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text]:focus,
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text]:focus,
-.articulosApartado .articulos-orden .articulosLista table tbody input[type=text]:focus {
+.articulosApartado .articulos-orden .articulosLista table tbody input[type=text]:focus,
+.articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text]:focus {
     background-color: #f9f9f9 !important;
     border-bottom: 0;
     box-shadow: 0 0 2px #727272 !important;
@@ -1522,24 +1583,27 @@ background-color: #37474f;
 }
 .articulosVenta .articulos-orden .articulosLista,
 .articulosCredito .articulos-orden .articulosLista,
-.articulosApartado .articulos-orden .articulosLista {
+.articulosApartado .articulos-orden .articulosLista,
+.articulosDevolucion .articulos.articulos-orden .articulosLista{
     padding: 0;
 }
 .articulosVenta .articulos-orden .articulosLista table,
 .articulosCredito .articulos-orden .articulosLista table,
-.articulosApartado .articulos-orden .articulosLista table {
+.articulosApartado .articulos-orden .articulosLista table,
+.articulosDevolucion .articulos-orden .articulosLista table{
     width: 100%;
 }
 .articulosVenta .articulos-orden .articulosLista table thead,
 .articulosCredito .articulos-orden .articulosLista table thead,
-.articulosApartado .articulos-orden .articulosLista table thead {
+.articulosApartado .articulos-orden .articulosLista table thead,
+.articulosDevolucion .articulos-orden .articulosLista table thead{
     width: calc( 100% - 1em );
     border-bottom: 0px;
 }
-
 .articulosVenta .articulos-orden .articulosLista table tbody,
 .articulosCredito .articulos-orden .articulosLista table tbody,
-.articulosApartado .articulos-orden .articulosLista table tbody {
+.articulosApartado .articulos-orden .articulosLista table tbody,
+.articulosDevolucion .articulos-orden .articulosLista table tbody {
     display: block;
     height: 30vh;
     min-height: 280px;
@@ -1550,14 +1614,17 @@ background-color: #37474f;
 .articulosCredito .articulos-orden .articulosLista table thead tr,
 .articulosCredito .articulos-orden .articulosLista table tbody tr,
 .articulosApartado .articulos-orden .articulosLista table thead tr,
-.articulosApartado .articulos-orden .articulosLista table tbody tr {
+.articulosApartado .articulos-orden .articulosLista table tbody tr,
+.articulosDevolucion .articulos-orden .articulosLista table thead tr,
+.articulosDevolucion .articulos-orden .articulosLista table tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
 .articulosVenta .articulos-orden .articulosLista table thead tr,
 .articulosCredito .articulos-orden .articulosLista table thead tr,
-.articulosApartado .articulos-orden .articulosLista table thead tr {
+.articulosApartado .articulos-orden .articulosLista table thead tr,
+.articulosDevolucion .articulos-orden .articulosLista table thead tr {
     border-bottom: 0px;
 }
 
@@ -3148,6 +3215,78 @@ background-color: #37474f;
 .articulos .option-bar,
 .clientes .option-bar {
     margin-bottom: 15px;
+}
+
+/*#endregion */
+/*#region NuevaDevolucion */
+
+/*modal de articulos*/
+.modal-devolucion .articulos .card-v,
+.modal-devolucion .articulos .table-v {
+    display: none;
+}
+.modal-devolucion .articulos .lista-articulos table td {
+    padding: 5px;
+}
+.modal-devolucion .articulos .lista-articulos table tbody img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+.modal-devolucion .lista-articulos table.highlight > tbody > tr:hover {
+}
+.modal-devolucion .articulos .lista-articulos .card .nombre {
+    font-size: 1.3rem;
+}
+.modal-devolucion .articulos .lista-articulos .card a {
+    padding: 0 0.5rem;
+}
+.modal-devolucion .articulos .lista-articulos .card a:hover {
+    background-color: #66bb6a !important;
+}
+.modal-devolucion .articulos .lista-articulos .card input[type=text] {
+    margin: 0 15px 0 0;
+    color: #3c3c3c;
+    border: none !important;
+    border-radius: 2px;
+    width: 60px;
+    height: 36px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background-color: #ECEFF1 !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-devolucion .articulos .lista-articulos .card input[type=text]:focus {
+    background-color: #f9f9f9 !important;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-devolucion .articulos .lista-articulos table tbody input[type=text] {
+    margin: 0;
+    color: #555;
+    border: none !important;
+    border-radius: 2px;
+    width: 80px;
+    height: 35px !important;
+    outline: none !important;
+    padding: 1px 10px 1px 10px !important;
+    background: rgba(183, 183, 183, 0.50) !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box !important;
+    transition: background-color 0.4s;
+    text-align: center;
+}
+.modal-devolucion .articulos .lista-articulos table tbody input[type=text]:focus {
+    background-color: #fff !important;
+    color: #3d3d3d;
+    border-bottom: 0;
+    box-shadow: 0 0 2px #727272 !important;
+}
+.modal-ventas .articulos .lista-articulos table tbody a {
+    padding: 0 0.7rem;
 }
 
 /*#endregion */

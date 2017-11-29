@@ -354,5 +354,38 @@ namespace AmilcarComercial.Controllers
 
         #endregion
 
+        [Route("ventas/buscar/{fact}")]
+        public JsonResult buscar(string fact)
+        {
+            if (db.Tbl_Orden.Where(m => m.fact_Orden == fact).Count() > 0)
+            {
+                var data = (from c in db.Tbl_Orden
+                            join d in db.Tbl_Detalle_Orden on c.id_orden equals d.id_orden
+                            where c.fact_Orden == fact
+                            select new
+                            {
+                                Factura = c.fact_Orden,
+                                ClienteN = c.Tbl_Clientes.nombre_cliente,
+                                ClienteA = c.Tbl_Clientes.apellidos_cliente,
+                                Fecha = c.fecha_orden.ToString(),
+                                Iva = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * (c.iva_orden / 100),
+                                VendedorN = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().FirstName,
+                                VendedorA = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().LastName,
+                                Estado = c.estado,
+                                Subtotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta),
+                                Total = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) + (db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.precio_venta) * (c.iva_orden / 100)),
+                                CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad)
+                            }).FirstOrDefault();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = false;
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+        }
     }
 }

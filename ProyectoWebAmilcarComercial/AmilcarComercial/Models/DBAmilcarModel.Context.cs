@@ -51,7 +51,6 @@ namespace AmilcarComercial.Models
         public virtual DbSet<Tbl_DescripcionValores> Tbl_DescripcionValores { get; set; }
         public virtual DbSet<Tbl_Detalle_Compra> Tbl_Detalle_Compra { get; set; }
         public virtual DbSet<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
-        public virtual DbSet<Tbl_Devolucion> Tbl_Devolucion { get; set; }
         public virtual DbSet<Tbl_garantia> Tbl_garantia { get; set; }
         public virtual DbSet<Tbl_ImgTamporal> Tbl_ImgTamporal { get; set; }
         public virtual DbSet<Tbl_Kardex> Tbl_Kardex { get; set; }

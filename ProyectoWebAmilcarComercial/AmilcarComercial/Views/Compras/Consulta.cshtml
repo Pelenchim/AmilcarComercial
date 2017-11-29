@@ -33,6 +33,20 @@
                 <p>Busca una compra para ver informacion <br /> detallada sobre esta.</p>
             </div>
         </div>
+        <div class="col l12 center" id="pre-Consulta" style="padding-top: 50px; display: none;">
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top:0">Cargando informacion de la compra..</p>
+        </div>
     </div>
 </div>
 
@@ -44,6 +58,8 @@
             Materialize.toast("Debe ingresar el numero de factura", 2000);
             return;
         }
+        $(".detalle-consulta .vacio").hide();
+        $("#pre-Consulta").css("display", "inline");
         $.ajax({
             url: '/compra/buscar/' + fact,
             type: 'GET',
@@ -51,16 +67,57 @@
             'success': function (data) {
                 if (data == false) {
                     Materialize.toast("No existe el registro", 3000);
+                    $("#pre-Consulta").css("display", "none");
+                    $(".detalle-consulta .vacio").show();
                     return;
                 }
                 $(".detalle-consulta").empty();
+                var estado,color;
+                if (data.Estado === true) {
+                    estado = "Aprovada";
+                    color = "green";
+                }
+                else {
+                    estado = "Anulada";
+                    color = "red";
+                }
                 $(".detalle-consulta").append(
-                    '<div class="col l8 offset-l2">' +
-                    '<div>' + data.Estado+'</div>' +
-                    '</div>' 
+                    '<div class="maestro col l10 offset-l1">' +
+                    '<div class="col l4" style="padding-left:0">' +
+                    '<span>N° Factura: ' + data.Factura + '</span>'+
+                    '</div>' +
+                    '<div class="col l4">' +
+                    '<span>Fecha: ' + data.Fecha + '</span>'+
+                    '</div>' +
+                    '<div class="col l4">' +
+                    '<span>Estado: <span class="' + color + ' estado white-text">' + estado + '</span></span>' +
+                    '</div>' +
+                    '<div class="col l4" style="padding-left:0">' +
+                    '<span>Proveedor: ' + data.Proveedor + '</span>' +
+                    '</div>' +
+                    '<div class="col l8">' +
+                    '<span>Comprador: ' + data.CompradorN +' '+ data.CompradorA + '</span>' +
+                    '</div>' +
+                    '<div class="col l3" style="padding-left:0">' +
+                    '<span>Articulos: ' + data.CantidadTotal + '</span>' +
+                    '</div>' +
+                    '<div class="col l3">' +
+                    '<span>SubTotal: C$' + (data.Subtotal).toFixed(2) + '</span>' +
+                    '</div>' +
+                    '<div class="col l3">' +
+                    '<span>Iva: C$' + (data.Iva).toFixed(2) + '</span>' +
+                    '</div>' +                    
+                    '<div class="col l3">' +
+                    '<span>Total: C$' + (data.Total).toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="divider-mio col l10 offset-l1"></div>'
                 );
+                $("#pre-Consulta").css("display", "none");
             },
             'error': function (request, error) {
+                $(".detalle-consulta .vacio").show();
+                $("#pre-Consulta").css("display", "none");
                 Materialize.toast("No existe el registro", 3000);
             }
         });
@@ -70,7 +127,8 @@
             contentType: "application/json",
             'success': function (data) {
                 $(".detalle-consulta").append(
-                    '<table class="responsive-table centered white z-depth-1 bordered highlight">' +
+                    '<div class="col l11 offset-l1"><h5>Detalle de la Compra</h5></div>' +
+                    '<table class="responsive-table centered white z-depth-1 bordered highlight col l10 offset-l1">' +
                     '<thead>' +
                     '<tr>' +
                     '<th>Nombre</th>' +
@@ -78,6 +136,7 @@
                     '<th>Cantidad</th>' +
                     '<th>Costo</th>' +
                     '<th>Descuento</th>' +
+                    '<th>SubTotal</th>' +
                     '</tr>' +
                     '</thead>' +
                     '<tbody>' +
@@ -88,11 +147,12 @@
                     $.each(this, function (name, value) {
                         $(".detalle-consulta table tbody").append(
                             '<tr>' +
-                            '<td>' + value.Nombre + '</td>' +
+                            '<td>' + value.Articulo + '</td>' +
                             '<td><img src="/Content/images/articulos/' + value.Img + '"></td>' +
                             '<td>' + value.Cantidad + '</td>' +
-                            '<td>' + value.Costo + '</td>' +
-                            '<td>' + value.Descuento + '</td>' +
+                            '<td>C$ ' + value.Costo + '</td>' +
+                            '<td>C$ ' + value.Descuento + '</td>' +
+                            '<td>C$ ' + value.Subtotal + '</td>' +
                             '</tr>'
                         );
                     });

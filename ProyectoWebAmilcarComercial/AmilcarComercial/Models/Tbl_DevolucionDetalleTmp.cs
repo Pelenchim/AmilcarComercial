@@ -17,12 +17,10 @@ namespace AmilcarComercial.Models
         public int id_detalleDevolucion { get; set; }
         public int id_articulo { get; set; }
         public string descripcion { get; set; }
-        public double precio { get; set; }
         public int cantidad { get; set; }
-        public int id_kardex { get; set; }
-        public Nullable<double> descuento { get; set; }
-        public int id_devolucionTmp { get; set; }
+        public string user { get; set; }
+        public string tipo { get; set; }
     
-        public virtual Tbl_DevolucionTmp Tbl_DevolucionTmp { get; set; }
+        public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }
 }

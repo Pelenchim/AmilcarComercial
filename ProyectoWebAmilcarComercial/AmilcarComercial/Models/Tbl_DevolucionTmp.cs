@@ -14,21 +14,13 @@ namespace AmilcarComercial.Models
     
     public partial class Tbl_DevolucionTmp
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_DevolucionTmp()
-        {
-            this.Tbl_DevolucionDetalleTmp = new HashSet<Tbl_DevolucionDetalleTmp>();
-        }
-    
         public int id_devolucion { get; set; }
         public string tipo { get; set; }
-        public Nullable<int> iva { get; set; }
-        public int id_transaccion { get; set; }
         public string user { get; set; }
+        public Nullable<int> id_compra { get; set; }
+        public Nullable<int> id_venta { get; set; }
     
-        public virtual Tbl_Compra Tbl_Compra { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_DevolucionDetalleTmp> Tbl_DevolucionDetalleTmp { get; set; }
-        public virtual Tbl_Orden Tbl_Orden { get; set; }
+        public virtual Tbl_Orden Tbl_Orden1 { get; set; }
+        public virtual Tbl_Compra Tbl_Compra1 { get; set; }
     }
 }

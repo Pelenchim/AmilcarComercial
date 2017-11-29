@@ -14,19 +14,10 @@ namespace AmilcarComercial.Models
     
     public partial class Tbl_garantia
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_garantia()
-        {
-            this.Tbl_Devolucion = new HashSet<Tbl_Devolucion>();
-        }
-    
         public int id_garantia { get; set; }
         public string cod_garantia { get; set; }
         public string plazo_garantia { get; set; }
         public string estado { get; set; }
         public int id_detalle_orden { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Devolucion> Tbl_Devolucion { get; set; }
     }
 }

@@ -317,9 +317,6 @@
     <Compile Include="Models\Tbl_Detalle_Orden.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_Devolucion.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tbl_DevolucionCliente.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
