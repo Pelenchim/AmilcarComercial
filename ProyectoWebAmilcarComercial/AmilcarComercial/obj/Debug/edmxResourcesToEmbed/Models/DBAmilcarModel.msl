@@ -499,6 +499,8 @@
     <EntitySetMapping Name="Tbl_DevolucionCliente">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DevolucionCliente">
         <MappingFragment StoreEntitySet="Tbl_DevolucionCliente">
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="fact" ColumnName="fact" />
           <ScalarProperty Name="id_venta" ColumnName="id_venta" />
           <ScalarProperty Name="fecha" ColumnName="fecha" />
           <ScalarProperty Name="id_devolucionCliente" ColumnName="id_devolucionCliente" />
@@ -520,6 +522,8 @@
     <EntitySetMapping Name="Tbl_DevolucionProveedor">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_DevolucionProveedor">
         <MappingFragment StoreEntitySet="Tbl_DevolucionProveedor">
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="fact" ColumnName="fact" />
           <ScalarProperty Name="id_compra" ColumnName="id_compra" />
           <ScalarProperty Name="fecha" ColumnName="fecha" />
           <ScalarProperty Name="id_DevolucionProveedor" ColumnName="id_DevolucionProveedor" />

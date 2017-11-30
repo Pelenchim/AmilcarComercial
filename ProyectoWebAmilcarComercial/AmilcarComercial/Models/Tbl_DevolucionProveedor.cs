@@ -23,6 +23,8 @@ namespace AmilcarComercial.Models
         public int id_DevolucionProveedor { get; set; }
         public System.DateTime fecha { get; set; }
         public int id_compra { get; set; }
+        public string fact { get; set; }
+        public string user { get; set; }
     
         public virtual Tbl_Compra Tbl_Compra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

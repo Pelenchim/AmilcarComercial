@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Devoluciones";
+    ViewBag.SubTitle = "Consulta";
+    ViewBag.ControllerGeneral = "Devoluciones";
+    ViewBag.PrimaryColor = "green";
+    ViewBag.NavExtendedColor = "green darken-1";
+}
+
+<div class="consulta">
+    <div class="consulta-content row">
+        <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+            @Html.Partial("_breadcrumbPartial")
+        </nav>
+        <div class="consulta-opciones col l12">
+            <div class="option-bar col l4 offset-l4 white z-depth-1 border-radius-2">
+                <div class="form col l11">
+                    <div class="input-field col l10">
+                        <input id="search" type="search" placeholder="Buscar Devolucion" required>
+                    </div>
+                    <div class="col l2 center search">
+                        <a onclick="buscar()" class="left tooltipped waves-effect waves-block" data-position="bottomMio" data-delay="50" data-tooltip="Buscar"><i class="material-icons">search</i></a>
+                    </div>
+                </div>
+                <div class="col l1 right-align icons">
+                    <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Imprimir" onclick="articulos(0)"><i class="material-icons">print</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="detalle-consulta container-mio">
+            <div class="vacio col l12 center grey-text text-lighten-1">
+                <i class="material-icons">search</i>
+                <p>Busca una devolucion para ver informacion <br /> detallada sobre esta.</p>
+            </div>
+        </div>
+        <div class="col l12 center" id="pre-Consulta" style="padding-top: 50px; display: none;">
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top:0">Cargando informacion de la compra..</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function buscar() {
+        var fact = $(".consulta .form #search").val();
+
+        if (fact == "") {
+            Materialize.toast("Debe ingresar el numero de factura", 2000);
+            return;
+        }
+        $(".detalle-consulta .vacio").hide();
+        $(".detalle-consulta").empty();
+        $("#pre-Consulta").css("display", "inline");
+
+        if (fact.includes("Dev-Cli")) {
+            $.ajax({
+                url: '/devolucion/cliente/buscar/' + fact,
+                type: 'GET',
+                contentType: "application/json",
+                'success': function (data) {
+                    if (data == false) {
+                        Materialize.toast("No existe el registro", 3000);
+                        $("#pre-Consulta").css("display", "none");
+                        $(".detalle-consulta .vacio").show();
+                        return;
+                    }
+                    $(".detalle-consulta").empty();
+                    $(".detalle-consulta").append(
+                        '<div class="maestro col l10 offset-l1">' +
+                        '<div class="col l4" style="padding-left:0">' +
+                        '<span>N° Factura: ' + data.Maestro.Factura + '</span>' +
+                        '</div>' +
+                        '<div class="col l4">' +
+                        '<span>Fecha: ' + data.Maestro.Fecha + '</span>' +
+                        '</div>' +
+                        '<div class="col l4">' +
+                        '<span>Articulos: ' + data.Maestro.CantidadTotal + '</span>' +
+                        '</div>' +
+                        '<div class="col l6" style="padding-left:0">' +
+                        '<span>Proveedor: ' + data.Maestro.ClienteN + ' ' + data.Maestro.ClienteA + '</span>' +
+                        '</div>' +
+                        '<div class="col l6">' +
+                        '<span>Comprador: ' + data.Maestro.VendedorN + ' ' + data.Maestro.VendedorA + '</span>' +
+                        '</div>' +                      
+                        '</div>' +
+                        '<div class="divider-mio col l10 offset-l1"></div>'
+                    );
+                    $(".detalle-consulta").append(
+                        '<div class="col l11 offset-l1"><h5>Detalle de la Compra</h5></div>' +
+                        '<table class="responsive-table centered white z-depth-1 bordered highlight col l10 offset-l1">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Nombre</th>' +
+                        '<th>Imagen</th>' +
+                        '<th>Cantidad</th>' +
+                        '<th>Descripcion</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>' +
+                        '</tbody>' +
+                        '</table>'
+                    );
+                    $.each(data.Detalle, function (name, value) {
+                        $(".detalle-consulta table tbody").append(
+                            '<tr>' +
+                            '<td>' + value.Articulo + '</td>' +
+                            '<td><img src="/Content/images/articulos/' + value.Img + '"></td>' +
+                            '<td>' + value.Cantidad + '</td>' +
+                            '<td>' + value.Descripcion + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                    $("#pre-Consulta").css("display", "none");
+                },
+                'error': function (request, error) {
+                    $(".detalle-consulta .vacio").show();
+                    $("#pre-Consulta").css("display", "none");
+                    Materialize.toast("No existe el registro", 3000);
+                }
+            });
+        }
+        if (fact.includes("Dev-Pro")) {
+            $.ajax({
+                url: '/devolucion/proveedor/buscar/' + fact,
+                type: 'GET',
+                contentType: "application/json",
+                'success': function (data) {
+                    if (data == false) {
+                        Materialize.toast("No existe el registro", 3000);
+                        $("#pre-Consulta").css("display", "none");
+                        $(".detalle-consulta .vacio").show();
+                        return;
+                    }
+                    $(".detalle-consulta").empty();
+                    $(".detalle-consulta").append(
+                        '<div class="maestro col l10 offset-l1">' +
+                        '<div class="col l4" style="padding-left:0">' +
+                        '<span>N° Factura: ' + data.Maestro.Factura + '</span>' +
+                        '</div>' +
+                        '<div class="col l4">' +
+                        '<span>Fecha: ' + data.Maestro.Fecha + '</span>' +
+                        '</div>' +
+                        '<div class="col l4">' +
+                        '<span>Articulos: ' + data.Maestro.CantidadTotal + '</span>' +
+                        '</div>' +
+                        '<div class="col l4" style="padding-left:0">' +
+                        '<span>Proveedor: ' + data.Maestro.Proveedor + '</span>' +
+                        '</div>' +
+                        '<div class="col l8">' +
+                        '<span>Comprador: ' + data.Maestro.CompradorN + ' ' + data.Maestro.CompradorA + '</span>' +
+                        '</div>' +                       
+                        '</div>' +
+                        '<div class="divider-mio col l10 offset-l1"></div>'
+                    );
+                    $(".detalle-consulta").append(
+                        '<div class="col l11 offset-l1"><h5>Detalle de la Compra</h5></div>' +
+                        '<table class="responsive-table centered white z-depth-1 bordered highlight col l10 offset-l1">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Nombre</th>' +
+                        '<th>Imagen</th>' +
+                        '<th>Cantidad</th>' +
+                        '<th>Descripcion</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>' +
+                        '</tbody>' +
+                        '</table>'
+                    );
+                    $.each(data.Detalle, function (name, value) {
+                        $(".detalle-consulta table tbody").append(
+                            '<tr>' +
+                            '<td>' + value.Articulo + '</td>' +
+                            '<td><img src="/Content/images/articulos/' + value.Img + '"></td>' +
+                            '<td>' + value.Cantidad + '</td>' +
+                            '<td>' + value.Descripcion + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                    $("#pre-Consulta").css("display", "none");
+                },
+                'error': function (request, error) {
+                    $(".detalle-consulta .vacio").show();
+                    $("#pre-Consulta").css("display", "none");
+                    Materialize.toast("No existe el registro", 3000);
+                }
+            });
+        }
+    }
+</script>

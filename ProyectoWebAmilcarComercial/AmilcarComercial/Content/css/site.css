@@ -241,8 +241,8 @@ body main.layout .content {
 .side-nav li > a > i.cliente {
     background-image: url('../system-resources/clientes.png');
 }
-.side-nav li > a > i.kardex {
-    background-image: url('../system-resources/Kardex-icon.png');
+.side-nav li > a > i.devolucion {
+    background-image: url('../system-resources/Devolucion-icon.png');
 }
 .side-nav li > a > i.compras {
     background-image: url('../system-resources/Compras-icon.png');
@@ -3136,7 +3136,163 @@ background-color: #37474f;
 }
 /*#endregion */
 
-/*#region Devolucion General */
+/*#region Devoluciones */
+
+.devoluciones {
+}
+.devoluciones .devoluciones-content {
+    padding: 0;
+    transition: all 0.3s ease-in;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones {
+    padding: 30px 0 40px 0;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones .icons,
+.devoluciones .devoluciones-content .devoluciones-opciones form,
+.devoluciones .devoluciones-content .devoluciones-opciones form .col:not(.filtro),
+.devoluciones .devoluciones-content .devoluciones-opciones form .search {
+    padding: 0;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones input.select-dropdown {
+    border-bottom: 0px solid #000;
+    box-shadow: 0 0 0 0 #000;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones .search a {
+    width: 100%;
+    height: 90%;
+    margin-top: 1px;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones .icons i {
+    height: 35px;
+    line-height: 35px;
+    margin: 7px 0;
+    padding: 0 5px;
+}
+.devoluciones .devoluciones-content .devoluciones-opciones .icons .last i {
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.devoluciones .listado-devoluciones table {
+    border-radius: 2px;
+}
+.devoluciones .listado-devoluciones table thead tr th:first-child {
+    padding-left: 20px;
+}
+.devoluciones .listado-devoluciones table tbody tr td:first-child {
+    padding-left: 20px;
+}
+.devoluciones .listado-devoluciones table tbody tr:last-child {
+    border-bottom: 0px solid grey;
+}
+.devoluciones .listado-devoluciones table tbody tr {
+    cursor: pointer;
+}
+.devoluciones .listado-devoluciones table tbody tr.active {
+    background-color: #4caf50 !important;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+.devoluciones .pagination {
+    margin-top: 2rem;
+}
+.devoluciones .pagination li.active {
+    background-color: #4caf50;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+/*aside de compras*/
+
+.devoluciones .devoluciones-details {
+    width: 300px;
+    height: calc(100% - 50px);
+    position: fixed;
+    top: 0;
+    right: -300px;
+    margin-top: 50px;
+    padding: 10px 0 30px 0;
+    transition: all 0.3s ease-in;
+}
+.devoluciones .devoluciones-details .row {
+    margin-bottom: 0;
+}
+.devoluciones .devoluciones-details .title {
+    margin-bottom: 0;
+    padding: 10px 15px;
+}
+.devoluciones .devoluciones-details .title i:last-child {
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+}
+.devoluciones .devoluciones-details .title i:last-child:hover {
+    color: rgba(255,255,255,1);
+}
+.devoluciones .devoluciones-details .title h5 {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.8rem;
+}
+.devoluciones .devoluciones-details .tabs .tab a {
+    color: #fff;
+    font-weight: 500;
+}
+.devoluciones .devoluciones-details .tabs .indicator {
+    background-color: #fff !important;
+    height: 3px;
+}
+.devoluciones .devoluciones-details .general,
+.devoluciones .devoluciones-details .detalle {
+    padding: 5px 25px;
+    position: absolute;
+    height: calc(100% - 135px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.devoluciones .devoluciones-details .general .no-selected,
+.devoluciones .devoluciones-details .detalle .no-selected {
+    margin-top: 2rem;
+}
+
+.devoluciones .devoluciones-details .general p:not(.no) {
+    text-align: end;
+    font-size: 13px;
+}
+
+.devoluciones .devoluciones-details .general p span {
+    color: rgba(0, 0, 0, 0.55);
+}
+.devoluciones .devoluciones-details .individual {
+    padding: 15px 0 10px 0;
+}
+
+.devoluciones .devoluciones-details .detalle p:not(.no) {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.devoluciones .devoluciones-details .detalle .individual .name {
+    opacity: 0.85;
+    padding-left: 5px;
+}
+
+.devoluciones .devoluciones-details .detalle .individual .cate {
+    padding-left: 5px;
+}
+
+.devoluciones .devoluciones-details .detalle .individual > .col {
+    padding: 0;
+    margin: 0;
+}
+
+.devoluciones .devoluciones-details .detalle .individual img {
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+/*#endregion */
+/*#region NuevaDevolucion General */
 
 .nueva-devolucion > div:first-child {
     padding-left: 0.75rem;

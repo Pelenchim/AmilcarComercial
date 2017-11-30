@@ -1258,6 +1258,8 @@
     <Property Name="id_venta" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Tbl_Orden" Relationship="DBAmilcarModel.FK_Tbl_DevolucionCliente_Tbl_Orden" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_Orden" />
     <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_DetalleDevolucionCliente" />
+    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionDetalleTmp">
     <Key>
@@ -1280,6 +1282,8 @@
     <Property Name="id_compra" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Tbl_Compra" Relationship="DBAmilcarModel.FK_Tbl_DevolucionProveedor_Tbl_Compra" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_Compra" />
     <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_DetalleDevolucionProveedor" />
+    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionTmp">
     <Key>

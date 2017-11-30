@@ -191,17 +191,17 @@
                                 <ul>
                                     <li>
                                         <a class="item waves-effect" href="@Url.Action("Inventario","Bodega")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono inventario"></i><span>Inventario</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Inventario</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="item waves-effect" href="@Url.Action("InventarioDañados","Bodega")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono kardex"></i><span>Articulos Dañados</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Articulos Dañados</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="item waves-effect" href="@Url.Action("Kardex","Bodega")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono kardex"></i><span>Kardex</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Kardex</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -213,29 +213,34 @@
                     <ul class="collapsible collapsible-accordion">
                         <li>
                             <a class="item collapsible-header waves-effect" data-position="right" data-delay="50" data-tooltip="Inventario">
-                                <i class="icono inventario left"></i>
+                                <i class="icono devolucion left"></i>
                                 <span>Devoluciones</span>
                                 <i class="material-icons right">arrow_drop_down</i>
                             </a>
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a class="item waves-effect" href="@Url.Action("Index","Devoluciones")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Listado Devoluciones</span>
+                                        <a class="item waves-effect" href="@Url.Action("ListaDevCliente","Devoluciones")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Clientes</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="item waves-effect" href="@Url.Action("ListaDevProveedor","Devoluciones")">
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">list</i><span>Proveedores</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="item waves-effect" href="@Url.Action("NuevaCliente","Devoluciones")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono inventario"></i><span>Nueva Cliente</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nueva Cliente</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="item waves-effect" href="@Url.Action("NuevaProveedor","Devoluciones")">
-                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="icono kardex"></i><span>Nueva Proveedor</span>
+                                            <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">add_box</i><span>Nueva Proveedor</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="item waves-effect" href="@Url.Action("Consulta","Devoluciones")">
+                                        <a class="item waves-effect" href="@Url.Action("Consultas","Devoluciones")">
                                             <i class="material-icons tiny">subdirectory_arrow_right</i><i class="material-icons grey-text text-darken-3">filter_list</i><span>Consultas</span>
                                         </a>
                                     </li>

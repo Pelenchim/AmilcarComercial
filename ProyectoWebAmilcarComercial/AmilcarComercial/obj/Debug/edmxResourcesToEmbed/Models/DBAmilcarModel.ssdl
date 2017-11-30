@@ -336,6 +336,8 @@
     <Property Name="id_devolucionCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="fecha" Type="datetime" Nullable="false" />
     <Property Name="id_venta" Type="int" Nullable="false" />
+    <Property Name="fact" Type="nvarchar" MaxLength="50" />
+    <Property Name="user" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionDetalleTmp">
     <Key>
@@ -355,6 +357,8 @@
     <Property Name="id_DevolucionProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="fecha" Type="datetime" Nullable="false" />
     <Property Name="id_compra" Type="int" Nullable="false" />
+    <Property Name="fact" Type="nvarchar" MaxLength="50" />
+    <Property Name="user" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionTmp">
     <Key>
