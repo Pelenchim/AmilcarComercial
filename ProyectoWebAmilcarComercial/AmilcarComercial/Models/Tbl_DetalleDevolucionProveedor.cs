@@ -12,9 +12,10 @@ namespace AmilcarComercial.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_DetalleDevolucion
+    public partial class Tbl_DetalleDevolucionProveedor
     {
-        public int id_detalleDevolucion { get; set; }
+        public int id_detalleDevolucionPro { get; set; }
+        public Nullable<int> id_proveedor { get; set; }
         public Nullable<int> id_articulo { get; set; }
         public string descripcion { get; set; }
         public Nullable<double> precio { get; set; }
@@ -22,11 +23,9 @@ namespace AmilcarComercial.Models
         public Nullable<int> id_kardex { get; set; }
         public Nullable<int> iva { get; set; }
         public Nullable<double> descuento { get; set; }
-        public string tipo { get; set; }
-        public Nullable<int> id_cliente { get; set; }
-        public Nullable<int> id_proveedor { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
+        public virtual Tbl_DevolucionProveedor Tbl_DevolucionProveedor { get; set; }
         public virtual Tbl_Kardex Tbl_Kardex { get; set; }
     }
 }

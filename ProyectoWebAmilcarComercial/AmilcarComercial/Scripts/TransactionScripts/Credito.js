@@ -313,7 +313,7 @@ function agregarArticuloTmp(id) {
     var cant = $(".articulos #cant" + id).val();
     var prima = $(".articulos #prima" + id).val();
     var meses = $(".articulos #meses" + id).val();
-    var stock = $(".articulos #stock" + id).text();
+    var stock = $(".articulos #stock" + id).val();
     if (cant === '') {
         Materialize.toast("Debe agregar la cantidad", 2000);
         $(".articulos #cant" + id).focus();
@@ -360,7 +360,7 @@ function agregarArticuloTmp(id) {
         return;
     }
     $.ajax({
-        url: '/credito/agregar/producto/' + id + '/' + cant + '/' + meses + '/' + prima,
+        url: '/credito/agregar/producto/' + id + '/' + cant + '/' + prima + '/' + meses,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -511,9 +511,12 @@ function articulosTable(data) {
                 '<td>' + value.ID + '</td>' +
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
-                '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
+                '<td>' + value.Stock + '</td>' +
                 '<td> C$ ' + (value.Precio).toFixed(2) + '</td>' +
                 '<td> C$ ' + (value.Prima).toFixed(2) + '</td>' +
+                '<td class="hide">' +
+                '<input placeholder="Prima" id="stock' + value.ID + '" value="' + value.Stock + '" type="text" class="browser-default">' +
+                '</td > ' +
                 '<td class="hide">' +
                 '<input placeholder="Prima" id="prima' + value.ID + '" value="' + value.Prima + '" type="text" class="browser-default">' +
                 '</td > ' +
@@ -583,7 +586,7 @@ function articulosOrdenTable(data) {
         '<th>Cantidad</th>' +
         '<th>PrimaSubTotal</th>' +
         '<th>Meses</th>' +
-        '<th>Cuota</th>' +
+        '<th>CuotaGerl</th>' +
         '<th>FechaPago</th>' +
         '<th>UltimoPago</th>' +
         '<th>SubTotal</th>' +
@@ -604,18 +607,18 @@ function articulosOrdenTable(data) {
                 '<td>' + value.Nombre + '</td>' +
                 '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
-                '<td>C$ ' + value.Precio + '</td>' +
+                '<td>C$ ' + (value.Precio).toFixed(2) + '</td>' +
                 '<td>C$ ' + (value.PrimaMinima).toFixed(2) + '</td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>' +
-                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + (value.Prima).toFixed(2) + '"></input>' +
+                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + (value.Prima).toFixed(2) + '" disabled></input>' +
                 '</td>' +                
                 '<td>' +
                 '<input class="browser-default" id="meses-' + value.ID + '" type="text" value="' + value.Meses + '"></input>' +
                 '</td>' +
-                '<td>C$ ' + ((value.Precio * 0.80) / value.Meses).toFixed(2) + '</td>' +
+                '<td>C$ ' + (((value.Precio * 0.80) / value.Meses) * value.Cantidad).toFixed(2) + '</td>' +
                 '<td>' + value.FechaPago + ' C/Mes</td>' +
                 '<td>' + value.FechaFin + '</td>' +
                 '<td>C$ ' + (value.Precio * value.Cantidad).toFixed(2) + '</td>' +

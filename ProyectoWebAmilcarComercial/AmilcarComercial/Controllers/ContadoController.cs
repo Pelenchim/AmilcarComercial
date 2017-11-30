@@ -402,13 +402,18 @@ namespace AmilcarComercial.Controllers
                         .OrderByDescending(m => m.id_orden).First();
 
             var cantidad = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.cantidad);
+            var descuento = (from v in db.Tbl_Detalle_Orden
+                            where v.id_orden == ultimo.id_orden
+                            select new
+                            {
+                                descuento = v.descuento * v.cantidad
+                            }).Sum(m => m.descuento);
             var subtotal = (from v in db.Tbl_Detalle_Orden
                             where v.id_orden == ultimo.id_orden
                             select new
                             {
-                                sub = (v.precio_venta - v.descuento) * v.cantidad
+                                sub = v.precio_venta * v.cantidad
                             }).Sum(m => m.sub);
-            var descuento = db.Tbl_Detalle_Orden.Where(m => m.id_orden == ultimo.id_orden).Sum(m => m.descuento);
             var ivatotal = subtotal * (ultimo.iva_orden / 100);            
 
             var total = subtotal + ivatotal - descuento;
@@ -431,7 +436,7 @@ namespace AmilcarComercial.Controllers
 
             if (nuevo == true)
             {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
 
                 Tbl_Clientes cliente = new Tbl_Clientes()
                 {
@@ -482,6 +487,7 @@ namespace AmilcarComercial.Controllers
                               ClienteNom = v.Tbl_Clientes.nombre_cliente,
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
+                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta),
                               Estado = v.estado                            
                           }).OrderByDescending(m => m.ID).Take(10).ToList();

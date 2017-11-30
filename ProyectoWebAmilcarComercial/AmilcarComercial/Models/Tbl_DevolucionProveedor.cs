@@ -14,10 +14,18 @@ namespace AmilcarComercial.Models
     
     public partial class Tbl_DevolucionProveedor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_DevolucionProveedor()
+        {
+            this.Tbl_DetalleDevolucionProveedor = new HashSet<Tbl_DetalleDevolucionProveedor>();
+        }
+    
         public int id_DevolucionProveedor { get; set; }
         public System.DateTime fecha { get; set; }
         public int id_compra { get; set; }
     
         public virtual Tbl_Compra Tbl_Compra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DetalleDevolucionProveedor> Tbl_DetalleDevolucionProveedor { get; set; }
     }
 }

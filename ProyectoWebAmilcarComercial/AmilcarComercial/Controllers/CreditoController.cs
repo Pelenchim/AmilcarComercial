@@ -12,8 +12,6 @@ namespace AmilcarComercial.Controllers
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
-        GeneralesController generales = new GeneralesController();
-
         #region vistas
         // GET: Credito
         public ActionResult Index()
@@ -199,9 +197,9 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("credito/agregar/producto/{id}/{cant}/{meses}/{prima}")]
+        [Route("credito/agregar/producto/{id}/{cant}/{prima}/{meses}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant, int meses, float prima)
+        public JsonResult AgregarProducto(int id, int cant, decimal prima, int meses)
         {
             var user = User.Identity.Name;
             Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
@@ -209,8 +207,10 @@ namespace AmilcarComercial.Controllers
             orden.id_Articulo = id;
             orden.cantidad = cant;
             orden.credito_meses = meses;
-            orden.prima = prima * cant;
+            orden.prima = (double)(prima * cant);
             orden.fecha = DateTime.Now;
+            orden.precioventa = (double)(prima * 5);
+            orden.descuento = 0;
             orden.user = user;
             orden.tipoventa = "Credito";
 
@@ -284,6 +284,7 @@ namespace AmilcarComercial.Controllers
         {
             var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.tipoventa == "Credito").FirstOrDefault();
             dato.cantidad = nuevoValor;
+            dato.prima = (dato.precioventa * 0.20) * nuevoValor;
             db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -376,7 +377,7 @@ namespace AmilcarComercial.Controllers
                             id_articulo = (int)articulo.id_Articulo,
                             id_kardex = kardex.id_Kardex,
                             cantidad = (int)articulo.cantidad,
-                            precio_venta = 0,
+                            precio_venta = (float)articulo.precioventa,
                             descuento = 0
                         };
                         db.Tbl_Detalle_Orden.Add(detalle);
@@ -454,7 +455,7 @@ namespace AmilcarComercial.Controllers
 
             if (nuevo == true)
             {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
 
                 Tbl_Clientes cliente = new Tbl_Clientes()
                 {
@@ -504,6 +505,7 @@ namespace AmilcarComercial.Controllers
                               ClienteNom = v.Tbl_Clientes.nombre_cliente,
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
+                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta),
                               Estado = v.estado
                           }).OrderByDescending(m => m.ID).Take(10).ToList();

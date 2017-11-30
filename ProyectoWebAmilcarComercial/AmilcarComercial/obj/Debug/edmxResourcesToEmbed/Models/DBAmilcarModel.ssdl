@@ -301,11 +301,11 @@
     <Property Name="descuento" Type="float" />
     <Property Name="id_kardex" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Tbl_DetalleDevolucion">
+  <EntityType Name="Tbl_DetalleDevolucionCliente">
     <Key>
-      <PropertyRef Name="id_detalleDevolucion" />
+      <PropertyRef Name="id_detalleDevolucionCli" />
     </Key>
-    <Property Name="id_detalleDevolucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_detalleDevolucionCli" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_cliente" Type="int" />
     <Property Name="id_articulo" Type="int" />
     <Property Name="descripcion" Type="nvarchar(max)" />
@@ -314,8 +314,20 @@
     <Property Name="id_kardex" Type="int" />
     <Property Name="iva" Type="int" />
     <Property Name="descuento" Type="float" />
-    <Property Name="tipo" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Tbl_DetalleDevolucionProveedor">
+    <Key>
+      <PropertyRef Name="id_detalleDevolucionPro" />
+    </Key>
+    <Property Name="id_detalleDevolucionPro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_proveedor" Type="int" />
+    <Property Name="id_articulo" Type="int" />
+    <Property Name="descripcion" Type="nvarchar(max)" />
+    <Property Name="precio" Type="float" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="id_kardex" Type="int" />
+    <Property Name="iva" Type="int" />
+    <Property Name="descuento" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionCliente">
     <Key>
@@ -891,26 +903,74 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_DetalleDevolucion_Tbl_Articulo">
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
     <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="0..1" />
-    <End Role="Tbl_DetalleDevolucion" Type="Self.Tbl_DetalleDevolucion" Multiplicity="*" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tbl_Articulo">
         <PropertyRef Name="id_articulo" />
       </Principal>
-      <Dependent Role="Tbl_DetalleDevolucion">
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
         <PropertyRef Name="id_articulo" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tbl_DetalleDevolucion_Tbl_Kardex">
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
+    <End Role="Tbl_DevolucionCliente" Type="Self.Tbl_DevolucionCliente" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DevolucionCliente">
+        <PropertyRef Name="id_devolucionCliente" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
     <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="0..1" />
-    <End Role="Tbl_DetalleDevolucion" Type="Self.Tbl_DetalleDevolucion" Multiplicity="*" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tbl_Kardex">
         <PropertyRef Name="id_Kardex" />
       </Principal>
-      <Dependent Role="Tbl_DetalleDevolucion">
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
+        <PropertyRef Name="id_kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
+    <End Role="Tbl_DevolucionProveedor" Type="Self.Tbl_DevolucionProveedor" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DevolucionProveedor">
+        <PropertyRef Name="id_DevolucionProveedor" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
+        <PropertyRef Name="id_proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
         <PropertyRef Name="id_kardex" />
       </Dependent>
     </ReferentialConstraint>
@@ -1111,7 +1171,8 @@
     <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Tbl_DetalleDevolucion" EntityType="Self.Tbl_DetalleDevolucion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_DetalleDevolucionCliente" EntityType="Self.Tbl_DetalleDevolucionCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_DetalleDevolucionProveedor" EntityType="Self.Tbl_DetalleDevolucionProveedor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_DevolucionCliente" EntityType="Self.Tbl_DevolucionCliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_DevolucionDetalleTmp" EntityType="Self.Tbl_DevolucionDetalleTmp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tbl_DevolucionProveedor" EntityType="Self.Tbl_DevolucionProveedor" Schema="dbo" store:Type="Tables" />
@@ -1254,13 +1315,29 @@
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
       <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucion_Tbl_Articulo" Association="Self.FK_Tbl_DetalleDevolucion_Tbl_Articulo">
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
       <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
-      <End Role="Tbl_DetalleDevolucion" EntitySet="Tbl_DetalleDevolucion" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucion_Tbl_Kardex" Association="Self.FK_Tbl_DetalleDevolucion_Tbl_Kardex">
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
+      <End Role="Tbl_DevolucionCliente" EntitySet="Tbl_DevolucionCliente" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
-      <End Role="Tbl_DetalleDevolucion" EntitySet="Tbl_DetalleDevolucion" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
+      <End Role="Tbl_DevolucionProveedor" EntitySet="Tbl_DevolucionProveedor" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
     </AssociationSet>
     <AssociationSet Name="FK_Tbl_DevolucionCliente_Tbl_Orden" Association="Self.FK_Tbl_DevolucionCliente_Tbl_Orden">
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />

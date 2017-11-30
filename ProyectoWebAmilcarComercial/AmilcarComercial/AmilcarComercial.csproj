@@ -308,7 +308,10 @@
     <Compile Include="Models\Tbl_DescripcionValores.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_DetalleDevolucion.cs">
+    <Compile Include="Models\Tbl_DetalleDevolucionCliente.cs">
+      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_DetalleDevolucionProveedor.cs">
       <DependentUpon>DBAmilcarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Compra.cs">

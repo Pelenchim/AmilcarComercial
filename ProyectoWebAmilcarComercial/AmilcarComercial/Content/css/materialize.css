@@ -7335,7 +7335,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .side-nav {
     position: fixed;
-    width: 260px;
+    width: 270px;
     left: 0;
     top: 0;
     margin: 0;
@@ -7391,7 +7391,7 @@ input[type=range]:focus::-ms-fill-upper {
     font-weight: 500;
     height: 48px;
     line-height: 48px;
-    padding: 0 32px;
+    padding: 0 20px 0 25px;
 }
 
 .side-nav li.sub > a {

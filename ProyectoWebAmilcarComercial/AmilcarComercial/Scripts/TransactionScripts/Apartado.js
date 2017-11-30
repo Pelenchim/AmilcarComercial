@@ -582,7 +582,7 @@ function articulosOrdenTable(data) {
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
                 '<td>' +
-                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + value.Prima + '"></input>' +
+                '<input class="browser-default" id="prima-' + value.ID + '" type="text" value="' + value.Prima + '" disabled></input>' +
                 '</td>' +
                 '<td>' + value.FechaLimite + '</td>' +
                 '<td>C$ ' + value.Precio * value.Cantidad + '</td>' +

@@ -582,7 +582,7 @@ function articulosOrdenTable(data) {
                 '</tr>'
             );
             cantidadTotal = cantidadTotal + value.Cantidad;
-            subTotal = subTotal + (value.Precio * value.Cantidad);
+            subTotal = subTotal + ((value.Precio * value.Cantidad) - (value.Descuento * value.Cantidad));
         });
     });
     detalles();

@@ -12,8 +12,6 @@ namespace AmilcarComercial.Controllers
     {
         private DBAmilcarEntities db = new DBAmilcarEntities();
 
-        GeneralesController generales = new GeneralesController();
-
         #region vistas
         // GET: Apartado
         public ActionResult Index()
@@ -212,6 +210,8 @@ namespace AmilcarComercial.Controllers
             orden.cantidad = cant;
             orden.fecha = DateTime.Now;
             orden.prima = prima * cant;
+            orden.descuento = 0;
+            orden.precioventa = prima * 5;
             orden.user = user;
             orden.tipoventa = "Apartado";
 
@@ -282,6 +282,7 @@ namespace AmilcarComercial.Controllers
         {
             var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
             dato.cantidad = nuevoValor;
+            dato.prima = (dato.precioventa * 0.20) * nuevoValor;
             db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -353,7 +354,7 @@ namespace AmilcarComercial.Controllers
                             id_articulo = (int)articulo.id_Articulo,
                             id_kardex = kardex.id_Kardex,
                             cantidad = (int)articulo.cantidad,
-                            precio_venta = 0,
+                            precio_venta = (float)articulo.precioventa,
                             descuento = 0
                         };
                         db.Tbl_Detalle_Orden.Add(detalle);
@@ -431,7 +432,7 @@ namespace AmilcarComercial.Controllers
 
             if (nuevo == true)
             {
-                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name).FirstOrDefault();
+                var clienteTmp = db.Tbl_ClienteTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
 
                 Tbl_Clientes cliente = new Tbl_Clientes()
                 {
@@ -482,6 +483,7 @@ namespace AmilcarComercial.Controllers
                               ClienteNom = v.Tbl_Clientes.nombre_cliente,
                               ClienteApell = v.Tbl_Clientes.apellidos_cliente,
                               Articulos = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Count(),
+                              CantidadTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Orden.Where(m => m.id_orden == v.id_orden).Sum(m => m.precio_venta),
                               Estado = v.estado
                           }).OrderByDescending(m => m.ID).Take(10).ToList();
