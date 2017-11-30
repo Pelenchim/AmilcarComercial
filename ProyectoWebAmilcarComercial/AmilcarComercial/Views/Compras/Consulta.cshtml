@@ -59,6 +59,7 @@
             return;
         }
         $(".detalle-consulta .vacio").hide();
+        $(".detalle-consulta").empty();
         $("#pre-Consulta").css("display", "inline");
         $.ajax({
             url: '/compra/buscar/' + fact,
@@ -84,48 +85,35 @@
                 $(".detalle-consulta").append(
                     '<div class="maestro col l10 offset-l1">' +
                     '<div class="col l4" style="padding-left:0">' +
-                    '<span>N° Factura: ' + data.Factura + '</span>'+
+                    '<span>N° Factura: ' + data.Maestro.Factura + '</span>'+
                     '</div>' +
                     '<div class="col l4">' +
-                    '<span>Fecha: ' + data.Fecha + '</span>'+
+                    '<span>Fecha: ' + data.Maestro.Fecha + '</span>'+
                     '</div>' +
                     '<div class="col l4">' +
                     '<span>Estado: <span class="' + color + ' estado white-text">' + estado + '</span></span>' +
                     '</div>' +
                     '<div class="col l4" style="padding-left:0">' +
-                    '<span>Proveedor: ' + data.Proveedor + '</span>' +
+                    '<span>Proveedor: ' + data.Maestro.Proveedor + '</span>' +
                     '</div>' +
                     '<div class="col l8">' +
-                    '<span>Comprador: ' + data.CompradorN +' '+ data.CompradorA + '</span>' +
+                    '<span>Comprador: ' + data.Maestro.CompradorN + ' ' + data.Maestro.CompradorA + '</span>' +
                     '</div>' +
                     '<div class="col l3" style="padding-left:0">' +
-                    '<span>Articulos: ' + data.CantidadTotal + '</span>' +
+                    '<span>Articulos: ' + data.Maestro.CantidadTotal + '</span>' +
                     '</div>' +
                     '<div class="col l3">' +
-                    '<span>SubTotal: C$' + (data.Subtotal).toFixed(2) + '</span>' +
+                    '<span>SubTotal: C$' + (data.Maestro.Subtotal).toFixed(2) + '</span>' +
                     '</div>' +
                     '<div class="col l3">' +
-                    '<span>Iva: C$' + (data.Iva).toFixed(2) + '</span>' +
+                    '<span>Iva: C$' + (data.Maestro.Iva).toFixed(2) + '</span>' +
                     '</div>' +                    
                     '<div class="col l3">' +
-                    '<span>Total: C$' + (data.Total).toFixed(2) + '</span>' +
+                    '<span>Total: C$' + (data.Maestro.Total).toFixed(2) + '</span>' +
                     '</div>' +
                     '</div>' +
                     '<div class="divider-mio col l10 offset-l1"></div>'
                 );
-                $("#pre-Consulta").css("display", "none");
-            },
-            'error': function (request, error) {
-                $(".detalle-consulta .vacio").show();
-                $("#pre-Consulta").css("display", "none");
-                Materialize.toast("No existe el registro", 3000);
-            }
-        });
-        $.ajax({
-            url: '/compra/detallebusqueda/' + fact,
-            type: 'GET',
-            contentType: "application/json",
-            'success': function (data) {
                 $(".detalle-consulta").append(
                     '<div class="col l11 offset-l1"><h5>Detalle de la Compra</h5></div>' +
                     '<table class="responsive-table centered white z-depth-1 bordered highlight col l10 offset-l1">' +
@@ -143,22 +131,24 @@
                     '</tbody>' +
                     '</table>'
                 );
-                $.each(data, function () {
-                    $.each(this, function (name, value) {
-                        $(".detalle-consulta table tbody").append(
-                            '<tr>' +
-                            '<td>' + value.Articulo + '</td>' +
-                            '<td><img src="/Content/images/articulos/' + value.Img + '"></td>' +
-                            '<td>' + value.Cantidad + '</td>' +
-                            '<td>C$ ' + value.Costo + '</td>' +
-                            '<td>C$ ' + value.Descuento + '</td>' +
-                            '<td>C$ ' + value.Subtotal + '</td>' +
-                            '</tr>'
-                        );
-                    });
+                $.each(data.Detalle, function (name, value) {
+                    $(".detalle-consulta table tbody").append(
+                        '<tr>' +
+                        '<td>' + value.Articulo + '</td>' +
+                        '<td><img src="/Content/images/articulos/' + value.Img + '"></td>' +
+                        '<td>' + value.Cantidad + '</td>' +
+                        '<td>C$ ' + value.Costo + '</td>' +
+                        '<td>C$ ' + value.Descuento + '</td>' +
+                        '<td>C$ ' + value.Subtotal + '</td>' +
+                        '</tr>'
+                    );
                 });
+                $("#pre-Consulta").css("display", "none");
             },
             'error': function (request, error) {
+                $(".detalle-consulta .vacio").show();
+                $("#pre-Consulta").css("display", "none");
+                Materialize.toast("No existe el registro", 3000);
             }
         });
     }

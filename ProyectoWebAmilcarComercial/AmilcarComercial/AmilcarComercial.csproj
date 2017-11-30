@@ -619,6 +619,7 @@
     <Content Include="Views\Compras\Consulta.cshtml" />
     <Content Include="Views\Devoluciones\NuevaCliente.cshtml" />
     <Content Include="Views\Devoluciones\NuevaProveedor.cshtml" />
+    <Content Include="Views\Bodega\InventarioDañados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

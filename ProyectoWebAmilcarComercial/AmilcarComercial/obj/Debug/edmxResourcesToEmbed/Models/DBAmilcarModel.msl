@@ -130,6 +130,7 @@
     <EntitySetMapping Name="Tbl_bodega_productos">
       <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega_productos">
         <MappingFragment StoreEntitySet="Tbl_bodega_productos">
+          <ScalarProperty Name="dañados" ColumnName="dañados" />
           <ScalarProperty Name="apartado" ColumnName="apartado" />
           <ScalarProperty Name="credito" ColumnName="credito" />
           <ScalarProperty Name="preciocredito" ColumnName="preciocredito" />

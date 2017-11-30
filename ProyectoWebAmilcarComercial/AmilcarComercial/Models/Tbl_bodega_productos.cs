@@ -28,6 +28,7 @@ namespace AmilcarComercial.Models
         public Nullable<double> preciocredito { get; set; }
         public Nullable<bool> credito { get; set; }
         public Nullable<bool> apartado { get; set; }
+        public Nullable<int> dañados { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bodega_Detalle> Bodega_Detalle { get; set; }

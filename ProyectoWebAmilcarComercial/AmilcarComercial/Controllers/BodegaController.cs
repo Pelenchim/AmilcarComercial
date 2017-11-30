@@ -23,6 +23,11 @@ namespace AmilcarComercial.Controllers
             return View();
         }
 
+        public ActionResult InventarioDañados()
+        {
+            return View();
+        }
+
         [Route("inventario/lista")]
         [HttpGet]
         public JsonResult ListaInventario()
@@ -41,6 +46,28 @@ namespace AmilcarComercial.Controllers
                              Precio = d.precio,
                              PrecioCredito = d.preciocredito,
                              Stock = d.stock
+                         }).ToList();
+
+            return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("inventario/dañados/lista")]
+        [HttpGet]
+        public JsonResult ListaInventarioDañados()
+        {
+            var user = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().Sucursal;
+
+            var lista = (from p in db.Tbl_Articulo
+                         join d in db.Tbl_bodega_productos on p.id_articulo equals d.id_articulo
+                         where d.id_sucursal == user && d.dañados > 0
+                         select new
+                         {
+                             ID = p.id_articulo,
+                             Cod = p.codigo_articulo,
+                             Imagen = p.imagen,
+                             Nombre = p.nombre_articulo,
+                             Categoria = p.Tbl_Categorias.Nombre,
+                             Dañados = d.dañados
                          }).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
@@ -87,6 +114,26 @@ namespace AmilcarComercial.Controllers
                           }).OrderByDescending(m => m.Fecha).ToList();
 
             return Json(new { data = kardex }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("dañados/detalle/{id}")]
+        [HttpGet]
+        public JsonResult DetalleDañados(int id)
+        {
+            var detalle = (from k in db.Tbl_Kardex
+                           where k.id_articulo == id && k.num_factura.Contains("Dev")
+                           select new
+                           {
+                               Articulo = k.Tbl_Articulo.nombre_articulo,
+                               NumFact = k.num_factura,
+                               Fecha = k.fechaKardex.ToString(),
+                               Nombre = db.AspNetUsers.Where(m => m.UserName == k.usuario).FirstOrDefault().FirstName,
+                               Apellido = db.AspNetUsers.Where(m => m.UserName == k.usuario).FirstOrDefault().LastName,
+                               Observacion = k.observaciones,
+                               Cantidad = k.Entrada
+                           }).OrderByDescending(m => m.Fecha).ToList();
+
+            return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
         }
     }
 }

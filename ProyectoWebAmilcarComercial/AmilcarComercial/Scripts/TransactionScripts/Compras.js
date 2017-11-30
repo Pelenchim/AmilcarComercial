@@ -596,7 +596,7 @@ function articulosOrdenTable(data) {
         '<th>Nombre</th>' +
         '<th>Costo</th>' +
         '<th>Cantidad</th>' +
-        '<th>Descuento</th>' +
+        '<th>DescXunidad</th>' +
         '<th>Subtotal</th>' +
         '<th>PrecioVenta</th>' +
         '<th>Opciones</th>' +
@@ -624,7 +624,7 @@ function articulosOrdenTable(data) {
                 '<td>' +
                 '<input class="browser-default" type="text" id="desc-' + value.ID + '" value="' + value.Descuento + '"></input>' +
                 '</td>' +
-                '<td>C$' + ((value.Precio * value.Cantidad) - value.Descuento).toFixed(2) + '</td>' +
+                '<td>C$' + ((value.Precio * value.Cantidad) - (value.Descuento * value.Cantidad)).toFixed(2) + '</td>' +
                 '<td>' +
                 '<input class="browser-default" type="text" id="vent-' + value.ID + '" value="' + value.PrecioVenta + '"></input>' +
                 '</td>' +
@@ -633,7 +633,7 @@ function articulosOrdenTable(data) {
                 '</tr>'
             );
             cantidadTotal = cantidadTotal + value.Cantidad;
-            subTotal = subTotal + (value.Precio * value.Cantidad);
+            subTotal = subTotal + ((value.Precio * value.Cantidad) - (value.Descuento * value.Cantidad));
         });
     });
     detalles();
@@ -642,7 +642,7 @@ function detectarCambios() {
     var ID_Obj;
     var AnteriorValor, NuevoValor; 
     var dividiendo;
-    var id, campo;
+    var id, campo, costo;
 
     $(document).on({
         'focusin': function () {
@@ -651,6 +651,7 @@ function detectarCambios() {
             campo = dividiendo[0];
             id = dividiendo[1];
             AnteriorValor = $(this).val();
+            costo = $("#precio-" + id).val();
         },
         'focusout': function () {
             NuevoValor = $(this).val();
@@ -722,8 +723,6 @@ function detectarCambios() {
             }
 
             if (campo === "desc") {
-
-                var costo = $("#precio-" + id).val();
                 if (NuevoValor >= costo) {
                     Materialize.toast("El descuento no puede ser mayor que el costo", 2000);
                     $("#desc-" + id).val(AnteriorValor);
@@ -816,7 +815,7 @@ function facturar() {
         'success': function (data) {
             if (data === true)
             {
-                window.location.href = "/Compras/Index";
+                window.location.href = "/Compras/Facturado";
             }
             else {
                 Materialize.toast('Error, no se pudo realizar la compra', 2000);

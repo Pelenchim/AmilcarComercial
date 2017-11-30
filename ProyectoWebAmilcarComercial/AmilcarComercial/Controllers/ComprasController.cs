@@ -38,6 +38,8 @@ namespace AmilcarComercial.Controllers
 
         #endregion
 
+        #region Generales
+
         [Route("compra/obtener/generales")]
         [HttpGet]
         public JsonResult Generales()
@@ -55,8 +57,8 @@ namespace AmilcarComercial.Controllers
             lista.Add(sucursal);
             lista.Add(compra);
             lista.Add(fact);
-            
-            return Json( lista, JsonRequestBehavior.AllowGet);
+
+            return Json(lista, JsonRequestBehavior.AllowGet);
         }
 
         [Route("compra/anular/{id}")]
@@ -120,24 +122,40 @@ namespace AmilcarComercial.Controllers
         {
             if (db.Tbl_Compra.Where(m => m.fact_compra == fact).Count() > 0)
             {
-                var data = (from c in db.Tbl_Compra
-                        join d in db.Tbl_Detalle_Compra on c.id_compra equals d.id_compra
-                        where c.fact_compra == fact
-                        select new
-                        {
-                            Factura = c.fact_compra,
-                            Proveedor = c.Tbl_Proveedor.razon_social,
-                            Fecha = c.fecha_compra.ToString(),
-                            Iva = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra / 100),
-                            CompradorN = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().FirstName,
-                            CompradorA = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().LastName,
-                            Estado = c.estado_compra,
-                            Subtotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo),
-                            Total = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) + (db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra/100)),
-                            CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad)
-                        }).FirstOrDefault();
+                var id = db.Tbl_Compra.Where(m => m.fact_compra == fact).FirstOrDefault().id_compra;
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                var data = (from c in db.Tbl_Compra
+                            join d in db.Tbl_Detalle_Compra on c.id_compra equals d.id_compra
+                            where c.id_compra == id
+                            select new
+                            {
+                                Factura = c.fact_compra,
+                                Proveedor = c.Tbl_Proveedor.razon_social,
+                                Fecha = c.fecha_compra.ToString(),
+                                Iva = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra / 100),
+                                CompradorN = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().FirstName,
+                                CompradorA = db.AspNetUsers.Where(m => m.UserName == c.usuario).FirstOrDefault().LastName,
+                                Estado = c.estado_compra,
+                                Subtotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo),
+                                Total = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) + (db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * (c.iva_compra / 100)),
+                                CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad)
+                            }).FirstOrDefault();
+
+                var dato = (from c in db.Tbl_Detalle_Compra
+                            where c.id_compra == id
+                            select new
+                            {
+                                Articulo = c.Tbl_Articulo.nombre_articulo,
+                                Img = c.Tbl_Articulo.imagen,
+                                Cantidad = c.cantidad,
+                                Descuento = c.descuento,
+                                Costo = c.costo,
+                                Subtotal = c.costo * c.cantidad - c.descuento
+                            }).ToList();
+
+                var result = new { Maestro = data, Detalle = dato };
+
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -148,22 +166,7 @@ namespace AmilcarComercial.Controllers
 
         }
 
-        [Route("compra/detallebusqueda/{fact}")]
-        public JsonResult detalleBusqueda(string fact)
-        {
-            var id = db.Tbl_Compra.Where(m => m.fact_compra == fact).FirstOrDefault().id_compra;
-            var data = (from c in db.Tbl_Detalle_Compra where c.id_compra == id
-                        select new {
-                            Articulo = c.Tbl_Articulo.nombre_articulo,
-                            Img = c.Tbl_Articulo.imagen,
-                            Cantidad = c.cantidad,
-                            Descuento = c.descuento,
-                            Costo = c.costo,
-                            Subtotal = c.costo * c.cantidad - c.descuento
-                        }).ToList();
-
-            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
-        }
+        #endregion
 
         #region Articulos         
 
@@ -415,18 +418,28 @@ namespace AmilcarComercial.Controllers
                        .OrderByDescending(m => m.id_compra).First();
 
             var cantidad = db.Tbl_Detalle_Compra.Where(m => m.id_compra == ultimo.id_compra).Sum(m => m.cantidad);
-            var descuento = db.Tbl_Detalle_Compra.Where(m => m.id_compra == ultimo.id_compra).Sum(m => m.descuento);
-            var subtotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == ultimo.id_compra).Sum(m => m.costo);
+            var descuento = (from v in db.Tbl_Detalle_Compra
+                            where v.id_compra == ultimo.id_compra
+                            select new
+                            {
+                                descuento = v.descuento * v.cantidad
+                            }).Sum(m => m.descuento);
+            var subtotal = (from v in db.Tbl_Detalle_Compra
+                            where v.id_compra == ultimo.id_compra
+                            select new
+                            {
+                                sub = (v.costo - v.descuento) * v.cantidad
+                            }).Sum(m => m.sub);
             var ivatotal = subtotal * (ultimo.iva_compra / 100);
             var total = subtotal + ivatotal - descuento;
             var id = ultimo.id_compra;
 
             List<double> datos = new List<double>();
             datos.Add(cantidad);
-            datos.Add(subtotal);
-            datos.Add(ivatotal);
-            datos.Add((double)descuento);
-            datos.Add((double)total);
+            datos.Add((float)subtotal);
+            datos.Add((float)ivatotal);
+            datos.Add((float)descuento);
+            datos.Add((float)total);
             datos.Add(id);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
@@ -488,7 +501,7 @@ namespace AmilcarComercial.Controllers
                               CantidadTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
                               PagoTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
                               Estado = c.estado_compra
-                          }).OrderByDescending(m => m.Fecha).ToList();
+                          }).OrderByDescending(m => m.ID).Take(10).ToList();
 
 
             return Json(new { data = compras }, JsonRequestBehavior.AllowGet);

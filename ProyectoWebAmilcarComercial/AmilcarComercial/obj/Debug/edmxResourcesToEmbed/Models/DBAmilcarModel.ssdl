@@ -139,6 +139,7 @@
     <Property Name="preciocredito" Type="float" />
     <Property Name="credito" Type="bit" />
     <Property Name="apartado" Type="bit" />
+    <Property Name="dañados" Type="int" />
   </EntityType>
   <EntityType Name="Tbl_Categorias">
     <Key>

@@ -31,7 +31,7 @@
                 </form>
                 <div class="col l2 center-align icons">
                     <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
-                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Imprimir"><i class="material-icons">print</i></a>
                 </div>
             </div>
         </div>
@@ -110,19 +110,19 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".apartado .info-sidenav").click(function () {
+            $(".apartado-content .listado-apartado").on('click','.info-sidenav', function () {
                 if ($(".apartado .apartado-details").hasClass('show')) {
                     $(".apartado .apartado-details").css("right", "0px");
                     $(".apartado .apartado-content").css("padding", "0 280px 0 0");
                     $(".apartado .apartado-details").toggleClass('show hiden');
                 }
-                else if ($(".apartado .apartado-details").hasClass('hiden')) {
-                    $(".apartado .apartado-details").css("right", "-300px");
-                    $(".apartado .apartado-content").css("padding", "0");
-                    $(".apartado .apartado-details").toggleClass('show hiden');
-                    $(".apartado .listado-apartado table tbody .item").removeClass("active");
-                    vacio();
-                }
+            });
+            $(".apartado-details").on('click', '.info-sidenav', function () {
+                $(".apartado .apartado-details").css("right", "-300px");
+                $(".apartado .apartado-content").css("padding", "0");
+                $(".apartado .apartado-details").toggleClass('show hiden');
+                $(".apartado .listado-apartado table tbody .item").removeClass("active");
+                vacio();
             });
             $('ul.tabs').tabs();
             $('select').material_select();
@@ -168,7 +168,7 @@
                                 color = "red";
                             }
                             $(".listado-apartado table tbody").append(
-                                '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
+                                '<tr class="item info-sidenav" onclick="informacionVenta(' + value.ID + ')">' +
                                 '<td>' + value.Venta + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
                                 '<td><span class="' + color + ' badge estado">' + estado + '</span></td>' +

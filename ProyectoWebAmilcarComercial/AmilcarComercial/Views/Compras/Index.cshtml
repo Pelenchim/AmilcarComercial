@@ -32,7 +32,7 @@
                 </form>      
                 <div class="col l2 center-align icons">
                     <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
-                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Imprimir"><i class="material-icons">print</i></a>
                 </div>
             </div>
         </div>
@@ -114,19 +114,19 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".compras .info-sidenav").click(function () {
+            $(".compras-content .listado-compras").on('click', '.info-sidenav', function () {
                 if ($(".compras .compras-details").hasClass('show')) {
                     $(".compras .compras-details").css("right", "0px");
                     $(".compras .compras-content").css("padding", "0 280px 0 0");
                     $(".compras .compras-details").toggleClass('show hiden');
                 }
-                else if ($(".compras .compras-details").hasClass('hiden')) {
-                    $(".compras .compras-details").css("right", "-300px");
+            });
+            $(".compras-details").on('click', '.info-sidenav', function () {
+                $(".compras .compras-details").css("right", "-300px");
                     $(".compras .compras-content").css("padding", "0");
                     $(".compras .compras-details").toggleClass('show hiden');
                     $(".compras .listado-compras table tbody .item").removeClass("active");
                     vacio();
-                }
             });
             $('ul.tabs').tabs();
             $('select').material_select();
@@ -173,7 +173,7 @@
                                 color = "red";
                             }
                             $(".listado-compras table tbody").append(
-                                '<tr class="item" onclick="informacionCompra(' + value.ID + ')">' +
+                                '<tr class="item info-sidenav" onclick="informacionCompra(' + value.ID + ')">' +
                                 '<td>' + value.Compra + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
                                 '<td> <span class="' + color + ' badge estado">' + estado + '</span></td>' +

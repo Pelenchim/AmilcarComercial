@@ -32,7 +32,7 @@
                 </form>
                 <div class="col l2 center-align icons">
                     <a class="tooltipped last" data-position="bottomMio" data-delay="50" data-tooltip="Vista de cuadricula" onclick="articulos(0)"><i class="material-icons">view_module</i></a>
-                    <a class="tooltipped info-sidenav" data-position="bottomMio" data-delay="50" data-tooltip="Ver detalles"><i class="material-icons">info</i></a>
+                    <a class="tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Imprimir"><i class="material-icons">print</i></a>
                 </div>
             </div>
         </div>
@@ -113,19 +113,19 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".contado .info-sidenav").click(function () {
+            $(".contado-content .listado-contado").on('click','.info-sidenav',function () {
                 if ($(".contado .contado-details").hasClass('show')) {
                     $(".contado .contado-details").css("right", "0px");
                     $(".contado .contado-content").css("padding", "0 280px 0 0");
                     $(".contado .contado-details").toggleClass('show hiden');
                 }
-                else if ($(".contado .contado-details").hasClass('hiden')) {
-                    $(".contado .contado-details").css("right", "-300px");
-                    $(".contado .contado-content").css("padding", "0");
-                    $(".contado .contado-details").toggleClass('show hiden');
-                    $(".contado .listado-contado table tbody .item").removeClass("active");
-                    vacio();
-                }
+            });
+            $(".contado-details").on('click','.info-sidenav', function () {
+                $(".contado .contado-details").css("right", "-300px");
+                $(".contado .contado-content").css("padding", "0");
+                $(".contado .contado-details").toggleClass('show hiden');
+                $(".contado .listado-contado table tbody .item").removeClass("active");
+                vacio();
             });
             $('ul.tabs').tabs();
             $('select').material_select();
@@ -171,7 +171,7 @@
                                 color = "red";
                             }
                             $(".listado-contado table tbody").append(
-                                '<tr class="item" onclick="informacionVenta(' + value.ID + ')">' +
+                                '<tr class="item info-sidenav" onclick="informacionVenta(' + value.ID + ')">' +
                                 '<td>' + value.Venta + '</td>' +
                                 '<td>' + value.Factura + '</td>' +
                                 '<td><span class="' + color + ' badge estado">' + estado + '</span></td>' +

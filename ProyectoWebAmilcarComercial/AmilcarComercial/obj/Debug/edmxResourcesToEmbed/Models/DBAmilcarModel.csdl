@@ -160,6 +160,7 @@
     <Property Name="preciocredito" Type="Double" />
     <Property Name="credito" Type="Boolean" />
     <Property Name="apartado" Type="Boolean" />
+    <Property Name="dañados" Type="Int32" />
   </EntityType>
   <EntityType Name="Tbl_Categorias">
     <Key>

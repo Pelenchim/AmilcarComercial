@@ -144,6 +144,7 @@
           <Property Name="preciocredito" Type="float" />
           <Property Name="credito" Type="bit" />
           <Property Name="apartado" Type="bit" />
+          <Property Name="dañados" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Categorias">
           <Key>
@@ -1487,6 +1488,7 @@
           <Property Name="preciocredito" Type="Double" />
           <Property Name="credito" Type="Boolean" />
           <Property Name="apartado" Type="Boolean" />
+          <Property Name="dañados" Type="Int32" />
         </EntityType>
         <EntityType Name="Tbl_Categorias">
           <Key>
@@ -2835,6 +2837,7 @@
           <EntitySetMapping Name="Tbl_bodega_productos">
             <EntityTypeMapping TypeName="DBAmilcarModel.Tbl_bodega_productos">
               <MappingFragment StoreEntitySet="Tbl_bodega_productos">
+                <ScalarProperty Name="dañados" ColumnName="dañados" />
                 <ScalarProperty Name="apartado" ColumnName="apartado" />
                 <ScalarProperty Name="credito" ColumnName="credito" />
                 <ScalarProperty Name="preciocredito" ColumnName="preciocredito" />
