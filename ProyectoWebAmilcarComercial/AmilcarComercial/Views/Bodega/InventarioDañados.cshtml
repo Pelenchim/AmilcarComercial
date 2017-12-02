@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Inventario Dañados";
-    ViewBag.SubTitle = "InventarioDañados";
+    ViewBag.Title = "Inventario";
+    ViewBag.SubTitle = "Inventario Dañados";
     ViewBag.ControllerGeneral = "Inventario";
     ViewBag.PrimaryColor = "blue";
     ViewBag.NavExtendedColor = "blue darken-1";
@@ -123,7 +123,7 @@
                                 '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' +  '</td>' +
                                 '<td>' + value.Nombre + '</td>' +
                                 '<td>' + value.Categoria + '</td>' +
-                                '<td><span class="cant white-text red">' + value.Dañados + '</span></td>' +
+                                '<td><span class="cant white-text blue">' + value.Dañados + '</span></td>' +
                                 '<td><i class="material-icons" onclick="detalleKardex(' + value.ID + ')">info</i></td>' +
                                 '</tr>'
                             );

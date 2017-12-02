@@ -21,6 +21,7 @@ namespace AmilcarComercial.Models
         public double precio_venta { get; set; }
         public Nullable<double> descuento { get; set; }
         public int id_kardex { get; set; }
+        public string motivo { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
         public virtual Tbl_Kardex Tbl_Kardex { get; set; }

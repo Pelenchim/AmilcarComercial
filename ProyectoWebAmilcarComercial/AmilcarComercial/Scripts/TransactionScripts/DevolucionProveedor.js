@@ -14,7 +14,7 @@
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });    
     var compra = false, articulo = false;
-    var total, subTotal, cantidadTotal, iva;
+    var cantidad, cantidadTotal;
     mostrarDevolucionTmp();
     generales();
     mostrarProductosTmp(1);
@@ -23,7 +23,7 @@
         iva = this.value;
         detalles();
     });
-    //detalles();
+    detalles();
 });
 function generales() {
     $("#pre-General").css("display", "inline");
@@ -92,6 +92,9 @@ function agregarCompraExistente(id) {
         url: '/agregar/devoluciontmpProveedor/' + id,
         type: 'GET',
         'success': function (data) {
+            if (articulo === true) {
+                eliminarProductosTodos();
+            }
             mostrarDevolucionTmp();
             $('#compras').modal('close');
             Materialize.toast('Compra definida exitosamente', 4000);
@@ -107,6 +110,9 @@ function eliminarCompra() {
         url: '/eliminar/devoluciontmp/' + tipo,
         type: 'GET',
         'success': function (data) {
+            if (articulo === true) {
+                eliminarProductosTodos();
+            }
             mostrarDevolucionTmp();
             Materialize.toast('Compra removida exitosamente.', 4000);
         },
@@ -134,7 +140,7 @@ function mostrarDevolucionTmp() {
                     '<button class="btn btn-flat green white-text" onclick="compras()">Buscar</button>' +
                     '</div>'
                 );
-                proveedor = false;
+                compra = false;
             }
             else {
                 $(".compra .opcionesCompra a").show();
@@ -151,7 +157,7 @@ function mostrarDevolucionTmp() {
                     '<p><strong>Comprador: </strong>' + data.UserN + ' ' + data.UserA + '</p>' +
                     '</div>'
                 );
-                proveedor = true;
+                compra = true;
             }
             $("#pre-Devolucion").css("display", "none");
             proveedorSelected = true;
@@ -167,6 +173,10 @@ function CancelCompra() {
 }
 
 function abrirArticulos() {
+    if (compra === false) {
+        Materialize.toast("Debe definir una compra", 2000);
+        return;
+    }
     $('#articulos').modal('open');
     articulos(1);
 }
@@ -317,7 +327,7 @@ function agregarArticuloTmp(id) {
     }
     var tipo = "Proveedor";
     $.ajax({
-        url: '/devoluciones/agregar/producto/' + id + '/' + cant + '/' + descrip + '/' + tipo,
+        url: '/devoluciones/agregar/producto/' + id + '/' + cant + '/' + descrip + '/' + tipo + '/' + 1,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -330,8 +340,9 @@ function agregarArticuloTmp(id) {
     });
 }
 function eliminarProductoTmp(id) {
+    var tipo = "Proveedor";
     $.ajax({
-        url: '/ventas/eliminar/productoTmp/' + id,
+        url: '/devoluciones/eliminar/productoTmp/' + id + '/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarProductosTmp(1);
@@ -343,8 +354,9 @@ function eliminarProductoTmp(id) {
     });
 }
 function eliminarProductosTodos() {
+    var tipo = "Proveedor";
     $.ajax({
-        url: '/ventas/eliminar/eliminarProductosTodos',
+        url: '/devoluciones/eliminar/eliminarProductosTodos/' + tipo,
         type: 'GET',
         'success': function (data) {
             mostrarProductosTmp(1);
@@ -360,8 +372,8 @@ function eliminarProductosTodos() {
 }
 function mostrarProductosTmp(view) {
     cantidadTotal = 0;
-    $(".articulos-orden").empty();
-    $("#pre-ArticulosOrden").css("display", "inline");
+    $(".articulos-devolucion").empty();
+    $("#pre-ArticulosDevolucion").css("display", "inline");
     var tipo = "Proveedor";
     $.ajax({
         url: '/devoluciones/obtener/productosTmp/' + tipo,
@@ -371,7 +383,7 @@ function mostrarProductosTmp(view) {
         'success': function (data) {
             $(".articulos-devolucion").append(
                 '<div class="divider-mio"></div>' +
-                '<div class="articulosLista col l12 mCustomScrollbar blue" data-mcs-theme="minimal-dark"></div>'
+                '<div class="articulosLista col l12 blue" style="padding:0"></div>'
             );
             if (data === 0) {
                 $(".opcionesArticulos .card-v").hide();
@@ -387,7 +399,7 @@ function mostrarProductosTmp(view) {
                 );
                 detalles();
                 articulo = false;
-                $("#pre-ArticulosOrden").css("display", "none");
+                $("#pre-ArticulosDevolucion").css("display", "none");
             }
             else {
                 if (view === 0) {
@@ -398,7 +410,7 @@ function mostrarProductosTmp(view) {
                 }
                 articulo = true;
             }
-            $("#pre-ArticulosOrden").css("display", "none");
+            $("#pre-ArticulosDevolucion").css("display", "none");
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -439,10 +451,10 @@ function articulosOrdenCard(data) {
     });
 }
 function articulosOrdenTable(data) {
-    $(".articulosVenta .opcionesArticulos .table-v").hide();
-    $(".articulosVenta .opcionesArticulos .card-v").show();
-    $(".articulosVenta .opcionesArticulos .delete").show();
-    $(".articulosVenta .opcionesArticulos .search").show();
+    $(".articulosDevolucion .opcionesArticulos .table-v").hide();
+    $(".articulosDevolucion .opcionesArticulos .card-v").show();
+    $(".articulosDevolucion .opcionesArticulos .delete").show();
+    $(".articulosDevolucion .opcionesArticulos .search").show();
     $(".articulos-devolucion .articulosLista").toggleClass("blue white");
     $(".lista-articulos").empty();
     $(".articulos-devolucion .articulosLista").append(
@@ -452,10 +464,9 @@ function articulosOrdenTable(data) {
         '<th>Cod</th>' +
         '<th>Img</th>' +
         '<th>Nombre</th>' +
-        '<th>Existencia</th>' +
-        '<th>Precio</th>' +
+        '<th>Cant-Comprada</th>' +
         '<th>Cantidad</th>' +
-        '<th>Subtotal</th>' +
+        '<th>Descripcion</th>' +
         '<th>Opciones</th>' +
         '</tr>' +
         '</thead>' +
@@ -464,7 +475,7 @@ function articulosOrdenTable(data) {
         '</table>'
     );
     cantidadTotal = 0;
-    subTotal = 0;
+    cantidad = 0;
     $.each(data, function () {
         $.each(this, function (name, value) {
             $(".articulosLista table tbody").append(
@@ -473,17 +484,204 @@ function articulosOrdenTable(data) {
                 '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
-                '<td>C$ ' + value.Precio + '</td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
-                '<td>' + value.Cantidad * value.Precio + '</td>' +
+                '<td>' +
+                '<input class="browser-default" id="descrip-' + value.ID + '" type="text" value="' + value.Descripcion + '"></input>' +
+                '</td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
+            cantidad++;
             cantidadTotal = cantidadTotal + value.Cantidad;
-            subTotal = subTotal + (value.Precio * value.Cantidad);
         });
     });
     detalles();
+}
+function detectarCambios() {
+    var ID_Obj;
+    var AnteriorValor, NuevoValor;
+    var dividiendo;
+    var id, campo, costo;
+
+    $(document).on({
+        'focusin': function () {
+            ID_Obj = $(this).attr("id");
+            dividiendo = ID_Obj.split("-", 2);
+            campo = dividiendo[0];
+            id = dividiendo[1];
+            AnteriorValor = $(this).val();
+            costo = $("#precio-" + id).val();
+        },
+        'focusout': function () {
+            NuevoValor = $(this).val();
+
+            if (NuevoValor === '') {
+                Materialize.toast("Debe ingresar un valor", 2000);
+                $(this).focus();
+                return;
+            }
+            else if (NuevoValor === 0) {
+                Materialize.toast("El valor no puede ser 0", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor < 0) {
+                Materialize.toast("El valor no es valido", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+            else if (NuevoValor === AnteriorValor) {
+                return;
+            }
+            else if (!/^([0-9])*$/.test(NuevoValor)) {
+                Materialize.toast("El valor no es valido", 2000);
+                $(this).val(AnteriorValor);
+                return;
+            }
+
+            if (campo === "precio") {
+                $.ajax({
+                    url: '/compras/actualizar/costo/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Costo del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+
+            if (campo === "cant") {
+                $.ajax({
+                    url: '/compras/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizada', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+
+            if (campo === "vent") {
+                $.ajax({
+                    url: '/compras/actualizar/precioventa/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('El precio de venta del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+
+            if (campo === "desc") {
+                if (NuevoValor >= costo) {
+                    Materialize.toast("El descuento no puede ser mayor que el costo", 2000);
+                    $("#desc-" + id).val(AnteriorValor);
+                    return;
+                }
+
+                $.ajax({
+                    url: '/compras/actualizar/descuento/productoTmp/' + id + '/' + NuevoValor,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Descuento del articulo actualizado', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+        }
+    }, '.articulosLista table tbody input');
+}
+
+function detalles() {
+    if (cantidadTotal === 0) {
+        $(".detalle .detalles").empty();
+        $(".detalle .detalles").append(
+            '<p><strong>Detalle:</strong></p>' +
+            '<div class="col l12">' +
+            '<p class="center-align"><strong>No hay articulos en la lista, agrege para realizar la devolucion.</strong></span>' +
+            '</div>'
+        );
+        $(".detalle .total").text("");
+        $("#facturar").addClass('disabled');
+        return;
+    }
+
+    $(".detalle .detalles").empty();
+    $(".detalle .detalles").append(
+        '<p><strong>Detalle:</strong></p>' +
+        '<div class="col l12">' +
+        '<span class="left"><strong>Articulos: </strong>' + cantidad + ' tipos</span>' +
+        '</div>' +
+        '<div class="col l12">' +
+        '<span class="left"><strong>Total Articulos:</strong>' + cantidadTotal + ' Unidades</span>' +
+        '</div>'
+    );
+    $("#comprar").removeClass('disabled');
+}
+function cancelarDevolucion() {
+    $.ajax({
+        url: '/devoluciones/proveedor/cancelar',
+        type: 'POST',
+        contentType: "application/json",
+        dataType: "json",
+        crossDomain: true,
+        success: function (data) {
+            window.location.href = data;
+        }
+    });
+}
+function facturar() {
+
+    if (proveedor === false) {
+        Materialize.toast("Debe definir un proveedor", 3000);
+        return;
+    }
+    if (articulo === false) {
+        Materialize.toast("Debe seleccionar productos a comprar", 3000);
+        return;
+    }
+    if ($("#N_factura").val() === "") {
+        Materialize.toast("Ingrese el numero de factura de la compra");
+        this.focus();
+        return;
+    }
+
+    var datos = {
+        fact_compra: $("#N_factura").val(),
+        tipo_comprobante_compra: $('#comprobante').val(),
+        iva_compra: $('#iva').val()
+    };
+
+    $.ajax({
+        url: '/compras/facturar',
+        type: 'GET',
+        contentType: "application/json",
+        dataType: "json",
+        data: datos,
+        'success': function (data) {
+            if (data === true) {
+                window.location.href = "/Compras/Facturado";
+            }
+            else {
+                Materialize.toast('Error, no se pudo realizar la compra', 2000);
+            }
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
 }

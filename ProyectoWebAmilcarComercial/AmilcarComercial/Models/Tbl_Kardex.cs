@@ -31,10 +31,10 @@ namespace AmilcarComercial.Models
         public int Entrada { get; set; }
         public int salida { get; set; }
         public int saldo { get; set; }
+        public double ultimoCosto { get; set; }
         public double costoPromedio { get; set; }
         public string usuario { get; set; }
         public int id_sucursal { get; set; }
-        public double ultimoCosto { get; set; }
         public string tipo { get; set; }
         public string observaciones { get; set; }
     
@@ -45,10 +45,10 @@ namespace AmilcarComercial.Models
         public virtual ICollection<Tbl_Detalle_Compra> Tbl_Detalle_Compra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
-        public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DetalleDevolucionCliente> Tbl_DetalleDevolucionCliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DetalleDevolucionProveedor> Tbl_DetalleDevolucionProveedor { get; set; }
+        public virtual Tbl_Sucursal Tbl_Sucursal { get; set; }
     }
 }

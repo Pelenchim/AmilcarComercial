@@ -3,8 +3,8 @@
     ViewBag.Title = "Devolucion";
     ViewBag.SubTitle = "Proveedor";
     ViewBag.ControllerGeneral = "Devoluciones";
-    ViewBag.PrimaryColor = "green";
-    ViewBag.NavExtendedColor = "green darken-1";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
 }
 
 <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
@@ -75,9 +75,9 @@
                             <div>
                                 <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="abrirArticulos(1)"><i class="material-icons">add_shopping_cart</i></a>
                                 <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
-                                <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
-                                <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
-                                <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
+                                <a class="table-v right tooltipped hide" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
+                                <a class="card-v right tooltipped hide" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
+                                <a class="search right tooltipped hide" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
                             </div>
                         </div>
                     </div>
@@ -107,30 +107,13 @@
                 <div class="divider-mio"></div>
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
-                    <div class="input-field col l6">
+                    <div class="input-field col l12">
                         <input placeholder="" id="N_factura" name="N_factura" type="text" disabled>
                         <label for="N_factura">N° Factura</label>
-                    </div>
-                    <div class="input-field col l6">
-                        <select id="iva">
-                            <option value="5">5%</option>
-                            <option value="10">10%</option>
-                            <option selected value="15">15%</option>
-                        </select>
-                        <label>IVA</label>
-                    </div>
-                    <div class="input-field col l12">
-                        <select id="comprobante">
-                            <option value="Recibo">Recibo</option>
-                            <option value="Factura">Factura</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                        <label>Comprobante</label>
                     </div>
                 </div>
                 <div class="detalles col l12"></div>
                 <div class="acciones col l12 blue center-align">
-                    <h5 class="center-align white-text total"></h5>
                     <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Compra" onclick="$('#cancelarCompra').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
                     <a id="comprar" class="btn white blue-text text-darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Compra" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
                 </div>
@@ -272,15 +255,15 @@
             <div class="row white z-depth-1">
                 <h4 class="grey-text text-darken-3 left-align">
                     <i class="material-icons">cancel</i>
-                    Cancelar Compra
+                    Cancelar Devolucion
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea cancelar la compra?</p>
+                <p class="white-text">Esta seguro que desea cancelar la devolucion?</p>
                 <div class="col l12 right-align">
                     <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
-                    <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarCompra()">Aceptar</a>
+                    <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarDevolucion();">Aceptar</a>
                 </div>
             </div>
         </div>

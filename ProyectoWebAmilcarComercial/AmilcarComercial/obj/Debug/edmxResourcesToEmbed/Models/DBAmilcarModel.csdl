@@ -140,11 +140,11 @@
     <NavigationProperty Name="Tbl_DescripcionValores" Relationship="Self.FK_Tbl_DescripcionValores_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DescripcionValores" />
     <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_Detalle_Compra" />
     <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_Detalle_Orden" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DetalleDevolucionCliente" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DetalleDevolucionProveedor" />
+    <NavigationProperty Name="Tbl_DevolucionDetalleTmp" Relationship="Self.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DevolucionDetalleTmp" />
     <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_Tbl_Kardex_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_Kardex" />
     <NavigationProperty Name="Tbl_OrdenTmp" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_OrdenTmp" />
-    <NavigationProperty Name="Tbl_DevolucionDetalleTmp" Relationship="DBAmilcarModel.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DevolucionDetalleTmp" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DetalleDevolucionCliente" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" FromRole="Tbl_Articulo" ToRole="Tbl_DetalleDevolucionProveedor" />
   </EntityType>
   <EntityType Name="Tbl_bodega_productos">
     <Key>
@@ -154,14 +154,14 @@
     <Property Name="id_sucursal" Type="Int32" Nullable="false" />
     <Property Name="id_articulo" Type="Int32" Nullable="false" />
     <Property Name="stock" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Bodega_Detalle" Relationship="Self.FK_Bodega_Detalle_Tbl_bodega_productos" FromRole="Tbl_bodega_productos" ToRole="Bodega_Detalle" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Articulo" FromRole="Tbl_bodega_productos" ToRole="Tbl_Articulo" />
-    <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Sucursal" FromRole="Tbl_bodega_productos" ToRole="Tbl_Sucursal" />
     <Property Name="precio" Type="Double" />
     <Property Name="preciocredito" Type="Double" />
     <Property Name="credito" Type="Boolean" />
     <Property Name="apartado" Type="Boolean" />
     <Property Name="dañados" Type="Int32" />
+    <NavigationProperty Name="Bodega_Detalle" Relationship="Self.FK_Bodega_Detalle_Tbl_bodega_productos" FromRole="Tbl_bodega_productos" ToRole="Bodega_Detalle" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Articulo" FromRole="Tbl_bodega_productos" ToRole="Tbl_Articulo" />
+    <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_bodega_productos_Tbl_Sucursal" FromRole="Tbl_bodega_productos" ToRole="Tbl_Sucursal" />
   </EntityType>
   <EntityType Name="Tbl_Categorias">
     <Key>
@@ -213,8 +213,8 @@
     <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="nuevo" Type="Boolean" Nullable="false" />
     <Property Name="id_cliente" Type="Int32" />
-    <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
     <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Departamentos" Relationship="Self.FK_Tbl_ClienteTmp_Tbl_Departamentos" FromRole="Tbl_ClienteTmp" ToRole="Tbl_Departamentos" />
   </EntityType>
   <EntityType Name="Tbl_Color">
     <Key>
@@ -236,12 +236,12 @@
     <Property Name="iva_compra" Type="Double" Nullable="false" />
     <Property Name="usuario" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="id_sucursal" Type="Int32" Nullable="false" />
+    <Property Name="estado_compra" Type="Boolean" />
     <NavigationProperty Name="Tbl_Proveedor" Relationship="Self.FK_Tbl_Compra_Tbl_Proveedor" FromRole="Tbl_Compra" ToRole="Tbl_Proveedor" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Compra_Tbl_Sucursal" FromRole="Tbl_Compra" ToRole="Tbl_Sucursal" />
     <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Compra" FromRole="Tbl_Compra" ToRole="Tbl_Detalle_Compra" />
-    <Property Name="estado_compra" Type="Boolean" />
-    <NavigationProperty Name="Tbl_DevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DevolucionProveedor_Tbl_Compra" FromRole="Tbl_Compra" ToRole="Tbl_DevolucionProveedor" />
-    <NavigationProperty Name="Tbl_DevolucionTmp1" Relationship="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Compra1" FromRole="Tbl_Compra" ToRole="Tbl_DevolucionTmp" />
+    <NavigationProperty Name="Tbl_DevolucionProveedor" Relationship="Self.FK_Tbl_DevolucionProveedor_Tbl_Compra" FromRole="Tbl_Compra" ToRole="Tbl_DevolucionProveedor" />
+    <NavigationProperty Name="Tbl_DevolucionTmp" Relationship="Self.FK_Tbl_DevolucionTmp_Tbl_Compra1" FromRole="Tbl_Compra" ToRole="Tbl_DevolucionTmp" />
   </EntityType>
   <EntityType Name="Tbl_CompraTmp">
     <Key>
@@ -254,8 +254,9 @@
     <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="costo" Type="Double" Nullable="false" />
     <Property Name="descuento" Type="Double" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_CompraTmp_Tbl_Articulo" FromRole="Tbl_CompraTmp" ToRole="Tbl_Articulo" />
     <Property Name="precioventa" Type="Double" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_CompraTmp_Tbl_Articulo" FromRole="Tbl_CompraTmp" ToRole="Tbl_Articulo" />
+    <Property Name="motivo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -276,6 +277,7 @@
     <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="monto" Type="Double" />
     <Property Name="id_sucursal" Type="Int32" />
+    <Property Name="tasacambio" Type="Double" />
   </EntityType>
   <EntityType Name="Tbl_Credito">
     <Key>
@@ -336,6 +338,7 @@
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Articulo" FromRole="Tbl_Detalle_Compra" ToRole="Tbl_Articulo" />
     <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Compra" FromRole="Tbl_Detalle_Compra" ToRole="Tbl_Compra" />
     <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex" FromRole="Tbl_Detalle_Compra" ToRole="Tbl_Kardex" />
+    <Property Name="motivo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Detalle_Orden">
     <Key>
@@ -351,6 +354,84 @@
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Articulo" FromRole="Tbl_Detalle_Orden" ToRole="Tbl_Articulo" />
     <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex" FromRole="Tbl_Detalle_Orden" ToRole="Tbl_Kardex" />
     <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Orden" FromRole="Tbl_Detalle_Orden" ToRole="Tbl_Orden" />
+    <Property Name="motivo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Tbl_DetalleDevolucionCliente">
+    <Key>
+      <PropertyRef Name="id_detalleDevolucionCli" />
+    </Key>
+    <Property Name="id_detalleDevolucionCli" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_cliente" Type="Int32" />
+    <Property Name="id_articulo" Type="Int32" />
+    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="id_kardex" Type="Int32" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_Articulo" />
+    <NavigationProperty Name="Tbl_DevolucionCliente" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_DevolucionCliente" />
+    <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_Kardex" />
+  </EntityType>
+  <EntityType Name="Tbl_DetalleDevolucionProveedor">
+    <Key>
+      <PropertyRef Name="id_detalleDevolucionPro" />
+    </Key>
+    <Property Name="id_detalleDevolucionPro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_proveedor" Type="Int32" />
+    <Property Name="id_articulo" Type="Int32" />
+    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="id_kardex" Type="Int32" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_Articulo" />
+    <NavigationProperty Name="Tbl_DevolucionProveedor" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_DevolucionProveedor" />
+    <NavigationProperty Name="Tbl_Kardex" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_Kardex" />
+  </EntityType>
+  <EntityType Name="Tbl_DevolucionCliente">
+    <Key>
+      <PropertyRef Name="id_devolucionCliente" />
+    </Key>
+    <Property Name="id_devolucionCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="id_venta" Type="Int32" Nullable="false" />
+    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_DetalleDevolucionCliente" />
+    <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_DevolucionCliente_Tbl_Orden" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_Orden" />
+  </EntityType>
+  <EntityType Name="Tbl_DevolucionDetalleTmp">
+    <Key>
+      <PropertyRef Name="id_detalleDevolucion" />
+    </Key>
+    <Property Name="id_detalleDevolucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_articulo" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" FromRole="Tbl_DevolucionDetalleTmp" ToRole="Tbl_Articulo" />
+    <Property Name="cantidadcomprada" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tbl_DevolucionProveedor">
+    <Key>
+      <PropertyRef Name="id_DevolucionProveedor" />
+    </Key>
+    <Property Name="id_DevolucionProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="id_compra" Type="Int32" Nullable="false" />
+    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_DevolucionProveedor_Tbl_Compra" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_Compra" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_DetalleDevolucionProveedor" />
+  </EntityType>
+  <EntityType Name="Tbl_DevolucionTmp">
+    <Key>
+      <PropertyRef Name="id_devolucion" />
+    </Key>
+    <Property Name="id_devolucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="id_compra" Type="Int32" />
+    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_venta" Type="Int32" />
+    <NavigationProperty Name="Tbl_Compra" Relationship="Self.FK_Tbl_DevolucionTmp_Tbl_Compra1" FromRole="Tbl_DevolucionTmp" ToRole="Tbl_Compra" />
+    <NavigationProperty Name="Tbl_Orden" Relationship="Self.FK_Tbl_DevolucionTmp_Tbl_Orden1" FromRole="Tbl_DevolucionTmp" ToRole="Tbl_Orden" />
   </EntityType>
   <EntityType Name="Tbl_garantia">
     <Key>
@@ -381,19 +462,19 @@
     <Property Name="Entrada" Type="Int32" Nullable="false" />
     <Property Name="salida" Type="Int32" Nullable="false" />
     <Property Name="saldo" Type="Int32" Nullable="false" />
+    <Property Name="ultimoCosto" Type="Double" Nullable="false" />
     <Property Name="costoPromedio" Type="Double" Nullable="false" />
     <Property Name="usuario" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="id_sucursal" Type="Int32" Nullable="false" />
+    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="observaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SalidaDetalle" Relationship="Self.FK_SalidaDetalle_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="SalidaDetalle" />
     <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_Kardex_Tbl_Articulo" FromRole="Tbl_Kardex" ToRole="Tbl_Articulo" />
     <NavigationProperty Name="Tbl_Detalle_Compra" Relationship="Self.FK_Tbl_Detalle_Compra_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Compra" />
     <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_Detalle_Orden" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_DetalleDevolucionCliente" />
+    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_DetalleDevolucionProveedor" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Kardex_Tbl_Sucursal" FromRole="Tbl_Kardex" ToRole="Tbl_Sucursal" />
-    <Property Name="ultimoCosto" Type="Double" Nullable="false" />
-    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="observaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_DetalleDevolucionCliente" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" FromRole="Tbl_Kardex" ToRole="Tbl_DetalleDevolucionProveedor" />
   </EntityType>
   <EntityType Name="Tbl_Marca">
     <Key>
@@ -418,14 +499,18 @@
     <Property Name="fact_Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="id_cliente" Type="Int32" Nullable="false" />
     <Property Name="tipo_pago" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" />
+    <Property Name="tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="pago" Type="Double" />
+    <Property Name="vuelto" Type="Double" />
+    <Property Name="moneda" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Tbl_Apartado" Relationship="Self.FK_Tbl_Apartado_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Apartado" />
     <NavigationProperty Name="Tbl_Clientes" Relationship="Self.FK_Tbl_Orden_Tbl_Clientes" FromRole="Tbl_Orden" ToRole="Tbl_Clientes" />
     <NavigationProperty Name="Tbl_Credito" Relationship="Self.FK_Tbl_Credito_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Credito" />
     <NavigationProperty Name="Tbl_Detalle_Orden" Relationship="Self.FK_Tbl_Detalle_Orden_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_Detalle_Orden" />
+    <NavigationProperty Name="Tbl_DevolucionCliente" Relationship="Self.FK_Tbl_DevolucionCliente_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_DevolucionCliente" />
+    <NavigationProperty Name="Tbl_DevolucionTmp" Relationship="Self.FK_Tbl_DevolucionTmp_Tbl_Orden1" FromRole="Tbl_Orden" ToRole="Tbl_DevolucionTmp" />
     <NavigationProperty Name="Tbl_Sucursal" Relationship="Self.FK_Tbl_Orden_Tbl_Sucursal" FromRole="Tbl_Orden" ToRole="Tbl_Sucursal" />
-    <Property Name="estado" Type="Boolean" />
-    <NavigationProperty Name="Tbl_DevolucionTmp1" Relationship="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Orden1" FromRole="Tbl_Orden" ToRole="Tbl_DevolucionTmp" />
-    <NavigationProperty Name="Tbl_DevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DevolucionCliente_Tbl_Orden" FromRole="Tbl_Orden" ToRole="Tbl_DevolucionCliente" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
     <Key>
@@ -436,13 +521,14 @@
     <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="cantidad" Type="Int32" />
     <Property Name="fecha" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
     <Property Name="credito_meses" Type="Int32" />
     <Property Name="apartado_fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="prima" Type="Double" />
     <Property Name="tipoventa" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="descuento" Type="Double" />
     <Property Name="precioventa" Type="Double" />
+    <NavigationProperty Name="Tbl_Articulo" Relationship="Self.FK_Tbl_OrdenTmp_Tbl_Articulo" FromRole="Tbl_OrdenTmp" ToRole="Tbl_Articulo" />
+    <Property Name="motivo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>
@@ -490,7 +576,7 @@
     <Key>
       <PropertyRef Name="id_proveedorTmp" />
     </Key>
-    <Property Name="id_proveedorTmp" Type="Int32" Nullable="false" />
+    <Property Name="id_proveedorTmp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -745,6 +831,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo">
+    <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
+    <End Role="Tbl_DevolucionDetalleTmp" Type="Self.Tbl_DevolucionDetalleTmp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Articulo">
+        <PropertyRef Name="id_articulo" />
+      </Principal>
+      <Dependent Role="Tbl_DevolucionDetalleTmp">
+        <PropertyRef Name="id_articulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tbl_Kardex_Tbl_Articulo">
     <End Role="Tbl_Articulo" Type="Self.Tbl_Articulo" Multiplicity="1" />
     <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="*" />
@@ -877,6 +999,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tbl_DevolucionProveedor_Tbl_Compra">
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="1" />
+    <End Role="Tbl_DevolucionProveedor" Type="Self.Tbl_DevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Compra">
+        <PropertyRef Name="id_compra" />
+      </Principal>
+      <Dependent Role="Tbl_DevolucionProveedor">
+        <PropertyRef Name="id_compra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DevolucionTmp_Tbl_Compra1">
+    <End Role="Tbl_Compra" Type="Self.Tbl_Compra" Multiplicity="0..1" />
+    <End Role="Tbl_DevolucionTmp" Type="Self.Tbl_DevolucionTmp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Compra">
+        <PropertyRef Name="id_compra" />
+      </Principal>
+      <Dependent Role="Tbl_DevolucionTmp">
+        <PropertyRef Name="id_compra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tbl_Salida_Tbl_Concepto">
     <End Role="Tbl_Concepto" Type="Self.Tbl_Concepto" Multiplicity="1" />
     <End Role="Tbl_Salida" Type="Self.Tbl_Salida" Multiplicity="*" />
@@ -961,6 +1107,78 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
+    <End Role="Tbl_DevolucionCliente" Type="Self.Tbl_DevolucionCliente" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DevolucionCliente">
+        <PropertyRef Name="id_devolucionCliente" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionCliente" Type="Self.Tbl_DetalleDevolucionCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionCliente">
+        <PropertyRef Name="id_kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
+    <End Role="Tbl_DevolucionProveedor" Type="Self.Tbl_DevolucionProveedor" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_DevolucionProveedor">
+        <PropertyRef Name="id_DevolucionProveedor" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
+        <PropertyRef Name="id_proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
+    <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="0..1" />
+    <End Role="Tbl_DetalleDevolucionProveedor" Type="Self.Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kardex">
+        <PropertyRef Name="id_Kardex" />
+      </Principal>
+      <Dependent Role="Tbl_DetalleDevolucionProveedor">
+        <PropertyRef Name="id_kardex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DevolucionCliente_Tbl_Orden">
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="1" />
+    <End Role="Tbl_DevolucionCliente" Type="Self.Tbl_DevolucionCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Tbl_DevolucionCliente">
+        <PropertyRef Name="id_venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_DevolucionTmp_Tbl_Orden1">
+    <End Role="Tbl_Orden" Type="Self.Tbl_Orden" Multiplicity="0..1" />
+    <End Role="Tbl_DevolucionTmp" Type="Self.Tbl_DevolucionTmp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Tbl_DevolucionTmp">
+        <PropertyRef Name="id_venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tbl_Kardex_Tbl_Sucursal">
     <End Role="Tbl_Sucursal" Type="Self.Tbl_Sucursal" Multiplicity="1" />
     <End Role="Tbl_Kardex" Type="Self.Tbl_Kardex" Multiplicity="*" />
@@ -1028,6 +1246,12 @@
     <EntitySet Name="Tbl_DescripcionValores" EntityType="Self.Tbl_DescripcionValores" />
     <EntitySet Name="Tbl_Detalle_Compra" EntityType="Self.Tbl_Detalle_Compra" />
     <EntitySet Name="Tbl_Detalle_Orden" EntityType="Self.Tbl_Detalle_Orden" />
+    <EntitySet Name="Tbl_DetalleDevolucionCliente" EntityType="Self.Tbl_DetalleDevolucionCliente" />
+    <EntitySet Name="Tbl_DetalleDevolucionProveedor" EntityType="Self.Tbl_DetalleDevolucionProveedor" />
+    <EntitySet Name="Tbl_DevolucionCliente" EntityType="Self.Tbl_DevolucionCliente" />
+    <EntitySet Name="Tbl_DevolucionDetalleTmp" EntityType="Self.Tbl_DevolucionDetalleTmp" />
+    <EntitySet Name="Tbl_DevolucionProveedor" EntityType="Self.Tbl_DevolucionProveedor" />
+    <EntitySet Name="Tbl_DevolucionTmp" EntityType="Self.Tbl_DevolucionTmp" />
     <EntitySet Name="Tbl_garantia" EntityType="Self.Tbl_garantia" />
     <EntitySet Name="Tbl_ImgTamporal" EntityType="Self.Tbl_ImgTamporal" />
     <EntitySet Name="Tbl_Kardex" EntityType="Self.Tbl_Kardex" />
@@ -1110,6 +1334,18 @@
       <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
       <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
     </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" Association="Self.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo">
+      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
+      <End Role="Tbl_DevolucionDetalleTmp" EntitySet="Tbl_DevolucionDetalleTmp" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Kardex_Tbl_Articulo" Association="Self.FK_Tbl_Kardex_Tbl_Articulo">
       <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
@@ -1154,6 +1390,14 @@
       <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
       <End Role="Tbl_Detalle_Compra" EntitySet="Tbl_Detalle_Compra" />
     </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DevolucionProveedor_Tbl_Compra" Association="Self.FK_Tbl_DevolucionProveedor_Tbl_Compra">
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+      <End Role="Tbl_DevolucionProveedor" EntitySet="Tbl_DevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DevolucionTmp_Tbl_Compra1" Association="Self.FK_Tbl_DevolucionTmp_Tbl_Compra1">
+      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
+      <End Role="Tbl_DevolucionTmp" EntitySet="Tbl_DevolucionTmp" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Salida_Tbl_Concepto" Association="Self.FK_Tbl_Salida_Tbl_Concepto">
       <End Role="Tbl_Concepto" EntitySet="Tbl_Concepto" />
       <End Role="Tbl_Salida" EntitySet="Tbl_Salida" />
@@ -1182,6 +1426,30 @@
       <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
       <End Role="Tbl_Detalle_Orden" EntitySet="Tbl_Detalle_Orden" />
     </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
+      <End Role="Tbl_DevolucionCliente" EntitySet="Tbl_DevolucionCliente" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" Association="Self.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
+      <End Role="Tbl_DevolucionProveedor" EntitySet="Tbl_DevolucionProveedor" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" Association="Self.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
+      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
+      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DevolucionCliente_Tbl_Orden" Association="Self.FK_Tbl_DevolucionCliente_Tbl_Orden">
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+      <End Role="Tbl_DevolucionCliente" EntitySet="Tbl_DevolucionCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_DevolucionTmp_Tbl_Orden1" Association="Self.FK_Tbl_DevolucionTmp_Tbl_Orden1">
+      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
+      <End Role="Tbl_DevolucionTmp" EntitySet="Tbl_DevolucionTmp" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tbl_Kardex_Tbl_Sucursal" Association="Self.FK_Tbl_Kardex_Tbl_Sucursal">
       <End Role="Tbl_Sucursal" EntitySet="Tbl_Sucursal" />
       <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
@@ -1198,269 +1466,5 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
-    <EntitySet Name="Tbl_DevolucionCliente" EntityType="DBAmilcarModel.Tbl_DevolucionCliente" />
-    <EntitySet Name="Tbl_DevolucionDetalleTmp" EntityType="DBAmilcarModel.Tbl_DevolucionDetalleTmp" />
-    <EntitySet Name="Tbl_DevolucionProveedor" EntityType="DBAmilcarModel.Tbl_DevolucionProveedor" />
-    <EntitySet Name="Tbl_DevolucionTmp" EntityType="DBAmilcarModel.Tbl_DevolucionTmp" />
-    <AssociationSet Name="FK_Tbl_DevolucionProveedor_Tbl_Compra" Association="DBAmilcarModel.FK_Tbl_DevolucionProveedor_Tbl_Compra">
-      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
-      <End Role="Tbl_DevolucionProveedor" EntitySet="Tbl_DevolucionProveedor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DevolucionTmp_Tbl_Orden1" Association="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Orden1">
-      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
-      <End Role="Tbl_DevolucionTmp" EntitySet="Tbl_DevolucionTmp" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DevolucionCliente_Tbl_Orden" Association="DBAmilcarModel.FK_Tbl_DevolucionCliente_Tbl_Orden">
-      <End Role="Tbl_Orden" EntitySet="Tbl_Orden" />
-      <End Role="Tbl_DevolucionCliente" EntitySet="Tbl_DevolucionCliente" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DevolucionTmp_Tbl_Compra1" Association="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Compra1">
-      <End Role="Tbl_Compra" EntitySet="Tbl_Compra" />
-      <End Role="Tbl_DevolucionTmp" EntitySet="Tbl_DevolucionTmp" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" Association="DBAmilcarModel.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo">
-      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
-      <End Role="Tbl_DevolucionDetalleTmp" EntitySet="Tbl_DevolucionDetalleTmp" />
-    </AssociationSet>
-    <EntitySet Name="Tbl_DetalleDevolucionCliente" EntityType="DBAmilcarModel.Tbl_DetalleDevolucionCliente" />
-    <EntitySet Name="Tbl_DetalleDevolucionProveedor" EntityType="DBAmilcarModel.Tbl_DetalleDevolucionProveedor" />
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
-      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
-      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
-      <End Role="Tbl_Articulo" EntitySet="Tbl_Articulo" />
-      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
-      <End Role="Tbl_DevolucionCliente" EntitySet="Tbl_DevolucionCliente" />
-      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
-      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
-      <End Role="Tbl_DetalleDevolucionCliente" EntitySet="Tbl_DetalleDevolucionCliente" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
-      <End Role="Tbl_DevolucionProveedor" EntitySet="Tbl_DevolucionProveedor" />
-      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" Association="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
-      <End Role="Tbl_Kardex" EntitySet="Tbl_Kardex" />
-      <End Role="Tbl_DetalleDevolucionProveedor" EntitySet="Tbl_DetalleDevolucionProveedor" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Tbl_DevolucionCliente">
-    <Key>
-      <PropertyRef Name="id_devolucionCliente" />
-    </Key>
-    <Property Name="id_devolucionCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="id_venta" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Tbl_Orden" Relationship="DBAmilcarModel.FK_Tbl_DevolucionCliente_Tbl_Orden" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_Orden" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" FromRole="Tbl_DevolucionCliente" ToRole="Tbl_DetalleDevolucionCliente" />
-    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Tbl_DevolucionDetalleTmp">
-    <Key>
-      <PropertyRef Name="id_detalleDevolucion" />
-    </Key>
-    <Property Name="id_detalleDevolucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="id_articulo" Type="Int32" Nullable="false" />
-    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="cantidad" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="DBAmilcarModel.FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo" FromRole="Tbl_DevolucionDetalleTmp" ToRole="Tbl_Articulo" />
-    <Property Name="user" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Tbl_DevolucionProveedor">
-    <Key>
-      <PropertyRef Name="id_DevolucionProveedor" />
-    </Key>
-    <Property Name="id_DevolucionProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="id_compra" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Tbl_Compra" Relationship="DBAmilcarModel.FK_Tbl_DevolucionProveedor_Tbl_Compra" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_Compra" />
-    <NavigationProperty Name="Tbl_DetalleDevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" FromRole="Tbl_DevolucionProveedor" ToRole="Tbl_DetalleDevolucionProveedor" />
-    <Property Name="fact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Tbl_DevolucionTmp">
-    <Key>
-      <PropertyRef Name="id_devolucion" />
-    </Key>
-    <Property Name="id_devolucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="id_compra" Type="Int32" />
-    <Property Name="id_venta" Type="Int32" />
-    <NavigationProperty Name="Tbl_Orden1" Relationship="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Orden1" FromRole="Tbl_DevolucionTmp" ToRole="Tbl_Orden" />
-    <NavigationProperty Name="Tbl_Compra1" Relationship="DBAmilcarModel.FK_Tbl_DevolucionTmp_Tbl_Compra1" FromRole="Tbl_DevolucionTmp" ToRole="Tbl_Compra" />
-  </EntityType>
-  <Association Name="FK_Tbl_DevolucionProveedor_Tbl_Compra">
-    <End Type="DBAmilcarModel.Tbl_Compra" Role="Tbl_Compra" Multiplicity="1" />
-    <End Type="DBAmilcarModel.Tbl_DevolucionProveedor" Role="Tbl_DevolucionProveedor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Compra">
-        <PropertyRef Name="id_compra" />
-      </Principal>
-      <Dependent Role="Tbl_DevolucionProveedor">
-        <PropertyRef Name="id_compra" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DevolucionTmp_Tbl_Orden1">
-    <End Type="DBAmilcarModel.Tbl_Orden" Role="Tbl_Orden" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DevolucionTmp" Role="Tbl_DevolucionTmp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Orden">
-        <PropertyRef Name="id_orden" />
-      </Principal>
-      <Dependent Role="Tbl_DevolucionTmp">
-        <PropertyRef Name="id_venta" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DevolucionCliente_Tbl_Orden">
-    <End Type="DBAmilcarModel.Tbl_Orden" Role="Tbl_Orden" Multiplicity="1" />
-    <End Type="DBAmilcarModel.Tbl_DevolucionCliente" Role="Tbl_DevolucionCliente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Orden">
-        <PropertyRef Name="id_orden" />
-      </Principal>
-      <Dependent Role="Tbl_DevolucionCliente">
-        <PropertyRef Name="id_venta" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DevolucionTmp_Tbl_Compra1">
-    <End Type="DBAmilcarModel.Tbl_Compra" Role="Tbl_Compra" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DevolucionTmp" Role="Tbl_DevolucionTmp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Compra">
-        <PropertyRef Name="id_compra" />
-      </Principal>
-      <Dependent Role="Tbl_DevolucionTmp">
-        <PropertyRef Name="id_compra" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DevolucionDetalleTmp_Tbl_Articulo">
-    <End Type="DBAmilcarModel.Tbl_Articulo" Role="Tbl_Articulo" Multiplicity="1" />
-    <End Type="DBAmilcarModel.Tbl_DevolucionDetalleTmp" Role="Tbl_DevolucionDetalleTmp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Articulo">
-        <PropertyRef Name="id_articulo" />
-      </Principal>
-      <Dependent Role="Tbl_DevolucionDetalleTmp">
-        <PropertyRef Name="id_articulo" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Tbl_DetalleDevolucionCliente">
-    <Key>
-      <PropertyRef Name="id_detalleDevolucionCli" />
-    </Key>
-    <Property Name="id_detalleDevolucionCli" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="id_cliente" Type="Int32" />
-    <Property Name="id_articulo" Type="Int32" />
-    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="precio" Type="Double" />
-    <Property Name="cantidad" Type="Int32" />
-    <Property Name="id_kardex" Type="Int32" />
-    <Property Name="iva" Type="Int32" />
-    <Property Name="descuento" Type="Double" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_Articulo" />
-    <NavigationProperty Name="Tbl_DevolucionCliente" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_DevolucionCliente" />
-    <NavigationProperty Name="Tbl_Kardex" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex" FromRole="Tbl_DetalleDevolucionCliente" ToRole="Tbl_Kardex" />
-  </EntityType>
-  <EntityType Name="Tbl_DetalleDevolucionProveedor">
-    <Key>
-      <PropertyRef Name="id_detalleDevolucionPro" />
-    </Key>
-    <Property Name="id_detalleDevolucionPro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="id_proveedor" Type="Int32" />
-    <Property Name="id_articulo" Type="Int32" />
-    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="precio" Type="Double" />
-    <Property Name="cantidad" Type="Int32" />
-    <Property Name="id_kardex" Type="Int32" />
-    <Property Name="iva" Type="Int32" />
-    <Property Name="descuento" Type="Double" />
-    <NavigationProperty Name="Tbl_Articulo" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_Articulo" />
-    <NavigationProperty Name="Tbl_DevolucionProveedor" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_DevolucionProveedor" />
-    <NavigationProperty Name="Tbl_Kardex" Relationship="DBAmilcarModel.FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex" FromRole="Tbl_DetalleDevolucionProveedor" ToRole="Tbl_Kardex" />
-  </EntityType>
-  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Articulo">
-    <End Type="DBAmilcarModel.Tbl_Articulo" Role="Tbl_Articulo" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionCliente" Role="Tbl_DetalleDevolucionCliente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Articulo">
-        <PropertyRef Name="id_articulo" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionCliente">
-        <PropertyRef Name="id_articulo" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Articulo">
-    <End Type="DBAmilcarModel.Tbl_Articulo" Role="Tbl_Articulo" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionProveedor" Role="Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Articulo">
-        <PropertyRef Name="id_articulo" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionProveedor">
-        <PropertyRef Name="id_articulo" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_DevolucionCliente">
-    <End Type="DBAmilcarModel.Tbl_DevolucionCliente" Role="Tbl_DevolucionCliente" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionCliente" Role="Tbl_DetalleDevolucionCliente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_DevolucionCliente">
-        <PropertyRef Name="id_devolucionCliente" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionCliente">
-        <PropertyRef Name="id_cliente" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DetalleDevolucionCliente_Tbl_Kardex">
-    <End Type="DBAmilcarModel.Tbl_Kardex" Role="Tbl_Kardex" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionCliente" Role="Tbl_DetalleDevolucionCliente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Kardex">
-        <PropertyRef Name="id_Kardex" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionCliente">
-        <PropertyRef Name="id_kardex" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_DevolucionProveedor">
-    <End Type="DBAmilcarModel.Tbl_DevolucionProveedor" Role="Tbl_DevolucionProveedor" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionProveedor" Role="Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_DevolucionProveedor">
-        <PropertyRef Name="id_DevolucionProveedor" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionProveedor">
-        <PropertyRef Name="id_proveedor" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tbl_DetalleDevolucionProveedor_Tbl_Kardex">
-    <End Type="DBAmilcarModel.Tbl_Kardex" Role="Tbl_Kardex" Multiplicity="0..1" />
-    <End Type="DBAmilcarModel.Tbl_DetalleDevolucionProveedor" Role="Tbl_DetalleDevolucionProveedor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tbl_Kardex">
-        <PropertyRef Name="id_Kardex" />
-      </Principal>
-      <Dependent Role="Tbl_DetalleDevolucionProveedor">
-        <PropertyRef Name="id_kardex" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

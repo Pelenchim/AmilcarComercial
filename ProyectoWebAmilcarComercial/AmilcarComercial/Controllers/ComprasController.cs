@@ -189,9 +189,9 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("compras/agregar/producto/{id}/{cant}/{precio}/{desc}/{precioventa}")]
+        [Route("compras/agregar/producto/{id}/{cant}/{precio}/{desc}/{precioventa}/{motivo}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant, float precio, float desc, float precioventa)
+        public JsonResult AgregarProducto(int id, int cant, float precio, float desc, float precioventa, int motivo)
         {
             var user = User.Identity.Name;
 
@@ -202,6 +202,7 @@ namespace AmilcarComercial.Controllers
             compra.descuento = desc;
             compra.precioventa = precioventa;
             compra.user = user;
+            compra.motivo = motivo;
             compra.fecha = System.DateTime.Now;
 
             db.Tbl_CompraTmp.Add(compra);
@@ -247,7 +248,8 @@ namespace AmilcarComercial.Controllers
                                  Cantidad = p.cantidad,
                                  Precio = p.costo,
                                  Descuento = p.descuento,
-                                 PrecioVenta = p.precioventa
+                                 PrecioVenta = p.precioventa,
+                                 Motivo = p.motivo
                              }).ToList();
                 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -292,12 +294,24 @@ namespace AmilcarComercial.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
         [Route("compras/actualizar/precioventa/productoTmp/{id}/{nuevoValor}")]
         [HttpGet]
         public JsonResult ActualizarPrecioVenta(int id, int nuevoValor)
         {
             var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
             dato.precioventa = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("compras/actualizar/motivo/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarMotivo(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_CompraTmp.Where(m => m.id_compraTmp == id).FirstOrDefault();
+            dato.motivo = nuevoValor;
             db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -342,6 +356,26 @@ namespace AmilcarComercial.Controllers
                         stock.stock = stock.stock + articulo.cantidad;
                         db.SaveChanges();
 
+                        var cost = articulo.costo;
+                        var desc = articulo.descuento;
+                        var motivo = "";
+                        if (articulo.motivo == 1)
+                        {
+                            motivo = "Compra";
+                        }
+                        if (articulo.motivo == 2)
+                        {
+                            cost = 0;
+                            desc = 0;
+                            motivo = "Bonificacion";
+                        }
+                        if (articulo.motivo == 3)
+                        {
+                            cost = 0;
+                            desc = 0;
+                            motivo = "Reposicion";
+                        }
+
                         Tbl_Kardex kardex = new Tbl_Kardex()
                         {
                             id_articulo = articulo.id_articulo,
@@ -350,15 +384,15 @@ namespace AmilcarComercial.Controllers
                             Entrada = articulo.cantidad,
                             salida = 0,
                             saldo = stock.stock,
-                            ultimoCosto = articulo.costo,
-                            costoPromedio = articulo.costo,
+                            ultimoCosto = cost,
+                            costoPromedio = cost,
                             usuario = User.Identity.Name,
                             id_sucursal = (int)suc,
                             tipo = "Entrada",
                             observaciones = "Compra Aprovada"
                         };
                         db.Tbl_Kardex.Add(kardex);
-                        db.SaveChanges();                      
+                        db.SaveChanges();                       
 
                         Tbl_Detalle_Compra detalle = new Tbl_Detalle_Compra()
                         {
@@ -366,8 +400,9 @@ namespace AmilcarComercial.Controllers
                             id_articulo = articulo.id_articulo,
                             id_Kardex = kardex.id_Kardex,
                             cantidad = articulo.cantidad,
-                            costo = articulo.costo,
-                            descuento = articulo.descuento
+                            costo = cost,
+                            descuento = desc,
+                            motivo = motivo
                         };
                         db.Tbl_Detalle_Compra.Add(detalle);
                         db.SaveChanges();

@@ -18,11 +18,8 @@ namespace AmilcarComercial.Models
         public Nullable<int> id_proveedor { get; set; }
         public Nullable<int> id_articulo { get; set; }
         public string descripcion { get; set; }
-        public Nullable<double> precio { get; set; }
         public Nullable<int> cantidad { get; set; }
         public Nullable<int> id_kardex { get; set; }
-        public Nullable<int> iva { get; set; }
-        public Nullable<double> descuento { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
         public virtual Tbl_DevolucionProveedor Tbl_DevolucionProveedor { get; set; }

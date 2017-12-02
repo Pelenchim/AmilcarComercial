@@ -46,7 +46,7 @@ namespace AmilcarComercial.Controllers
                              Precio = d.precio,
                              PrecioCredito = d.preciocredito,
                              Stock = d.stock
-                         }).ToList();
+                         }).Take(10).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }
@@ -68,7 +68,7 @@ namespace AmilcarComercial.Controllers
                              Nombre = p.nombre_articulo,
                              Categoria = p.Tbl_Categorias.Nombre,
                              Dañados = d.dañados
-                         }).ToList();
+                         }).Take(10).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }
@@ -89,7 +89,7 @@ namespace AmilcarComercial.Controllers
                              Fecha = p.Tbl_Kardex.OrderByDescending(m => m.id_articulo).FirstOrDefault().fechaKardex,
                              SalidaFecha = db.Tbl_Kardex.Where(m => m.id_articulo == p.id_articulo && m.salida > 0).OrderByDescending(m => m.fechaKardex).FirstOrDefault().fechaKardex.ToString(),
                              EntradaFecha = db.Tbl_Kardex.Where(m => m.id_articulo == p.id_articulo && m.Entrada > 0).OrderByDescending(m => m.fechaKardex).FirstOrDefault().fechaKardex.ToString()
-                         }).OrderBy(m => m.Fecha).ToList();
+                         }).OrderBy(m => m.Fecha).Take(10).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }
@@ -111,7 +111,7 @@ namespace AmilcarComercial.Controllers
                               Apellido = db.AspNetUsers.Where(m => m.UserName == k.usuario).FirstOrDefault().LastName,
                               Tipo = k.tipo,
                               Observacion = k.observaciones
-                          }).OrderByDescending(m => m.Fecha).ToList();
+                          }).OrderByDescending(m => m.Fecha).Take(10).ToList();
 
             return Json(new { data = kardex }, JsonRequestBehavior.AllowGet);
         }

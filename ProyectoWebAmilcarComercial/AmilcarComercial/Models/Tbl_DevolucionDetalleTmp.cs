@@ -20,6 +20,7 @@ namespace AmilcarComercial.Models
         public int cantidad { get; set; }
         public string user { get; set; }
         public string tipo { get; set; }
+        public Nullable<int> cantidadcomprada { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }

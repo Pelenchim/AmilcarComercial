@@ -23,11 +23,11 @@ namespace AmilcarComercial.Models
             this.Tbl_DescripcionValores = new HashSet<Tbl_DescripcionValores>();
             this.Tbl_Detalle_Compra = new HashSet<Tbl_Detalle_Compra>();
             this.Tbl_Detalle_Orden = new HashSet<Tbl_Detalle_Orden>();
-            this.Tbl_Kardex = new HashSet<Tbl_Kardex>();
-            this.Tbl_OrdenTmp = new HashSet<Tbl_OrdenTmp>();
-            this.Tbl_DevolucionDetalleTmp = new HashSet<Tbl_DevolucionDetalleTmp>();
             this.Tbl_DetalleDevolucionCliente = new HashSet<Tbl_DetalleDevolucionCliente>();
             this.Tbl_DetalleDevolucionProveedor = new HashSet<Tbl_DetalleDevolucionProveedor>();
+            this.Tbl_DevolucionDetalleTmp = new HashSet<Tbl_DevolucionDetalleTmp>();
+            this.Tbl_Kardex = new HashSet<Tbl_Kardex>();
+            this.Tbl_OrdenTmp = new HashSet<Tbl_OrdenTmp>();
         }
     
         public int id_articulo { get; set; }
@@ -57,14 +57,14 @@ namespace AmilcarComercial.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Detalle_Orden> Tbl_Detalle_Orden { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Kardex> Tbl_Kardex { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_OrdenTmp> Tbl_OrdenTmp { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_DevolucionDetalleTmp> Tbl_DevolucionDetalleTmp { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DetalleDevolucionCliente> Tbl_DetalleDevolucionCliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DetalleDevolucionProveedor> Tbl_DetalleDevolucionProveedor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DevolucionDetalleTmp> Tbl_DevolucionDetalleTmp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Kardex> Tbl_Kardex { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_OrdenTmp> Tbl_OrdenTmp { get; set; }
     }
 }

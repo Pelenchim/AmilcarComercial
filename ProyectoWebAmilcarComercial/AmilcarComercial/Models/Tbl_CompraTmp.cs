@@ -22,6 +22,7 @@ namespace AmilcarComercial.Models
         public double costo { get; set; }
         public Nullable<double> descuento { get; set; }
         public Nullable<double> precioventa { get; set; }
+        public Nullable<int> motivo { get; set; }
     
         public virtual Tbl_Articulo Tbl_Articulo { get; set; }
     }

@@ -79,11 +79,7 @@
                             <div>
                                 <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="articulos(1)"><i class="material-icons">add_shopping_cart</i></a>
                                 <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
-                                <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
-                                <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
-                                <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
                             </div>
-                            <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
                         </div>
                     </div>
                 </div>
@@ -129,7 +125,6 @@
                         <select id="tipoPago">
                             <option selected value="Efectivo">Efectivo</option>
                             <option value="Tarjeta">Tarjeta</option>
-                            <option value="Ambos">Ambos</option>
                         </select>
                         <label>Tipo de Pago</label>
                     </div>                    
@@ -138,7 +133,7 @@
                 <div class="acciones col l12 blue center-align">
                     <h5 class="center-align white-text total"></h5>
                     <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
-                    <a id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="facturar();"><i class="material-icons">shopping_cart</i></a>
+                    <a id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="pago();"><i class="material-icons">shopping_cart</i></a>
                 </div>
             </div>
         </div>
@@ -396,37 +391,62 @@
             </div>
         </div>
     </div>
-    <div id="calcularVuelto" class="modal modal-mini">
-        <div class="calcularVuelto blue">
+    <div id="tarjeta" class="modal modal-fixed-footer modal-mini">
+        <div class="tarjeta blue">
             <div class="row white z-depth-1">
                 <h4 class="grey-text text-darken-3 left-align">
                     <i class="material-icons">monetization_on</i>
-                    Calcular Vuelto
+                    Numero de Tarjeta de Credito
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
-            <div class="modal-content">
-                <div class="row" style="margin-bottom: 0">
+            <div class="modal-content blue">
+                <div class="row">
+                    <div class="input-field col l10 offset-l1">
+                        <input placeholder="" id="numero" type="text">
+                        <label for="tarjeta">Numero de Tarjeta</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="facturar('tarjeta');">Facturar</a>
+            </div>
+        </div>
+    </div>
+    <div id="efectivo" class="modal modal-fixed-footer modal-mini">
+        <div class="efectivo blue">
+            <div class="row white z-depth-1">
+                <h4 class="grey-text text-darken-3 left-align">
+                    <i class="material-icons">monetization_on</i>
+                    Datos del Pago
+                    <i class="salir modal-close material-icons right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content blue">
+                <div class="row">
                     <div class="input-field col l6">
                         <input placeholder="Cantidad a pagar" id="total" type="text" disabled>
                         <label for="total">Total a pagar</label>
                     </div>
                     <div class="input-field col l6">
                         <input placeholder="Cantidad con que pago" id="pago" type="text">
-                        <label for="pago">Pago</label>
+                        <label for="pago">Pago Con</label>
                     </div>
                     <div class="input-field col l6">
-                        <select>
-                            <option selected value="1">Cordobas</option>
-                            <option value="2">Dolares</option>
+                        <select id="moneda">
+                            <option selected value="Cordobas">Cordobas</option>
+                            <option value="Dolares">Dolares</option>
                         </select>
                         <label>Moneda</label>
                     </div>
                     <div class="input-field col l6">
-                        <input placeholder="Cantidad a retornar" id="cambio" type="text" disabled>
-                        <label for="cambio">Cambio</label>
+                        <input placeholder="" id="vuelto" type="text" disabled>
+                        <label for="pago">Vuelto</label>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="facturar('efectivo');">Facturar</a>
             </div>
         </div>
     </div>

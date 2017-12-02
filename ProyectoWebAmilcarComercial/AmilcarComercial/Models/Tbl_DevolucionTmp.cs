@@ -16,11 +16,11 @@ namespace AmilcarComercial.Models
     {
         public int id_devolucion { get; set; }
         public string tipo { get; set; }
-        public string user { get; set; }
         public Nullable<int> id_compra { get; set; }
+        public string user { get; set; }
         public Nullable<int> id_venta { get; set; }
     
-        public virtual Tbl_Orden Tbl_Orden1 { get; set; }
-        public virtual Tbl_Compra Tbl_Compra1 { get; set; }
+        public virtual Tbl_Compra Tbl_Compra { get; set; }
+        public virtual Tbl_Orden Tbl_Orden { get; set; }
     }
 }

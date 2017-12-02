@@ -75,11 +75,7 @@
                         <div class="acciones col l6">
                             <div>
                                 <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="abrirArticulos(1)"><i class="material-icons">add_shopping_cart</i></a>
-                                @*<a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Nuevo Producto" onclick="articulos(0)"><i class="material-icons">add_box</i></a>*@
                                 <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
-                                <a class="table-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Lista" onclick="mostrarProductosTmp(1)"><i class="material-icons">view_list</i></a>
-                                <a class="card-v right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vista de Cuadricula" onclick="mostrarProductosTmp(0)"><i class="material-icons">view_module</i></a>
-                                <a class="search right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Producto en Lista"><i class="material-icons">search</i></a>
                             </div>
                             <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
                         </div>
@@ -111,7 +107,7 @@
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
                     <div class="input-field col l6">
-                        <input placeholder="" id="N_factura" name="N_factura" type="text" disabled>
+                        <input placeholder="" id="N_factura" name="N_factura" type="text">
                         <label for="N_factura">N° Factura</label>
                     </div>
                     <div class="input-field col l6">

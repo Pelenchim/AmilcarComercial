@@ -222,6 +222,9 @@
                     $.each(data, function () {
                         $.each(this, function (name, value) {
                             var color, estado;
+                            var fecha = new Date();
+                            var fechahoy = fecha.getDate();
+
                             if (value.Estado === true) {
                                 estado = "Aprovada";
                                 color = "green";
@@ -250,7 +253,7 @@
                                 '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
                                 '</div>'
                             );
-                            if (value.Estado === true) {
+                            if (value.Estado === true && value.Fecha.endsWith(fechahoy)) {
                                 $(".apartado-details .general").append(
                                     '<div class="center">' +
                                     '<a class="btn btn-flat btn-anular white grey-text text-darken-2">Anular Venta</a>' +

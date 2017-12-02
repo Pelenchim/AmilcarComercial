@@ -261,11 +261,11 @@ namespace AmilcarComercial.Controllers
                 var data = (from d in db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo)
                             select new
                             {
-                                ID = d.Tbl_Compra1.id_compra,
-                                Fecha = d.Tbl_Compra1.fecha_compra.ToString(),
-                                Entidad = d.Tbl_Compra1.Tbl_Proveedor.razon_social,
-                                UserN = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Compra1.usuario).FirstOrDefault().FirstName,
-                                UserA = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Compra1.usuario).FirstOrDefault().LastName
+                                ID = d.Tbl_Compra.id_compra,
+                                Fecha = d.Tbl_Compra.fecha_compra.ToString(),
+                                Entidad = d.Tbl_Compra.Tbl_Proveedor.razon_social,
+                                UserN = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Compra.usuario).FirstOrDefault().FirstName,
+                                UserA = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Compra.usuario).FirstOrDefault().LastName
                             }).First();
 
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -286,12 +286,12 @@ namespace AmilcarComercial.Controllers
                 var data = (from d in db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo)
                             select new
                             {
-                                ID = d.Tbl_Orden1.id_orden,
-                                Fecha = d.Tbl_Orden1.fecha_orden.ToString(),
-                                EntidadN = d.Tbl_Orden1.Tbl_Clientes.nombre_cliente,
-                                EntidadA = d.Tbl_Orden1.Tbl_Clientes.apellidos_cliente,
-                                UserN = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Orden1.usuario).FirstOrDefault().FirstName,
-                                UserA = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Orden1.usuario).FirstOrDefault().LastName
+                                ID = d.Tbl_Orden.id_orden,
+                                Fecha = d.Tbl_Orden.fecha_orden.ToString(),
+                                EntidadN = d.Tbl_Orden.Tbl_Clientes.nombre_cliente,
+                                EntidadA = d.Tbl_Orden.Tbl_Clientes.apellidos_cliente,
+                                UserN = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Orden.usuario).FirstOrDefault().FirstName,
+                                UserA = db.AspNetUsers.Where(m => m.UserName == d.Tbl_Orden.usuario).FirstOrDefault().LastName
                             }).First();
 
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -360,15 +360,16 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("devoluciones/agregar/producto/{id}/{cant}/{descrip}/{tipo}")]
+        [Route("devoluciones/agregar/producto/{id}/{cant}/{descrip}/{tipo}/{cant2}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant, string descrip, string tipo)
+        public JsonResult AgregarProducto(int id, int cant, string descrip, string tipo, int cant2)
         {
             var user = User.Identity.Name;
             Tbl_DevolucionDetalleTmp devolucion = new Tbl_DevolucionDetalleTmp();
 
             devolucion.id_articulo = id;
             devolucion.cantidad = cant;
+            devolucion.cantidadcomprada = cant2;
             devolucion.descripcion = descrip;
             devolucion.user = user;
             devolucion.tipo = tipo;
@@ -408,7 +409,6 @@ namespace AmilcarComercial.Controllers
             if (db.Tbl_DevolucionDetalleTmp.Where(m => m.user == User.Identity.Name && m.tipo == tipo).Count() != 0)
             {
                 var datos = (from p in db.Tbl_DevolucionDetalleTmp
-                             join b in db.Tbl_bodega_productos on p.id_articulo equals b.id_articulo
                              where (p.user == User.Identity.Name && p.tipo == tipo)
                              select new
                              {
@@ -416,8 +416,8 @@ namespace AmilcarComercial.Controllers
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
-                                 Existecia = b.stock,
-                                 Precio = b.precio
+                                 CantidadCV = p.cantidadcomprada,
+                                 Descripcion = p.descripcion
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -430,10 +430,204 @@ namespace AmilcarComercial.Controllers
             }
         }
 
+        [Route("devoluciones/cliente/cancelar")]
+        [HttpPost]
+        public JsonResult CancelarDevCliente()
+        {
+            var venta = db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Cliente").ToList();
+            var articulos = db.Tbl_DevolucionDetalleTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Cliente").ToList();
+
+            if (venta != null)
+            {
+                db.Tbl_DevolucionTmp.RemoveRange(venta);
+                db.SaveChanges();
+            }
+            if (articulos != null)
+            {
+                db.Tbl_DevolucionDetalleTmp.RemoveRange(articulos);
+                db.SaveChanges();
+            }
+            return Json(Url.Action("ListaDevCliente", "Devoluciones"));
+        }
+
+        [Route("devoluciones/proveedor/cancelar")]
+        [HttpPost]
+        public JsonResult CancelarDevProveedor()
+        {
+            var venta = db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Proveedor").ToList();
+            var articulos = db.Tbl_DevolucionDetalleTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Proveedor").ToList();
+
+            if (venta != null)
+            {
+                db.Tbl_DevolucionTmp.RemoveRange(venta);
+                db.SaveChanges();
+            }
+            if (articulos != null)
+            {
+                db.Tbl_DevolucionDetalleTmp.RemoveRange(articulos);
+                db.SaveChanges();
+            }
+            return Json(Url.Action("ListaDevProveedor", "Devoluciones"));
+        }
+
+        [Route("devoluciones/cliente/guardar")]
+        [HttpGet]
+        public JsonResult GuardarCli(Tbl_DevolucionCliente cliente)
+        {
+            bool data = false;
+
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+
+                    Tbl_DevolucionCliente maestro = new Tbl_DevolucionCliente()
+                    {
+                        fecha = DateTime.Now,
+                        user = User.Identity.Name,
+                        fact = cliente.fact,
+                        id_venta = cliente.id_venta
+                    };
+                    db.Tbl_DevolucionCliente.Add(maestro);
+                    db.SaveChanges();
+
+                    var detalleTmp = db.Tbl_DevolucionDetalleTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Cliente").ToList();
+
+                    foreach (var articulo in detalleTmp)
+                    {
+                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
+                        stock.stock = stock.stock + articulo.cantidad;
+                        stock.dañados = stock.dañados + articulo.cantidad;
+                        db.SaveChanges();
+
+                        var kardexultimo = db.Tbl_Kardex.Where(m => m.id_articulo == articulo.id_articulo).OrderByDescending(m => m.id_Kardex).FirstOrDefault();
+
+                        Tbl_Kardex kardex = new Tbl_Kardex()
+                        {
+                            id_articulo = articulo.id_articulo,
+                            fechaKardex = DateTime.Now,
+                            num_factura = maestro.fact,
+                            Entrada = articulo.cantidad,
+                            salida = 0,
+                            saldo = stock.stock,
+                            ultimoCosto = kardexultimo.ultimoCosto,
+                            costoPromedio = kardexultimo.costoPromedio,
+                            usuario = User.Identity.Name,
+                            id_sucursal = (int)suc,
+                            tipo = "Entrada",
+                            observaciones = "Devolucion Cliente"
+                        };
+                        db.Tbl_Kardex.Add(kardex);
+                        db.SaveChanges();
+
+                        Tbl_DetalleDevolucionCliente detalle = new Tbl_DetalleDevolucionCliente()
+                        {
+                            id_articulo = articulo.id_articulo,
+                            descripcion = articulo.descripcion,
+                            cantidad = articulo.cantidad,
+                            id_kardex = kardex.id_Kardex,
+                            id_cliente = maestro.id_devolucionCliente
+                        };
+
+                        db.Tbl_DetalleDevolucionCliente.Add(detalle);
+                        db.SaveChanges();
+                    }
+                    db.Tbl_DevolucionDetalleTmp.RemoveRange(detalleTmp);
+                    db.SaveChanges();
+
+                    tran.Commit();
+                    data = true;
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                }
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("devoluciones/proveedor/guardar")]
+        [HttpGet]
+        public JsonResult GuardarPro(Tbl_DevolucionProveedor proveedor)
+        {
+            bool data = false;
+
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+
+                    Tbl_DevolucionProveedor maestro = new Tbl_DevolucionProveedor()
+                    {
+                        fecha = DateTime.Now,
+                        user = User.Identity.Name,
+                        fact = proveedor.fact,
+                        id_compra = proveedor.id_compra
+                    };
+                    db.Tbl_DevolucionProveedor.Add(maestro);
+                    db.SaveChanges();
+
+                    var detalleTmp = db.Tbl_DevolucionDetalleTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Proveedor").ToList();
+
+                    foreach (var articulo in detalleTmp)
+                    {
+                        var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
+                        stock.dañados = stock.dañados - articulo.cantidad;
+                        stock.stock = stock.stock - articulo.cantidad;
+                        db.SaveChanges();
+
+                        Tbl_Kardex kardex = new Tbl_Kardex()
+                        {
+                            id_articulo = articulo.id_articulo,
+                            fechaKardex = DateTime.Now,
+                            num_factura = maestro.fact,
+                            Entrada = 0,
+                            salida = articulo.cantidad,
+                            saldo = stock.stock,
+                            ultimoCosto = 0,
+                            costoPromedio = 0,
+                            usuario = User.Identity.Name,
+                            id_sucursal = (int)suc,
+                            tipo = "Salida",
+                            observaciones = "Devolucion Proveedor"
+                        };
+                        db.Tbl_Kardex.Add(kardex);
+                        db.SaveChanges();
+
+                        Tbl_DetalleDevolucionProveedor detalle = new Tbl_DetalleDevolucionProveedor()
+                        {
+                            id_articulo = articulo.id_articulo,
+                            descripcion = articulo.descripcion,
+                            cantidad = articulo.cantidad,
+                            id_kardex = kardex.id_Kardex,
+                            id_proveedor = maestro.id_DevolucionProveedor
+                        };
+
+                        db.Tbl_DetalleDevolucionProveedor.Add(detalle);
+                        db.SaveChanges();
+                    }
+                    db.Tbl_DevolucionDetalleTmp.RemoveRange(detalleTmp);
+                    db.SaveChanges();
+
+                    tran.Commit();
+                    data = true;
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                }
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region ListaDevoluciones
-    
+
         [Route("devolucion/cliente/lista")]
         [HttpGet]
         public JsonResult ListaCliente()

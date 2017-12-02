@@ -219,160 +219,160 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AmilcarDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmilcarDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AmilcarDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AmilcarDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmilcarDBModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRoles.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaims.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogins.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUsers.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bodega_Detalle.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBAmilcarModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcarModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBAmilcarModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBAmilcarModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SalidaDetalle.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Apartado.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Articulo.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_bodega_productos.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Categorias.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_CategoriaTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Clientes.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_ClienteTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Color.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Compra.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_CompraTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Concepto.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Configuracion.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Credito.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Departamentos.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Descripciones.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DescripcionValores.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DetalleDevolucionCliente.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DetalleDevolucionProveedor.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Compra.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Detalle_Orden.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DevolucionCliente.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DevolucionDetalleTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DevolucionProveedor.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_DevolucionTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_garantia.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_ImgTamporal.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Kardex.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Marca.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Orden.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_OrdenTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Pago_Apartado.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Pago_Credito.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Presentacion.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Proveedor.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_ProveedorTmp.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Salida.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Sucursal.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Talla.cs">
-      <DependentUpon>DBAmilcarModel.tt</DependentUpon>
+      <DependentUpon>AmilcarDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UtilitiesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -474,23 +474,23 @@
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.ttf" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff" />
     <Content Include="Content\fonts\Roboto\Thin\Roboto-Thin.woff2" />
-    <EntityDeploy Include="Models\DBAmilcarModel.edmx">
+    <EntityDeploy Include="Models\AmilcarDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBAmilcarModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>AmilcarDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBAmilcarModel.edmx.diagram">
-      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
+    <Content Include="Models\AmilcarDBModel.edmx.diagram">
+      <DependentUpon>AmilcarDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Models\DBAmilcarModel.Context.tt">
+    <Content Include="Models\AmilcarDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
-      <LastGenOutput>DBAmilcarModel.Context.cs</LastGenOutput>
+      <DependentUpon>AmilcarDBModel.edmx</DependentUpon>
+      <LastGenOutput>AmilcarDBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DBAmilcarModel.tt">
+    <Content Include="Models\AmilcarDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAmilcarModel.edmx</DependentUpon>
-      <LastGenOutput>DBAmilcarModel.cs</LastGenOutput>
+      <DependentUpon>AmilcarDBModel.edmx</DependentUpon>
+      <LastGenOutput>AmilcarDBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />

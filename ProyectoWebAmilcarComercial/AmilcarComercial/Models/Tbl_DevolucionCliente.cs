@@ -26,8 +26,8 @@ namespace AmilcarComercial.Models
         public string fact { get; set; }
         public string user { get; set; }
     
-        public virtual Tbl_Orden Tbl_Orden { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_DetalleDevolucionCliente> Tbl_DetalleDevolucionCliente { get; set; }
+        public virtual Tbl_Orden Tbl_Orden { get; set; }
     }
 }

@@ -48,6 +48,7 @@ namespace AmilcarComercial.Controllers
             var UserLastName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().LastName;
             var UserFirtsName = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().FirstName;
             var fact = String.Concat("Cont" + venta);
+            var taza = db.Tbl_Configuracion.FirstOrDefault().tasacambio;
 
             List<string> lista = new List<string>();
             lista.Add(DateTime.Now.ToString());
@@ -55,6 +56,7 @@ namespace AmilcarComercial.Controllers
             lista.Add(sucursal);
             lista.Add(venta);
             lista.Add(fact);
+            lista.Add(taza.ToString());
 
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
@@ -194,9 +196,9 @@ namespace AmilcarComercial.Controllers
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ventas/agregar/producto/{id}/{cant}/{precio}/{desc}")]
+        [Route("ventas/agregar/producto/{id}/{cant}/{precio}/{desc}/{motivo}")]
         [HttpGet]
-        public JsonResult AgregarProducto(int id, int cant, float precio, float desc)
+        public JsonResult AgregarProducto(int id, int cant, float precio, float desc, int motivo)
         {
             var user = User.Identity.Name;
             Tbl_OrdenTmp orden = new Tbl_OrdenTmp();
@@ -206,6 +208,7 @@ namespace AmilcarComercial.Controllers
             orden.tipoventa = "Contado";
             orden.descuento = desc;
             orden.precioventa = precio;
+            orden.motivo = motivo;
             orden.fecha = DateTime.Now;
             orden.user = user;
 
@@ -253,7 +256,8 @@ namespace AmilcarComercial.Controllers
                                  Cantidad = p.cantidad,
                                  Existecia = b.stock,
                                  Precio = b.precio,
-                                 Descuento = p.descuento
+                                 Descuento = p.descuento,
+                                 Motivo = p.motivo
                              }).ToList();
 
                 return Json(new { data = datos }, JsonRequestBehavior.AllowGet);
@@ -288,6 +292,17 @@ namespace AmilcarComercial.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("ventas/actualizar/motivo/productoTmp/{id}/{nuevoValor}")]
+        [HttpGet]
+        public JsonResult ActualizarMotivo(int id, int nuevoValor)
+        {
+            var dato = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id).FirstOrDefault();
+            dato.motivo = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Facturacion
@@ -316,7 +331,11 @@ namespace AmilcarComercial.Controllers
                         tipo_orden = "Contado",
                         fact_Orden = venta.fact_Orden,
                         id_cliente = cliente,
-                        tipo_pago = venta.tipo_pago
+                        tipo_pago = venta.tipo_pago,
+                        moneda = venta.moneda,
+                        pago = venta.pago,
+                        vuelto = venta.vuelto,
+                        tarjeta = venta.tarjeta
                     };
                     db.Tbl_Orden.Add(maestro);
                     db.SaveChanges();
@@ -328,6 +347,26 @@ namespace AmilcarComercial.Controllers
                         var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_Articulo).FirstOrDefault();
                         stock.stock = (int)stock.stock - (int)articulo.cantidad;
                         db.SaveChanges();
+                        
+                        var desc = articulo.descuento;
+                        var precioventa = (float)(articulo.precioventa - articulo.descuento);
+                        var motivo = "";
+                        if (articulo.motivo == 1)
+                        {
+                            motivo = "Compra";
+                        }
+                        if (articulo.motivo == 2)
+                        {
+                            desc = 0;
+                            precioventa = 0;
+                            motivo = "Bonificacion";
+                        }
+                        if (articulo.motivo == 3)
+                        {
+                            desc = 0;
+                            precioventa = 0;
+                            motivo = "Reposicion";
+                        }
 
                         Tbl_Kardex kardex = new Tbl_Kardex()
                         {
@@ -353,8 +392,9 @@ namespace AmilcarComercial.Controllers
                             id_articulo = (int)articulo.id_Articulo,
                             id_kardex = kardex.id_Kardex,
                             cantidad = (int)articulo.cantidad,
-                            precio_venta = (float)(articulo.precioventa - articulo.descuento),
-                            descuento = articulo.descuento
+                            precio_venta = precioventa,
+                            descuento = desc,
+                            motivo = motivo
                         };
                         db.Tbl_Detalle_Orden.Add(detalle);
                         db.SaveChanges();
@@ -418,6 +458,18 @@ namespace AmilcarComercial.Controllers
 
             var total = subtotal + ivatotal - descuento;
             var id = ultimo.id_orden;
+            var pago = db.Tbl_Orden.Where(m => m.id_orden == ultimo.id_orden).FirstOrDefault().pago;
+            var vuelto = db.Tbl_Orden.Where(m => m.id_orden == ultimo.id_orden).FirstOrDefault().vuelto;
+            var moneda = db.Tbl_Orden.Where(m => m.id_orden == ultimo.id_orden).FirstOrDefault().moneda;
+            double mon = 0;
+            if (moneda == "Dolares")
+            {
+                mon = 1;
+            }
+            if (moneda == "Cordobas")
+            {
+                mon = 0;
+            }
 
             List<double> datos = new List<double>();
             datos.Add(cantidad);
@@ -426,6 +478,9 @@ namespace AmilcarComercial.Controllers
             datos.Add((float)descuento);
             datos.Add((float)total);
             datos.Add(id);
+            datos.Add((float)pago);
+            datos.Add(mon);
+            datos.Add((float)vuelto);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
         }

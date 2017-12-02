@@ -220,6 +220,7 @@
     <Property Name="costo" Type="float" Nullable="false" />
     <Property Name="descuento" Type="float" />
     <Property Name="precioventa" Type="float" />
+    <Property Name="motivo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_Concepto">
     <Key>
@@ -239,6 +240,7 @@
     <Property Name="correo" Type="nvarchar" MaxLength="50" />
     <Property Name="monto" Type="float" />
     <Property Name="id_sucursal" Type="int" />
+    <Property Name="tasacambio" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_Credito">
     <Key>
@@ -288,6 +290,7 @@
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="descuento" Type="float" />
     <Property Name="costo" Type="float" Nullable="false" />
+    <Property Name="motivo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_Detalle_Orden">
     <Key>
@@ -300,6 +303,7 @@
     <Property Name="precio_venta" Type="float" Nullable="false" />
     <Property Name="descuento" Type="float" />
     <Property Name="id_kardex" Type="int" Nullable="false" />
+    <Property Name="motivo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_DetalleDevolucionCliente">
     <Key>
@@ -309,11 +313,8 @@
     <Property Name="id_cliente" Type="int" />
     <Property Name="id_articulo" Type="int" />
     <Property Name="descripcion" Type="nvarchar(max)" />
-    <Property Name="precio" Type="float" />
     <Property Name="cantidad" Type="int" />
     <Property Name="id_kardex" Type="int" />
-    <Property Name="iva" Type="int" />
-    <Property Name="descuento" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_DetalleDevolucionProveedor">
     <Key>
@@ -323,11 +324,8 @@
     <Property Name="id_proveedor" Type="int" />
     <Property Name="id_articulo" Type="int" />
     <Property Name="descripcion" Type="nvarchar(max)" />
-    <Property Name="precio" Type="float" />
     <Property Name="cantidad" Type="int" />
     <Property Name="id_kardex" Type="int" />
-    <Property Name="iva" Type="int" />
-    <Property Name="descuento" Type="float" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionCliente">
     <Key>
@@ -349,6 +347,7 @@
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="user" Type="nvarchar(max)" Nullable="false" />
     <Property Name="tipo" Type="nvarchar" MaxLength="50" />
+    <Property Name="cantidadcomprada" Type="int" />
   </EntityType>
   <EntityType Name="Tbl_DevolucionProveedor">
     <Key>
@@ -429,6 +428,10 @@
     <Property Name="id_cliente" Type="int" Nullable="false" />
     <Property Name="tipo_pago" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="estado" Type="bit" />
+    <Property Name="tarjeta" Type="nvarchar" MaxLength="50" />
+    <Property Name="pago" Type="float" />
+    <Property Name="vuelto" Type="float" />
+    <Property Name="moneda" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_OrdenTmp">
     <Key>
@@ -445,6 +448,7 @@
     <Property Name="tipoventa" Type="nvarchar" MaxLength="30" />
     <Property Name="descuento" Type="float" />
     <Property Name="precioventa" Type="float" />
+    <Property Name="motivo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tbl_Pago_Apartado">
     <Key>

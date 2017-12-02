@@ -228,6 +228,9 @@
                     $.each(data, function () {
                         $.each(this, function (name, value) {
                             var color, estado;
+                            var fecha = new Date();
+                            var fechahoy = fecha.getDate();
+
                             if (value.Estado === true) {
                                 estado = "Aprovada";
                                 color = "green";
@@ -240,10 +243,10 @@
                                 '<div>' +
                                 '<div>' +
                                 '<div class="col l12 center border-radius-2 ' + color + '" style="margin-bottom:8px;">' +
-                                '<span class="white-text">Venta ' + estado + '</span>' +
+                                '<span class="white-text">Compra ' + estado + '</span>' +
                                 '</div>' +
                                 '<p class="id-compra" id="' + value.Compra + '"><span class="left">N° Compra</span>' + value.Compra + '</p>' +
-                                '<p><span class="left">N° Factura</span>C$ ' + value.Factura + '</p>' +
+                                '<p><span class="left">N° Factura</span>' + value.Factura + '</p>' +
                                 '<p><span class="left">Comprador</span>' + value.Usuario + '</p>' +
                                 '<p><span class="left">Proveedor</span>' + value.Proveedor + '</p>' +
                                 '<p><span class="left">Sucursal</span>C$ ' + value.Sucursal + '</p>' +
@@ -257,10 +260,10 @@
                                 '<p><span class="left">Pago Total</span>C$ ' + value.PagoTotal + '</p>' +
                                 '</div>'
                             );
-                            if (value.Estado === true) {
+                            if (value.Estado === true && value.Fecha.endsWith(fechahoy)) {
                                 $(".compras-details .general").append(
                                     '<div class="center">' +
-                                    '<a class="btn btn-flat btn-anular white grey-text text-darken-2">Anular Venta</a>' +
+                                    '<a class="btn btn-flat btn-anular white grey-text text-darken-2">Anular Compra</a>' +
                                     '</div > '
                                 );
                             }

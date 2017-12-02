@@ -11,7 +11,8 @@
     });
     $('.tooltipped').tooltip({ delay: 50 });
     var cliente = false, articulo = false;
-    var total, subTotal, cantidadTotal, iva;
+    var total, subTotal, cantidadTotal, iva, pago, vuelto, cambio, subtotalpro;
+    var moneda, tarjeta;
     mostrarClienteTmp();
     mostrarProductosTmp(1);
     generales();
@@ -20,6 +21,39 @@
         iva = this.value;
         detalles();
     });
+    $('#efectivo').on('change', '#moneda', function (e) {
+        if ($("#efectivo #pago").val() === "") {
+            Materialize.toast("Ingrese la cantidad con la que pago", 2000);
+            $("#efectivo #pago").focus();
+            return;
+        }
+        if (this.value === "Cordobas") {
+            var result = $("#efectivo #pago").val() - $("#efectivo #total").val();
+            $("#efectivo #vuelto").val(result);
+        }
+        if (this.value === "Dolares") {
+            var valor = $("#efectivo #pago").val();
+            var result = convertir(valor) - $("#efectivo #total").val();
+            $("#efectivo #vuelto").val(result);
+        }
+    });
+    $(document).on({
+    'focusin': function () {
+        AnteriorValor = $(this).val();
+    },
+    'focusout': function () {
+        var moneda = $("#efectivo #moneda").val();
+        if (moneda === "Cordobas") {
+            var result = $("#efectivo #pago").val() - $("#efectivo #total").val();
+            $("#efectivo #vuelto").val(result);
+        }
+        if (moneda === "Dolares") {
+            var valor = $("#efectivo #pago").val();
+            var result = convertir(valor) - $("#efectivo #total").val();
+            $("#efectivo #vuelto").val(result);
+        }
+    }
+    }, '#efectivo #pago');
     detalles();
 });
 function generales() {
@@ -41,6 +75,7 @@ function generales() {
                 '</div>' 
             );
             $("#N_factura").val(data[4]);
+            cambio = data[5];
             $("#pre-General").css("display", "none");
         },
         'error': function (request, error) {
@@ -289,6 +324,7 @@ function agregarArticuloTmp(id) {
     var stock = $(".articulos #stock" + id).text();
     var precio = $(".articulos #precio" + id).text();
     var desc = $(".articulos #desc" + id).val();
+    var motiv = $(".articulos #motivo" + id).val();
 
     if (cant === '') {
         Materialize.toast("Debe agregar la cantidad", 2000);
@@ -336,7 +372,7 @@ function agregarArticuloTmp(id) {
         return;
     }
     $.ajax({
-        url: '/ventas/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc,
+        url: '/ventas/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc + '/' + motiv,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -464,9 +500,9 @@ function articulosTable(data) {
         '<table class="responsive-table centered white z-depth-1 bordered highlight">' +
         '<thead>' +
         '<tr>' +
-        '<th>Cod</th>' +
-        '<th>Img</th>' +
         '<th>Nombre</th>' +
+        '<th>Img</th>' +
+        '<th>Motivo</th>' +
         '<th>Stock</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
@@ -482,9 +518,14 @@ function articulosTable(data) {
         $.each(this, function (name, value) {
             $(".lista-articulos table tbody").append(
                 '<tr>' +
-                '<td>' + value.ID + '</td>' +
-                '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
+                '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
+                '<td>' +
+                '<select id="motivo' + value.ID + '" class="browser-default">' +
+                '<option value="1" selected>Venta</option>' +
+                '<option value="2">Regalia</option>' +
+                '<option value="3">Reposicion</option>' +
+                '</select>' +
                 '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
                 '<td>C$ <span id="precio' + value.ID + '">' + value.Precio + '</span></td>' +
                 '<td>' +
@@ -545,10 +586,10 @@ function articulosOrdenTable(data) {
         '<table class="bordered highlight centered responsive-table white">' +
         '<thead class="z-depth-1">' +
         '<tr>' +
-        '<th>Cod</th>' +
-        '<th>Img</th>' +
+        '<th>Motivo</th>' +
         '<th>Nombre</th>' +
-        '<th>Existencia</th>' +
+        '<th>Img</th>' +
+        '<th>Stock</th>' +
         '<th>Precio</th>' +
         '<th>Cantidad</th>' +
         '<th>DescXunidad</th>' +
@@ -562,13 +603,21 @@ function articulosOrdenTable(data) {
     );
     cantidadTotal = 0;
     subTotal = 0;
+    subtotalpro = 0;
     $.each(data, function () {
         $.each(this, function (name, value) {
+            subtotalpro = ((value.Cantidad * value.Precio) - (value.Descuento * value.Cantidad));
             $(".articulosLista table tbody").append(
                 '<tr>' +
-                '<td>' + value.ID + '</td>' +
-                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
+                '<td>' +
+                '<select id="motivo-' + value.ID + '" class="browser-default">' +
+                '<option value="1" selected>Venta</option>' +
+                '<option value="2">Regalia</option>' +
+                '<option value="3">Reposicion</option>' +
+                '</select>' +
+                '</td>' +
                 '<td>' + value.Nombre + '</td>' +
+                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
                 '<td>C$ <span id="precio-' + value.ID + '">' + value.Precio + '</span></td>' +
                 '<td>' +
@@ -577,12 +626,24 @@ function articulosOrdenTable(data) {
                 '<td>' +
                 '<input class="browser-default" id="desc-' + value.ID + '" type="text" value="' + value.Descuento + '"></input>' +
                 '</td>' +
-                '<td>' + ((value.Cantidad * value.Precio) - (value.Descuento * value.Cantidad)) + '</td>' +
+                '<td><span id="subtotal-' + value.ID + '">C$ <span>' + subtotalpro + '</span></span></td>' +
                 '<td>' + '<a class="center" onclick= "eliminarProductoTmp(' + value.ID + ')">' + '<i class="material-icons">delete</i>' + '</a >' + '</td>' +
                 '</tr>'
             );
+            $('.articulosLista table #motivo-' + value.ID).val(value.Motivo);
+            if (value.Motivo === 2 || value.Motivo === 3) {
+                $(".articulosLista table #desc-" + value.ID).prop('disabled', true).addClass("desabilitado");
+                $(".articulosLista table #subtotal-" + value.ID).addClass("desabilitado");
+                $(".articulosLista table #subtotal-" + value.ID + " span").text("-- -- --");
+                subtotalpro = 0;
+            }
+            $('.articulosLista table').on("change", "#motivo-" + value.ID, function (e) {
+                var motivo = this.value;
+                var id = value.ID;
+                detectarTipoVenta(motivo, id);
+            });
             cantidadTotal = cantidadTotal + value.Cantidad;
-            subTotal = subTotal + ((value.Precio * value.Cantidad) - (value.Descuento * value.Cantidad));
+            subTotal = subTotal + subtotalpro;
         });
     });
     detalles();
@@ -669,8 +730,36 @@ function detectarCambios() {
         }
     }, '.articulosLista table tbody input');
 }
+function detectarTipoVenta(motivo, id) {
+    $.ajax({
+        url: '/ventas/actualizar/motivo/productoTmp/' + id + '/' + motivo,
+        type: 'GET',
+        'success': function (data) {
+            mostrarProductosTmp(1);
+            Materialize.toast('Motivo del articulo actualizado', 2000);
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
+}
 
-function facturar() {
+function pago() {
+    var tipo = $(".detalle #tipoPago").val();
+
+    if (tipo === "Tarjeta") {
+        $('#tarjeta').modal('open');
+    }
+    if (tipo === "Efectivo") {
+        $("#efectivo #total").val(Total);
+        $('#efectivo').modal('open');
+    }
+}
+function convertir(valor) {
+    var result = valor * cambio;
+    return result;
+}
+function facturar(tipo) {
     if (cliente === false) {
         Materialize.toast("Debe definir un cliente", 3000);
         return;
@@ -680,10 +769,49 @@ function facturar() {
         return;
     }
 
+    if (tipo === "tarjeta") {
+        var valor = $("#tarjeta #numero").val();
+
+        if (valor === ""){
+            Materialize.toast("Ingrese el numero de tarjeta",2000);
+            $("#tarjeta #numero").focus();
+            return;
+        }
+
+        moneda = "Cordobas";
+        tarjeta = valor;
+        pago = total;
+        vuelto = 0;
+    }
+    if (tipo === "efectivo") {
+        var valor = $("#efectivo #pago").val();
+        var vuelto = parseFloat($("#fectivo #vuelto").val());
+
+        if (valor === "") {
+            Materialize.toast("Ingrese la cantidad con que el cliente pago", 2000);
+            $("#efectivo #pago").focus();
+            return;
+        }
+        if (0 > vuelto) {
+            Materialize.toast("El pago es Insuficiente", 2000);
+            $("#efectivo #pago").focus();
+            return;
+        }
+
+        moneda = $("#efectivo #moneda").val();
+        tarjeta = "-- -- --";
+        pago = valor;
+        vuelto = $("#efectivo #vuelto").val();
+    }
+
     var datos = {
         fact_Orden: $("#N_factura").val(),
         iva_orden: $("#iva").val(),
-        tipo_pago: $("#tipoPago").val()
+        tipo_pago: $("#tipoPago").val(),
+        tarjeta: tarjeta,
+        pago: pago,
+        vuelto: vuelto,
+        moneda: moneda
     };
 
     $.ajax({
