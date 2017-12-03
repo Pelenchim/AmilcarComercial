@@ -46,8 +46,7 @@ namespace AmilcarComercial.Controllers
         // GET: Categorias/Create
         public ActionResult Create()
         {
-            ViewBag.id_CatPadre = new SelectList(db.Tbl_Categorias, "id_categoria", "Nombre");
-            return PartialView();
+            return View();
         }
 
         // POST: Categorias/Create

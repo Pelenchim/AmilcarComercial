@@ -1,29 +1,12 @@
 ﻿$(document).ready(function () {
-    $('.modal').modal({
-        opacity: 0.5,
-        inDuration: 350,
-        outDuration: 250,
-        ready: undefined,
-        complete: undefined,
-        dismissible: false,
-        startingTop: '4%',
-        endingTop: '10%'
-    });
     $('.tooltipped').tooltip({ delay: 50 });
-    $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
-        $('.nueva-venta .articulosVenta .acciones input').toggle(500);
-    });
     var venta = false, articulo = false;
     var cantidadTotal, cantidad;
     var idventa;
     mostrarDevolucionTmp();
     generales();
     mostrarProductosTmp(1);
-    //detectarCambios();
-    $('.nueva-compra .detalle').on('change', '#iva', function (e) {
-        iva = this.value;
-        detalles();
-    });
+    detectarCambios();
     detalles();
 });
 function generales() {
@@ -70,9 +53,9 @@ function ventas() {
                         '<a onclick="agregarVentaExistente(' + value.ID + ')">' +
                         '<div class="card white grey-text text-darken-3 hoverable">' +
                         '<div class="card-content">' +
-                        '<span class="card-title truncate">' + value.ClienteNombre + ' ' + value.ClienteApellido + '</span>' +
-                        '<p>Tel: ' + value.Factura + '</p>' +
-                        '<p>Ruc: ' + value.Cantidad + '</p>' +
+                        '<span class="card-title truncate">Fact: ' + value.Factura + '</span>' +
+                        '<p class="truncate">Cliente: ' + value.ClienteNombre + ' ' + value.ClienteApellido + '</p>' +
+                        '<p>Fecha: ' + value.Fecha + '</p>' +
                         '</div>' +
                         '</div>' +
                         '</a>' +
@@ -163,7 +146,6 @@ function mostrarDevolucionTmp() {
                 idventa = data.ID;
             }
             $("#pre-Devolucion").css("display", "none");
-            proveedorSelected = true;
         },
         'error': function (request, error) {
             alert("Request: " + JSON.stringify(request));
@@ -193,15 +175,6 @@ function articulos(vista) {
         contentType: "application/json",
         dataType: "json",
         'success': function (data) {
-            //if (data.length === 0) {
-            //    $(".modal-compras .articulos .acciones .table-v").hide();
-            //    $(".modal-compras .articulos .acciones .card-v").hide();
-            //    $(".lista-articulos").empty();
-            //    $(".lista-articulos").append(
-            //        '<p class="center-align">No hay articulos para agregar a la compra </br> ya has agregado todos los articulos.</p>'
-            //    );
-            //    return;
-            //}
             if (vista === 0) {
                 articulosCard(data)
             }
@@ -276,9 +249,9 @@ function articulosTable(data) {
                 '<td>' + value.Codigo + '</td>' +
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
-                '<td id="cantidad' + value.ID + '">' + value.Cantidad + '</td>' +
+                '<td id="cant2' + value.ID + '">' + value.Cantidad + '</td>' +
                 '<td>' +
-                '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default" value="' + value.Cantidad + '">' +
+                '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td>' +
                 '<input placeholder="Descripcion" id="descrip' + value.ID + '" type="text" class="browser-default">' +
@@ -293,7 +266,7 @@ function articulosTable(data) {
 }
 
 function agregarArticuloTmp(id) {
-    var vendidas = $(".articulos #cantidad" + id).text();
+    var cant2 = $(".articulos #cant2" + id).text();
     var cant = $(".articulos #cant" + id).val();
     var descrip = $(".articulos #descrip" + id).val();
     if (cant === '') {
@@ -311,7 +284,7 @@ function agregarArticuloTmp(id) {
         $(".articulos #cant" + id).focus();
         return;
     }
-    if (cant > vendidas) {
+    if (cant > cant2) {
         Materialize.toast("La cantidad a devolver no puede ser mayor a la vendida", 2000);
         $(".articulos #cant" + id).focus();
         return;
@@ -328,7 +301,7 @@ function agregarArticuloTmp(id) {
     }
     var tipo = "Cliente";
     $.ajax({
-        url: '/devoluciones/agregar/producto/' + id + '/' + cant + '/' + descrip + '/' + tipo + '/' + 1,
+        url: '/devoluciones/agregar/producto/' + id + '/' + cant + '/' + descrip + '/' + tipo + '/' + cant2,
         type: 'GET',
         'success': function (data) {
             CancelArticulos();
@@ -430,10 +403,9 @@ function articulosOrdenTable(data) {
         '<table class="bordered highlight centered responsive-table white">' +
         '<thead class="z-depth-1">' +
         '<tr>' +
-        '<th>Cod</th>' +
-        '<th>Img</th>' +
         '<th>Nombre</th>' +
-        '<th>Cant-Comprada</th>' +
+        '<th>Img</th>' +
+        '<th>Cant-Vendida</th>' +
         '<th>Cantidad</th>' +
         '<th>Descripcion</th>' +
         '<th>Opciones</th>' +
@@ -449,10 +421,9 @@ function articulosOrdenTable(data) {
         $.each(this, function (name, value) {
             $(".articulosLista table tbody").append(
                 '<tr>' +
-                '<td>' + value.ID + '</td>' +
-                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
                 '<td>' + value.Nombre + '</td>' +
-                '<td id="exist-' + value.ID + '">' + value.Existecia + '</td>' +
+                '<td>' + '<img src="/Content/images/articulos/' + value.Imagen + '">' + '</td>' +
+                '<td id="exist-' + value.ID + '">' + value.CantidadCV + '</td>' +
                 '<td>' +
                 '<input class="browser-default" id="cant-' + value.ID + '" type="text" value="' + value.Cantidad + '"></input>' +
                 '</td>' +
@@ -468,6 +439,86 @@ function articulosOrdenTable(data) {
     });
     detalles();
 }
+function detectarCambios() {
+    var ID_Obj;
+    var AnteriorValor, NuevoValor;
+    var dividiendo;
+    var id, campo;
+    var tipo = "Cliente";
+    var exist;
+
+    $(document).on({
+        'focusin': function () {
+            ID_Obj = $(this).attr("id");
+            dividiendo = ID_Obj.split("-", 2);
+            campo = dividiendo[0];
+            id = dividiendo[1];
+            AnteriorValor = $(this).val();
+            exist = $("#exist-" + id).text();
+        },
+        'focusout': function () {
+            NuevoValor = $(this).val();
+
+            if (NuevoValor === '') {
+                Materialize.toast("Debe ingresar un valor", 2000);
+                $(this).focus();
+                return;
+            }
+            else if (NuevoValor === AnteriorValor) {
+                return;
+            }
+
+            if (campo === "cant") {
+                if (!/^([0-9])*$/.test(NuevoValor)) {
+                    Materialize.toast("El valor no es valido", 2000);
+                    $(this).val(AnteriorValor);
+                    return;
+                }
+                else if (NuevoValor === 0) {
+                    Materialize.toast("El valor no puede ser 0", 2000);
+                    $(this).val(AnteriorValor);
+                    return;
+                }
+                if (NuevoValor < 0) {
+                    Materialize.toast("El valor no es valido", 2000);
+                    $(this).val(AnteriorValor);
+                    return;
+                }
+                if (NuevoValor > exist) {
+                    Materialize.toast("La cantidad no puede ser mayor que la comprada", 2000);
+                    $(this).val(AnteriorValor);
+                    return;
+                }
+
+                $.ajax({
+                    url: '/devoluciones/actualizar/cantidad/productoTmp/' + id + '/' + NuevoValor + '/' + tipo,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Cantidad del articulo actualizada', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+
+            if (campo === "descrip") {
+                $.ajax({
+                    url: '/devoluciones/actualizar/descripcion/productoTmp/' + id + '/' + NuevoValor + '/' + tipo,
+                    type: 'GET',
+                    'success': function (data) {
+                        mostrarProductosTmp(1);
+                        Materialize.toast('Descripcion actualizada', 2000);
+                    },
+                    'error': function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
+        }
+    }, '.articulosLista table tbody input');
+}
 
 function detalles() {
     if (cantidadTotal === 0) {
@@ -479,7 +530,7 @@ function detalles() {
             '</div>'
         );
         $(".detalle .total").text("");
-        $("#facturar").addClass('disabled');
+        $("#devolver").addClass('disabled');
         return;
     }
 
@@ -493,7 +544,7 @@ function detalles() {
         '<span class="left"><strong>Total Articulos:</strong>' + cantidadTotal + ' Unidades</span>' +
         '</div>'
     );
-    $("#comprar").removeClass('disabled');
+    $("#devolver").removeClass('disabled');
 }
 function cancelarDevolucion() {
     $.ajax({

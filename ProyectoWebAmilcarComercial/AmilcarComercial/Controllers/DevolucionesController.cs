@@ -191,7 +191,7 @@ namespace AmilcarComercial.Controllers
                                ID = c.id_compra,
                                Proveedor = c.Tbl_Proveedor.razon_social,
                                Factura = c.fact_compra,
-                               Fecha = c.fecha_compra,
+                               Fecha = c.fecha_compra.ToString(),
                                Cantidad = c.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad)
                            }).ToList();
 
@@ -209,7 +209,7 @@ namespace AmilcarComercial.Controllers
                               ClienteApellido = c.Tbl_Clientes.apellidos_cliente,
                               ClienteNombre = c.Tbl_Clientes.nombre_cliente,
                               Factura = c.fact_Orden,
-                              Fecha = c.fecha_orden,
+                              Fecha = c.fecha_orden.ToString(),
                               Cantidad = c.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad)
                           }).ToList();
 
@@ -227,7 +227,7 @@ namespace AmilcarComercial.Controllers
             devolucion.tipo = "Proveedor";
             devolucion.id_compra = id;
             devolucion.user = user;
-
+           
             db.Tbl_DevolucionTmp.Add(devolucion);
             db.SaveChanges();
 
@@ -324,8 +324,10 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerProductosCompra(int id)
         {
+            var articulosOrden = (from p in db.Tbl_DevolucionDetalleTmp where (p.user == User.Identity.Name && p.tipo == "Proveedor") select p.id_articulo).ToArray();
+
             var Articulos = (from p in db.Tbl_Detalle_Compra
-                             where (p.id_compra == id)
+                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.id_compra == id)
                              select new
                              {
                                  ID = p.id_articulo,
@@ -344,8 +346,10 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerProductosVenta(int id)
         {
+            var articulosOrden = (from p in db.Tbl_DevolucionDetalleTmp where (p.user == User.Identity.Name && p.tipo == "Cliente") select p.id_articulo).ToArray();
+
             var Articulos = (from p in db.Tbl_Detalle_Orden
-                             where (p.id_orden == id)
+                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.id_orden == id)
                              select new
                              {
                                  ID = p.id_articulo,
@@ -412,7 +416,7 @@ namespace AmilcarComercial.Controllers
                              where (p.user == User.Identity.Name && p.tipo == tipo)
                              select new
                              {
-                                 ID = p.Tbl_Articulo.id_articulo,
+                                 ID = p.id_detalleDevolucion,
                                  Nombre = p.Tbl_Articulo.nombre_articulo,
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Cantidad = p.cantidad,
@@ -429,6 +433,32 @@ namespace AmilcarComercial.Controllers
                 return Json(datos, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [Route("devoluciones/actualizar/cantidad/productoTmp/{id}/{nuevoValor}/{tipo}")]
+        [HttpGet]
+        public JsonResult ActualizarCantidad(int id, int nuevoValor, string tipo)
+        {
+            var dato = db.Tbl_DevolucionDetalleTmp.Where(m => m.id_detalleDevolucion == id && m.tipo == tipo).FirstOrDefault();
+            dato.cantidad = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("devoluciones/actualizar/descripcion/productoTmp/{id}/{nuevoValor}/{tipo}")]
+        [HttpGet]
+        public JsonResult ActualizarCantidad(int id, string nuevoValor, string tipo)
+        {
+            var dato = db.Tbl_DevolucionDetalleTmp.Where(m => m.id_detalleDevolucion == id && m.tipo == tipo).FirstOrDefault();
+            dato.descripcion = nuevoValor;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Facturacion
 
         [Route("devoluciones/cliente/cancelar")]
         [HttpPost]
@@ -481,6 +511,7 @@ namespace AmilcarComercial.Controllers
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+                    var devolucion = db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Cliente").FirstOrDefault();
 
                     Tbl_DevolucionCliente maestro = new Tbl_DevolucionCliente()
                     {
@@ -534,6 +565,7 @@ namespace AmilcarComercial.Controllers
                         db.SaveChanges();
                     }
                     db.Tbl_DevolucionDetalleTmp.RemoveRange(detalleTmp);
+                    db.Tbl_DevolucionTmp.Remove(devolucion);
                     db.SaveChanges();
 
                     tran.Commit();
@@ -559,6 +591,7 @@ namespace AmilcarComercial.Controllers
                 try
                 {
                     var suc = db.AspNetUsers.FirstOrDefault(m => m.UserName == User.Identity.Name).Sucursal;
+                    var devolucion = db.Tbl_DevolucionTmp.Where(m => m.user == User.Identity.Name && m.tipo == "Proveedor").FirstOrDefault();
 
                     Tbl_DevolucionProveedor maestro = new Tbl_DevolucionProveedor()
                     {
@@ -575,7 +608,6 @@ namespace AmilcarComercial.Controllers
                     foreach (var articulo in detalleTmp)
                     {
                         var stock = db.Tbl_bodega_productos.Where(m => m.id_sucursal == suc && m.id_articulo == articulo.id_articulo).FirstOrDefault();
-                        stock.dañados = stock.dañados - articulo.cantidad;
                         stock.stock = stock.stock - articulo.cantidad;
                         db.SaveChanges();
 
@@ -592,7 +624,7 @@ namespace AmilcarComercial.Controllers
                             usuario = User.Identity.Name,
                             id_sucursal = (int)suc,
                             tipo = "Salida",
-                            observaciones = "Devolucion Proveedor"
+                            observaciones = "Devolucion Tienda"
                         };
                         db.Tbl_Kardex.Add(kardex);
                         db.SaveChanges();
@@ -610,6 +642,7 @@ namespace AmilcarComercial.Controllers
                         db.SaveChanges();
                     }
                     db.Tbl_DevolucionDetalleTmp.RemoveRange(detalleTmp);
+                    db.Tbl_DevolucionTmp.Remove(devolucion);
                     db.SaveChanges();
 
                     tran.Commit();

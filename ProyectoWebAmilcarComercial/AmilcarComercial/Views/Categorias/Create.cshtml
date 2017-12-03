@@ -1,55 +1,58 @@
-﻿@model AmilcarComercial.Models.Tbl_Categorias
-
-@{ 
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Categorias";
+    ViewBag.SubTitle = "Nueva";
+    ViewBag.ControllerGeneral = "Home";
+    ViewBag.PrimaryColor = "cyan";
+    ViewBag.NavExtendedColor = "cyan darken-1";
 }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Tbl_Categorias</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+    @Html.Partial("_breadcrumbPartial")
+</nav>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_CatPadre, "id_CatPadre", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("id_CatPadre", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.id_CatPadre, "", new { @class = "text-danger" })
-            </div>
+<div class="nueva-categoria container">
+    <div class="row form">
+        <div class="input-field col l4">
+            <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+            <label for="first_name">Nombre Categoria</label>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.estado)
-                    @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="input-field col l4">
+            <select>
+                <option value="null" selected>Ninguna</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+            <label>Categoria Padre</label>
         </div>
     </div>
-}
+    <div class="descripciones row">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    </div>
+    <div class="row">
+        <div class="col l4">
+            <button id="add-Descripcion" class="btn btn-flat blue-grey darken-3 white-text">Agregar Descripcion</button>
+        </div>
+        <div class="col l4">
+            <button id="add-Descripcion" class="btn btn-flat blue-grey darken-3 white-text">Guardar Categoria</button>
+        </div>
+    </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var i = 0;
+            $(".nueva-categoria #add-Descripcion").click(function () {
+                $(".nueva-categoria .descripciones").append(
+                    '<div class="input-field col l4">' +
+                    '<input placeholder="Placeholder" id="descripcion' + i + '" type="text" class="validate">' +
+                    '<label for="first_name">Nombre Descripcion</label>'+
+                    '</div >'
+                );
+                i++;
+            });
+        });
+    </script>
 }
