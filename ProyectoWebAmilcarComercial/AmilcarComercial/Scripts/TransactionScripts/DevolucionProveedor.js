@@ -25,7 +25,7 @@ function generales() {
                 '</div>' +
                 '<div class="col l6">' +
                 '<p class=""><strong>Fecha: </strong>' + data[0] + '</p>' +
-                '<p class=""><strong>Sucursal: </strong>' + data[2] + '</p>' +
+                '<p class="">.</p>' +
                 '</div>'
             );
             //$("#N_factura").val(data[4]);
@@ -51,7 +51,7 @@ function compras() {
                     $(".lista-compras").append(
                         '<div class="col l4">' +
                         '<a onclick="agregarCompraExistente(' + value.ID + ')">' +
-                        '<div class="card white grey-text text-darken-3 hoverable">' +
+                        '<div class="card blue white-text hoverable">' +
                         '<div class="card-content">' +
                         '<span class="card-title truncate">Fact: ' + value.Factura + '</span>' +
                         '<p class="truncate">Prov: ' + value.Proveedor + '</p>' +
@@ -121,7 +121,7 @@ function mostrarDevolucionTmp() {
                 $(".datosCompra").append(
                     '<div class="center-align vacio">' +
                     '<p>Aun no a definido una compra para esta devolucion</p>' +
-                    '<button class="btn btn-flat green white-text" onclick="compras()">Buscar</button>' +
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="compras()">Buscar</button>' +
                     '</div>'
                 );
                 compra = false;
@@ -226,7 +226,7 @@ function articulosTable(data) {
     $(".modal-compras .articulos .acciones .card-v").show();
     $(".lista-articulos").empty();
     $(".lista-articulos").append(
-        '<table class="responsive-table bordered highlight centered white z-depth-1">' +
+        '<table class="responsive-table bordered highlight centered white">' +
         '<thead>' +
         '<tr>' +
         '<th>Cod</th>' +
@@ -618,7 +618,7 @@ function facturar() {
         data: datos,
         'success': function (data) {
             if (data === true) {
-                window.location.href = "//Facturado";
+                window.location.href = "/proveedor/devolucion/facturado";
             }
             else {
                 Materialize.toast('Error, no se pudo realizar la compra', 2000);

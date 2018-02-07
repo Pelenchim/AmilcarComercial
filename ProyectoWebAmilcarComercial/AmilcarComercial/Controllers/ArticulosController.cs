@@ -19,8 +19,8 @@ namespace AmilcarComercial.Controllers
         // GET: Articulos
         public ActionResult Index()
         {
-            ViewBag.id_categoria = new SelectList(db.Tbl_Categorias, "id_categoria", "Nombre");
-            ViewBag.id_marca = new SelectList(db.Tbl_Marca, "id_Marca", "nombre");
+            ViewBag.id_categoria = new SelectList(db.Tbl_Categorias.Where(m => m.estado == true), "id_categoria", "Nombre");
+            ViewBag.id_marca = new SelectList(db.Tbl_Marca.Where(m => m.estado == true), "id_Marca", "nombre");
             var tbl_Articulo = db.Tbl_Articulo.Where(m => m.estado == true).Include(t => t.Tbl_Categorias).Include(t => t.Tbl_Marca);
             return View(tbl_Articulo.ToList());
         }
@@ -53,25 +53,50 @@ namespace AmilcarComercial.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_articulo,codigo_articulo,nombre_articulo,descripcion_articulo,id_categoria,credito_articulo,id_Marca,GarantiaCant,GarantiaMedida")] Tbl_Articulo tbl_Articulo)
+        public ActionResult Create(/*[Bind(Include = "id_articulo,codigo_articulo,nombre_articulo,descripcion_articulo,id_categoria,credito_articulo,id_Marca,GarantiaCant,GarantiaMedida")] Tbl_Articulo tbl_Articulo*/)
         {
-            if (ModelState.IsValid)
-            {
-                var imagen = db.Tbl_ImgTamporal.OrderByDescending(m => m.id_img).Where(m => m.user == User.Identity.Name).FirstOrDefault();
-                tbl_Articulo.imagen = imagen.imagen;
-                var ruta = "articulos";
-                utileria.MoverImagen(ruta, imagen.imagen);
-                tbl_Articulo.estado = true;
+            var art = db.Tbl_Articulo.Find(15);
+            art.estado = true;
+            db.SaveChanges();
 
-                db.Tbl_Articulo.Add(tbl_Articulo);
-                db.Tbl_ImgTamporal.Remove(imagen);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("Index");
+            //var suc = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().Sucursal;
 
-            ViewBag.id_categoria = new SelectList(db.Tbl_Categorias, "id_categoria", "Nombre", tbl_Articulo.id_categoria);
-            ViewBag.id_categoria = new SelectList(db.Tbl_Marca, "id_Marca", "nombre", tbl_Articulo.id_categoria);
-            return RedirectToAction("Index",tbl_Articulo);
+            //if (ModelState.IsValid)
+            //{
+            //    var imagen = db.Tbl_ImgTamporal.OrderByDescending(m => m.id_img).Where(m => m.user == User.Identity.Name).FirstOrDefault();
+            //    tbl_Articulo.imagen = imagen.imagen;
+            //    var ruta = "articulos";
+            //    utileria.MoverImagen(ruta, imagen.imagen);
+            //    tbl_Articulo.estado = true;
+
+            //    Tbl_Kardex kardex = new Tbl_Kardex()
+            //    {
+            //        id_articulo = tbl_Articulo.id_articulo,
+            //        fechaKardex = DateTime.Now,
+            //        num_factura = "-- -- --",
+            //        Entrada = 0,
+            //        salida = 0,
+            //        saldo = 0,
+            //        ultimoCosto = 0,
+            //        costoPromedio = 0,
+            //        usuario = User.Identity.Name,
+            //        id_sucursal = (int)suc,
+            //        tipo = "Entrada",
+            //        observaciones = "Creacion de Articulo"
+            //    };
+            //    db.Tbl_Kardex.Add(kardex);
+            //    db.SaveChanges();
+
+            //    db.Tbl_Articulo.Add(tbl_Articulo);
+            //    db.Tbl_ImgTamporal.Remove(imagen);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+            //ViewBag.id_categoria = new SelectList(db.Tbl_Categorias, "id_categoria", "Nombre", tbl_Articulo.id_categoria);
+            //ViewBag.id_categoria = new SelectList(db.Tbl_Marca, "id_Marca", "nombre", tbl_Articulo.id_categoria);
+            //return RedirectToAction("Index",tbl_Articulo);
         }
 
         // GET: Articulos/Edit/5

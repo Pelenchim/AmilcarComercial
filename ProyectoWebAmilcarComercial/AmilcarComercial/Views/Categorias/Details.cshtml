@@ -1,40 +1,39 @@
 ﻿@model AmilcarComercial.Models.Tbl_Categorias
 
-@{ 
+@{
     Layout = null;
 }
 
-<div>
-    <h4>Tbl_Categorias</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tbl_Categorias2.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tbl_Categorias2.Nombre)
-        </dd>
-
-    </dl>
+<div class="cliente-detalle white">
+    <div class="row blue z-depth-1">
+        <h4 class="white-text left-align"><i class="material-icons">info</i>Detalle de Categoria</h4>
+    </div>
+    <div class="modal-content row grey-text text-darken-3">
+        <div class="col l4">
+            <figure>
+                <img src="~/Content/system-resources/catalogos.png" class="responsive-img" />
+            </figure>
+        </div>
+        <div class="col l8">
+            <p><strong>Nombre:</strong> @Model.Nombre</p>
+            <p><br /><strong>Descripciones:</strong></p>
+            <div class="divider-mio row white"></div>
+            @foreach (var descrip in Model.Tbl_Descripciones)
+    {
+            <div class="col l6"><p><span>@descrip.nombre</span></p></div>
+}
+            <div class="acciones col l12 right-align">
+                @Ajax.ActionLink("Editar", "Edit", "Categorias", new { id = Model.id_categoria }, new AjaxOptions
+        {
+            UpdateTargetId = "editar",
+            HttpMethod = "GET"
+        }, new { @class = "btn btn-flat white blue-text", @onclick = "$('#editar').modal('open');" })
+                @Ajax.ActionLink("Eliminar", "Delete", "Categorias", new { id = Model.id_categoria }, new AjaxOptions
+        {
+            UpdateTargetId = "eliminar",
+            HttpMethod = "GET"
+        }, new { @class = "btn btn-flat white red-text", @onclick = "$('#eliminar').modal('open');" })
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id_categoria }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

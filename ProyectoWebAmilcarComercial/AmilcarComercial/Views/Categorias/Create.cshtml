@@ -2,57 +2,12 @@
     ViewBag.Title = "Categorias";
     ViewBag.SubTitle = "Nueva";
     ViewBag.ControllerGeneral = "Home";
-    ViewBag.PrimaryColor = "cyan";
-    ViewBag.NavExtendedColor = "cyan darken-1";
+    ViewBag.PrimaryColor = "pink";
+    ViewBag.NavExtendedColor = "pink darken-1";
 }
 
-<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
-    @Html.Partial("_breadcrumbPartial")
-</nav>
 
-<div class="nueva-categoria container">
-    <div class="row form">
-        <div class="input-field col l4">
-            <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-            <label for="first_name">Nombre Categoria</label>
-        </div>
-        <div class="input-field col l4">
-            <select>
-                <option value="null" selected>Ninguna</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-            </select>
-            <label>Categoria Padre</label>
-        </div>
-    </div>
-    <div class="descripciones row">
 
-    </div>
-    <div class="row">
-        <div class="col l4">
-            <button id="add-Descripcion" class="btn btn-flat blue-grey darken-3 white-text">Agregar Descripcion</button>
-        </div>
-        <div class="col l4">
-            <button id="add-Descripcion" class="btn btn-flat blue-grey darken-3 white-text">Guardar Categoria</button>
-        </div>
-    </div>
-</div>
-
-@section Scripts
+    @section Scripts
 {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var i = 0;
-            $(".nueva-categoria #add-Descripcion").click(function () {
-                $(".nueva-categoria .descripciones").append(
-                    '<div class="input-field col l4">' +
-                    '<input placeholder="Placeholder" id="descripcion' + i + '" type="text" class="validate">' +
-                    '<label for="first_name">Nombre Descripcion</label>'+
-                    '</div >'
-                );
-                i++;
-            });
-        });
-    </script>
-}
+    }

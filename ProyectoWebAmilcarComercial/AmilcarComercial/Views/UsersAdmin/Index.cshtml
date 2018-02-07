@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Configuracion";
     ViewBag.SubTitle = "> Usuarios";
-    ViewBag.PrimaryColor = "blue-grey darken-4";
-    ViewBag.NavExtendedColor = "blue-grey darken-3";
+    ViewBag.PrimaryColor = "pink";
+    ViewBag.NavExtendedColor = "pink darken-1";
 }
 
 <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
@@ -51,11 +51,11 @@
                     <div class="card-panel white">
                         <div class="row">
                             <div class="col l3">
-                                <img src="~/Content/images/@user.Avatar" class="circle responsive-img" />
+                                <img src="~/Content/images/usuarios/@user.Avatar" class="circle responsive-img" />
                             </div>
                             <div class="col l8 m11 s11">
                                 <span class="truncate">Usuario: @user.UserName</span>
-                                <span>rol de usuario</span>
+                                <span class="truncate">Cedula: @user.IdentityidentificationCard</span>
                             </div>
                             <div class="col l1 m1 s1">
                                 <a class="tooltipped dropdown-button" href="#!" data-activates="dropdown1" data-position="left" data-delay="50" data-tooltip="Opciones">

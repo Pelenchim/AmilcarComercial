@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -174,15 +175,11 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerArticulos()
         {
-            var articulosOrden = (from p in db.Tbl_OrdenTmp
-                                  where (p.user == User.Identity.Name && p.tipoventa == "Contado")
-                                  select p.id_Articulo).ToArray();
 
             var sucursal = db.AspNetUsers.Where(m => m.UserName == User.Identity.Name).FirstOrDefault().Sucursal;
 
             var Articulos = (from p in db.Tbl_Articulo join b in db.Tbl_bodega_productos on p.id_articulo equals b.id_articulo
-                             where (b.id_sucursal == sucursal && p.estado == true &&
-                                    !(articulosOrden.Contains((int)p.id_articulo)))
+                             where (b.id_sucursal == sucursal && p.estado == true)
                              select new
                              {
                                  ID = p.id_articulo,
@@ -190,9 +187,16 @@ namespace AmilcarComercial.Controllers
                                  Nombre = p.nombre_articulo,
                                  Imagen = p.imagen,
                                  Stock = b.stock,
-                                 Precio = b.precio
+                                 Precio = b.precio,
+                                 Motivo = (from n in db.Tbl_OrdenTmp
+                                           where (n.user == User.Identity.Name && n.tipoventa == "Contado" && n.id_Articulo == p.id_articulo)
+                                           select n.motivo),
+                                 cant = (from n in db.Tbl_OrdenTmp
+                                         where (n.user == User.Identity.Name && n.tipoventa == "Contado" && n.id_Articulo == p.id_articulo)
+                                         select n.cantidad)
                              }).ToList();
 
+            Thread.Sleep(200);
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
@@ -222,7 +226,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id)
         {
-            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_Articulo == id && m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault();
+            var articulo = db.Tbl_OrdenTmp.Where(m => m.id_OrdenTmp == id && m.user == User.Identity.Name && m.tipoventa == "Contado").FirstOrDefault();
             db.Tbl_OrdenTmp.Remove(articulo);
             db.SaveChanges();
 

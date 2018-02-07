@@ -24,8 +24,7 @@ function generales() {
                 '<p class="truncate"><strong>Gerente: </strong>' + data[1] + '</p>' +
                 '</div>' +
                 '<div class="col l6">' +
-                '<p class=""><strong>Fecha: </strong>' + data[0] + '</p>' +
-                '<p class=""><strong>Sucursal: </strong>' + data[2] + '</p>' +
+                '<p class=""><strong>Fecha: </strong>' + data[0] + '</p>' + '<p>.</p>' +
                 '</div>'
             );
             $("#N_factura").val(data[4]);
@@ -51,7 +50,7 @@ function ventas() {
                     $(".lista-ventas").append(
                         '<div class="col l4">' +
                         '<a onclick="agregarVentaExistente(' + value.ID + ')">' +
-                        '<div class="card white grey-text text-darken-3 hoverable">' +
+                        '<div class="card blue white-text hoverable">' +
                         '<div class="card-content">' +
                         '<span class="card-title truncate">Fact: ' + value.Factura + '</span>' +
                         '<p class="truncate">Cliente: ' + value.ClienteNombre + ' ' + value.ClienteApellido + '</p>' +
@@ -121,7 +120,7 @@ function mostrarDevolucionTmp() {
                 $(".datosVenta").append(
                     '<div class="center-align vacio">' +
                     '<p>Aun no a definido una venta para esta devolucion</p>' +
-                    '<button class="btn btn-flat green white-text" onclick="ventas()">Buscar</button>' +
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="ventas()">Buscar</button>' +
                     '</div>'
                 );
                 venta = false;
@@ -226,12 +225,13 @@ function articulosTable(data) {
     $(".modal-compras .articulos .acciones .card-v").show();
     $(".lista-articulos").empty();
     $(".lista-articulos").append(
-        '<table class="responsive-table bordered highlight centered white z-depth-1">' +
+        '<table class="responsive-table bordered highlight centered white">' +
         '<thead>' +
         '<tr>' +
         '<th>Cod</th>' +
         '<th>Img</th>' +
         '<th>Nombre</th>' +
+        '<th>Garantia</th>' +
         '<th>Cant-Comprada</th>' +
         '<th>Cantidad</th>' +
         '<th>Descripcion</th>' +
@@ -249,6 +249,7 @@ function articulosTable(data) {
                 '<td>' + value.Codigo + '</td>' +
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' + value.Nombre + '</td>' +
+                '<td>' + value.GCant + ' Dias</td>' +
                 '<td id="cant2' + value.ID + '">' + value.Cantidad + '</td>' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
@@ -257,10 +258,13 @@ function articulosTable(data) {
                 '<input placeholder="Descripcion" id="descrip' + value.ID + '" type="text" class="browser-default">' +
                 '</td > ' +
                 '<td class="right-align">' +
-                '<a class="btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
+                '<a class="add' + value.ID + ' btn btn-flat pink white-text" onclick="agregarArticuloTmp(' + value.ID + ')"><i class="material-icons">add_shopping_cart</i></a>' +
                 '</td > ' +
                 '</tr>'
             );
+            if (value.GCant === 0) {
+                $(".lista-articulos .add" + value.ID).attr('disabled','disabled');
+            }
         });
     });
 }
@@ -581,7 +585,7 @@ function facturar() {
         data: datos,
         'success': function (data) {
             if (data === true) {
-                window.location.href = "//Facturado";
+                window.location.href = "/proveedor/devolucion/facturado";
             }
             else {
                 Materialize.toast('Error, no se pudo realizar la compra', 2000);

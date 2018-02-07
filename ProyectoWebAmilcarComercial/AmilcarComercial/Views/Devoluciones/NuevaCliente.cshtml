@@ -3,7 +3,7 @@
     ViewBag.Title = "Devolucion";
     ViewBag.SubTitle = "Cliente";
     ViewBag.ControllerGeneral = "Devoluciones";
-    ViewBag.PrimaryColor = "blue";
+    ViewBag.PrimaryColor = "pink";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
@@ -124,9 +124,9 @@
 
 <div class="modal-devolucion">
     <div id="ventas" class="modal">
-        <div class="ventas blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="ventas white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Buscar Venta
                     <i class="salir material-icons right" onclick="CancelVenta()">clear</i>
@@ -186,9 +186,9 @@
         </div>
     </div>
     <div id="articulos" class="modal modal-giant">
-        <div class="articulos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="articulos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Buscar Articulo
                     <i class="salir material-icons right" onclick="CancelArticulos()">clear</i>
@@ -232,31 +232,20 @@
                     </div>
                     <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
                 </div>
-                <div class="col l12 center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
     <div id="eliminartodos" class="modal modal-mini">
-        <div class="eliminartodos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="eliminartodos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">delete_forever</i>
                     Vaciar orden
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
                 <div class="col l12 right-align">
                     <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
                     <a class="modal-action modal-close waves-effect waves-light btn-flat white blue-text" onclick="eliminarProductosTodos()">Aceptar</a>
@@ -265,16 +254,16 @@
         </div>
     </div>
     <div id="cancelarCompra" class="modal modal-mini">
-        <div class="cancelarCompra blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="cancelarCompra white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">cancel</i>
                     Cancelar Devolucion
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea cancelar la devolucion?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea cancelar la devolucion?</p>
                 <div class="col l12 right-align">
                     <a class="modal-action modal-close waves-effect waves-light btn-flat white red-text">Cancelar</a>
                     <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarDevolucion();">Aceptar</a>

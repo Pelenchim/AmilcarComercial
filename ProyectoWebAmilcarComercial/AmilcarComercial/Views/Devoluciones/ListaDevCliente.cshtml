@@ -3,8 +3,8 @@
     ViewBag.Title = "Listado";
     ViewBag.SubTitle = "Cliente";
     ViewBag.ControllerGeneral = "Devoluciones";
-    ViewBag.PrimaryColor = "green";
-    ViewBag.NavExtendedColor = "green darken-1";
+    ViewBag.PrimaryColor = "pink";
+    ViewBag.NavExtendedColor = "blue darken-1";
 }
 
 <div class="devoluciones">
@@ -50,25 +50,14 @@
                 <tbody></tbody>
             </table>
         </div>
-        <div class="paginacion col l12 center">
-            <ul class="pagination">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li class="active"><a href="#!">1</a></li>
-                <li class="waves-effect"><a href="#!">2</a></li>
-                <li class="waves-effect"><a href="#!">3</a></li>
-                <li class="waves-effect"><a href="#!">4</a></li>
-                <li class="waves-effect"><a href="#!">5</a></li>
-                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-            </ul>
-        </div>
     </div>
     <aside class="devoluciones-details show row white z-depth-1">
         <div class="row z-depth-1-half">
-            <div class="col l12 green darken-1 title">
+            <div class="col l12 blue darken-1 title">
                 <h5><i class="material-icons left">business_center</i>Detalle de Devolucion<i class="material-icons right info-sidenav">clear</i></h5>
             </div>
-            <div class="col l12 green darken-1">
-                <ul class="tabs green darken-1">
+            <div class="col l12 blue darken-1">
+                <ul class="tabs blue darken-1">
                     <li class="tab col l6"><a class="active" href="#general">General</a></li>
                     <li class="tab col l6"><a href="#detalle">Detalle</a></li>
                 </ul>
@@ -80,167 +69,10 @@
         </div>
     </aside>
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light blue pulse" href="@Url.Action("NuevaCliente","Devoluciones")"><i class="material-icons">add</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light blue-grey darken-4 pulse" href="@Url.Action("NuevaCliente","Devoluciones")"><i class="material-icons">add</i></a>
     </div>
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".devoluciones-content .listado-devoluciones").on('click', '.info-sidenav', function () {
-                if ($(".devoluciones .devoluciones-details").hasClass('show')) {
-                    $(".devoluciones .devoluciones-details").css("right", "0px");
-                    $(".devoluciones .devoluciones-content").css("padding", "0 280px 0 0");
-                    $(".devoluciones .devoluciones-details").toggleClass('show hiden');
-                }
-            });
-            $(".devoluciones-details").on('click', '.info-sidenav', function () {
-                $(".devoluciones .devoluciones-details").css("right", "-300px");
-                $(".devoluciones .devoluciones-content").css("padding", "0");
-                $(".devoluciones .devoluciones-details").toggleClass('show hiden');
-                $(".devoluciones .listado-devoluciones table tbody .item").removeClass("active");
-                vacio();
-            });
-            $('ul.tabs').tabs();
-            $('select').material_select();
-            listaDevoluciones();
-            vacio();
-
-            $(".devoluciones .listado-devoluciones table tbody").on('click', '.item', function () {
-                $(".compras .listado-devolucionesdevoluciones table tbody .item").removeClass("active");
-                $(this).addClass("active");
-            });
-            $('.devoluciones .devoluciones-content, .devoluciones .devoluciones-content .devoluciones-opciones, .devoluciones .devoluciones-content .paginacion').on('click', function (e) {
-                if (e.target !== this)
-                    return;
-                $(".devoluciones .listado-devoluciones table tbody .item").removeClass("active");
-                vacio();
-            });
-        });
-        function listaDevoluciones() {
-            $.ajax({
-                url: '/devolucion/cliente/lista',
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".listado-devoluciones table tbody").empty();
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            var estado, color;
-                            if (value.Estado === true) {
-                                estado = "Aprovada";
-                                color = "green"
-                            }
-                            else {
-                                estado = "Anulada";
-                                color = "red";
-                            }
-                            $(".listado-devoluciones table tbody").append(
-                                '<tr class="item info-sidenav" onclick="informacionDevolucion(' + value.ID + ')">' +
-                                '<td>' + value.ID + '</td>' +
-                                '<td>' + value.Factura + '</td>' +
-                                '<td>' + value.Fecha + '</td>' +
-                                '<td>' + value.Articulos + '</td>' +
-                                '<td>' + value.Cantidad + ' Unidades</td>' +
-                                '<td>' + value.ClienteN + ' ' + value.ClienteA + '</td>' +
-                                '</tr>'
-                            );
-                        });
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function vacio() {
-            $(".devoluciones-details .general").empty();
-            $(".devoluciones-details .detalle").empty();
-            $(".devoluciones-details .general").append(
-                '<div class="no-selected">' +
-                '<div class="center">' +
-                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
-                '</div>' +
-                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni una devolucion para ver la informacion</p>' +
-                '</div>'
-            );
-            $(".devoluciones-details .detalle").append(
-                '<div class="no-selected">' +
-                '<div class="center">' +
-                '<i class="grey-text text-darken-1 material-icons large">touch_app</i>' +
-                '</div>' +
-                '<p class="no center-align grey-text text-darken-1">No a seleccionado ni una devolucion para ver la informacion</p>' +
-                '</div>'
-            );
-        }
-        function informacionDevolucion(id) {
-            var id = id;
-            detalleDevolucionGeneral(id);
-            detalleDevolucionEspecifico(id);
-        }
-        function detalleDevolucionGeneral(id) {
-            $.ajax({
-                url: '/devolucion/cliente/detalle/general/' + id,
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".devoluciones-details .general").empty();
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            $(".devoluciones-details .general").append(
-                                '<div>' +
-                                '<p><span class="left">N° Devolucion</span>' + value.Devolucion + '</p>' +
-                                '<p><span class="left">N° Factura</span>C$ ' + value.Factura + '</p>' +
-                                '<p><span class="left">Usuario</span>' + value.Usuario + '</p>' +
-                                '<p><span class="left">Cliente</span> ' + value.ClienteN + ' ' + value.ClienteA + ' </p>' +
-                                '<p><span class="left">Fecha</span>' + value.Fecha + '</td>' +
-                                '<p><span class="left">Tipos Articulos</span>' + value.Articulos + '</p>' +
-                                '<p><span class="left">Cantidad Articulos</span>' + value.CantidadTotal + ' Unds</p>' +
-                                '</div>'
-                            );
-                        });
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function detalleDevolucionEspecifico(id) {
-            $.ajax({
-                url: '/devolucion/cliente/detalle/especifico/' + id,
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    $(".devoluciones-details .detalle").empty();
-                    $.each(data, function () {
-                        $.each(this, function (name, value) {
-                            $(".devoluciones-details .detalle").append(
-                                '<div class="individual col l12">' +
-                                '<div class="col l2">' +
-                                '<img src="/Content/images/articulos/' + value.Img + '">' +
-                                '</div>' +
-                                '<div class="col l10">' +
-                                '<p class="name"><strong>' + value.Articulo + '</strong></p>' +
-                                '<p class="cate">' + value.Categoria + '</p>' +
-                                '</div>' +
-                                '<div class="col l12">' +
-                                '<p><span>Cant: ' + value.Cantidad + ' </span></p>' +
-                                '<p><span>Descripcion: ' + value.Descripcion + ' </span></p>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="col l12 divider-mio"></div>'
-                            );
-                        });
-                    });
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-    </script>
+    @Scripts.Render("~/bundles/listadevcliente")
 }

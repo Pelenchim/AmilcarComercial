@@ -45,6 +45,18 @@ namespace AmilcarComercial.Controllers
             return View();
         }
 
+        [Route("cliente/devolucion/facturado")]
+        public ActionResult FacturadoCliente()
+        {
+            return View();
+        }
+
+        [Route("proveedor/devolucion/facturado")]
+        public ActionResult FacturadoProveedor()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Generales
@@ -193,7 +205,7 @@ namespace AmilcarComercial.Controllers
                                Factura = c.fact_compra,
                                Fecha = c.fecha_compra.ToString(),
                                Cantidad = c.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad)
-                           }).ToList();
+                           }).ToList().Take(9);
 
             return Json(new { data = compras }, JsonRequestBehavior.AllowGet);
         }
@@ -211,7 +223,7 @@ namespace AmilcarComercial.Controllers
                               Factura = c.fact_Orden,
                               Fecha = c.fecha_orden.ToString(),
                               Cantidad = c.Tbl_Detalle_Orden.Where(m => m.id_orden == c.id_orden).Sum(m => m.cantidad)
-                          }).ToList();
+                          }).ToList().Take(9);
 
             return Json(new { data = ventas }, JsonRequestBehavior.AllowGet);
         }
@@ -336,7 +348,7 @@ namespace AmilcarComercial.Controllers
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Costo = p.costo,
                                  Descuento = p.descuento,
-                                 Cantidad = p.cantidad
+                                 Cantidad = p.cantidad                   
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
@@ -358,7 +370,10 @@ namespace AmilcarComercial.Controllers
                                  Imagen = p.Tbl_Articulo.imagen,
                                  Precio = p.precio_venta,
                                  Descuento = p.descuento,
-                                 Cantidad = p.cantidad
+                                 Cantidad = p.cantidad,
+                                 Fecha = p.Tbl_Orden.fecha_orden,
+                                 GCant = p.Tbl_Articulo.GarantiaCant,
+                                 GMed = p.Tbl_Articulo.GarantiaMedida
                              }).ToList();
 
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
@@ -388,7 +403,7 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult EliminarProducto(int id, string tipo)
         {
-            var articulo = db.Tbl_DevolucionDetalleTmp.Where(m => m.id_articulo == id && m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
+            var articulo = db.Tbl_DevolucionDetalleTmp.Where(m => m.id_detalleDevolucion == id && m.user == User.Identity.Name && m.tipo == tipo).FirstOrDefault();
             db.Tbl_DevolucionDetalleTmp.Remove(articulo);
             db.SaveChanges();
 
@@ -657,6 +672,39 @@ namespace AmilcarComercial.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("devolucion/cliente/factura")]
+        public JsonResult DetalleCli()
+        {
+            var ultimo = db.Tbl_DevolucionCliente.Where(m => m.user == User.Identity.Name)
+                        .OrderByDescending(m => m.id_devolucionCliente).First();
+
+            var cantidad = db.Tbl_DetalleDevolucionCliente.Where(m => m.id_cliente == ultimo.id_devolucionCliente).Sum(m => m.cantidad);
+            var id = ultimo.id_venta;
+
+            List<double> datos = new List<double>();
+            datos.Add((int)cantidad);
+            datos.Add(id);
+
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("devolucion/proveedor/factura")]
+        public JsonResult DetallePro()
+        {
+            var ultimo = db.Tbl_DevolucionProveedor.Where(m => m.user == User.Identity.Name)
+                        .OrderByDescending(m => m.id_DevolucionProveedor).First();
+
+            var cantidad = db.Tbl_DetalleDevolucionProveedor.Where(m => m.id_proveedor == ultimo.id_DevolucionProveedor).Sum(m => m.cantidad);
+            var id = ultimo.id_compra;
+
+            List<double> datos = new List<double>();
+            datos.Add((int)cantidad);
+            datos.Add(id);
+
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+
         #endregion
 
         #region ListaDevoluciones
@@ -674,7 +722,7 @@ namespace AmilcarComercial.Controllers
                              ClienteN = d.Tbl_Orden.Tbl_Clientes.nombre_cliente,
                              ClienteA = d.Tbl_Orden.Tbl_Clientes.apellidos_cliente,
                              Articulos = d.Tbl_DetalleDevolucionCliente.Where(m => m.id_cliente == d.id_devolucionCliente).Count(),
-                             Cantidad = d.Tbl_DetalleDevolucionCliente.Where(m => m.id_detalleDevolucionCli == d.id_devolucionCliente).Sum(m => m.cantidad)
+                             Cantidad = d.Tbl_DetalleDevolucionCliente.Where(m => m.id_cliente == d.id_devolucionCliente).Sum(m => m.cantidad)
                          }).OrderByDescending(m => m.ID).Take(10).ToList();
 
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);

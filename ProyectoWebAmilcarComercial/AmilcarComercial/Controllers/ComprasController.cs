@@ -1,7 +1,9 @@
 ﻿using AmilcarComercial.Models;
+using CrystalDecisions.CrystalReports.Engine;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -23,6 +25,8 @@ namespace AmilcarComercial.Controllers
 
         public ActionResult Nueva()
         {
+            ViewBag.id_categoria = new SelectList(db.Tbl_Categorias.Where(m => m.estado == true), "id_categoria", "Nombre");
+            ViewBag.id_marca = new SelectList(db.Tbl_Marca.Where(m => m.estado == true), "id_Marca", "nombre");
             return View();
         }
 
@@ -31,8 +35,10 @@ namespace AmilcarComercial.Controllers
             return View();
         }
 
-        public ActionResult Consulta()
+        [Route("Compras/Consulta/{id}")]
+        public ActionResult Consulta(int id)
         {
+            buscar(id);
             return View();
         }
 
@@ -118,11 +124,11 @@ namespace AmilcarComercial.Controllers
         }
 
         [Route("compra/buscar/{fact}")]
-        public JsonResult buscar(string fact)
+        public JsonResult buscar(int parametro)
         {
-            if (db.Tbl_Compra.Where(m => m.fact_compra == fact).Count() > 0)
+            if (db.Tbl_Compra.Where(m => m.id_compra == parametro).Count() > 0)
             {
-                var id = db.Tbl_Compra.Where(m => m.fact_compra == fact).FirstOrDefault().id_compra;
+                var id = db.Tbl_Compra.Where(m => m.id_compra == parametro).FirstOrDefault().id_compra;
 
                 var data = (from c in db.Tbl_Compra
                             join d in db.Tbl_Detalle_Compra on c.id_compra equals d.id_compra
@@ -174,18 +180,18 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ObtenerProductos()
         {
-            var articulosOrden = (from p in db.Tbl_CompraTmp where (p.user == User.Identity.Name) select p.id_articulo).ToArray();
-
             var Articulos = (from p in db.Tbl_Articulo
-                             where (!(articulosOrden.Contains((int)p.id_articulo)) && p.estado == true)
+                             where (p.estado == true)
                              select new
                              {
                                  ID = p.id_articulo,
                                  Codigo = p.codigo_articulo,
                                  Nombre = p.nombre_articulo,
-                                 Imagen = p.imagen
+                                 Imagen = p.imagen,
+                                 Motivo = (from c in db.Tbl_CompraTmp where (c.user == User.Identity.Name && c.id_articulo == p.id_articulo) select c.motivo)
                              }).ToList();
 
+            Thread.Sleep(200);
             return Json(new { data = Articulos }, JsonRequestBehavior.AllowGet);
         }
 
@@ -562,7 +568,8 @@ namespace AmilcarComercial.Controllers
                               SubTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo),
                               PagoTotal = db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.costo) * db.Tbl_Detalle_Compra.Where(m => m.id_compra == c.id_compra).Sum(m => m.cantidad),
                               Sucursal = c.Tbl_Sucursal.Nombre,
-                              Estado = c.estado_compra
+                              Estado = c.estado_compra,
+                              ID = c.id_compra
                           };
 
             return Json(new { data = detalle }, JsonRequestBehavior.AllowGet);
@@ -590,5 +597,33 @@ namespace AmilcarComercial.Controllers
         }
 
         #endregion
+
+        [Route("compras/nuevopro")]
+        public ActionResult guardarpro()
+        {
+            var art = db.Tbl_Articulo.Find(12);
+            art.estado = true;
+            db.SaveChanges();
+
+            return Json(new { data = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Reporte(int id)
+        {
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(Server.MapPath("/Reports/nombre.rpt"));        
+            reporte.SetDataSource(db.Tbl_Compra.Where(m => m.id_compra == id).ToList());
+
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+
+            Stream stream = reporte.ExportToStream(
+                CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var pdf = new FileStreamResult(stream, "application/pdf");
+            return pdf;
+        }
     }
 }

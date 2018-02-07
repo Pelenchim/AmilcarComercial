@@ -186,7 +186,7 @@ header .dropdown-content li a:hover {
 body main.layout .content {
     height: calc(100vh - 64px);
     padding-left: 260px;
-    padding-bottom: 30px;
+    padding-bottom: 80px;
     background-color: #eceff1;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -542,7 +542,7 @@ padding: 10px 24px 20px 24px;
 .sucursales .card .opciones i,
 .clientes .card .opciones i,
 .articulos .card .opciones i{
-    background-color: rgba(0, 0, 0, 0.30);
+    background-color: rgba(0, 0, 0, 0.10);
     border-radius: 100%;
 }
 .marcas .card .opciones i:hover,
@@ -653,20 +653,23 @@ margin: 0;
 .articulo-eliminar p:first-child {
     font-size: large;
 }
-
+.modal-compras .articulo-nuevo #my-dropzone,
 .articulo-nuevo #my-dropzone {
     width: 235px !important;
     min-width: 240px !important;
     height: 240px !important;
-    border: white 3px dashed !important;
+    border: #212121 3px dashed !important;
     padding: 3px;
 }
+.modal-compras .articulo-nuevo .dropzone .dz-message,
 .articulo-nuevo .dropzone .dz-message {
     margin: 6em 2em;
 }
+.modal-compras .articulo-nuevo .dropzone .dz-preview,
 .articulo-nuevo .dropzone .dz-preview {
     margin: 0px !important;
 }
+.modal-compras .articulo-nuevo .dropzone .dz-preview .dz-image,
 .articulo-nuevo .dropzone .dz-preview .dz-image {
     width: 230px !important;
     height: 230px !important;
@@ -674,9 +677,11 @@ margin: 0;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
+.modal-compras .articulo-nuevo .dropzone .dz-preview .dz-image img,
 .articulo-nuevo .dropzone .dz-preview .dz-image img {
     width: 100%;
 }
+.modal-compras .articulo-nuevo .dropzone .dz-preview .dz-remove,
 .articulo-nuevo .dropzone .dz-preview .dz-remove {
     z-index: 30;
     position: absolute;
@@ -694,36 +699,37 @@ margin: 0;
     border-radius: 3px;
     line-height: 150%;
 }
+.modal-compras .articulo-nuevo .dropzone .dz-preview .dz-remove:hover,
 .articulo-nuevo .dropzone .dz-preview .dz-remove:hover {
     opacity: 1;
 }
 
 .articulo-editar .input-field label,
 .articulo-nuevo .input-field label {
-    color: #fff !important;
+    color: #212121 !important;
 }
 
 .articulo-editar .input-field input[type=text],
 .articulo-nuevo .input-field input[type=text] {
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
+    border-bottom: 1px solid #212121;
+    box-shadow: 0 1px 0 0 #212121;
 }
 /* label focus color */
 .articulo-editar .input-field input[type=text]:focus + label,
 .articulo-nuevo .input-field input[type=text]:focus + label {
-    color: #fff !important;
+    color: #212121 !important;
 }
 /* label underline focus color */
 .articulo-editar .input-field input[type=text]:focus,
 .articulo-nuevo .input-field input[type=text]:focus {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
+    border-bottom: 1px solid #212121 !important;
+    box-shadow: 0 1px 0 0 #212121 !important;
 }
 /* valid color */
 .articulo-editar .input-field input[type=text].valid,
 .articulo-nuevo .input-field input[type=text].valid {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
+    border-bottom: 1px solid #212121 !important;
+    box-shadow: 0 1px 0 0 #212121 !important;
 }
 /* invalid color */
 .articulo-editar .input-field input[type=text].invalid,
@@ -733,7 +739,7 @@ margin: 0;
 }
 .articulo-editar .select-wrapper span.caret,
 .articulo-nuevo .select-wrapper span.caret{
-    color: white;
+    color: #212121;
 }
 
 
@@ -1046,6 +1052,99 @@ margin: 0;
 }
 .cliente-editar .select-wrapper span.caret,
 .cliente-nuevo .select-wrapper span.caret {
+    color: white;
+}
+
+/*#endregion */
+/*#region Categorias */
+
+.categoria-detalle > .row,
+.categoria-editar > .row,
+.categoria-nuevo > .row,
+.categoria-eliminar > .row {
+    margin: 0;
+}
+
+.categoria-detalle h4,
+.categoria-editar h4,
+.categoria-nuevo h4,
+.categoria-eliminar h4 {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    padding-top: 0.8rem;
+}
+
+.categoria-detalle .modal-content,
+.categoria-editar .modal-content,
+.categoria-nuevo .modal-content {
+    padding: 2rem;
+}
+
+    .categoria-detalle .modal-content figure,
+    .categoria-editar .modal-content figure {
+        margin: 0;
+    }
+
+    .categoria-detalle .modal-content p {
+        font-size: 1.2em;
+        margin-top: 0.1rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .categoria-detalle .modal-content .acciones,
+    .categoria-editar .modal-content .acciones,
+    .categoria-nuevo .modal-content .acciones {
+        margin-top: 1rem;
+    }
+
+.categoria-editar .input-field label,
+.categoria-nuevo .input-field label {
+    color: #212121 !important;
+}
+
+.categoria-editar .input-field input[type=text],
+.categoria-editar .input-field input[type=number],
+.categoria-nuevo .input-field input[type=text],
+.categoria-nuevo .input-field input[type=number] {
+    border-bottom: 1px solid #212121;
+    box-shadow: 0 1px 0 0 #212121;
+}
+    /* label focus color */
+    .categoria-editar .input-field input[type=text]:focus + label,
+    .categoria-nuevo .input-field input[type=text]:focus + label {
+        color: #212121 !important;
+    }
+    /* label underline focus color */
+    .categoria-editar .input-field input[type=text]:focus,
+    .categoria-editar .input-field input[type=number]:focus,
+    .categoria-nuevo .input-field input[type=text]:focus,
+    .categoria-nuevo .input-field input[type=number]:focus {
+        border-bottom: 1px solid #212121 !important;
+        box-shadow: 0 1px 0 0 #212121 !important;
+    }
+    /* valid color */
+    .categoria-editar .input-field input[type=text].valid,
+    .categoria-nuevo .input-field input[type=text].valid {
+        border-bottom: 1px solid #fff !important;
+        box-shadow: 0 1px 0 0 #fff !important;
+    }
+    /* invalid color */
+    .categoria-editar .input-field input[type=text].invalid,
+    .categoria-nuevo .input-field input[type=text].invalid {
+        border-bottom: 1px solid #e91e63 !important;
+        box-shadow: 0 1px 0 0 #e91e63 !important;
+    }
+
+.categoria-eliminar p {
+    margin: 0;
+}
+
+    .categoria-eliminar p:first-child {
+        font-size: large;
+    }
+
+.categoria-editar .select-wrapper span.caret,
+.categoria-nuevo .select-wrapper span.caret {
     color: white;
 }
 
@@ -1535,28 +1634,28 @@ background-color: #37474f;
     width: 50%;
     margin: 0.3rem;
 }
-.articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
-.articulosCredito .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
-.articulosApartado .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosApartado .articulos-orden .articulosLista table tbody input[type=text],
-.articulosDevolucion .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text] {
-    width: 100%;
-    margin: 0;
-    color: #333;
-    border: none !important;
-    border-radius: 2px;
-    height: 35px !important;
-    outline: none !important;
-    padding: 1px 10px 1px 10px !important;
-    background: #dbdbdb !important;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box !important;
-    transition: background-color 0.4s;
-    text-align: center;
-}
+    .articulosVenta .articulos-orden .articulosLista .card .card-content input[type=text],
+    .articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
+    .articulosCredito .articulos-orden .articulosLista .card .card-content input[type=text],
+    .articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
+    .articulosApartado .articulos-orden .articulosLista .card .card-content input[type=text],
+    .articulosApartado .articulos-orden .articulosLista table tbody input[type=text],
+    .articulosDevolucion .articulos-orden .articulosLista .card .card-content input[type=text],
+    .articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text] {
+        width: 100%;
+        margin: 0;
+        color: #fff;
+        border: none !important;
+        border-radius: 2px;
+        height: 35px !important;
+        outline: none !important;
+        padding: 1px 10px 1px 10px !important;
+        background: #4caf50 !important;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box !important;
+        transition: background-color 0.4s;
+        text-align: center;
+    }
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text],
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text],
 .articulosApartado .articulos-orden .articulosLista table tbody input[type=text],
@@ -1571,22 +1670,22 @@ background-color: #37474f;
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text]:focus,
 .articulosApartado .articulos-orden .articulosLista table tbody input[type=text]:focus,
 .articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text]:focus {
-    background-color: #f9f9f9 !important;
+    background-color: #4caf50 !important;
     border-bottom: 0;
-    box-shadow: 0 0 2px #727272 !important;
+    box-shadow: 0 0 2px #4caf50 !important;
 }
 .articulosVenta .articulos-orden .articulosLista table tbody input[type=text].desabilitado,
 .articulosCredito .articulos-orden .articulosLista table tbody input[type=text].desabilitado,
 .articulosApartado .articulos-orden .articulosLista table tbody input[type=text].desabilitado,
 .articulosDevolucion .articulos-orden .articulosLista table tbody input[type=text].desabilitado {
-    background-color: #ef5350 !important;
+    background-color: #dbdbdb !important;
     border-bottom: 0;
-    color: #fff;
-    box-shadow: 0 0 0px #727272 !important;
+    color: #333;
+    box-shadow: 0 0 0px #dbdbdb !important;
 }
 .articulosVenta .articulos-orden .articulosLista table tbody span.desabilitado {
-    background-color: #ef5350 !important;
-    color: #fff;
+    background-color: #dbdbdb !important;
+    color: #333;
     padding: 9px 7px;
     border-radius: 3px;
 }
@@ -1649,6 +1748,7 @@ background-color: #37474f;
 .articulos > .row,
 .clientes > .row,
 .nuevoCliente > .row,
+.editarCliente > .row,
 .cancelarVenta > .row,
 .eliminartodos > .row,
 .calcularVuelto > .row,
@@ -1661,13 +1761,14 @@ background-color: #37474f;
 .articulos h4,
 .clientes h4,
 .nuevoCliente h4,
+.editarCliente h4,
 .cancelarVenta h4,
 .eliminartodos h4,
 .calcularVuelto h4,
 .detalleCliente h4,
 .anularVenta h4,
 .efectivo h4,
-.tarjeta h4{
+.tarjeta h4 {
     font-size: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -1675,13 +1776,14 @@ background-color: #37474f;
 }
 .clientes h4 .salir,
 .nuevoCliente h4 .salir,
+.editarCliente h4 .salir,
 .cancelarVenta h4 .salir,
 .eliminartodos h4 .salir,
 .calcularVuelto h4 .salir,
 .detalleCliente h4 .salir,
 .anularVenta h4 .salir,
 .efectivo h4 .salir,
-.tarjeta h4 .salir{
+.tarjeta h4 .salir {
     cursor: pointer;
 }
 #efectivo.modal.modal-fixed-footer{
@@ -1693,7 +1795,7 @@ background-color: #37474f;
 }
 .tarjeta input,
 .efectivo input{
-    color: #fff;
+    color: #212121;
 }
 .articulos .option-bar,
 .clientes .option-bar {
@@ -1704,17 +1806,17 @@ background-color: #37474f;
 }
 .clientes .pagination li a,
 .articulos .pagination li a {
-    color: #fff !important;
+    color: #212121 !important;
 }
 .clientes .pagination li.active,
 .articulos .pagination li.active {
-    background-color: #fff;
+    background-color: #E91E63;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .clientes .pagination li.active a,
 .articulos .pagination li.active a {
-    color: #444 !important;
+    color: #fff !important;
 }
 .anularVenta .modal-content p {
     margin-top: 0;
@@ -1899,16 +2001,16 @@ background-color: #37474f;
 .contado .listado-contado table tbody tr {
     cursor: pointer;
 }
-.contado .listado-contado table tbody tr.active {
-    background-color: #2196f3 !important;
-    border-bottom: 1px solid #fff;
-    color: #fff;
-}
+    .contado .listado-contado table tbody tr.active {
+        background-color: #2196f3 !important;
+        border-bottom: 1px solid #fff;
+        color: #fff;
+    }
 .contado .pagination {
     margin-top: 2rem;
 }
 .contado .pagination li.active {
-    background-color: #2196f3;
+    background-color: #e91e63;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -1989,18 +2091,18 @@ background-color: #37474f;
 
 /*textbox's de los modals*/
 .modal-ventas .input-field label {
-    color: #fff !important;
+    color: #212121 !important;
 }
 .modal-ventas .input-field input[type=text] {
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
+    border-bottom: 1px solid #212121;
+    box-shadow: 0 1px 0 0 #212121;
 }
 .modal-ventas .input-field input[type=password]:focus + label {
-    color: #fff !important;
+    color: #212121 !important;
 }
 .modal-ventas .input-field input[type=text]:focus {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
+    border-bottom: 1px solid #212121 !important;
+    box-shadow: 0 1px 0 0 #212121 !important;
 }
 
 
@@ -2594,16 +2696,16 @@ background-color: #37474f;
 .compras .listado-compras table tbody tr{
     cursor: pointer;
 }
-.compras .listado-compras table tbody tr.active {
-    background-color: #2196f3 !important;
-    border-bottom: 1px solid #fff;
-    color: #fff;
-}
+    .compras .listado-compras table tbody tr.active {
+        background-color: #2196f3 !important;
+        border-bottom: 1px solid #fff;
+        color: #fff;
+    }
 .compras .pagination{
     margin-top: 2rem;
 }
 .compras .pagination li.active {
-    background-color: #2196f3;
+    background-color: #e91e63;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -2863,22 +2965,22 @@ background-color: #37474f;
     margin: 0.3rem;
 }
 
-.articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text],
-.articulosCompra .articulos-orden .articulosLista table tbody input[type=text] {
-    width: 100%;
-    margin: 0;
-    color: #333;
-    border: none !important;
-    border-radius: 2px;
-    height: 35px !important;
-    outline: none !important;
-    padding: 1px 10px 1px 10px !important;
-    background: #dbdbdb !important;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box !important;
-    transition: background-color 0.4s;
-    text-align: center;
-}
+    .articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text],
+    .articulosCompra .articulos-orden .articulosLista table tbody input[type=text] {
+        width: 100%;
+        margin: 0;
+        color: #fff;
+        border: none !important;
+        border-radius: 2px;
+        height: 35px !important;
+        outline: none !important;
+        padding: 1px 10px 1px 10px !important;
+        background: #4caf50 !important;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box !important;
+        transition: background-color 0.4s;
+        text-align: center;
+    }
 
 .articulosCompra .articulos-orden .articulosLista table tbody input[type=text]:not(.precio) {
     width: 60px;
@@ -2886,21 +2988,21 @@ background-color: #37474f;
 .articulosCompra .articulos-orden .articulosLista table tbody input[type=text].precio {
     width: 75px;
 }
-.articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text]:focus,
-.articulosCompra .articulos-orden .articulosLista table tbody input[type=text]:focus {
-    background-color: #f9f9f9 !important;
-    border-bottom: 0;
-    box-shadow: 0 0 2px #727272 !important;
-}
-.articulosCompra .articulos-orden .articulosLista table tbody input[type=text].desabilitado {
-    background-color: #ef5350 !important;
-    color: #fff;
-    border-bottom: 0;
-    box-shadow: 0 0 0 #ef5350 !important;
-}
+        .articulosCompra .articulos-orden .articulosLista .card .card-content input[type=text]:focus,
+        .articulosCompra .articulos-orden .articulosLista table tbody input[type=text]:focus {
+            background-color: #4caf50 !important;
+            border-bottom: 0;
+            box-shadow: 0 0 2px #4caf50 !important;
+        }
+    .articulosCompra .articulos-orden .articulosLista table tbody input[type=text].desabilitado {
+        background-color: #dbdbdb !important;
+        color: #333;
+        border-bottom: 0;
+        box-shadow: 0 0 0 #ef5350 !important;
+    }
 .articulosCompra .articulos-orden .articulosLista table tbody span.desabilitado{
-    background-color: #ef5350 !important;
-    color: #fff;
+    background-color: #dbdbdb !important;
+    color: #333;
     padding: 9px 7px;
     border-radius: 3px;
 }
@@ -2960,45 +3062,35 @@ background-color: #37474f;
 }
 .modal-compras .proveedores .pagination li a,
 .modal-compras .articulos .pagination li a{
-    color: #fff !important;
+    color: #212121 !important;
 }
 .modal-compras .proveedores .pagination li.active,
-.modal-compras .articulos .pagination li.active{
-    background-color: #fff;
+.modal-compras .articulos .pagination li.active {
+    background-color: #e91e63;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .modal-compras .proveedores .pagination li.active a,
 .modal-compras .articulos .pagination li.active a{
-    color: #444 !important;
+    color: #fff !important;
 }
 
 .modal-compras .input-field label {
-    color: #fff !important;
+    color: #212121 !important;
 }
 
 .modal-compras .input-field input[type=text]{
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
+    border-bottom: 1px solid #212121;
+    box-shadow: 0 1px 0 0 #212121;
 }
 
 .modal-compras .input-field input[type=text]:focus + label{
-    color: #fff !important;
+    color: #212121 !important;
 }
 
 .modal-compras .input-field input[type=text]:focus{
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
-}
-
-.modal-compras .input-field input[type=text].valid{
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
-}
-
-.modal-compras .input-field input[type=text].invalid {
-    border-bottom: 1px solid #e91e63 !important;
-    box-shadow: 0 1px 0 0 #e91e63 !important;
+    border-bottom: 1px solid #212121 !important;
+    box-shadow: 0 1px 0 0 #212121 !important;
 }
 
 /*modal proveedores*/
@@ -3171,8 +3263,8 @@ background-color: #37474f;
     color: #444 !important;
 }
 .inventario .pagination li.active,
-.kardex .pagination li.active{
-    background-color: #2196f3;
+.kardex .pagination li.active {
+    background-color: #e91e63;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -3249,11 +3341,11 @@ background-color: #37474f;
 .devoluciones .listado-devoluciones table tbody tr {
     cursor: pointer;
 }
-.devoluciones .listado-devoluciones table tbody tr.active {
-    background-color: #4caf50 !important;
-    border-bottom: 1px solid #fff;
-    color: #fff;
-}
+    .devoluciones .listado-devoluciones table tbody tr.active {
+        background-color: #2196f3 !important;
+        border-bottom: 1px solid #fff;
+        color: #fff;
+    }
 .devoluciones .pagination {
     margin-top: 2rem;
 }
@@ -3442,8 +3534,16 @@ background-color: #37474f;
 }
 
 .articulos .option-bar,
+.ventas .option-bar,
+.compras .option-bar,
 .clientes .option-bar {
     margin-bottom: 15px;
+}
+
+.compras .pagination li.active,
+.ventas .pagination li.active {
+    background-color: #e91e63 !important;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 /*tabla de ordenes*/

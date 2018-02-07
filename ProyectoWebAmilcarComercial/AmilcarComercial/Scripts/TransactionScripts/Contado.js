@@ -98,7 +98,7 @@ function clientes() {
                     $(".lista-clientes").append(
                         '<a onclick="agregarClienteExistente(' + value.ID + ')">' +
                         '<div class="col l4">' +
-                        '<div class="card white grey-text text-darken-3">' +
+                        '<div class="card blue white-text text-darken-3">' +
                         '<div class="card-content">' +
                         '<span class="card-title truncate">' + value.Nombre + ' ' + value.Apellido + '</span>' +
                         '<p>Dep: ' + value.Departamento + '</p>' +
@@ -256,8 +256,8 @@ function mostrarClienteTmp() {
                 $(".datosCliente").append(
                     '<div class="center-align vacio">' +
                     '<p style="padding-bottom: 10px">Aun no a definido cliente para esta venta</p>' +
-                    '<button class="btn btn-flat green white-text" onclick="agregarCliente()">Agregar</button>' + ' ' +
-                    '<button class="btn btn-flat green white-text" onclick="clientes()">Buscar</button>' +
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="agregarCliente()">Agregar</button>' + ' ' +
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="clientes()">Buscar</button>' +
                     '</div>'
                 );
                 cliente = false;
@@ -326,6 +326,10 @@ function agregarArticuloTmp(id) {
     var desc = $(".articulos #desc" + id).val();
     var motiv = $(".articulos #motivo" + id).val();
 
+    if (motiv == 0) {
+        Materialize.toast("Debe definir el motivo", 2000);
+        return;
+    }
     if (cant === '') {
         Materialize.toast("Debe agregar la cantidad", 2000);
         $(".articulos #cant" + id).focus();
@@ -375,7 +379,7 @@ function agregarArticuloTmp(id) {
         url: '/ventas/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc + '/' + motiv,
         type: 'GET',
         'success': function (data) {
-            CancelArticulos();
+            articulos(1);
             mostrarProductosTmp(1);
             Materialize.toast('Articulo agregado a la orden', 4000);
         },
@@ -497,7 +501,7 @@ function articulosTable(data) {
     $(".modal-ventas .articulos .delete").show();
     $(".lista-articulos").empty();
     $(".lista-articulos").append(
-        '<table class="responsive-table centered white z-depth-1 bordered highlight">' +
+        '<table class="responsive-table centered white bordered highlight">' +
         '<thead>' +
         '<tr>' +
         '<th>Nombre</th>' +
@@ -522,11 +526,12 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' +
                 '<select id="motivo' + value.ID + '" class="browser-default">' +
-                '<option value="1" selected>Venta</option>' +
+                '<option value="0" selected disabled>Seleccione</option>' +
+                '<option value="1">Venta</option>' +
                 '<option value="2">Regalia</option>' +
                 '<option value="3">Reposicion</option>' +
                 '</select>' +
-                '<td id="stock' + value.ID + '">' + value.Stock + '</td>' +
+                '<td id="stock' + value.ID + '">' + (value.Stock - value.cant) + '</td>' +
                 '<td>C$ <span id="precio' + value.ID + '">' + value.Precio + '</span></td>' +
                 '<td>' +
                 '<input placeholder="Cantidad" id="cant' + value.ID + '" type="text" class="browser-default">' +
@@ -539,7 +544,16 @@ function articulosTable(data) {
                 '</td > ' +
                 '</tr>'
             );
-        });
+            if (value.Motivo == 1) {
+                $("#motivo" + value.ID).children('option[value=1]').hide();
+            }
+            if (value.Motivo == 2) {
+                $("#motivo" + value.ID).children('option[value=2]').hide();
+            }
+            if (value.Motivo == 3) {
+                $("#motivo" + value.ID).children('option[value=3]').hide();
+            }
+        });      
     });
 }
 function articulosOrdenCard(data) {
@@ -744,11 +758,11 @@ function detectarTipoVenta(motivo, id) {
     });
 }
 
-function pago() {
+function pagar() {
     var tipo = $(".detalle #tipoPago").val();
 
     if (tipo === "Tarjeta") {
-        $('#tarjeta').modal('open');
+        facturar("tarjeta");
     }
     if (tipo === "Efectivo") {
         $("#efectivo #total").val(Total);
@@ -770,16 +784,8 @@ function facturar(tipo) {
     }
 
     if (tipo === "tarjeta") {
-        var valor = $("#tarjeta #numero").val();
-
-        if (valor === ""){
-            Materialize.toast("Ingrese el numero de tarjeta",2000);
-            $("#tarjeta #numero").focus();
-            return;
-        }
-
         moneda = "Cordobas";
-        tarjeta = valor;
+        tarjeta = "-- -- --";
         pago = total;
         vuelto = 0;
     }
@@ -806,7 +812,7 @@ function facturar(tipo) {
 
     var datos = {
         fact_Orden: $("#N_factura").val(),
-        iva_orden: $("#iva").val(),
+        iva_orden: 15,
         tipo_pago: $("#tipoPago").val(),
         tarjeta: tarjeta,
         pago: pago,
@@ -859,7 +865,7 @@ function detalles() {
         return;
     }
 
-    iva = (subTotal * parseFloat($('#iva').val() / 100));
+    iva = (subTotal * parseFloat(15 / 100));
     Total = subTotal + iva;
     $(".detalle .detalles").empty();
     $(".detalle .detalles").append(

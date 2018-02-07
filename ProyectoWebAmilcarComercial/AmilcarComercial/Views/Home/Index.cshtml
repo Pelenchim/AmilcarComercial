@@ -3,7 +3,7 @@
 }
 
 <div class="home">
-    <div class="row home-title pink">
+    <div class="row home-title blue">
         <span class="white-text">Bienvenido</span>
     </div>
     <div class="row home-content white z-depth-1 center-align">
@@ -22,14 +22,6 @@
     <div class="row home-items">
         <div class="col l10 offset-l1">
             <div class="col l4 center">
-                <a href="@Url.Action("Index","Estadisticas")">
-                    <figure>
-                        <img src="~/Content/system-resources/estadisticas.png" class="responsive-img" />
-                        <figcaption>Estadisticas</figcaption>
-                    </figure>
-                </a>
-            </div>
-            <div class="col l4 center">
                 <a href="@Url.Action("Index","Compras")">
                     <figure>
                         <img src="~/Content/system-resources/compras.png" class="responsive-img no" />
@@ -38,31 +30,15 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="@Url.Action("Index","Ventas")">
+                <a href="@Url.Action("Index","Contado")">
                     <figure>
                         <img src="~/Content/system-resources/ventas.png" class="responsive-img" />
-                        <figcaption>Ventas</figcaption>
-                    </figure>
-                </a>
-            </div>
-            @*<div class="col l4 center">
-                <a href="@Url.Action("Index","Credito")">
-                    <figure>
-                        <img src="~/Content/system-resources/credito.png" class="responsive-img" />
-                        <figcaption>Credito</figcaption>
-                    </figure>
-                </a>
-            </div>*@
-            <div class="col l4 center">
-                <a href="@Url.Action("Index","Apartado")">
-                    <figure>
-                        <img src="~/Content/system-resources/credito.png" class="responsive-img" />
-                        <figcaption>Apartado</figcaption>
+                        <figcaption>Contado</figcaption>
                     </figure>
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="@Url.Action("Index","Devoluciones")">
+                <a href="@Url.Action("ListaDevCliente","Devoluciones")">
                     <figure>
                         <img src="~/Content/system-resources/devolucion.png" class="responsive-img" />
                         <figcaption>Devoluciones</figcaption>
@@ -70,7 +46,7 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="@Url.Action("Index","Inventario")">
+                <a href="@Url.Action("Inventario","Bodega")">
                     <figure>
                         <img src="~/Content/system-resources/inventario.png" class="responsive-img" />
                         <figcaption>Inventario</figcaption>
@@ -86,7 +62,7 @@
                 </a>
             </div>
             <div class="col l4 center">
-                <a href="@Url.Action("Index","Reportes")">
+                <a href="@Url.Action("Reportes","Home")">
                     <figure>
                         <img src="~/Content/system-resources/reportes.png" class="responsive-img" />
                         <figcaption>Reportes</figcaption>
@@ -96,7 +72,7 @@
         </div>
     </div>
     <div class="row">
-        <p class="center-align grey-text darken-3">Francisco Fernandez Lopez - Roger Davila Ortiz</p>
+        <p class="center-align grey-text darken-3">Francisco Fernandez Lopez - Roger Davila Gutierrez</p>
         <p class="center-align grey-text darken-3">Desarrolladores</p>
     </div>
 </div>

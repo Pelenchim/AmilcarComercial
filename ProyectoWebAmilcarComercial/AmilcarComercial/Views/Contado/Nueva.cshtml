@@ -1,9 +1,9 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "Contado";
     ViewBag.SubTitle = "Nueva";
     ViewBag.ControllerGeneral = "Contado";
-    ViewBag.PrimaryColor = "blue";
+    ViewBag.PrimaryColor = "pink";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
@@ -108,11 +108,11 @@
                 <div class="divider-mio"></div>
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
-                    <div class="input-field col l6">
+                    <div class="input-field col l12">
                         <input placeholder="Placeholder" id="N_factura" name="N_factura" type="text" disabled>
                         <label for="N_factura">N° Factura</label>
                     </div>
-                    <div class="input-field col l6">
+                    @*<div class="input-field col l6">
                         <select id="iva">
                             <option value="0">0%</option>
                             <option value="5">5%</option>
@@ -120,7 +120,7 @@
                             <option value="15" selected>15%</option>
                         </select>
                         <label>IVA</label>
-                    </div>
+                    </div>*@
                     <div class="input-field col l12">
                         <select id="tipoPago">
                             <option selected value="Efectivo">Efectivo</option>
@@ -133,7 +133,7 @@
                 <div class="acciones col l12 blue center-align">
                     <h5 class="center-align white-text total"></h5>
                     <a class="btn white red-text tooltipped" data-position="top" data-delay="50" data-tooltip="Cancelar Venta" onclick="$('#cancelarVenta').modal('open');"><i class="material-icons">remove_shopping_cart</i></a>
-                    <a id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="pago();"><i class="material-icons">shopping_cart</i></a>
+                    <a id="vender" class="btn white blue-text tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Venta" onclick="pagar();"><i class="material-icons">shopping_cart</i></a>
                 </div>
             </div>
         </div>
@@ -142,9 +142,9 @@
 
 <div class="modal-ventas">
     <div id="articulos" class="modal modal-giant">
-        <div class="articulos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>Buscar Articulo
+        <div class="articulos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align"><i class="material-icons">search</i>Buscar Articulo
                 <i class="material-icons modal-close right">clear</i></h4>
             </div>
             <div class="modal-content row">
@@ -173,7 +173,7 @@
                 <div class="lista-articulos"></div>
                 <div class="col l12 center" id="pre-Articulos" style="padding-top: 30px; padding-bottom: 20px; display: none;">
                     <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-white-only">
+                        <div class="spinner-layer spinner-blue-only">
                             <div class="circle-clipper left">
                                 <div class="circle"></div>
                             </div><div class="gap-patch">
@@ -185,24 +185,13 @@
                     </div>
                     <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
                 </div>
-                <div class="col l12 center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
     <div id="clientes" class="modal">
-        <div class="clientes blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="clientes white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Buscar Cliente
                     <i class="salir material-icons right" onclick="CancelClientes()">clear</i>
@@ -247,30 +236,19 @@
                     </div>
                     <p class="white-text" style="margin-top:0">Cargando lista de clientes..</p>
                 </div>
-                <div class="col l12 center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
     <div id="nuevoCliente" class="modal modal-middle">
-        <div class="nuevoCliente blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="nuevoCliente white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Agregar Cliente
                     <i class="salir material-icons right" onclick="$('#nuevoCliente').modal('close');">clear</i>
                 </h4>
             </div>
-            <div class="modal-content row white-text">
+            <div class="modal-content row grey-text text-darken-4">
                 <div class="col l3">
                     <img src="~/Content/system-resources/clientes.png" class="responsive-img" />
                 </div>
@@ -301,7 +279,7 @@
                     </div>
                     <div class="col l12 right-align">
                         <br />
-                        <button class="btn btn-flat white pink-text" type="button" onclick="$('#nuevoCliente').modal('close');">Cancelar</button>
+                        <button class="btn btn-flat white purple-text" type="button" onclick="$('#nuevoCliente').modal('close');">Cancelar</button>
                         <button class="btn btn-flat white blue-text" type="button" onclick="agregarClienteTmp()">Agregar</button>
                     </div>
                 </div>
@@ -309,15 +287,15 @@
         </div>
     </div>
     <div id="editarCliente" class="modal modal-middle">
-        <div class="editarCliente blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="editarCliente white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Editar Cliente
                     <i class="salir material-icons right" onclick="$('#editarCliente').modal('close');">clear</i>
                 </h4>
             </div>
-            <div class="modal-content row white-text">
+            <div class="modal-content row grey-text text-darken-4">
                 <div class="col l3">
                     <img src="~/Content/system-resources/clientes.png" class="responsive-img" />
                 </div>
@@ -348,7 +326,7 @@
                     </div>
                     <div class="col l12 right-align">
                         <br />
-                        <button class="btn btn-flat white pink-text" type="button" onclick="$('#editarCliente').modal('close');">Cancelar</button>
+                        <button class="btn btn-flat white purple-text" type="button" onclick="$('#editarCliente').modal('close');">Cancelar</button>
                         <button class="btn btn-flat white blue-text" type="button" onclick="editarClienteTmp()">Agregar</button>
                     </div>
                 </div>
@@ -356,77 +334,55 @@
         </div>
     </div>
     <div id="eliminartodos" class="modal modal-mini">
-        <div class="eliminartodos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="eliminartodos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">delete_forever</i>
                     Vaciar orden
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
                 <div class="col l12 right-align">
-                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white purple-text">Cancelar</a>
                     <a class="modal-action modal-close waves-effect waves-light btn-flat white blue-text" onclick="eliminarProductosTodos()">Aceptar</a>
                 </div>
             </div>
         </div>
     </div>
     <div id="cancelarVenta" class="modal modal-mini">
-        <div class="cancelarVenta blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="cancelarVenta white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">cancel</i>
                     Cancelar Venta
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea cancelar la venta?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea cancelar la venta?</p>
                 <div class="col l12 right-align">
-                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white purple-text">Cancelar</a>
                     <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarVenta()">Aceptar</a>
                 </div>
             </div>
         </div>
     </div>
-    <div id="tarjeta" class="modal modal-fixed-footer modal-mini">
-        <div class="tarjeta blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
-                    <i class="material-icons">monetization_on</i>
-                    Numero de Tarjeta de Credito
-                    <i class="salir modal-close material-icons right">clear</i>
-                </h4>
-            </div>
-            <div class="modal-content blue">
-                <div class="row">
-                    <div class="input-field col l10 offset-l1">
-                        <input placeholder="" id="numero" type="text">
-                        <label for="tarjeta">Numero de Tarjeta</label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="facturar('tarjeta');">Facturar</a>
-            </div>
-        </div>
-    </div>
     <div id="efectivo" class="modal modal-fixed-footer modal-mini">
-        <div class="efectivo blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="efectivo white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">monetization_on</i>
                     Datos del Pago
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
-            <div class="modal-content blue">
+            <div class="modal-content white">
                 <div class="row">
                     <div class="input-field col l6">
                         <input placeholder="Cantidad a pagar" id="total" type="text" disabled>
-                        <label for="total">Total a pagar</label>
+                        <label for="total">Total a pagar C$</label>
                     </div>
                     <div class="input-field col l6">
                         <input placeholder="Cantidad con que pago" id="pago" type="text">
@@ -441,12 +397,13 @@
                     </div>
                     <div class="input-field col l6">
                         <input placeholder="" id="vuelto" type="text" disabled>
-                        <label for="pago">Vuelto</label>
+                        <label for="pago">Vuelto C$</label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="facturar('efectivo');">Facturar</a>
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat purple-text">Cancelar</a>
+                <a href="#!" class="modal-action waves-effect waves-green btn-flat blue-text" onclick="facturar('efectivo');">Facturar</a>
             </div>
         </div>
     </div>

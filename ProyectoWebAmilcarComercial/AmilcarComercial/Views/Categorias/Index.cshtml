@@ -4,26 +4,126 @@
     ViewBag.Title = "Catalogos";
     ViewBag.SubTitle = "Categorias";
     ViewBag.ControllerGeneral = "Home";
-    ViewBag.PrimaryColor = "cyan";
-    ViewBag.NavExtendedColor = "cyan darken-1";
+    ViewBag.PrimaryColor = "blue";
+    ViewBag.NavExtendedColor = "blue darken-1";
 }
 
 <nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
     @Html.Partial("_breadcrumbPartial")
 </nav>
-
+<div class="row titulo-catalogo">
+    <div class="container-mio">
+        <div class="col l12">
+            <h5>Lista de Categorias</h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container-mio clientes" id="categorias">
+        @foreach (var categoria in Model)
+        {
+            <div class="col l4">
+                <div class="card horizontal white hoverable">
+                    <div class="col l4 contenedor-img green">
+                        <img src="~/Content/system-resources/catalogos.png" class="responsive-img">
+                    </div>
+                    <div class="col l8 card-content white">
+                        <div class="opciones">
+                            <a class='dropdown-button grey-text text-darken-3 tooltipped' href='#' data-activates='@categoria.id_categoria' data-position="opcionesCatalogo" data-delay="50" data-tooltip="Opciones">
+                                <i class="material-icons right">more_vert</i>
+                            </a>
+                            <ul id='@categoria.id_categoria' class='dropdown-content'>
+                                <li>
+                                    @Ajax.ActionLink("Detalles", "Details", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "detalle",
+                                        HttpMethod = "GET"
+                                    }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Editar", "Edit", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "editar",
+                                        HttpMethod = "GET"
+                                    }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink("Eliminar", "Delete", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "eliminar",
+                                        HttpMethod = "GET"
+                                    }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="card-title truncate tooltipped" data-position="tituloCatalogo" data-delay="50" data-tooltip="@categoria.Nombre">@categoria.Nombre</span>
+                        <p>
+                            @if (categoria.id_CatPadre != null)
+                            {
+                                //var padre = categoria.Tbl_Categorias1.Where(m => m.id_categoria == categoria.id_CatPadre).ToString().Nombre;
+                                <span>Sin Padre</span>
+                            }
+                            else
+                            {
+                                <span>Categoria Padre</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 <div class="fixed-action-btn">
-    @Ajax.ActionLink("add", "Create", "Categorias", new AjaxOptions
-{
-    UpdateTargetId = "nuevo", // <-- DOM element ID to update
-    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-    HttpMethod = "GET" // <-- HTTP method,
-}, new { @class = "modal-trigger btn-floating btn-large blue-grey darken-4 pulse material-icons", @onclick = " $('#nuevo').modal('open');" })
+    <a class="waves-effect waves-light btn-large btn-floating modal-trigger blue-grey darken-4 pulse" href="#nuevo"><i class="material-icons">add</i></a>
 </div>
 
-<div id="detalle" class="modal modal-w"></div>
-<div id="nuevo" class="modal modal-w"></div>
-<div id="editar" class="modal modal-w"></div>
+<div id="detalle" class="modal modal-middle"></div>
+<div id="nuevo" class="modal modal-middle">
+    <div class="categoria-nuevo white">
+        <div class="row blue z-depth-1">
+            <h4 class="white-text left-align"><i class="material-icons">add_box</i>Agregar Nueva Categoria</h4>
+        </div>
+        <div class="modal-content row grey-text text-darken-3">
+            <div class="col l3">
+                <div class="col l12">
+                    <img src="~/Content/system-resources/catalogos.png" class="responsive-img" />
+                </div>
+            </div>
+            <div class="col l9">
+                <div class="input-field col l6">
+                    <input placeholder="Nombre" id="nombre" type="text">
+                    <label for="nombre">Nombre Categoria</label>
+                </div>
+                <div class="input-field col l6">
+                    <select id="padre">
+                        <option value="null" selected>Ninguna</option>
+                        <option value="1">Ropa</option>
+                        <option value="2">Electrodomesticos</option>
+                    </select>
+                    <label>Categoria Padre</label>
+                </div>
+                <div class="col l12">
+                    <p>Lista de descripciones</p>
+                </div>
+            </div>
+            <div class="divider-mio"></div>
+            <div class="descripciones row">
+                <div class="center">
+                    <p>No se le a asignado descripciones a esta categoria.</p>
+                    <a id="empty" class="empty btn btn-flat green white-text">Agregar</a>
+                </div>
+            </div>
+            <div class="divider-mio"></div>
+            <div class="row right">
+                <br />
+                <button class="btn btn-flat white red-text modal-close">Cancelar</button>
+                <a href="@Url.Action("Nueva","Categorias")" id="guardar" class="btn btn-flat white blue-text">Guardar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editar" class="modal modal-small"></div>
 <div id="eliminar" class="modal modal-mini"></div>
 
 @section Scripts
@@ -33,6 +133,83 @@
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
             $('.tooltipped').tooltip({ delay: 50 });
+
+            var descripciones = 0;
+            var valoresDescrip = [];
+            $(".categoria-nuevo").on('click', '#empty' ,function () {
+                $('.categoria-nuevo .descripciones').empty();
+                $(".categoria-nuevo .descripciones").append(
+                    '<div id="add"></div>'
+                );
+                $(".categoria-nuevo .descripciones #add").append(
+                    '<div class="input-field col l4">' +
+                    '<input id="descripcion' + descripciones + '" type="text" class="validate">' +
+                    '<label for="first_name">Nombre Descripcion</label>' +
+                    '</div >'
+                );
+                $(".categoria-nuevo .descripciones").append(
+                    '<div class="input-field col l4"><a id="add-Descripcion" class="btn btn-flat green white-text"><i class="material-icons">add</i></a></div>'
+                );
+            });
+            $(".categoria-nuevo .descripciones").on('click', '#add-Descripcion', function () {
+                $(".categoria-nuevo .descripciones #add").append(
+                    '<div class="input-field col l4">' +
+                    '<input id="descripcion' + descripciones + '" type="text" class="validate">' +
+                    '<label for="first_name">Nombre Descripcion</label>' +
+                    '</div >'
+                );
+                descripciones++;
+            });
+
+            $(".categoria-nuevo").on('change', '#padre', function () {
+                if ($(".categoria-nuevo #padre").val() == 1) {
+                    $(".categoria-nuevo .descripciones").empty();
+                    $(".categoria-nuevo .descripciones").append(
+                        '<div class="center">' +
+                        '<p>A definido esta categoria como articulo de vestimenta, no puede agregar descripciones</p>' +
+                        '</div >'
+                    );
+                }
+                else {
+                    $(".categoria-nuevo .descripciones").empty();
+                    $(".categoria-nuevo .descripciones").append(
+                        '<div class="center">'+
+                            '<p>No se le a asignado descripciones a esta categoria.</p>'+
+                            '<a id="empty" class="empty btn btn-flat green white-text">Agregar</a>'+
+                        '</div>'
+                    );
+                }
+            });
+            
+            $(".nueva-categoria #guardar").click(function () {
+
+                for (var i = 0; i <= descripciones; i++) {
+                    valoresDescrip[i] = ($(".descripciones #descripcion" + i).val());
+                }
+
+                var datos = {
+                    nombre: $(".nueva-categoria #nombre").val(),
+                    id_CatPadre: $(".nueva-categoria #padre").val(),
+                    estado: true
+                };
+                $.ajax({
+                    url: "/categoria/nueva",
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        "cat": datos,
+                        "descrip": JSON.stringify(descripciones)
+                    }),
+                    dataType: "json",
+                    'success': function (data) {
+                    },
+                    error: function (jqXHR, exception) {
+                        alert('Error message.');
+                    }
+                });
+            });
         });
     </script>
+
+    @Scripts.Render("~/bundles/jqueryajax")
 }

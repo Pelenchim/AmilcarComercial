@@ -77,6 +77,10 @@ namespace AmilcarComercial.Controllers
         [HttpGet]
         public JsonResult ListaKardex()
         {
+            var d = db.Tbl_Articulo.Find(15);
+            d.estado = false;
+            db.SaveChanges();
+
             var lista = (from p in db.Tbl_Articulo
                          where p.estado == true
                          select new

@@ -3,7 +3,7 @@
     ViewBag.Title = "Compras";
     ViewBag.SubTitle = "Todas";
     ViewBag.ControllerGeneral = "Compras";
-    ViewBag.PrimaryColor = "blue";
+    ViewBag.PrimaryColor = "pink";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
@@ -19,7 +19,7 @@
                         <strong>Datos del Proveedor</strong>
                         <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Eliminar Proveedor" onclick="eliminarProveedor()"><i class="material-icons">clear</i></a>
                         <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Buscar Proveedor" onclick="proveedores()"><i class="material-icons">search</i></a>
-                        <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Editar Proveedor" onclick="editarProveedor()"><i class="material-icons">edit</i></a>
+                        <a class="right tooltipped editar" data-position="bottomMio" data-delay="50" data-tooltip="Editar Proveedor" onclick="editarProveedor()"><i class="material-icons">edit</i></a>
                     </p>
                 </div>
                 <div class="divider-mio"></div>
@@ -75,6 +75,7 @@
                         <div class="acciones col l6">
                             <div>
                                 <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Seleccionar Producto" onclick="abrirArticulos(1)"><i class="material-icons">add_shopping_cart</i></a>
+                                <a class="right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Agregar Producto" onclick="$('#nuevoProducto').modal('open'); ultimo();"><i class="material-icons">add_box</i></a>
                                 <a class="delete right tooltipped" data-position="bottomMio" data-delay="50" data-tooltip="Vaciar Orden" onclick="$('#eliminartodos').modal('open');"><i class="material-icons">delete_forever</i></a>
                             </div>
                             <input placeholder="Buscar por nombre o codigo" id="first_name" type="text" class="right" width="100">
@@ -106,18 +107,18 @@
                 <div class="divider-mio"></div>
                 <div class="col l12">
                     <p><strong>Preferencias:</strong></p>
-                    <div class="input-field col l6">
+                    <div class="input-field col l12">
                         <input placeholder="" id="N_factura" name="N_factura" type="text">
                         <label for="N_factura">N° Factura</label>
                     </div>
-                    <div class="input-field col l6">
-                        <select id="iva">
-                            <option value="5">5%</option>
-                            <option value="10">10%</option>
-                            <option selected value="15">15%</option>
-                        </select>
-                        <label>IVA</label>
-                    </div>
+                    @*<div class="input-field col l6">
+                            <select id="iva">
+                                <option value="5">5%</option>
+                                <option value="10">10%</option>
+                                <option selected value="15">15%</option>
+                            </select>
+                            <label>IVA</label>
+                        </div>*@
                     <div class="input-field col l12">
                         <select id="comprobante">
                             <option value="Recibo">Recibo</option>
@@ -125,7 +126,7 @@
                             <option value="Otro">Otro</option>
                         </select>
                         <label>Comprobante</label>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="detalles col l12"></div>
                 <div class="acciones col l12 blue center-align">
@@ -134,15 +135,15 @@
                     <a id="comprar" class="btn white blue-text text-darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Realizar Compra" onclick="facturar()"><i class="material-icons">shopping_cart</i></a>
                 </div>
             </div>
-        </div>        
-    </div> 
+        </div>
+    </div>
 </div>
 
 <div class="modal-compras">
     <div id="proveedores" class="modal">
-        <div class="proveedores blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="proveedores white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Buscar Proveedor
                     <i class="salir material-icons right" onclick="CancelProveedor()">clear</i>
@@ -187,30 +188,19 @@
                     </div>
                     <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
                 </div>
-                <div class="col l12 center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
     <div id="nuevoProveedor" class="modal modal-small">
-        <div class="nuevoProveedor blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="nuevoProveedor white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Agregar Proveedor
                     <i class="salir material-icons right" onclick="$('#nuevoProveedor').modal('close');">clear</i>
                 </h4>
             </div>
-            <div class="modal-content row white-text">
+            <div class="modal-content row grey-text text-darken-4">
                 <div class="col l3">
                     <img src="~/Content/system-resources/proveedor-Default.png" class="responsive-img" />
                 </div>
@@ -229,7 +219,7 @@
                     </div>
                     <div class="col l12 right-align">
                         <br />
-                        <button class="btn btn-flat white pink-text" type="button" onclick="CancelNuevoProveedor()">Cancelar</button>
+                        <button class="btn btn-flat white purple-text" type="button" onclick="CancelNuevoProveedor()">Cancelar</button>
                         <button class="btn btn-flat white blue-text" type="button" onclick="agregarProveedorTmp()">Agregar</button>
                     </div>
                 </div>
@@ -237,9 +227,9 @@
         </div>
     </div>
     <div id="editarProveedor" class="modal modal-small">
-        <div class="editarProveedor blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="editarProveedor white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">search</i>
                     Editar Proveedor
                     <i class="salir material-icons right" onclick="$('#editarProveedor').modal('close');">clear</i>
@@ -267,7 +257,7 @@
                     </div>
                     <div class="col l12 right-align">
                         <br />
-                        <button class="btn btn-flat white pink-text" type="button" onclick="CancelEditarProveedor()">Cancelar</button>
+                        <button class="btn btn-flat white purple-text" type="button" onclick="CancelEditarProveedor()">Cancelar</button>
                         <button class="btn btn-flat white blue-text" type="button" onclick="editarGuardarProveedor()">Agregar</button>
                     </div>
                 </div>
@@ -275,11 +265,13 @@
         </div>
     </div>
     <div id="articulos" class="modal modal-giant">
-        <div class="articulos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align"><i class="material-icons">search</i>
-                Buscar Articulo
-                <i class="salir material-icons right" onclick="CancelArticulos()">clear</i></h4>
+        <div class="articulos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
+                    <i class="material-icons">search</i>
+                    Buscar Articulo
+                    <i class="salir material-icons right" onclick="CancelArticulos()">clear</i>
+                </h4>
             </div>
             <div class="modal-content row">
                 <div class="col l12">
@@ -307,7 +299,7 @@
                 <div class="lista-articulos"></div>
                 <div class="col l12 center" id="pre-Articulos" style="padding-top: 30px; padding-bottom: 20px; display: none;">
                     <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-white-only">
+                        <div class="spinner-layer spinner-blue-only">
                             <div class="circle-clipper left">
                                 <div class="circle"></div>
                             </div><div class="gap-patch">
@@ -319,58 +311,114 @@
                     </div>
                     <p class="white-text" style="margin-top:0">Cargando lista de articulos..</p>
                 </div>
-                <div class="col l12 center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
     <div id="eliminartodos" class="modal modal-mini">
-        <div class="eliminartodos blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="eliminartodos white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">delete_forever</i>
                     Vaciar orden
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea eliminar todos los articulos agregados en la orden?</p>
                 <div class="col l12 right-align">
-                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white purple-text">Cancelar</a>
                     <a class="modal-action modal-close waves-effect waves-light btn-flat white blue-text" onclick="eliminarProductosTodos()">Aceptar</a>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
     <div id="cancelarCompra" class="modal modal-mini">
-        <div class="cancelarCompra blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="cancelarCompra white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">cancel</i>
                     Cancelar Compra
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea cancelar la compra?</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea cancelar la compra?</p>
                 <div class="col l12 right-align">
-                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
+                    <a class="modal-action modal-close waves-effect waves-light  btn-flat white purple-text">Cancelar</a>
                     <a class="modal-action waves-effect waves-light btn-flat white blue-text" onclick="cancelarCompra()">Aceptar</a>
                 </div>
             </div>
         </div>
     </div>
+    <div id="nuevoProducto" class="modal white">
+        <div class="articulo-nuevo white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
+                    <i class="material-icons">add_box</i>Agregar Nuevo Articulo
+                    <i class="material-icons modal-close right">clear</i>
+                </h4>
+            </div>
+            <div class="modal-content row grey-text text-darken-3">
+                <div class="col l4">
+                    <div class="col l12">
+                        <form action="~/Utilities/SaveUploadedFile/0" method="post" enctype="multipart/form-data" class="dropzone" id="my-dropzone" style="width: 50px; background: none; border: none;">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                                <input type="submit" value="Upload" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    <div class="col l8">
+                        <div class="input-field col l3">
+                            <input name="codigo_articulo" id="codigo_articulo" class="validate" type="text" autofocus  disabled/>
+                            <label for="codigo_articulo">Codigo</label>
+                        </div>
+                        <div class="input-field col l9">
+                            <input name="nombre_articulo" id="nombre_articulo" class="validate" type="text" autofocus />
+                            <label for="nombre_articulo">Nombre</label>
+                        </div>
+                        <div class="input-field col l6">
+                            @Html.DropDownList("id_marca", null, "Seleccione Marca", htmlAttributes: new { @class = "form-control" })
+                            <label>Marca</label>
+                        </div>
+                        <div class="input-field col l6">
+                            @Html.DropDownList("id_categoria", null, "Seleccione Categoria", htmlAttributes: new { @class = "form-control" })
+                            <label>Categoria</label>
+                        </div>
+                        <div class="input-field col l8">
+                            <input name="descripcion_articulo" id="descripcion_articulo" class="validate" type="text" />
+                            <label for="descripcion_articulo">Descripcion</label>
+                        </div>
+                        <div class="input-field col l2">
+                            <input name="GarantiaCant" id="GarantiaCant" class="validate" type="text" />
+                            <label for="Garantia">Garantia</label>
+                        </div>
+                        <div class="input-field col l2">
+                            <select id="GarantiaMedida" name="GarantiaMedida">
+                                <option value="1">Dias</option>
+                                <option value="2">Meses</option>
+                                <option value="3">Años</option>
+                            </select>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="" class="col l12 especificaciones"></div>
+                    <div class="col l12 right-align">
+                        <br />
+                        <div class="col l12">
+                            <button class="modal-close btn btn-flat white purple-text" type="reset">Cancelar</button>
+                            <button class="btn btn-flat white blue-text modal-close" id="nuevopro" onclick="nuevopro();">Guardar</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+@section Styles{
+    @Styles.Render("~/Content/dropzone")
+}
 @section Scripts{
-    @Scripts.Render("~/bundles/compras") 
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/nuevacompra")
 }

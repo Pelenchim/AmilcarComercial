@@ -1,43 +1,54 @@
 ﻿@model IEnumerable<AmilcarComercial.Models.Tbl_Categorias>
 
-@{ 
-    Layout = null;
+@foreach (var categoria in Model)
+{
+    <div class="col l4">
+        <div class="card horizontal white hoverable">
+            <div class="col l4 contenedor-img green">
+                <img src="~/Content/system-resources/catalogos.png" class="responsive-img">
+            </div>
+            <div class="col l8 card-content white">
+                <div class="opciones">
+                    <a class='dropdown-button grey-text text-darken-3 tooltipped' href='#' data-activates='@categoria.id_categoria' data-position="opcionesCatalogo" data-delay="50" data-tooltip="Opciones">
+                        <i class="material-icons right">more_vert</i>
+                    </a>
+                    <ul id='@categoria.id_categoria' class='dropdown-content'>
+                        <li>
+                            @Ajax.ActionLink("Detalles", "Details", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                            {
+                                UpdateTargetId = "detalle",
+                                HttpMethod = "GET"
+                            }, new { @class = "", @onclick = "$('#detalle').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Editar", "Edit", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                            {
+                                UpdateTargetId = "editar",
+                                HttpMethod = "GET"
+                            }, new { @class = "", @onclick = "$('#editar').modal('open');" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Eliminar", "Delete", "Categorias", new { id = categoria.id_categoria }, new AjaxOptions
+                            {
+                                UpdateTargetId = "eliminar",
+                                HttpMethod = "GET"
+                            }, new { @class = "", @onclick = "$('#eliminar').modal('open');" })
+                        </li>
+                    </ul>
+                </div>
+                <span class="card-title truncate tooltipped" data-position="tituloCatalogo" data-delay="50" data-tooltip="@categoria.Nombre">@categoria.Nombre</span>
+                <p>
+                    @if (categoria.id_CatPadre != null)
+                    {
+                        //var padre = categoria.Tbl_Categorias1.Where(m => m.id_categoria == categoria.id_CatPadre).ToString().Nombre;
+                        <span>Sin Padre</span>
+                    }
+                    else
+                    {
+                        <span>Categoria Padre</span>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
 }
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.estado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tbl_Categorias2.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tbl_Categorias2.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_categoria }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_categoria }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_categoria })
-        </td>
-    </tr>
-}
-
-</table>

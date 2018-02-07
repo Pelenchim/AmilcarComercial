@@ -4,7 +4,7 @@
 {
     <div class="col width-mio">
         <div class="card hoverable">
-            <div class="card-image cyan">
+            <div class="card-image green">
                 <p class="codigo white-text">Cod: @articulo.codigo_articulo</p>
                 <div class="opciones">
                     <a class='dropdown-button white-text' href='#' data-activates='@articulo.id_articulo'>
@@ -34,7 +34,7 @@
                         </li>
                     </ul>
                 </div>
-                <img src="~/Content/images/articulos/@articulo.imagen">
+                <img src="~/Content/images/articulos/@articulo.imagen" style="max-height:200px";>
                 <span class="card-title truncate tooltipped" data-position="top" data-delay="50" data-tooltip="@articulo.nombre_articulo">@articulo.nombre_articulo</span>
             </div>
             <div class="card-content">

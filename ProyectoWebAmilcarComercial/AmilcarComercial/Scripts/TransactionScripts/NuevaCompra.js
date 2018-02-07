@@ -13,8 +13,10 @@
     $('.nueva-venta .articulosVenta .acciones .search').on('click', function () {
         $('.nueva-venta .articulosVenta .acciones input').toggle(500);
     });
+  
     var proveedor = false, articulo = false;
     var total, subTotal, cantidadTotal, iva, subtotalpro;
+    ultimo();
     mostrarProveedorTmp();
     generales();
     mostrarProductosTmp(1);
@@ -24,7 +26,59 @@
         detalles();
     });
     detalles();
-});
+    $('#id_categoria').on('change', '', function (e) {
+        var idCategoria = this.value;
+
+        if (idCategoria == 1) {
+            $(".especificaciones").empty();
+            return;
+        }
+
+        $.ajax({
+            url: '/obtener/especificaciones/' + idCategoria,
+            type: 'GET',
+            contentType: "application/json",
+            dataType: "json",
+            'success': function (data) {
+                $(".especificaciones").empty();
+                $(".especificaciones").append(
+                    '<div class="col l12">' +
+                    '<br />' +
+                    '<span>Especificaciones:</span>' +
+                    '<div class="divider-mio white"></div>' +
+                    '<br />' +
+                    '</div>'
+                );
+                $.each(data, function () {
+                    $.each(this, function (name, value) {
+                        $(".especificaciones").append(
+                            '<div class="input-field col l4">' +
+                            '<input id="' + value.ID + '" type="text" class="validate">' +
+                            '<label for="' + value.ID + '">' + value.Nombre + '</label>' +
+                            '</div>'
+                        );
+                    });
+                });
+            },
+            'error': function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }); 
+})
+Dropzone.autoDiscover = true;
+Dropzone.options.myDropzone = {
+    paramName: "file",
+    uploadMultiple: false,
+    maxFiles: 1,
+    addRemoveLinks: true,
+    init: function () {
+        this.on("complete", function (data) {
+            //var res = eval('(' + data.xhr.responseText + ')');
+            var res = JSON.parse(data.xhr.responseText);
+        });
+    }
+};  
 function generales() {
     $("#pre-General").css("display", "inline");
     $.ajax({
@@ -41,8 +95,7 @@ function generales() {
                 '</div>' +
                 '<div class="col l6">' +
                 '<p class=""><strong>Fecha: </strong>' + data[0] + '</p>' +
-                '<p class=""><strong>Sucursal: </strong>' + data[2] + '</p>' +
-                '</div>'
+                '<p>.</p>'+'</div>'
             );
             $("#pre-General").css("display", "none");
         },
@@ -66,7 +119,7 @@ function proveedores() {
                     $(".lista-proveedores").append(
                         '<div class="col l4">' +
                         '<a onclick="agregarProveedorExistente(' + value.ID + ')">' +
-                        '<div class="card white grey-text text-darken-3 hoverable">' +
+                        '<div class="card blue white-text text-darken-3 hoverable">' +
                         '<div class="card-content">' +
                         '<span class="card-title truncate">' + value.Nombre + '</span>' +
                         '<p>Tel: ' + value.Telefono + '</p>' +
@@ -201,8 +254,8 @@ function mostrarProveedorTmp() {
                 $(".datosProveedor").append(
                     '<div class="center-align vacio">' +
                     '<p>Aun no a definido cliente para esta venta</p>' +
-                    '<button class="btn btn-flat green white-text" onclick="agregarProveedor()">Agregar</button>' + ' ' +
-                    '<button class="btn btn-flat green white-text" onclick="proveedores()">Buscar</button>' +
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="agregarProveedor()">Agregar</button>' + ' ' + 
+                    '<button class="btn btn-flat blue-grey darken-4 white-text" onclick="proveedores()">Buscar</button>' +
                     '</div>'
                 );
                 proveedor = false;
@@ -294,6 +347,10 @@ function agregarArticuloTmp(id) {
     var vent = $(".articulos #vent" + id).val();
     var motiv = $(".articulos #motivo" + id).val();
 
+    if (motiv == 0) {
+        Materialize.toast("Debe seleccionar el motivo", 2000);
+        return;
+    }
     if (precio === '') {
         Materialize.toast("Debe agregar el costo", 2000);
         $(".articulos #precio" + id).focus();
@@ -379,7 +436,6 @@ function agregarArticuloTmp(id) {
         url: '/compras/agregar/producto/' + id + '/' + cant + '/' + precio + '/' + desc + '/' + vent + '/' + motiv,
         type: 'GET',
         'success': function (data) {
-            $('#articulos').modal('close');
             articulos(1);
             mostrarProductosTmp(1);
             Materialize.toast('Articulo agregado a la orden', 2000);
@@ -499,7 +555,7 @@ function articulosTable(data) {
     $(".modal-compras .articulos .acciones .card-v").show();
     $(".lista-articulos").empty();
     $(".lista-articulos").append(
-        '<table class="responsive-table bordered highlight centered white z-depth-1">' +
+        '<table class="responsive-table bordered highlight centered white">' +
         '<thead>' +
         '<tr>' +
         '<th>Nombre</th>' +
@@ -524,7 +580,8 @@ function articulosTable(data) {
                 '<td><img src="/Content/images/articulos/' + value.Imagen + '"></td>' +
                 '<td>' +
                 '<select id="motivo' + value.ID + '" class="browser-default">' +
-                '<option value="1" selected>Compra</option>' +
+                '<option value="0" selected>Seleccione</option>' +
+                '<option value="1">Compra</option>' +
                 '<option value="2">Bonificacion</option>' +
                 '<option value="3">Reposicion</option>' +
                 '</select>' +
@@ -546,6 +603,15 @@ function articulosTable(data) {
                 '</td > ' +
                 '</tr>'
             );
+            if (value.Motivo == 1) {
+                $("#motivo" + value.ID).children('option[value=1]').hide();
+            }
+            if (value.Motivo == 2) {
+                $("#motivo" + value.ID).children('option[value=2]').hide();
+            }
+            if (value.Motivo == 3) {
+                $("#motivo" + value.ID).children('option[value=3]').hide();
+            }
             $('.lista-articulos table tbody').on("change", "#motivo" + value.ID, function (e) {
                 var mot = this.value;
                 if (mot == 2 || mot == 3) {
@@ -791,6 +857,36 @@ function detectarTipoVenta(motivo, id) {
     }); 
 }
 
+function nuevopro() {
+    $.ajax({
+        url: '/compras/nuevopro',
+        type: 'GET',
+        contentType: "application/json",
+        'success': function (data) {
+                Materialize.toast("Nuevo articulo creado", 2000);
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
+}
+function ultimo() {
+    $.ajax({
+        url: '/obtener/ultimo',
+        type: 'GET',
+        contentType: "application/json",
+        dataType: "json",
+        'success': function (data) {
+            $.each(data, function (index, element) {
+                $('#nuevoProducto .articulo-nuevo #codigo_articulo').val(element.ID);
+            });
+        },
+        'error': function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
+    $('#nuevo').modal('open');
+};
 function detalles() {
     if (cantidadTotal === 0) {
         $(".detalle .detalles").empty();
@@ -805,7 +901,7 @@ function detalles() {
         return;
     }
 
-    iva = (subTotal * parseFloat($('#iva').val() / 100));
+    iva = (subTotal * parseFloat(15 / 100));
     Total = subTotal + iva;
     $(".detalle .detalles").empty();
     $(".detalle .detalles").append(
@@ -838,15 +934,15 @@ function cancelarCompra() {
 function facturar() {
 
     if (proveedor === false) {
-        Materialize.toast("Debe definir un proveedor", 3000);
+        Materialize.toast("Debe definir un proveedor", 2000);
         return;
     }
     if (articulo === false) {
-        Materialize.toast("Debe seleccionar productos a comprar", 3000);
+        Materialize.toast("Debe seleccionar productos a comprar", 2000);
         return;
     }
     if ($("#N_factura").val() === ""){
-        Materialize.toast("Ingrese el numero de factura de la compra");
+        Materialize.toast("Ingrese el numero de factura de la compra", 2000);
         this.focus();
         return;
     }
@@ -854,7 +950,7 @@ function facturar() {
     var datos = {
         fact_compra: $("#N_factura").val(),
         tipo_comprobante_compra: $('#comprobante').val(),
-        iva_compra: $('#iva').val()
+        iva_compra: 15
     };
 
     $.ajax({

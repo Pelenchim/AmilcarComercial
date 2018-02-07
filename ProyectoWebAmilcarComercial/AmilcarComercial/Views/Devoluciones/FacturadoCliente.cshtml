@@ -1,0 +1,66 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Devolucion Finalizada";
+    ViewBag.PrimaryColor = "pink";
+    ViewBag.NavExtendedColor = "blue darken-1";
+}
+
+<nav class="breadcrumb-nav nav-extended @ViewBag.NavExtendedColor">
+    <div class="nav-wrapper">
+        <div class="col l12">
+            <a href="#" class="breadcrumb">@ViewBag.Title</a>
+        </div>
+    </div>
+</nav>
+
+<div class="detalleVenta row">
+    <div class="col l4 offset-l4 white border-radius-4 z-depth-1">
+        <div class="title col l12 center">
+            <p><i class="material-icons blue-grey-text text-darken-4">check_circle</i></p>
+            <p>Devolucion de Cliente Realizada Exitosamente</p>
+        </div>
+        <div class="detalle col l12 center"></div>
+    </div>
+    <div class="col l4 offset-l4 blue border-radius-4 z-depth-1 center">
+        <a href="@Url.Action("ListaDevCliente","Devoluciones")" class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Devoluciones">Lista</a>
+        <a class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
+        @*<a id="" class="anular btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Venta">Anular</a>*@
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+</div>
+<div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("NuevaCliente","Devoluciones")">
+        <i class="large material-icons">add</i>
+    </a>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            detalle();
+            $(".anular").on("click", function () {
+                var id = $(this).attr("id");
+                anular(id);
+            });
+        });
+        function detalle() {
+            $.ajax({
+                url: '/devolucion/cliente/factura',
+                type: 'GET',
+                contentType: "application/json",
+                'success': function (data) {
+                    $(".detalleVenta .detalle").append(
+                        '<p><span class="left">Cantidad de Articulos: </span><span class="right">' + data[0] + ' Unds</span></p>'
+                    );
+                    $(".detalleVenta .anular").attr("id", data[5]);
+                },
+                'error': function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+    </script>
+}

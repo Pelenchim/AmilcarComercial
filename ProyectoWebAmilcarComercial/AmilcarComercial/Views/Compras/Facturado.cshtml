@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Compra Finalizada";
-    ViewBag.PrimaryColor = "blue";
+    ViewBag.PrimaryColor = "pink";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
@@ -17,14 +17,13 @@
 <div class="detalleCompra row">
     <div class="col l4 offset-l4 white border-radius-4 z-depth-1">
         <div class="title col l12 center">
-            <p><i class="material-icons green-text">check_circle</i></p>
+            <p><i class="material-icons blue-grey-text text-darken-4">check_circle</i></p>
             <p>Compra Realizada Exitosamente</p>
         </div>
         <div class="detalle col l12 center"></div>
     </div>
     <div class="col l4 offset-l4 blue border-radius-4 z-depth-1 center">
         <a href="@Url.Action("Index","Compras")" class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Lista de Compras">Lista</a>
-        <a class="btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir Factura">Imprimir</a>
         <a id="" class="anular btn btn-large btn-flat blue white-text tooltipped" data-position="top" data-delay="50" data-tooltip="Anular Compra">Anular</a>
     </div>
 </div>
@@ -32,57 +31,11 @@
 <div class="fixed-action-btn">
 </div>
 <div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large green pulse" href="@Url.Action("Nueva","Compras")">
+    <a class="btn-floating btn-large blue-grey darken-4 pulse" href="@Url.Action("Nueva","Compras")">
         <i class="large material-icons">add</i>
     </a>
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            detalle();
-            $(".anular").on("click", function () {
-                var id = $(this).attr("id");
-                anular(id);
-            });
-        });
-        function detalle() {
-            $.ajax({
-                url: '/compras/detallefactura',
-                type: 'GET',
-                contentType: "application/json",
-                'success': function (data) {
-                    $(".detalleCompra .detalle").append(
-                        '<p><span class="left">Cantidad de Articulos: </span><span class="right">' + data[0] + ' Unds</span></p>' +
-                        '<div class="divider-mio"></div>' +
-                        '<p><span class="left">SubTotal: </span><span class="right"> C$ ' + data[1].toFixed(2) + '</span></p>' +
-                        '<div class="divider-mio"></div>' +
-                        '<p><span class="left">Iva Total: </span><span class="right"> C$ ' + data[2].toFixed(2) + '</span></p>' +
-                        '<div class="divider-mio"></div>' +
-                        '<p><span class="left">Descuento Total: </span><span class="right"> C$ ' + data[3].toFixed(2) + '</span></p>' +
-                        '<div class="divider-mio"></div>' +
-                        '<p><span class="left">Total a Pagar: </span><span class="right"> C$ ' + data[4].toFixed(2) + '</span></p>'
-                    );
-                    $(".detalleCompra .anular").attr("id", data[5]);
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-        function anular(id) {
-            $.ajax({
-                url: '/compras/anular/' + id,
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                'success': function (data) {
-                    window.location.href = '/compras/index';
-                },
-                'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
-                }
-            });
-        }
-    </script>
+    @Scripts.Render("~/bundles/facturacompra")
 }

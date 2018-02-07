@@ -36,8 +36,17 @@ namespace AmilcarComercial
             bundles.Add(new ScriptBundle("~/bundles/contado").Include(
                       "~/Scripts/TransactionScripts/Contado.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/compras").Include(
-                      "~/Scripts/TransactionScripts/Compras.js"));
+            bundles.Add(new ScriptBundle("~/bundles/nuevacompra").Include(
+                      "~/Scripts/TransactionScripts/NuevaCompra.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/listacompras").Include(
+                      "~/Scripts/TransactionScripts/ListaCompras.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/consultacompra").Include(
+                      "~/Scripts/TransactionScripts/ConsultarCompra.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/facturacompra").Include(
+                      "~/Scripts/TransactionScripts/FacturaCompra.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/apartado").Include(
                       "~/Scripts/TransactionScripts/Apartado.js"));
@@ -50,6 +59,15 @@ namespace AmilcarComercial
 
             bundles.Add(new ScriptBundle("~/bundles/devolucionProveedor").Include(
                       "~/Scripts/TransactionScripts/DevolucionProveedor.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/listadevcliente").Include(
+                      "~/Scripts/TransactionScripts/ListaDevClientes.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/listadevproveedor").Include(
+                      "~/Scripts/TransactionScripts/ListaDevProveedor.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/kardex").Include(
+                      "~/Scripts/TransactionScripts/Kardex.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/public").Include(
                       "~/Scripts/public.js"));

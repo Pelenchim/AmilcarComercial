@@ -1,9 +1,9 @@
 ﻿
 @{
     ViewBag.Title = "Contado";
-    ViewBag.SubTitle = "Nueva";
+    ViewBag.SubTitle = "Lista";
     ViewBag.ControllerGeneral = "Ventas";
-    ViewBag.PrimaryColor = "blue";
+    ViewBag.PrimaryColor = "pink";
     ViewBag.NavExtendedColor = "blue darken-1";
 }
 
@@ -53,17 +53,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="paginacion col l12 center">
-            <ul class="pagination">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li class="active"><a href="#!">1</a></li>
-                <li class="waves-effect"><a href="#!">2</a></li>
-                <li class="waves-effect"><a href="#!">3</a></li>
-                <li class="waves-effect"><a href="#!">4</a></li>
-                <li class="waves-effect"><a href="#!">5</a></li>
-                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-            </ul>
-        </div>
     </div>
     <aside class="contado-details show white z-depth-1">
         <div class="row z-depth-1-half">
@@ -83,23 +72,23 @@
         </div>
     </aside>
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light green pulse" href="@Url.Action("Nueva","Contado")"><i class="material-icons">add</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light blue-grey darken-4 pulse" href="@Url.Action("Nueva","Contado")"><i class="material-icons">add</i></a>
     </div>
 </div>
 
 <div class="modales">
     <div id="anularVenta" class="modal modal-mini">
-        <div class="anularVenta blue">
-            <div class="row white z-depth-1">
-                <h4 class="grey-text text-darken-3 left-align">
+        <div class="anularVenta white">
+            <div class="row blue z-depth-1">
+                <h4 class="white-text left-align">
                     <i class="material-icons">cancel</i>
                     Anular Venta
                     <i class="salir modal-close material-icons right">clear</i>
                 </h4>
             </div>
             <div class="modal-content">
-                <p class="white-text">Esta seguro que desea anular la venta?</p>
-                <p class="white-text">Si anula esta venta se agregara nuevamente al inventario los articulos de esta venta.</p>
+                <p class="grey-text text-darken-4">Esta seguro que desea anular la venta?</p>
+                <p class="grey-text text-darken-4">Si anula esta venta se agregara nuevamente al inventario los articulos de esta venta.</p>
                 <div class="col l12 right-align">
                     <a class="modal-action modal-close waves-effect waves-light  btn-flat white red-text">Cancelar</a>
                     <a class="anular modal-action waves-effect waves-light btn-flat white blue-text">Aceptar</a>

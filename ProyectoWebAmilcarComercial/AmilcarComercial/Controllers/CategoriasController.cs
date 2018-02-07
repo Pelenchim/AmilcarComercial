@@ -18,13 +18,14 @@ namespace AmilcarComercial.Controllers
         // GET: Categorias
         public ActionResult Index()
         {
-            var tbl_Categorias = db.Tbl_Categorias.Include(t => t.Tbl_Categorias2);
-            return View(tbl_Categorias.ToList());
+            var Categorias = db.Tbl_Categorias.Include(m => m.Tbl_Categorias2).Where(m => m.estado == true).ToList();
+
+            return View(Categorias);
         }
 
         public ActionResult Listar()
         {
-            var tbl_Categorias = db.Tbl_Categorias.Include(t => t.Tbl_Categorias2);
+            var tbl_Categorias = db.Tbl_Categorias.Include(t => t.Tbl_Categorias2).Where(m => m.estado == true);
             return PartialView(tbl_Categorias.ToList());
         }
 
@@ -46,25 +47,57 @@ namespace AmilcarComercial.Controllers
         // GET: Categorias/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.id_padre = new SelectList(db.Tbl_Categorias.Where(m => m.id_CatPadre == null).ToList(), "Nombre", "id_categoria");
+
+            return PartialView();
         }
 
-        // POST: Categorias/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_categoria,Nombre,id_CatPadre,estado")] Tbl_Categorias tbl_Categorias)
+        //[HttpPost]
+        //[Route("categoria/nueva")]
+        public ActionResult Nueva(/*Tbl_Categorias cat, string[] descrip*/)
         {
-            if (ModelState.IsValid)
-            {
-                db.Tbl_Categorias.Add(tbl_Categorias);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            //bool data = false;
 
-            ViewBag.id_CatPadre = new SelectList(db.Tbl_Categorias, "id_categoria", "Nombre", tbl_Categorias.id_CatPadre);
-            return PartialView(tbl_Categorias);
+            //using (var tran = db.Database.BeginTransaction())
+            //{
+            //    try
+            //    {
+            //        Tbl_Categorias categoria = new Tbl_Categorias()
+            //        {
+            //            estado = cat.estado,
+            //            Nombre = cat.Nombre,
+            //            id_CatPadre = cat.id_CatPadre
+            //        };
+            //        db.Tbl_Categorias.Add(categoria);
+            //        db.SaveChanges();
+
+            //        foreach (var desc in descrip)
+            //        {
+            //            Tbl_Descripciones descripcion = new Tbl_Descripciones()
+            //            {
+            //                nombre = desc,
+            //                id_categoria = categoria.id_categoria
+            //            };
+            //            db.Tbl_Descripciones.Add(descripcion);
+            //            db.SaveChanges();
+            //        }
+
+            //        tran.Commit();
+            //        data = true;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        tran.Rollback();
+            //    }
+            //}
+
+
+            //return Json(data, JsonRequestBehavior.AllowGet);
+            var cat = db.Tbl_Categorias.Find(1004);
+            cat.estado = true;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Categorias/Edit/5
@@ -100,15 +133,22 @@ namespace AmilcarComercial.Controllers
             return PartialView(tbl_Categorias);
         }
 
+        public ActionResult Delete(int id)
+        {
+            Tbl_Categorias cate = db.Tbl_Categorias.Find(id);
+            return PartialView(cate);
+        } 
+
         // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tbl_Categorias tbl_Categorias = db.Tbl_Categorias.Find(id);
-            db.Tbl_Categorias.Remove(tbl_Categorias);
+            Tbl_Categorias tbl_Categorias = db.Tbl_Categorias.Find(id);            
+            tbl_Categorias.estado = false;
+            db.Entry(tbl_Categorias).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Listar");
         }
 
         protected override void Dispose(bool disposing)

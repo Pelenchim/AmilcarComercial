@@ -11,15 +11,24 @@
             <img src="~/Content/images/articulos/@Model.imagen" class="responsive-img" width="160"/>
         </div>
         <div class="descripciones col l4 right">
-            <p class="precio">$ 1200</p>
-            @*@foreach (var item in @Model.Tbl_Categorias.Tbl_Descripciones)
-            {
-                <p>@item.nombre</p>
-            }
-            @foreach (var item in Model.Tbl_DescripcionValores)
-            {
-                <p>@item.valor</p>
-            }*@
+            <div class="class=" row"">
+                <span><strong>Descripciones</strong></span>
+                <br />
+            </div>
+            <div class="col l6">
+                <br />
+                @foreach (var item in @Model.Tbl_Categorias.Tbl_Descripciones)
+    {
+            <p>@item.nombre:</p>
+}
+            </div>
+            <div class="col l6">
+                <br />
+                @foreach (var item in Model.Tbl_DescripcionValores)
+    {
+            <p>@item.valor</p>
+}
+            </div>
         </div>
     </div>
     <div class="row">
@@ -28,10 +37,10 @@
         </div>
         <div class="valores col l8">
             <p class="resumen"><strong>Descripcion:</strong> @Model.descripcion_articulo</p>
-            <p><span>Marca: @Model.Tbl_Marca.nombre</span><span>Garantia: 3 meses</span><span>Credito: Si</span></p>
+            <p><span>Marca: @Model.Tbl_Marca.nombre</span></p>
         </div>
         <div class="acciones col l4 center">
-            <p>Stock: <span>70</span>unid</p>
+            <br />
             @Ajax.ActionLink("delete", "Delete", "Articulos", new { id = Model.id_articulo }, new AjaxOptions
             {
                 UpdateTargetId = "eliminar",
